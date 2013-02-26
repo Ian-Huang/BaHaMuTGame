@@ -14,7 +14,7 @@ public class ExplosiveObject : MonoBehaviour
     {
         this.isExplsion = true;
         Destroy(this.GetComponent<MoveObject>());
-        Destroy(this.GetComponent<ChangePictures>());
+        Destroy(this.GetComponent<RegularChangePictures>());
 
         //Destroy(other.gameObject);
         other.GetComponent<Life>().DecreaseLife(1);

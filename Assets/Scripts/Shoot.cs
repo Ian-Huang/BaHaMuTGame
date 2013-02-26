@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Shoot : MonoBehaviour
 {
-    public GameObject ShootObject;
+    public GameObject ShootObject;              
     void OnTriggerEnter(Collider other)
     {
         Instantiate(this.ShootObject, this.transform.position, this.ShootObject.transform.rotation);

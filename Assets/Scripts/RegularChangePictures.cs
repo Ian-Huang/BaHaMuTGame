@@ -1,7 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-public class ChangePictures : MonoBehaviour
+/// <summary>
+/// 固定頻率交換圖片Script
+/// </summary>
+public class RegularChangePictures : MonoBehaviour
 {
     public Texture[] ChangeTextures;
     public float ChangeTime = 0.1f;
@@ -30,6 +33,5 @@ public class ChangePictures : MonoBehaviour
                 this.currentTexture++;
         }
         this.addValue += Time.deltaTime;
-        
     }
 }
