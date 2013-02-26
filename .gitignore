@@ -172,3 +172,4 @@ Temp
 *.userprefs
 *.suo
 obj
+output_log.txt
