@@ -18,14 +18,14 @@ public class Shoot : MonoBehaviour
     private float addValue { get; set; }
     private bool isShoot { get; set; }
     private List<Texture[]> ChangeTextureList { get; set; }
+    private GameObject detectedEnemyObject { get; set; }
 
-    public GameObject obj;
     void OnTriggerStay(Collider other)
     {
         if (!this.isShoot)
         {
             this.isShoot = true;
-            this.obj = other.gameObject;
+            this.detectedEnemyObject = other.gameObject;
             this.GetComponent<RegularChangePictures>().ChangeState(false);
             this.renderer.material.mainTexture = this.ChangeTextureList[this.currentGroupIndex][this.currentTextureIndex];
         }
@@ -69,8 +69,8 @@ public class Shoot : MonoBehaviour
 
                 if (this.currentTextureIndex == this.AttackIndex)   //攻擊判定
                 {
-                    if (this.obj != null)      //判定追蹤的物體是否還存在
-                        if (this.obj.transform.position.y == this.transform.position.y)     //判定追蹤的物體是否在同一高度(未來魔王關可能會有問題!!)
+                    if (this.detectedEnemyObject != null)      //判定追蹤的物體是否還存在
+                        if (this.detectedEnemyObject.transform.position.y == this.transform.position.y)     //判定追蹤的物體是否在同一高度(未來魔王關可能會有問題!!)
                             Instantiate(this.ShootObject, this.transform.position, this.ShootObject.transform.rotation);
                 }
 
