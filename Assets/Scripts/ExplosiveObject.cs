@@ -4,15 +4,16 @@ using System.Collections;
 public class ExplosiveObject : MonoBehaviour
 {
     public Texture[] ChangeTextures;
-    public float ChangeTime = 0.1f;
+    public float ChangeTime = 0.1f;             //交換時間間隔
 
-    private int currentTexture { get; set; }
+    private int currentTextureIndex { get; set; }
     private bool isExplsion { get; set; }
     private float addValue { get; set; }
 
     void OnTriggerEnter(Collider other)
-    {
+    {        
         this.isExplsion = true;
+        this.renderer.material.mainTexture = this.ChangeTextures[this.currentTextureIndex];
         Destroy(this.GetComponent<MoveObject>());
         Destroy(this.GetComponent<RegularChangePictures>());
 
@@ -23,8 +24,8 @@ public class ExplosiveObject : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        this.addValue = this.ChangeTime;  // 一開始就觸發
-        this.currentTexture = 0;
+        this.addValue = 0;
+        this.currentTextureIndex = 0;
         this.isExplsion = false;
     }
 
@@ -35,17 +36,15 @@ public class ExplosiveObject : MonoBehaviour
         {
             if (this.addValue >= this.ChangeTime)
             {
-                if (this.currentTexture >= this.ChangeTextures.Length)
+                this.addValue = 0;
+                this.currentTextureIndex++;
+                if (this.currentTextureIndex >= this.ChangeTextures.Length)
                 {
                     Destroy(this.gameObject);
                     return;
                 }
-
-                this.addValue = 0;
-                this.renderer.material.mainTexture = this.ChangeTextures[this.currentTexture];
-                this.currentTexture++;
+                this.renderer.material.mainTexture = this.ChangeTextures[this.currentTextureIndex];
             }
-
             this.addValue += Time.deltaTime;
         }
     }

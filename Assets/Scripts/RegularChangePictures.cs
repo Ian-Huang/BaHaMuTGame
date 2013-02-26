@@ -7,31 +7,58 @@ using System.Collections;
 public class RegularChangePictures : MonoBehaviour
 {
     public Texture[] ChangeTextures;
-    public float ChangeTime = 0.1f;
+    public float ChangeTime = 0.1f;             //交換時間間隔
 
-    private int currentTexture { get; set; }
+    private int currentTextureIndex { get; set; }
     private float addValue { get; set; }
+
+    private bool isChanging { get; set; }
 
     // Use this for initialization
     void Start()
     {
-        this.addValue = this.ChangeTime;  // 一開始就觸發
-        this.currentTexture = 0;
+        this.isChanging = true;
+        this.addValue = 0;
+        this.currentTextureIndex = 0;
+        this.renderer.material.mainTexture = this.ChangeTextures[this.currentTextureIndex];
+    }
+
+    /// <summary>
+    /// 改變Change Picture的狀態
+    /// </summary>
+    /// <param name="isChange">是否改變</param>
+    public void ChangeState(bool isChange)
+    {
+        if (isChange)
+        {
+            this.isChanging = true;
+            this.addValue = 0;
+            this.currentTextureIndex = 0;
+            this.renderer.material.mainTexture = this.ChangeTextures[this.currentTextureIndex];
+        }
+        else
+        {
+            this.isChanging = false;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (this.addValue >= this.ChangeTime)
+        if (this.isChanging)
         {
-            this.addValue = 0;
-            this.renderer.material.mainTexture = this.ChangeTextures[this.currentTexture];
+            if (this.addValue >= this.ChangeTime)
+            {
+                this.addValue = 0;
 
-            if ((this.currentTexture + 1) >= this.ChangeTextures.Length)
-                this.currentTexture = 0;
-            else
-                this.currentTexture++;
+                if ((this.currentTextureIndex + 1) >= this.ChangeTextures.Length)
+                    this.currentTextureIndex = 0;
+                else
+                    this.currentTextureIndex++;
+
+                this.renderer.material.mainTexture = this.ChangeTextures[this.currentTextureIndex];
+            }
+            this.addValue += Time.deltaTime;
         }
-        this.addValue += Time.deltaTime;
     }
 }

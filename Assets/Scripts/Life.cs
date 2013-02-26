@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Life : MonoBehaviour
 {
-    public int TotalLife = 1;
+    public int TotalLife = 1;           //物體生命總值
 
     // Use this for initialization
     void Start()

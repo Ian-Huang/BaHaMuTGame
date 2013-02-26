@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-public class ControllerCollection : MonoBehaviour
+public class RolesController : MonoBehaviour
 {
-    public GameObject Sidewalk1;
-    public GameObject Sidewalk2;
-    public GameObject Sidewalk3;
-    public GameObject Sidewalk4;
+    public GameObject Role1;
+    public GameObject Role2;
+    public GameObject Role3;
+    public GameObject Role4;
 
     private GameObject tempGameObject;
     private Vector3 tempPosition;
@@ -17,6 +17,11 @@ public class ControllerCollection : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 交換物體位置
+    /// </summary>
+    /// <param name="obj1">物體1</param>
+    /// <param name="obj2">物體2</param>
     void SetChange(ref GameObject obj1, ref GameObject obj2)
     {
         GameObject tempGameObject;
@@ -34,12 +39,12 @@ public class ControllerCollection : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.A))
-            this.SetChange(ref this.Sidewalk1, ref this.Sidewalk2);
+            this.SetChange(ref this.Role1, ref this.Role2);
 
         if (Input.GetKeyUp(KeyCode.S))
-            this.SetChange(ref this.Sidewalk2, ref this.Sidewalk3);
+            this.SetChange(ref this.Role2, ref this.Role3);
 
         if (Input.GetKeyUp(KeyCode.D))
-            this.SetChange(ref this.Sidewalk3, ref this.Sidewalk4);
+            this.SetChange(ref this.Role3, ref this.Role4);
     }
 }

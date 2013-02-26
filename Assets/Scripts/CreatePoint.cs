@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class CreatePoint : MonoBehaviour
 {
-    public GameObject[] CreateObjects;
-    public Transform[] CreatePositions;
+    public GameObject[] CreateObjects;      //待Create的物件陣列
+    public Transform[] CreatePositions;     //待Create的位置陣列
     public float CreateTime = 2;
 
     private float addValue { get; set; }
