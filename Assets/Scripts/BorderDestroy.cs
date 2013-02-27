@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 將超出邊界的物件刪除
+/// </summary>
 public class BorderDestroy : MonoBehaviour
 {
     public float DestroyRadius = 15;     //邊界球形的半徑
@@ -14,11 +17,11 @@ public class BorderDestroy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //確認是否有物體進入範圍
         if (Physics.CheckSphere(this.transform.position, this.DestroyRadius))
         { 
-            Collider[] objs;
-            objs = Physics.OverlapSphere(this.transform.position, this.DestroyRadius);
-            foreach(var obj in objs)
+            //刪除進入範圍內的物件
+            foreach (var obj in Physics.OverlapSphere(this.transform.position, this.DestroyRadius))
                 Destroy(obj.gameObject);
         }
     }

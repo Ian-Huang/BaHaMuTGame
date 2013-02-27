@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// 固定頻率交換圖片Script
+/// 固定頻率的交換圖片Script
 /// </summary>
 public class RegularChangePictures : MonoBehaviour
 {
@@ -24,9 +24,9 @@ public class RegularChangePictures : MonoBehaviour
     }
 
     /// <summary>
-    /// 改變Change Picture的狀態
+    /// 改變是否運行Regular Change Picture的狀態
     /// </summary>
-    /// <param name="isChange">是否改變</param>
+    /// <param name="isChange">是或否</param>
     public void ChangeState(bool isChange)
     {
         if (isChange)
@@ -51,7 +51,7 @@ public class RegularChangePictures : MonoBehaviour
             {
                 this.addValue = 0;
 
-                if ((this.currentTextureIndex + 1) >= this.ChangeTextures.Length)
+                if ((this.currentTextureIndex + 1) >= this.ChangeTextures.Length)       //歸0，循環
                     this.currentTextureIndex = 0;
                 else
                     this.currentTextureIndex++;

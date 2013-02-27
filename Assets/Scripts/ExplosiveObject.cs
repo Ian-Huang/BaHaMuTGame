@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 爆炸物件(法師火球撞擊敵人後產生)
+/// </summary>
 public class ExplosiveObject : MonoBehaviour
 {
     public Texture[] ChangeTextures;
@@ -14,11 +17,12 @@ public class ExplosiveObject : MonoBehaviour
     {        
         this.isExplsion = true;
         this.renderer.material.mainTexture = this.ChangeTextures[this.currentTextureIndex];
-        Destroy(this.GetComponent<MoveObject>());
+        
+        //移除Script，使爆炸位置固定、換圖正常
+        Destroy(this.GetComponent<MoveController>());
         Destroy(this.GetComponent<RegularChangePictures>());
 
-        //Destroy(other.gameObject);
-        other.GetComponent<Life>().DecreaseLife(1);
+        other.GetComponent<EnemyLife>().DecreaseLife(1);
     }
 
     // Use this for initialization
@@ -40,6 +44,7 @@ public class ExplosiveObject : MonoBehaviour
                 this.currentTextureIndex++;
                 if (this.currentTextureIndex >= this.ChangeTextures.Length)
                 {
+                    //播完爆炸圖片後，刪除物件
                     Destroy(this.gameObject);
                     return;
                 }

@@ -1,7 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-public class Life : MonoBehaviour
+/// <summary>
+/// 控制敵人的血量
+/// </summary>
+public class EnemyLife : MonoBehaviour
 {
     public int TotalLife = 1;           //物體生命總值
 
@@ -18,14 +21,16 @@ public class Life : MonoBehaviour
     public void DecreaseLife(int deLife)
     {
         this.TotalLife -= deLife;
+        
+        //當生命小於0，刪除物件
+        if (this.TotalLife <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (this.TotalLife <= 0)
-        {
-            Destroy(this.gameObject);
-        }
     }
 }

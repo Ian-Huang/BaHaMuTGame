@@ -1,15 +1,15 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 角色控制器(角色位置交換)
+/// </summary>
 public class RolesController : MonoBehaviour
 {
     public GameObject Role1;
     public GameObject Role2;
     public GameObject Role3;
     public GameObject Role4;
-
-    private GameObject tempGameObject;
-    private Vector3 tempPosition;
 
     // Use this for initialization
     void Start()

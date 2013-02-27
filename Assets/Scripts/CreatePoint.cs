@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// 敵人生產點(固定時間、位置隨機、物件隨機)
+/// </summary>
 public class CreatePoint : MonoBehaviour
 {
     public GameObject[] CreateObjects;      //待Create的物件陣列
@@ -9,8 +12,8 @@ public class CreatePoint : MonoBehaviour
     public float CreateTime = 2;
 
     private float addValue { get; set; }
-    public List<int> tempPositionIndexList { get; set; }
-    public List<int> tempObjectIndexList { get; set; }
+    private List<int> tempPositionIndexList { get; set; }   //儲存已產生敵人的位置(因不重複生產)
+    private List<int> tempObjectIndexList { get; set; }
 
     // Use this for initialization
     void Start()
