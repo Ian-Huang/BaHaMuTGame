@@ -43,8 +43,10 @@ public class AttackController : MonoBehaviour
     {
         //List放入攻擊動作的圖組
         this.ChangeTextureList = new List<Texture[]>();
-        this.ChangeTextureList.Add(this.ChangeTextureGroup1);
-        this.ChangeTextureList.Add(this.ChangeTextureGroup2);
+        if (this.ChangeTextureGroup1.Length != 0)
+            this.ChangeTextureList.Add(this.ChangeTextureGroup1);
+        if(this.ChangeTextureGroup2.Length != 0)
+            this.ChangeTextureList.Add(this.ChangeTextureGroup2);
 
         this.currentGroupIndex = Random.Range(0, this.ChangeTextureList.Count); //隨機選擇欲撥放的攻擊動作圖組
         this.currentTextureIndex = 0;
