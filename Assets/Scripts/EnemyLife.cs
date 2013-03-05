@@ -8,10 +8,18 @@ public class EnemyLife : MonoBehaviour
 {
     public int TotalLife = 1;           //物體生命總值
 
+    public Texture[] ChangeTextures;
+    public float ChangeTime = 0.1f;             //交換時間間隔
+
+    private int currentTextureIndex { get; set; }
+    private bool isDestroy { get; set; }
+    private float addValue { get; set; }
+
+
     // Use this for initialization
     void Start()
     {
-
+        this.isDestroy = false;
     }
 
     /// <summary>
@@ -23,14 +31,32 @@ public class EnemyLife : MonoBehaviour
         this.TotalLife -= deLife;
         
         //當生命小於0，刪除物件
-        if (this.TotalLife <= 0)
+        if (!this.isDestroy && this.TotalLife <= 0)
         {
-            Destroy(this.gameObject);
+            this.isDestroy = true;
+            Destroy(this.GetComponent<MoveController>());
+            Destroy(this.GetComponent<RegularChangePictures>());
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (this.isDestroy)
+        {
+            if (this.addValue >= this.ChangeTime)
+            {
+                this.addValue = 0;
+                this.currentTextureIndex++;
+                if (this.currentTextureIndex >= this.ChangeTextures.Length)
+                {
+                    //播完爆炸圖片後，刪除物件
+                    Destroy(this.gameObject);
+                    return;
+                }
+                this.renderer.material.mainTexture = this.ChangeTextures[this.currentTextureIndex];
+            }
+            this.addValue += Time.deltaTime;
+        }
     }
 }
