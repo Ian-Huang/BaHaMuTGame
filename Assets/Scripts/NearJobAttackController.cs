@@ -7,6 +7,8 @@ using System.Collections.Generic;
 /// </summary>
 public class NearJobAttackController : MonoBehaviour
 {
+    public float AttackDistance = 2;
+
     public Texture[] ChangeTextureGroup1;   //圖組1
     public Texture[] ChangeTextureGroup2;   //圖組2
 
@@ -31,10 +33,13 @@ public class NearJobAttackController : MonoBehaviour
     {
         if (!this.isAttacking)
         {
-            this.isAttacking = true;
-            this.detectedEnemyObject = other.gameObject;                        //抓取進入範圍內的敵人
-            this.GetComponent<RegularChangePictures>().ChangeState(false);      //將一般移動的換圖暫停
-            this.renderer.material.mainTexture = this.ChangeTextureList[this.currentGroupIndex][this.currentTextureIndex];
+            if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.AttackDistance)
+            {
+                this.isAttacking = true;
+                this.detectedEnemyObject = other.gameObject;                        //抓取進入範圍內的敵人
+                this.GetComponent<RegularChangePictures>().ChangeState(false);      //將一般移動的換圖暫停
+                this.renderer.material.mainTexture = this.ChangeTextureList[this.currentGroupIndex][this.currentTextureIndex];
+            }
         }
     }
 
@@ -58,11 +63,7 @@ public class NearJobAttackController : MonoBehaviour
         this.AttackIndexList.Add(this.AttackIndex1);
         this.AttackIndexList.Add(this.AttackIndex2);
 
-        this.currentGroupIndex = Random.Range(0, this.ChangeTextureList.Count); //隨機選擇欲撥放的攻擊動作圖組
-        this.currentTextureIndex = 0;
-
-        this.addValue = 0;
-        this.isAttacking = false;
+        this.Reset();
     }
 
     /// <summary>
@@ -70,7 +71,7 @@ public class NearJobAttackController : MonoBehaviour
     /// </summary>
     void Reset()
     {
-        this.currentGroupIndex = Random.Range(0, this.ChangeTextureList.Count);
+        this.currentGroupIndex = Random.Range(0, this.ChangeTextureList.Count); //隨機選擇欲撥放的攻擊動作圖組
         this.currentTextureIndex = 0;
         this.addValue = 0;
         this.isAttacking = false;
@@ -105,5 +106,11 @@ public class NearJobAttackController : MonoBehaviour
 
             this.addValue += Time.deltaTime;
         }
+    }
+
+    void OnDrawGizmos()
+    {
+        //畫出偵測線
+        Gizmos.DrawRay(this.transform.position, Vector3.right * this.AttackDistance);
     }
 }
