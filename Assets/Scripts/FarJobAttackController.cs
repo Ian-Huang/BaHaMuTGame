@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// 遠攻角色的攻擊控制 (分為近距離攻擊、遠距離攻擊) (待修正)
+/// 遠攻角色的攻擊控制 (分為近距離攻擊、遠距離攻擊) 
 /// </summary>
 public class FarJobAttackController : MonoBehaviour
 {
@@ -23,72 +23,42 @@ public class FarJobAttackController : MonoBehaviour
     public int NearAttackIndex;                 //確認第N張圖的時間跑完後，判定攻擊的索引  (對應近距離攻擊模式圖組)
 
     private int currentTextureIndex { get; set; }         //當前正在使用Texture的index
-    //private int currentGroupIndex { get; set; }           //當前正在使用Texture Group的index
-
+    
     private bool isAttacking { get; set; }
     private GameObject detectedEnemyObject { get; set; }        //目前追蹤的敵人
     private float addValue { get; set; }
-
-    //private List<Texture[]> ChangeTextureList { get; set; }
-    //private List<float[]> ChangeTimeList { get; set; }
-    //private List<int> AttackIndexList { get; set; }
 
     void OnTriggerStay(Collider other)
     {
         if (!this.isAttacking)
         {
-            if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.FarAttackDistance)
+            if (!other.gameObject.GetComponent<EnemyLife>().isDead)
             {
-                if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.NearAttackDistance)
+                if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.FarAttackDistance)
                 {
-                    this.attackMode = GameDefinition.AttackMode.Near;
-                    this.renderer.material.mainTexture = this.NearAttackChangeTextures[this.currentTextureIndex];
+                    if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.NearAttackDistance)
+                    {
+                        this.attackMode = GameDefinition.AttackMode.Near;
+                        this.renderer.material.mainTexture = this.NearAttackChangeTextures[this.currentTextureIndex];
+                    }
+                    else
+                    {
+                        this.attackMode = GameDefinition.AttackMode.Far;
+                        this.renderer.material.mainTexture = this.FarAttackChangeTextures[this.currentTextureIndex];
+                    }
+                    this.isAttacking = true;
+                    this.detectedEnemyObject = other.gameObject;                        //抓取進入範圍內的敵人
+                    this.GetComponent<RegularChangePictures>().ChangeState(false);      //將一般移動的換圖暫停
                 }
-                else
-                {
-                    this.attackMode = GameDefinition.AttackMode.Far;
-                    this.renderer.material.mainTexture = this.FarAttackChangeTextures[this.currentTextureIndex];
-                }
-                this.isAttacking = true;
-                this.detectedEnemyObject = other.gameObject;                        //抓取進入範圍內的敵人
-                this.GetComponent<RegularChangePictures>().ChangeState(false);      //將一般移動的換圖暫停
             }
         }
     }
 
     // Use this for initialization
     void Start()
-    {
-        ////List放入攻擊動作的圖組
-        //this.ChangeTextureList = new List<Texture[]>();
-        //if (this.FarAttackChangeTextures.Length != 0)
-        //    this.ChangeTextureList.Add(this.FarAttackChangeTextures);
-        //if (this.NearAttackChangeTextures.Length != 0)
-        //    this.ChangeTextureList.Add(this.NearAttackChangeTextures);
-
-        ////List放入攻擊動作的時間
-        //this.ChangeTimeList = new List<float[]>();
-        //this.ChangeTimeList.Add(this.FarAttackChangeTime);
-        //this.ChangeTimeList.Add(this.NearAttackChangeTime);
-
-        ////List放入判定攻擊的索引
-        //this.AttackIndexList = new List<int>();
-        //this.AttackIndexList.Add(this.FarAttackIndex);
-        //this.AttackIndexList.Add(this.NearAttackIndex);
-
+    {        
         this.Reset();
     }
-
-    /// <summary>
-    /// 將數值回復成預設值
-    /// </summary>
-    void Reset()
-    {
-        this.currentTextureIndex = 0;
-        this.addValue = 0;
-        this.isAttacking = false;
-    }
-
 
     // Update is called once per frame
     void Update()
@@ -158,5 +128,15 @@ public class FarJobAttackController : MonoBehaviour
 
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(this.transform.position, Vector3.right * this.NearAttackDistance);
+    }
+
+    /// <summary>
+    /// 將數值回復成預設值
+    /// </summary>
+    void Reset()
+    {
+        this.currentTextureIndex = 0;
+        this.addValue = 0;
+        this.isAttacking = false;
     }
 }

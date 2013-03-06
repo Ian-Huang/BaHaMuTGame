@@ -17,6 +17,14 @@ public class RegularChangePictures : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        this.Reset();
+    }
+
+    /// <summary>
+    /// 將數值回復成預設值
+    /// </summary>
+    void Reset()
+    {
         this.isChanging = true;
         this.addValue = 0;
         this.currentTextureIndex = 0;
@@ -30,16 +38,9 @@ public class RegularChangePictures : MonoBehaviour
     public void ChangeState(bool isChange)
     {
         if (isChange)
-        {
-            this.isChanging = true;
-            this.addValue = 0;
-            this.currentTextureIndex = 0;
-            this.renderer.material.mainTexture = this.ChangeTextures[this.currentTextureIndex];
-        }
+            this.Reset();
         else
-        {
             this.isChanging = false;
-        }
     }
 
     // Update is called once per frame

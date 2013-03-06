@@ -6,20 +6,20 @@ using System.Collections;
 /// </summary>
 public class EnemyLife : MonoBehaviour
 {
-    public int TotalLife = 1;           //物體生命總值
+    public int TotalLife = 1;                   //物體生命總值
 
-    public Texture[] ChangeTextures;
+    public Texture[] DeadChangeTextures;        //攻擊的交換圖組
     public float ChangeTime = 0.1f;             //交換時間間隔
 
-    private int currentTextureIndex { get; set; }
-    private bool isDestroy { get; set; }
+    public bool isDead { get; private set; }
+    private int currentTextureIndex { get; set; }    
     private float addValue { get; set; }
 
 
     // Use this for initialization
     void Start()
     {
-        this.isDestroy = false;
+        this.isDead = false;
     }
 
     /// <summary>
@@ -31,30 +31,31 @@ public class EnemyLife : MonoBehaviour
         this.TotalLife -= deLife;
         
         //當生命小於0，刪除物件
-        if (!this.isDestroy && this.TotalLife <= 0)
+        if (!this.isDead && this.TotalLife <= 0)
         {
-            this.isDestroy = true;
+            this.isDead = true;
             Destroy(this.GetComponent<MoveController>());
             Destroy(this.GetComponent<RegularChangePictures>());
+            Destroy(this.GetComponent<EnemyAttackController>());
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (this.isDestroy)
+        if (this.isDead)
         {
             if (this.addValue >= this.ChangeTime)
             {
                 this.addValue = 0;
                 this.currentTextureIndex++;
-                if (this.currentTextureIndex >= this.ChangeTextures.Length)
+                if (this.currentTextureIndex >= this.DeadChangeTextures.Length)
                 {
                     //播完爆炸圖片後，刪除物件
                     Destroy(this.gameObject);
                     return;
                 }
-                this.renderer.material.mainTexture = this.ChangeTextures[this.currentTextureIndex];
+                this.renderer.material.mainTexture = this.DeadChangeTextures[this.currentTextureIndex];
             }
             this.addValue += Time.deltaTime;
         }
