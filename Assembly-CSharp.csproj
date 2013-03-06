@@ -44,12 +44,14 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\AttackController.cs" />
      <Compile Include="Assets\Scripts\BorderDestroy.cs" />
      <Compile Include="Assets\Scripts\CreatePoint.cs" />
      <Compile Include="Assets\Scripts\EnemyLife.cs" />
      <Compile Include="Assets\Scripts\ExplosiveObject.cs" />
+     <Compile Include="Assets\Scripts\FarJobAttackController.cs" />
+     <Compile Include="Assets\Scripts\GameDefinition.cs" />
      <Compile Include="Assets\Scripts\MoveController.cs" />
+     <Compile Include="Assets\Scripts\NearJobAttackController.cs" />
      <Compile Include="Assets\Scripts\RegularChangePictures.cs" />
      <Compile Include="Assets\Scripts\RolesController.cs" />
   </ItemGroup>
