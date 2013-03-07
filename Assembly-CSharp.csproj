@@ -46,6 +46,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\BorderDestroy.cs" />
      <Compile Include="Assets\Scripts\CreatePoint.cs" />
+     <Compile Include="Assets\Scripts\EnemyAttackController.cs" />
      <Compile Include="Assets\Scripts\EnemyLife.cs" />
      <Compile Include="Assets\Scripts\ExplosiveObject.cs" />
      <Compile Include="Assets\Scripts\FarJobAttackController.cs" />
