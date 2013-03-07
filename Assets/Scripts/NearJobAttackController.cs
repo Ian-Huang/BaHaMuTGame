@@ -12,11 +12,13 @@ public class NearJobAttackController : MonoBehaviour
     public Texture[] ChangeTextureGroup1;   //圖組1
     public Texture[] ChangeTextureGroup2;   //圖組2
 
-    public float[] ChangeTimeGroup1;              //交換時間間隔  (對應圖組1)
-    public float[] ChangeTimeGroup2;              //交換時間間隔  (對應圖組2)
+    public float[] ChangeTextureTimeGroup1;              //交換時間間隔  (對應圖組1)
+    public float[] ChangeTextureTimeGroup2;              //交換時間間隔  (對應圖組2)
 
     public int AttackIndex1;                 //確認第N張圖的時間跑完後，判定攻擊的索引  (對應圖組1)
     public int AttackIndex2;                 //確認第N張圖的時間跑完後，判定攻擊的索引  (對應圖組2)
+
+    public LayerMask AttackLayer;
 
     private int currentTextureIndex { get; set; }         //當前正在使用Texture的index
     private int currentGroupIndex { get; set; }           //當前正在使用Texture Group的index
@@ -26,21 +28,23 @@ public class NearJobAttackController : MonoBehaviour
     private float addValue { get; set; }
 
     private List<Texture[]> ChangeTextureList { get; set; }
-    private List<float[]> ChangeTimeList { get; set; }
+    private List<float[]> ChangeTextureTimeList { get; set; }
     private List<int> AttackIndexList { get; set; }
 
     void OnTriggerStay(Collider other)
-    {
-        if (!this.isAttacking)
+    {if ((this.AttackLayer.value & (int)Mathf.Pow(2, other.gameObject.layer)) != 0)      //判定攻擊的Layer
         {
-            if (!other.gameObject.GetComponent<EnemyLife>().isDead)
+            if (!this.isAttacking)
             {
-                if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.AttackDistance)
+                if (!other.gameObject.GetComponent<EnemyLife>().isDead)
                 {
-                    this.isAttacking = true;
-                    this.detectedEnemyObject = other.gameObject;                        //抓取進入範圍內的敵人
-                    this.GetComponent<RegularChangePictures>().ChangeState(false);      //將一般移動的換圖暫停
-                    this.renderer.material.mainTexture = this.ChangeTextureList[this.currentGroupIndex][this.currentTextureIndex];
+                    if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.AttackDistance)
+                    {
+                        this.isAttacking = true;
+                        this.detectedEnemyObject = other.gameObject;                        //抓取進入範圍內的敵人
+                        this.GetComponent<RegularChangePictures>().ChangeState(false);      //將一般移動的換圖暫停
+                        this.renderer.material.mainTexture = this.ChangeTextureList[this.currentGroupIndex][this.currentTextureIndex];
+                    }
                 }
             }
         }
@@ -57,9 +61,9 @@ public class NearJobAttackController : MonoBehaviour
             this.ChangeTextureList.Add(this.ChangeTextureGroup2);
 
         //List放入攻擊動作的時間
-        this.ChangeTimeList = new List<float[]>();
-        this.ChangeTimeList.Add(this.ChangeTimeGroup1);
-        this.ChangeTimeList.Add(this.ChangeTimeGroup2);
+        this.ChangeTextureTimeList = new List<float[]>();
+        this.ChangeTextureTimeList.Add(this.ChangeTextureTimeGroup1);
+        this.ChangeTextureTimeList.Add(this.ChangeTextureTimeGroup2);
 
         //List放入判定攻擊的索引
         this.AttackIndexList = new List<int>();
@@ -74,7 +78,7 @@ public class NearJobAttackController : MonoBehaviour
     {
         if (this.isAttacking)
         {
-            if (this.addValue >= this.ChangeTimeList[this.currentGroupIndex][this.currentTextureIndex])
+            if (this.addValue >= this.ChangeTextureTimeList[this.currentGroupIndex][this.currentTextureIndex])
             {
                 this.addValue = 0;
 

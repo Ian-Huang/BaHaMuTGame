@@ -7,7 +7,7 @@ using System.Collections;
 public class RegularChangePictures : MonoBehaviour
 {
     public Texture[] ChangeTextures;
-    public float ChangeTime = 0.1f;             //交換時間間隔
+    public float ChangeTextureTime = 0.1f;             //交換時間間隔
 
     private int currentTextureIndex { get; set; }
     private float addValue { get; set; }
@@ -48,7 +48,7 @@ public class RegularChangePictures : MonoBehaviour
     {
         if (this.isChanging)
         {
-            if (this.addValue >= this.ChangeTime)
+            if (this.addValue >= this.ChangeTextureTime)
             {
                 this.addValue = 0;
 

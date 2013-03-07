@@ -6,25 +6,28 @@ using System.Collections;
 /// </summary>
 public class ExplosiveObject : MonoBehaviour
 {
-    public Texture[] ChangeTextures;
-    public float ChangeTime = 0.1f;             //交換時間間隔
+    public Texture[] ChangeTextures;        //換圖的圖組
+    public float ChangeTextureTime = 0.1f;  //貼圖交換時間間隔
+    public LayerMask ExplosiveLayer;
 
     private int currentTextureIndex { get; set; }
     private bool isExplsion { get; set; }
     private float addValue { get; set; }
 
     void OnTriggerEnter(Collider other)
-    {        
-        this.isExplsion = true;
-        this.renderer.material.mainTexture = this.ChangeTextures[this.currentTextureIndex];
-        
-        //移除Script，使爆炸位置固定、換圖正常
-        Destroy(this.GetComponent<MoveController>());
-        Destroy(this.GetComponent<RegularChangePictures>());
+    {
+        if ((this.ExplosiveLayer.value & (int)Mathf.Pow(2, other.gameObject.layer)) != 0)      //判定欲爆炸的Layer
+        {
+            this.isExplsion = true;
+            this.renderer.material.mainTexture = this.ChangeTextures[this.currentTextureIndex];
 
-        other.GetComponent<EnemyLife>().DecreaseLife(1);
+            //移除Script，使爆炸位置固定、換圖正常
+            Destroy(this.GetComponent<MoveController>());
+            Destroy(this.GetComponent<RegularChangePictures>());
+
+            other.GetComponent<EnemyLife>().DecreaseLife(1);
+        }
     }
-
     // Use this for initialization
     void Start()
     {
@@ -38,7 +41,7 @@ public class ExplosiveObject : MonoBehaviour
     {
         if (this.isExplsion)
         {
-            if (this.addValue >= this.ChangeTime)
+            if (this.addValue >= this.ChangeTextureTime)
             {
                 this.addValue = 0;
                 this.currentTextureIndex++;

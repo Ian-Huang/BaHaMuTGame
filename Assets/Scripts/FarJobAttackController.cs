@@ -16,11 +16,13 @@ public class FarJobAttackController : MonoBehaviour
     public Texture[] FarAttackChangeTextures;   //遠距離攻擊模式圖組
     public Texture[] NearAttackChangeTextures;   //近距離攻擊模式圖組
 
-    public float[] FarAttackChangeTime;              //交換時間間隔  (對應遠距離攻擊模式圖組)
-    public float[] NearAttackChangeTime;              //交換時間間隔  (對應近距離攻擊模式圖組)
+    public float[] FarAttackChangeTextureTime;              //交換時間間隔  (對應遠距離攻擊模式圖組)
+    public float[] NearAttackChangeTextureTime;              //交換時間間隔  (對應近距離攻擊模式圖組)
 
     public int FarAttackIndex;                 //確認第N張圖的時間跑完後，判定攻擊的索引  (對應遠距離攻擊模式圖組)
     public int NearAttackIndex;                 //確認第N張圖的時間跑完後，判定攻擊的索引  (對應近距離攻擊模式圖組)
+
+    public LayerMask AttackLayer;
 
     private int currentTextureIndex { get; set; }         //當前正在使用Texture的index
     
@@ -30,25 +32,28 @@ public class FarJobAttackController : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (!this.isAttacking)
+        if ((this.AttackLayer.value & (int)Mathf.Pow(2, other.gameObject.layer)) != 0)      //判定攻擊的Layer
         {
-            if (!other.gameObject.GetComponent<EnemyLife>().isDead)
+            if (!this.isAttacking)
             {
-                if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.FarAttackDistance)
+                if (!other.gameObject.GetComponent<EnemyLife>().isDead)
                 {
-                    if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.NearAttackDistance)
+                    if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.FarAttackDistance)
                     {
-                        this.attackMode = GameDefinition.AttackMode.Near;
-                        this.renderer.material.mainTexture = this.NearAttackChangeTextures[this.currentTextureIndex];
+                        if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.NearAttackDistance)
+                        {
+                            this.attackMode = GameDefinition.AttackMode.Near;
+                            this.renderer.material.mainTexture = this.NearAttackChangeTextures[this.currentTextureIndex];
+                        }
+                        else
+                        {
+                            this.attackMode = GameDefinition.AttackMode.Far;
+                            this.renderer.material.mainTexture = this.FarAttackChangeTextures[this.currentTextureIndex];
+                        }
+                        this.isAttacking = true;
+                        this.detectedEnemyObject = other.gameObject;                        //抓取進入範圍內的敵人
+                        this.GetComponent<RegularChangePictures>().ChangeState(false);      //將一般移動的換圖暫停
                     }
-                    else
-                    {
-                        this.attackMode = GameDefinition.AttackMode.Far;
-                        this.renderer.material.mainTexture = this.FarAttackChangeTextures[this.currentTextureIndex];
-                    }
-                    this.isAttacking = true;
-                    this.detectedEnemyObject = other.gameObject;                        //抓取進入範圍內的敵人
-                    this.GetComponent<RegularChangePictures>().ChangeState(false);      //將一般移動的換圖暫停
                 }
             }
         }
@@ -68,7 +73,7 @@ public class FarJobAttackController : MonoBehaviour
             //遠距離攻擊模式設定
             if (this.attackMode == GameDefinition.AttackMode.Far)
             {
-                if (this.addValue >= this.FarAttackChangeTime[this.currentTextureIndex])
+                if (this.addValue >= this.FarAttackChangeTextureTime[this.currentTextureIndex])
                 {
                     this.addValue = 0;
 
@@ -93,7 +98,7 @@ public class FarJobAttackController : MonoBehaviour
             //近距離攻擊模式設定
             else
             {
-                if (this.addValue >= this.NearAttackChangeTime[this.currentTextureIndex])
+                if (this.addValue >= this.NearAttackChangeTextureTime[this.currentTextureIndex])
                 {
                     this.addValue = 0;
 

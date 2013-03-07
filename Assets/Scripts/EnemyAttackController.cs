@@ -6,28 +6,32 @@ using System.Collections;
 /// </summary>
 public class EnemyAttackController : MonoBehaviour
 {
-    public float AttackDistance = 2;
+    public float AttackDistance = 2;            //攻擊距離
     public Texture[] AttackChangeTextures;      //攻擊的交換圖組
-    public float ChangeTime = 0.1f;             //交換時間間隔
-    public int AttackIndex;                    //確認第N張圖的時間跑完後，判定攻擊的索引
+    public float ChangeTextureTime = 0.1f;      //交換時間間隔
+    public int AttackIndex;                     //確認第N張圖的時間跑完後，判定攻擊的索引
+    public float AttackMoveSpeed = 0;           //攻擊時的移動速度
+    public LayerMask AttackLayer;
    
     private int currentTextureIndex { get; set; }
     private float addValue { get; set; }
     private bool isAttacking { get; set; }
-    
+
     void OnTriggerStay(Collider other)
     {
-
-        if (!this.isAttacking)
+        if ((this.AttackLayer.value & (int)Mathf.Pow(2, other.gameObject.layer)) != 0)      //判定攻擊的Layer
         {
-            if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.AttackDistance)
+            if (!this.isAttacking)
             {
-                this.isAttacking = true;
-                this.renderer.material.mainTexture = this.AttackChangeTextures[this.currentTextureIndex];
-                if (!this.GetComponent<EnemyLife>().isDead)      //判定追蹤的物體是否還存在
+                if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.AttackDistance)
                 {
-                    this.GetComponent<RegularChangePictures>().ChangeState(false);  //將一般移動的換圖暫停
-                    this.GetComponent<MoveController>().MovingState(false);         //將一般移動的控制暫停
+                    this.isAttacking = true;
+                    this.renderer.material.mainTexture = this.AttackChangeTextures[this.currentTextureIndex];
+                    if (!this.GetComponent<EnemyLife>().isDead)      //判定追蹤的物體是否還存在
+                    {
+                        this.GetComponent<RegularChangePictures>().ChangeState(false);          //將一般移動的換圖暫停
+                        this.GetComponent<MoveController>().ChangeSpeed(this.AttackMoveSpeed);  //改變攻擊時移動的速度
+                    }
                 }
             }
         }
@@ -44,7 +48,7 @@ public class EnemyAttackController : MonoBehaviour
     {
         if (this.isAttacking)
         {
-            if (this.addValue >= this.ChangeTime)
+            if (this.addValue >= this.ChangeTextureTime)
             {
                 this.addValue = 0;
 
@@ -56,9 +60,7 @@ public class EnemyAttackController : MonoBehaviour
                 this.currentTextureIndex++;
                 if (this.currentTextureIndex >= this.AttackChangeTextures.Length)
                 {
-
                     this.GetComponent<RegularChangePictures>().ChangeState(true);
-                    this.GetComponent<MoveController>().MovingState(true);
                     this.Reset();
                     return;
                 }

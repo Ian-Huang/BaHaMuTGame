@@ -9,7 +9,7 @@ public class EnemyLife : MonoBehaviour
     public int TotalLife = 1;                   //物體生命總值
 
     public Texture[] DeadChangeTextures;        //攻擊的交換圖組
-    public float ChangeTime = 0.1f;             //交換時間間隔
+    public float ChangeTextureTime = 0.1f;             //交換時間間隔
 
     public bool isDead { get; private set; }
     private int currentTextureIndex { get; set; }    
@@ -45,7 +45,7 @@ public class EnemyLife : MonoBehaviour
     {
         if (this.isDead)
         {
-            if (this.addValue >= this.ChangeTime)
+            if (this.addValue >= this.ChangeTextureTime)
             {
                 this.addValue = 0;
                 this.currentTextureIndex++;
