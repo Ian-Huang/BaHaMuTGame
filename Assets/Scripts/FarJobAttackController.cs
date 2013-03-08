@@ -64,7 +64,7 @@ public class FarJobAttackController : MonoBehaviour
     {        
         this.Reset();
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -81,7 +81,9 @@ public class FarJobAttackController : MonoBehaviour
                     {
                         if (this.detectedEnemyObject != null)      //判定追蹤的物體是否還存在
                         {
-                            Instantiate(this.ShootObject, this.transform.position, this.ShootObject.transform.rotation);
+                            Instantiate(this.ShootObject,
+                            new Vector3(this.transform.position.x, this.transform.position.y, GameDefinition.ShootObject_ZIndex),
+                            this.ShootObject.transform.rotation);
                         }
                     }
 
@@ -92,7 +94,7 @@ public class FarJobAttackController : MonoBehaviour
                         this.Reset();
                         return;
                     }
-                    renderer.material.mainTexture = this.FarAttackChangeTextures[this.currentTextureIndex];
+                    this.renderer.material.mainTexture = this.FarAttackChangeTextures[this.currentTextureIndex];
                 }
             }
             //近距離攻擊模式設定

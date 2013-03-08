@@ -11,6 +11,8 @@ public class EnemyAttackController : MonoBehaviour
     public float ChangeTextureTime = 0.1f;      //交換時間間隔
     public int AttackIndex;                     //確認第N張圖的時間跑完後，判定攻擊的索引
     public float AttackMoveSpeed = 0;           //攻擊時的移動速度
+    public GameDefinition.AttackMode attackMode;
+    public GameObject ShootObject;
     public LayerMask AttackLayer;
    
     private int currentTextureIndex { get; set; }
@@ -55,6 +57,12 @@ public class EnemyAttackController : MonoBehaviour
                 if (this.currentTextureIndex == this.AttackIndex)   //攻擊判定
                 {
                     //待補(敵人攻擊後給於角色的回饋)
+                    if (this.attackMode == GameDefinition.AttackMode.Far)
+                    {
+                        Instantiate(this.ShootObject, 
+                            new Vector3(this.transform.position.x,this.transform.position.y,GameDefinition.ShootObject_ZIndex),
+                            this.ShootObject.transform.rotation);
+                    }
                 }
 
                 this.currentTextureIndex++;

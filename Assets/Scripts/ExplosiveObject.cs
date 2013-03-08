@@ -14,18 +14,28 @@ public class ExplosiveObject : MonoBehaviour
     private bool isExplsion { get; set; }
     private float addValue { get; set; }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
-        if ((this.ExplosiveLayer.value & (int)Mathf.Pow(2, other.gameObject.layer)) != 0)      //判定欲爆炸的Layer
+        if (!this.isExplsion)
         {
-            this.isExplsion = true;
-            this.renderer.material.mainTexture = this.ChangeTextures[this.currentTextureIndex];
+            if ((this.ExplosiveLayer.value & (int)Mathf.Pow(2, other.gameObject.layer)) != 0)      //判定欲爆炸的Layer
+            {
+                if (Mathf.Abs(other.transform.position.x - this.transform.position.x) < 1)
+                {
+                    this.isExplsion = true;
+                    this.renderer.material.mainTexture = this.ChangeTextures[this.currentTextureIndex];
 
-            //移除Script，使爆炸位置固定、換圖正常
-            Destroy(this.GetComponent<MoveController>());
-            Destroy(this.GetComponent<RegularChangePictures>());
+                    //移除Script，使爆炸位置固定、換圖正常
+                    Destroy(this.GetComponent<MoveController>());
+                    Destroy(this.GetComponent<RegularChangePictures>());
 
-            other.GetComponent<EnemyLife>().DecreaseLife(1);
+                    //處理不同碰撞物的部分(敵人、主角)
+                    if (other.gameObject.layer == GameDefinition.Enemy_Layer)
+                        other.GetComponent<EnemyLife>().DecreaseLife(1);
+                    else if (other.gameObject.layer == GameDefinition.Role_Layer)
+                        print("Role is Attacked");
+                }
+            }
         }
     }
     // Use this for initialization
