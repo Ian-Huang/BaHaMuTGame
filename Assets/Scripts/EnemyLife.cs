@@ -28,6 +28,7 @@ public class EnemyLife : MonoBehaviour
     /// <param name="deLife">減少的數值</param>
     public void DecreaseLife(int deLife)
     {
+
         this.TotalLife -= deLife;
         
         //當生命小於0，刪除物件
