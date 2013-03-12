@@ -8,3 +8,5 @@ Temp
 *.userprefs
 *.suo
 obj
+*.csproj
+*.sln
