@@ -6,6 +6,7 @@ using System.Collections;
 /// 13/03/20 Updated.
 /// 13/04/06 角度與倍率.
 /// 13/05/05 繼承 UIBase 
+/// 13/05/09 根據CenterPosition給予繪製中心點
 /// </summary>
 public class Label : UIBase
 {
@@ -40,11 +41,6 @@ public class Label : UIBase
         if (guiSkin)
             GUI.skin = this.guiSkin;
 
-        _rect = new Rect(rect.x * _ScreenSize.x
-                        , rect.y * _ScreenSize.y
-                        , rect.width * _ScreenSize.x
-                        , rect.height * _ScreenSize.y);
-
         GUI.skin.label.fontSize = (int)((_ScreenSize.x / Resolution) * FontSize);
         GUI.skin.label.normal.textColor = color;
         GUI.skin.label.alignment = Alignment;
@@ -52,7 +48,9 @@ public class Label : UIBase
         GUIUtility.RotateAroundPivot(angle, CenterPosition);
         GUIUtility.ScaleAroundPivot(scale, CenterPosition);
 
-        GUI.Label(_rect, Text);
+        Rect newRect = new Rect(CenterPosition.x, CenterPosition.y, _rect.width, _rect.height);
+
+        GUI.Label(newRect, Text);
     }
 
 

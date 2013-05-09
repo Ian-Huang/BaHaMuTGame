@@ -4,6 +4,7 @@ using System.Collections;
 /// <summary>
 /// 介面 - 輸入文字框
 /// 13/05/05 繼承 UIBase 
+/// 13/05/09 根據CenterPosition給予繪製中心點
 /// </summary>
 public class TextField : UIBase
 {
@@ -41,7 +42,9 @@ public class TextField : UIBase
         GUIUtility.RotateAroundPivot(angle, CenterPosition);
         GUIUtility.ScaleAroundPivot(scale, CenterPosition);
 
-        Text = GUI.TextField(_rect, Text);
+        Rect newRect = new Rect(CenterPosition.x, CenterPosition.y, _rect.width, _rect.height);
+
+        Text = GUI.TextField(newRect, Text);
 
     }
 

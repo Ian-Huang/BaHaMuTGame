@@ -103,8 +103,8 @@ public class UIBase : MonoBehaviour
 
         if (CenterAlignment == centerAlignment.MiddleCenter)
         {
-            CenterPosition.x = _rect.x + _rect.width / 2;
-            CenterPosition.y = _rect.y + _rect.height / 2;
+            CenterPosition.x = _rect.x;
+            CenterPosition.y = _rect.y;
         }
         if (CenterAlignment == centerAlignment.UpperLeft)
         {
