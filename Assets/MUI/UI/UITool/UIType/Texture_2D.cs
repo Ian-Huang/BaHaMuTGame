@@ -16,8 +16,12 @@ public class Texture_2D : UIBase
     // Use this for initialization
     void Start()
     {
-        if (!Texture2d) Debug.LogWarning(this.name + "-Texture2d" + "-Unset");
         UIBase_Start();
+    }
+
+    void LogWarning()
+    {
+        if (!Texture2d) Debug.LogWarning(this.name + "-Texture2d" + "-Unset");
     }
 
     // Update is called once per frame
@@ -33,14 +37,8 @@ public class Texture_2D : UIBase
         GUI.depth = depth;
         GUIUtility.RotateAroundPivot(angle, CenterPosition);
         GUIUtility.ScaleAroundPivot(scale, CenterPosition);
-
-
-     // Vector2 DrawPosition = CenterPosition - new Vector2(_rect.width / 2, _rect.height / 2);
-        if (CenterAlignment == centerAlignment.MiddleCenter)
-            _rect = new Rect(CenterPosition.x - _rect.width/2, CenterPosition.y - _rect.height/2, _rect.width, _rect.height);
-
         if (Texture2d)
             GUI.DrawTexture(_rect, Texture2d, scaleMode);
-
+        
     }
 }

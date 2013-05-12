@@ -50,7 +50,8 @@ public class MEnum : MonoBehaviour
     }
     //Itween的循環方式
     public enum loopType { none, pingPong, loop }
-
+    //準心動作模式
+    public enum CursorActionType { KeyDown, KeyUp, KeyDownAndUp, DoubleKeyDown }
 
     // 特效變數 structure
     public struct EffectStruct
@@ -64,8 +65,8 @@ public class MEnum : MonoBehaviour
         //文字顏色
         public Color color;
 
-        //介面深度 - 正值越前面
-        public int depth;
+        //放大倍率
+        public Vector2 scale;
 
         //持續時間
         public float time;
@@ -78,8 +79,22 @@ public class MEnum : MonoBehaviour
 
         //Ease方式
         public EaseType easeType;
+
+        //HashCode - Hex
+        public string hashcode;
     }
 
+    /// <summary>
+    /// 停止特效Struct
+    /// </summary>
+    public struct StopEffectStruct
+    {
+        //是否重置到開始狀態
+        public bool isReset;
+
+        //HashCode - Hex
+        public string hashcode;
+    }
 
 
     // Use this for initialization

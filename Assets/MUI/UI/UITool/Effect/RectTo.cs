@@ -4,13 +4,16 @@ using System.Collections;
 public class RectTo : MonoBehaviour
 {
     public MEnum.EffectStruct _effectStruct;
+    public MEnum.StopEffectStruct _stopEffectStruct;
 
     //位置與大小
     public Rect rect;
-    //持續時間
-    public float time;
     //顏色變化
     //public Color color;
+    //放大倍率
+    //public Vector2 scale;
+    //持續時間
+    public float time;
     //延遲時間
     public float delay;
     //Ease方式
@@ -24,7 +27,7 @@ public class RectTo : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-       
+
     }
 
     IEnumerator Recover(float delay)
@@ -40,6 +43,8 @@ public class RectTo : MonoBehaviour
         _effectStruct.delay = this.delay;
         _effectStruct.easeType = this.easeType;
         _effectStruct.looptype = this.looptype;
+        _effectStruct.hashcode = string.Format("{0:X}",this.GetHashCode());
+
         this.SendMessage("RectTo", _effectStruct, SendMessageOptions.DontRequireReceiver);
         this.transform.parent.SendMessage("RectTo", _effectStruct, SendMessageOptions.DontRequireReceiver);
 
@@ -55,8 +60,11 @@ public class RectTo : MonoBehaviour
 
     void OnDisable()
     {
-        this.SendMessage("StopRectTo", ResetAfterEffectDone, SendMessageOptions.DontRequireReceiver);
-        this.transform.parent.SendMessage("StopRectTo", ResetAfterEffectDone, SendMessageOptions.DontRequireReceiver);
+        _stopEffectStruct.isReset = ResetAfterEffectDone;
+        _stopEffectStruct.hashcode = string.Format("{0:X}", this.GetHashCode());
+
+        this.SendMessage("StopRectTo", _stopEffectStruct, SendMessageOptions.DontRequireReceiver);
+        this.transform.parent.SendMessage("StopRectTo", _stopEffectStruct, SendMessageOptions.DontRequireReceiver);
     }
 
 }

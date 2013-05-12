@@ -4,13 +4,16 @@ using System.Collections;
 public class ColorTo : MonoBehaviour
 {
     public MEnum.EffectStruct _effectStruct;
+    public MEnum.StopEffectStruct _stopEffectStruct;
 
     //位置與大小
     //public Rect rect;
-    //持續時間
-    public float time;
     //顏色變化
     public Color color;
+    //放大倍率
+    //public Vector2 scale;
+    //持續時間
+    public float time;
     //延遲時間
     public float delay;
     //Ease方式
@@ -20,7 +23,6 @@ public class ColorTo : MonoBehaviour
     //特效結束時是否回到原本狀態
     public bool ResetAfterEffectDone;
     public float ResetAfterEffectDone_TimeOffset;
-
 
     // Use this for initialization
     void Start()
@@ -36,11 +38,13 @@ public class ColorTo : MonoBehaviour
 
     void OnEnable()
     {
-        _effectStruct.time = this.time;
         _effectStruct.color = this.color;
+        _effectStruct.time = this.time;
         _effectStruct.delay = this.delay;
         _effectStruct.easeType = this.easeType;
         _effectStruct.looptype = this.looptype;
+        _effectStruct.hashcode = string.Format("{0:X}", this.GetHashCode());
+
         this.SendMessage("ColorTo", _effectStruct, SendMessageOptions.DontRequireReceiver);
         this.transform.parent.SendMessage("ColorTo", _effectStruct, SendMessageOptions.DontRequireReceiver);
 
@@ -55,8 +59,11 @@ public class ColorTo : MonoBehaviour
 
     void OnDisable()
     {
-        this.SendMessage("StopColorTo", ResetAfterEffectDone, SendMessageOptions.DontRequireReceiver);
-        this.transform.parent.SendMessage("StopColorTo", ResetAfterEffectDone, SendMessageOptions.DontRequireReceiver);
+        _stopEffectStruct.isReset = ResetAfterEffectDone;
+        _stopEffectStruct.hashcode = string.Format("{0:X}", this.GetHashCode());
+
+        this.SendMessage("StopColorTo", _stopEffectStruct, SendMessageOptions.DontRequireReceiver);
+        this.transform.parent.SendMessage("StopColorTo", _stopEffectStruct, SendMessageOptions.DontRequireReceiver);
     }
 
     
