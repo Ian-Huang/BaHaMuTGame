@@ -23,6 +23,8 @@ public class ScaleTo : MonoBehaviour
     //特效結束時是否回到原本狀態
     public bool ResetAfterEffectDone;
     public float ResetAfterEffectDone_TimeOffset;
+    //物件被Disable時是否回到原本狀態
+    public bool ResetAfterDisable;
 
     // Use this for initialization
     void Start()
@@ -60,11 +62,15 @@ public class ScaleTo : MonoBehaviour
 
     void OnDisable()
     {
-        _stopEffectStruct.isReset = ResetAfterEffectDone;
+        if (ResetAfterEffectDone || ResetAfterDisable)
+            _stopEffectStruct.isReset = true;
+
         _stopEffectStruct.hashcode = string.Format("{0:X}", this.GetHashCode());
 
         this.SendMessage("StopScaleTo", _stopEffectStruct, SendMessageOptions.DontRequireReceiver);
         this.transform.parent.SendMessage("StopScaleTo", _stopEffectStruct, SendMessageOptions.DontRequireReceiver);
+
+        print("1");
     }
 
 }

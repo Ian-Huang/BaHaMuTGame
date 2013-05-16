@@ -14,8 +14,6 @@ public class MouseClick : MonoBehaviour
 
     public GameObject Event;
 
-    private GameObject MouseOver;
-
     public KeyCode keyCode;
 
     public MEnum.CursorActionType cursorActionType;
@@ -26,6 +24,7 @@ public class MouseClick : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
 
     }
 
@@ -48,6 +47,7 @@ public class MouseClick : MonoBehaviour
                             GameObject newGameObject = (GameObject)Instantiate(Event);
                             newGameObject.SetActive(true);
                         }
+                        EffectObject.SetActive(true);
                     }
 
 
@@ -62,6 +62,7 @@ public class MouseClick : MonoBehaviour
                             GameObject newGameObject = (GameObject)Instantiate(Event);
                             newGameObject.SetActive(true);
                         }
+                        EffectObject.SetActive(true);
                     }
 
 
@@ -82,6 +83,7 @@ public class MouseClick : MonoBehaviour
                                 GameObject newGameObject = (GameObject)Instantiate(Event);
                                 newGameObject.SetActive(true);
                             }
+                            EffectObject.SetActive(true);
                         }
                     }
                     break;
@@ -97,6 +99,7 @@ public class MouseClick : MonoBehaviour
                                 GameObject newGameObject = (GameObject)Instantiate(Event);
                                 newGameObject.SetActive(true);
                             }
+                            EffectObject.SetActive(true);
                         }
                         intervalTime = Time.time;
                     }

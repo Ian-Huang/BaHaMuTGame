@@ -56,12 +56,8 @@ public class UIBase : MonoBehaviour
     public float screenRatio;
 
     //備份資訊 (BackUp)
-    [HideInInspector]
-    public Rect _rect_backup;
-
-    [HideInInspector]
-    public Color _color_backup;
-
+    private Rect _rect_backup;
+    private Color _color_backup;
     private Vector2 _scale_backup;
 
     [HideInInspector]
@@ -179,7 +175,7 @@ public class UIBase : MonoBehaviour
            "easetype", effect.easeType.ToString(),
            "onupdate", "updateColor",
            "loopType", effect.looptype.ToString(),
-           "name", "ColorTo"));
+           "name", "ColorTo" + effect.hashcode));
     }
 
     /// <summary>
@@ -197,7 +193,7 @@ public class UIBase : MonoBehaviour
            "easetype", effect.easeType.ToString(),
            "onupdate", "updateScale",
            "loopType", effect.looptype.ToString(),
-           "name", "ScaleTo"));
+           "name", "ScaleTo" + effect.hashcode));
     }
 
 
