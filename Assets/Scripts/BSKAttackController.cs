@@ -41,11 +41,11 @@ public class BSKAttackController : MonoBehaviour
                 {
                     if (!this.isAttacking)
                     {
-                        this.isAttacking = true;                        
+                        this.isAttacking = true;
                         this.GetComponent<RegularChangePictures>().ChangeState(false);  //將一般移動的換圖暫停
                         this.renderer.material.mainTexture = this.ChangeTextureList[this.currentGroupIndex][this.currentTextureIndex];
                     }
-                    if(!this.detectedObjectList.Contains(other.gameObject))
+                    if (!this.detectedObjectList.Contains(other.gameObject))
                         this.detectedObjectList.Add(other.gameObject);              //抓取進入範圍內的敵人
                 }
             }
@@ -109,11 +109,12 @@ public class BSKAttackController : MonoBehaviour
                     {
                         if (obj.layer == GameDefinition.Enemy_Layer)      //判定敵人的Layer
                         {
-                            obj.GetComponent<EnemyLife>().DecreaseLife(1);
+                            if (obj != null)
+                                obj.GetComponent<EnemyLife>().DecreaseLife(1);
                         }
                         //else if (obj.layer == GameDefinition.Obstacle)      //判定障礙物的Layer
                         //{ 
-                        
+
                         //}
                     }
                 }

@@ -98,7 +98,15 @@ public class KnightJobAttackController : MonoBehaviour
                 {
                     foreach (var obj in this.detectedObjectList)
                     {
-                        obj.GetComponent<EnemyLife>().DecreaseLife(1);
+                        if (obj.layer == GameDefinition.Enemy_Layer)      //判定敵人的Layer
+                        {
+                            if (obj != null)
+                                obj.GetComponent<EnemyLife>().DecreaseLife(1);
+                        }
+                        //else if (obj.layer == GameDefinition.Obstacle)      //判定障礙物的Layer
+                        //{ 
+
+                        //}
                     }
                 }
 
