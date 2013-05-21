@@ -2,6 +2,32 @@ using System.Collections;
 
 public class GameDefinition
 {
+    public class RoleData
+    {
+        public int Life;
+        public int CureRate;
+        public int Defence;
+        public int NearAttack;
+        public int FarAttack;
+    }
+
+    public class EnemyData
+    {
+        public int Life;
+        public int CureRate;
+        public int Defence;
+        public int NearAttack;
+        public int FarAttack;
+    }
+
+    public class BossData
+    {
+        public int Life;
+        public int CureRate;
+        public int Defence;
+        //
+    }
+
     public enum AttackMode
     { Near, Far }
 
