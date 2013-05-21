@@ -31,7 +31,6 @@ public class MouseClick : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Ray ray = GameObject.Find("Camera").camera.ScreenPointToRay(Input.mousePosition);
         rect = (Rect)(DisplayObject.GetType().GetField("_rect").GetValue(DisplayObject));
 
         //Input.GetTouch(0).phase == TouchPhase.
@@ -95,7 +94,8 @@ public class MouseClick : MonoBehaviour
                                 GameObject newGameObject = (GameObject)Instantiate(Event);
                                 newGameObject.SetActive(true);
                             }
-                            EffectObject.SetActive(true);
+                            if( EffectObject)
+                                EffectObject.SetActive(true);
                         }
                     }
                     break;
@@ -127,7 +127,17 @@ public class MouseClick : MonoBehaviour
         }
         else
         {
-            pressDown = false;
+
+                            pressDown = false;
+            if( EffectObject)
+                if (Input.GetKeyUp(keyCode))
+                            EffectObject.SetActive(false);
+
+
+
+                
+            
+   
         }
 
     }

@@ -42,13 +42,11 @@ public class Texture_2D : UIBase
 
         if (Texture2d)
         {
-
-            GUI.DrawTexture(new Rect(_rect.x, _rect.y, _rect.width, _rect.height), Texture2d, scaleMode);
-            //GUI.BeginGroup(new Rect(_rect.x, _rect.y, _rect.width * offset.x, _rect.height * offset.y));
-           // {
-           //     GUI.DrawTexture(new Rect(0, 0, _rect.width, _rect.height), Texture2d, scaleMode);
-           // }
-           // GUI.EndGroup();
+            GUI.BeginGroup(new Rect(_rect.x, _rect.y, _rect.width * offset.x, _rect.height * offset.y));
+            {
+                GUI.DrawTexture(new Rect(0, 0, _rect.width, _rect.height), Texture2d, scaleMode);
+            }
+            GUI.EndGroup();
         }
     }
 
