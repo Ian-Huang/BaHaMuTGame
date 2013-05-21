@@ -10,10 +10,8 @@ public class TextureTo : MonoBehaviour
     private Texture textur_2D_backup;
     public Texture Texture2d;
 
-
     //物件被Disable時是否回到原本狀態
     public bool ResetAfterDisable;
-
 
     void Awake()
     {

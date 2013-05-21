@@ -80,18 +80,12 @@ public class UIBase : MonoBehaviour
     /// Virtual Method UIBase_Start
     /// </summary>
     virtual public void UIBase_Start()
-    {
-        if (!guiSkin) Debug.LogWarning(this.name + "-guiSkin" + "-Unset");
-
-        //Set Backup
-
+    {       
         _ScreenSize = new Vector2(Screen.width, Screen.height);
         screenRatio = Screen.width / (float)Screen.height;
-
         ReDefinePreviousState();
-       
     }
-
+    //Set Backup
     public void ReDefinePreviousState()
     {
         _rect_previousState = rect;
@@ -142,6 +136,10 @@ public class UIBase : MonoBehaviour
             rect.height = float.Parse((_ScreenSize.x * sqrt_x).ToString("0.0000"));
         }
 
+    }
+
+    void OnGUI()
+    {
     }
 
     #region #特效系統

@@ -1,7 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-public class Button : MonoBehaviour {
+/// <summary>
+/// 簡易按鈕
+/// </summary>
+public class SimpleButton : MonoBehaviour {
 
     //視窗大小
     private Vector2 _ScreenSize = new Vector2(Screen.width, Screen.height);
@@ -23,7 +26,6 @@ public class Button : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        if (!guiSkin)           Debug.LogWarning(this.name + "-guiSkin" + "-Unset");
         if (FontSize == 0)      Debug.LogWarning(this.name + "-FontSize" + "-Unset");
 	}
 	
@@ -49,6 +51,7 @@ public class Button : MonoBehaviour {
         {
             GameObject newEvent = (GameObject)Instantiate(Event);
             newEvent.SetActive(true);
+           // Destroy(newEvent);
         }
     }
 

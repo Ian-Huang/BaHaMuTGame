@@ -4,8 +4,7 @@ using System.Collections;
 /// <summary>
 /// 設定MoveTo動畫效果變數
 /// 與RectTo不同的是，MoveTo是給予一個移動變量
-/// * 供 Layout 使用 與 Texture2D、Lable 同一層
-/// * 對 Parent物件 Disable 可以觸發 同層物件的 OnDisable()
+/// * 在 Texture2D、Lable 下一層
 /// </summary>
 public class MoveTo : MonoBehaviour
 {
@@ -54,16 +53,9 @@ public class MoveTo : MonoBehaviour
 
     void OnEnable()
     {
-        foreach (Transform child in this.transform.parent.transform)
-        {
-            if (ChkObjectisUI(child))
-            {
-                //建立特效協程
-                SetEffectStartCoroutine();
-                //建立當特效結束協程
-                SetEffectDoneCoroutine();
-            }
-        }
+        SetEffectStartCoroutine();
+        //建立當特效結束協程
+        SetEffectDoneCoroutine();
     }
 
     /// <summary>
@@ -90,59 +82,48 @@ public class MoveTo : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        foreach (Transform child in this.transform.parent.transform)
-        {
-            if (ChkObjectisUI(child))
-            {
-                //取得當前rect
-                newRect = new Rect(child.GetComponent<Texture_2D>().rect.x + moveV2.x,
-                        child.GetComponent<Texture_2D>().rect.y + moveV2.y,
-                        child.GetComponent<Texture_2D>().rect.width,
-                        child.GetComponent<Texture_2D>().rect.height);
+
+        //取得當前rect
+        newRect = new Rect(this.transform.parent.GetComponent<Texture_2D>().rect.x + moveV2.x,
+                this.transform.parent.GetComponent<Texture_2D>().rect.y + moveV2.y,
+                this.transform.parent.GetComponent<Texture_2D>().rect.width,
+                this.transform.parent.GetComponent<Texture_2D>().rect.height);
 
 
-                _effectStruct.rect = newRect;
-                _effectStruct.time = this.time;
-                _effectStruct.delay = this.delay;
-                _effectStruct.easeType = this.easeType;
-                _effectStruct.looptype = this.looptype;
-                _effectStruct.hashcode = string.Format("{0:X}", this.GetHashCode());
+        _effectStruct.rect = newRect;
+        _effectStruct.time = this.time;
+        _effectStruct.delay = this.delay;
+        _effectStruct.easeType = this.easeType;
+        _effectStruct.looptype = this.looptype;
+        _effectStruct.hashcode = string.Format("{0:X}", this.GetHashCode());
 
-                child.SendMessage("RectTo", _effectStruct, SendMessageOptions.DontRequireReceiver);
-            }
-        }
+        this.transform.parent.SendMessage("RectTo", _effectStruct, SendMessageOptions.DontRequireReceiver);
+
+
     }
 
     IEnumerator WhenEffectDone(float delay)
     {
         yield return new WaitForSeconds(delay);
-        foreach (Transform child in this.transform.parent.transform)
+
+        if (_resetWhenEffectDone == MEnum.ResetWhenEffectDone.True)
+            ResetOrDefine();
+        if (_disableWhenEffectDone == MEnum.DisableWhenEffectDone.True)
         {
-            if (ChkObjectisUI(child))
-            {
-                if (_resetWhenEffectDone == MEnum.ResetWhenEffectDone.True)
-                    ResetOrDefine();
-                if (_disableWhenEffectDone == MEnum.DisableWhenEffectDone.True)
-                {
-                    ResetOrDefine();
-                    this.gameObject.SetActive(false);
-                }
-            }
+            ResetOrDefine();
+            this.gameObject.SetActive(false);
+
         }
     }
 
     void ResetOrDefine()
     {
-        foreach (Transform child in this.transform.parent.transform)
-        {
-            if (ChkObjectisUI(child))
-            {
-                _stopEffectStruct.isReset = this.isReset();
-                _stopEffectStruct.reDefinePreviousState = this.isReDefinePreviousState();
-                _stopEffectStruct.hashcode = string.Format("{0:X}", this.GetHashCode());
-                child.SendMessage("StopRectTo", _stopEffectStruct, SendMessageOptions.DontRequireReceiver);
-            }
-        }
+
+        _stopEffectStruct.isReset = this.isReset();
+        _stopEffectStruct.reDefinePreviousState = this.isReDefinePreviousState();
+        _stopEffectStruct.hashcode = string.Format("{0:X}", this.GetHashCode());
+        this.transform.parent.SendMessage("StopRectTo", _stopEffectStruct, SendMessageOptions.DontRequireReceiver);
+
     }
 
 
