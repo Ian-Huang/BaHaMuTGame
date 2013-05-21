@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 設定ColorTo動畫效果變數
+/// </summary>
 public class ColorTo : MonoBehaviour
 {
     public MEnum.EffectStruct _effectStruct;
@@ -25,6 +28,8 @@ public class ColorTo : MonoBehaviour
     public float ResetAfterEffectDone_TimeOffset;
     //物件被Disable時是否回到原本狀態
     public bool ResetAfterDisable;
+    //特效結束時 物件Disable
+    public bool DisableWhenEffectDone;
 
     // Use this for initialization
     void Start()
@@ -38,6 +43,14 @@ public class ColorTo : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
+    IEnumerator SendMessage()
+    {
+        yield return new WaitForSeconds(0);
+        this.transform.SendMessage("ColorTo", _effectStruct, SendMessageOptions.DontRequireReceiver);
+        this.transform.parent.SendMessage("ColorTo", _effectStruct, SendMessageOptions.DontRequireReceiver);
+    }
+
+
     void OnEnable()
     {
         _effectStruct.color = this.color;
@@ -47,16 +60,15 @@ public class ColorTo : MonoBehaviour
         _effectStruct.looptype = this.looptype;
         _effectStruct.hashcode = string.Format("{0:X}", this.GetHashCode());
 
-        this.SendMessage("ColorTo", _effectStruct, SendMessageOptions.DontRequireReceiver);
-        this.transform.parent.SendMessage("ColorTo", _effectStruct, SendMessageOptions.DontRequireReceiver);
 
         if (ResetAfterEffectDone)
         {
             float delaytime = time + delay;
-            if (looptype == MEnum.loopType.pingPong)
-                delaytime *= 2;
+            if (looptype == MEnum.loopType.pingPong) delaytime *= 2;
             StartCoroutine(Recover(delaytime + ResetAfterEffectDone_TimeOffset));
         }
+
+        StartCoroutine(SendMessage());
     }
 
     void OnDisable()

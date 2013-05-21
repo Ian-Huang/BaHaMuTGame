@@ -16,20 +16,11 @@ public class TextSetter : MonoBehaviour {
 
         //警告通知
         if (!label) Debug.LogWarning(this.name + "-label" + "-Unset");
-
-
-
-      
-        
     }
 	
 	// Update is called once per frame
 	void Update () {
-
         getText = (string)(Languages_Controller.ST.languageFile.GetType().GetField(MappingText).GetValue(Languages_Controller.ST.languageFile));
         label.Text = getText;
-
-        Languages_Controller.ST.ChangeLanguage(Languages_Controller.Language.English);
-
 	}
 }

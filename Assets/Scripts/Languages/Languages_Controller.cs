@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Languages_Controller : MonoBehaviour {
 
-
+    //ÀRºA
     public static Languages_Controller ST;
     private Languages_en language_en;
     private Languages_zhTW language_zhTW;
@@ -16,8 +16,24 @@ public class Languages_Controller : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         ST = this;
-        language_en = this.GetComponent<Languages_en>();
-        language_zhTW = this.GetComponent<Languages_zhTW>();
+
+
+
+        switch (language)
+        {
+            case Language.English:
+                if (!this.GetComponent<Languages_en>())
+                    language_en = this.gameObject.AddComponent<Languages_en>();
+                break;
+            case Language.Traditional_Chinese:
+                if (!this.GetComponent<Languages_zhTW>())
+                    language_zhTW = this.gameObject.AddComponent<Languages_zhTW>();
+                break;
+            default:
+                languageFile = language_zhTW;
+                break;
+        }
+
         ChangeLanguage(language);
 	}
 	

@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 設定RectTo動畫效果變數
+/// </summary>
 public class RectTo : MonoBehaviour
 {
     public MEnum.EffectStruct _effectStruct;
@@ -20,55 +23,116 @@ public class RectTo : MonoBehaviour
     public MEnum.EaseType easeType;
     //循環方式
     public MEnum.loopType looptype;
-    //特效結束時是否回到原本狀態
-    public bool ResetAfterEffectDone;
-    public float ResetAfterEffectDone_TimeOffset;
+
+    //特效開始延遲時間
+    public float EffectStartDelay;
+
+    public bool on;
+    float time2;
+
     //物件被Disable時是否回到原本狀態
-    public bool ResetAfterDisable;
+    public MEnum.ResetWhenDisable _resetWhenDisable;
+    //特效結束時 是否 回到原本狀態
+    public MEnum.ResetWhenEffectDone _resetWhenEffectDone;
+    //特效結束時 物件Disable
+    public MEnum.DisableWhenEffectDone _disableWhenEffectDone;
 
-    // Use this for initialization
-    void Start()
+    public float ResetWhenEffectDone_TimeOffset;
+
+    void Update()
     {
-
-    }
-
-    IEnumerator Recover(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        this.gameObject.SetActive(false);
+        if (on)
+            time2 += Time.deltaTime;
     }
 
     void OnEnable()
     {
+        //建立特效協程
+        SetEffectStartCoroutine();
+        //建立當特效結束協程
+        SetEffectDoneCoroutine();
+    }
+
+    /// <summary>
+    /// 特效開始協程
+    /// </summary>
+    void SetEffectStartCoroutine()
+    {
+        StartCoroutine(WhenEffectStart(this.EffectStartDelay));
+    }
+
+
+    /// <summary>
+    /// 特效結束協程
+    /// </summary>
+    void SetEffectDoneCoroutine()
+    {
+        float delaytime = time + delay;
+        if (looptype == MEnum.loopType.pingPong) delaytime *= 2;
+        StartCoroutine(WhenEffectDone(delaytime + ResetWhenEffectDone_TimeOffset + this.EffectStartDelay));
+    }
+
+
+    IEnumerator WhenEffectStart(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
         _effectStruct.rect = this.rect;
         _effectStruct.time = this.time;
         _effectStruct.delay = this.delay;
         _effectStruct.easeType = this.easeType;
         _effectStruct.looptype = this.looptype;
-        _effectStruct.hashcode = string.Format("{0:X}",this.GetHashCode());
+        _effectStruct.hashcode = string.Format("{0:X}", this.GetHashCode());
 
-        this.SendMessage("RectTo", _effectStruct, SendMessageOptions.DontRequireReceiver);
         this.transform.parent.SendMessage("RectTo", _effectStruct, SendMessageOptions.DontRequireReceiver);
 
-        if (ResetAfterEffectDone)
+    }
+
+    IEnumerator WhenEffectDone(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (_resetWhenEffectDone == MEnum.ResetWhenEffectDone.True)
+            ResetOrDefine();
+        if (_disableWhenEffectDone == MEnum.DisableWhenEffectDone.True)
         {
-            float delaytime = time + delay;
-            if (looptype == MEnum.loopType.pingPong)
-                delaytime *= 2;
-            StartCoroutine(Recover(delaytime + ResetAfterEffectDone_TimeOffset));
+            ResetOrDefine();
+            this.gameObject.SetActive(false);
         }
 
     }
 
-    void OnDisable()
+    void ResetOrDefine()
     {
-        if( ResetAfterEffectDone || ResetAfterDisable)
-            _stopEffectStruct.isReset = true;
 
+        _stopEffectStruct.isReset = this.isReset();
+        _stopEffectStruct.reDefinePreviousState = this.isReDefinePreviousState();
         _stopEffectStruct.hashcode = string.Format("{0:X}", this.GetHashCode());
-
-        this.SendMessage("StopRectTo", _stopEffectStruct, SendMessageOptions.DontRequireReceiver);
         this.transform.parent.SendMessage("StopRectTo", _stopEffectStruct, SendMessageOptions.DontRequireReceiver);
+
     }
+
+
+
+    bool isReset()
+    {
+        if (_resetWhenEffectDone >= MEnum.ResetWhenEffectDone.True ||
+            _resetWhenDisable >= MEnum.ResetWhenDisable.True)
+            return true;
+        else
+            return false;
+    }
+
+    bool isReDefinePreviousState()
+    {
+        if (_resetWhenEffectDone == MEnum.ResetWhenEffectDone.True_ReDefinePreviousState ||
+            _resetWhenDisable == MEnum.ResetWhenDisable.True_ReDefinePreviousState)
+            return true;
+        else
+            return false;
+    }
+
+
+ 
 
 }

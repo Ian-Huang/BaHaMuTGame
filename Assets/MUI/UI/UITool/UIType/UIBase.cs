@@ -22,8 +22,11 @@ public class UIBase : MonoBehaviour
     //圖案顏色
     public Color color = Color.white;
 
-    //介面深度 - 正值越前面
+    //介面深度 - 負值越前面
     public int depth;
+
+    //介面偏移量
+    public Vector2 offset = new Vector2(1, 1);
 
     //設定中心點 (左上、正中央)
     public enum centerAlignment { UpperLeft, MiddleCenter };
@@ -31,7 +34,7 @@ public class UIBase : MonoBehaviour
 
     
     /// <summary>
-    /// 自動藉由解析度放大縮小
+    /// 自動根據解析度放大縮小
     /// None - 無
     /// WidthFixed - 固定寬度
     /// HeightFixed - 固定高度
@@ -41,6 +44,7 @@ public class UIBase : MonoBehaviour
     public AutoResolutionFix autoResolutionFix;
 
     [HideInInspector]
+    //中心點
     public Vector2 CenterPosition;
 
     [HideInInspector]
@@ -55,26 +59,20 @@ public class UIBase : MonoBehaviour
     //視窗比例
     public float screenRatio;
 
+
     //備份資訊 (BackUp)
-    private Rect _rect_backup;
-    private Color _color_backup;
-    private Vector2 _scale_backup;
+    private Rect _rect_previousState;
+    private Color _color_previousState;
+    private Vector2 _scale_previousState;
 
-    [HideInInspector]
-    public int _fontSize_backup;
-
+    //運算後的Rect(Pixel值)
     [HideInInspector]
     public Rect _rect;
 
-    void Awake()
-    {
-        _ScreenSize = new Vector2(Screen.width, Screen.height);
-        screenRatio = Screen.width / (float)Screen.height;
-    }
+
     // Use this for initialization
     void Start()
     {
-        
 
     }
 
@@ -86,12 +84,19 @@ public class UIBase : MonoBehaviour
         if (!guiSkin) Debug.LogWarning(this.name + "-guiSkin" + "-Unset");
 
         //Set Backup
-       
-        _rect_backup = rect;
-        _color_backup = color;
-        _scale_backup = scale;
 
-        
+        _ScreenSize = new Vector2(Screen.width, Screen.height);
+        screenRatio = Screen.width / (float)Screen.height;
+
+        ReDefinePreviousState();
+       
+    }
+
+    public void ReDefinePreviousState()
+    {
+        _rect_previousState = rect;
+        _color_previousState = color;
+        _scale_previousState = scale;
     }
 
 
@@ -148,7 +153,6 @@ public class UIBase : MonoBehaviour
     /// <param name="effect">特效結構</param>
     void RectTo(MEnum.EffectStruct effect)
     {
-
         iTween.ValueTo(gameObject, iTween.Hash(
             "from", rect,
             "to", effect.rect,
@@ -199,20 +203,32 @@ public class UIBase : MonoBehaviour
 
     void StopRectTo(MEnum.StopEffectStruct stopEffect)
     {
+        if (stopEffect.reDefinePreviousState)
+            _rect_previousState = stopEffect.rect;
+
         if (stopEffect.isReset)
-            rect = _rect_backup;
+            rect = _rect_previousState;
+
         iTween.StopByName(this.gameObject, "RectTo" + stopEffect.hashcode);
     }
     void StopColorTo(MEnum.StopEffectStruct stopEffect)
     {
+        if (stopEffect.reDefinePreviousState)
+            _color_previousState = stopEffect.color;
+
         if (stopEffect.isReset)
-            color = _color_backup;
+            color = _color_previousState;
+
         iTween.StopByName(this.gameObject, "ColorTo" + stopEffect.hashcode);
     }
     void StopScaleTo(MEnum.StopEffectStruct stopEffect)
     {
+        if (stopEffect.reDefinePreviousState)
+            _scale_previousState = stopEffect.scale;
+
         if (stopEffect.isReset)
-            scale = _scale_backup;
+            scale = _scale_previousState;
+
         iTween.StopByName(this.gameObject, "ScaleTo" + stopEffect.hashcode);
     }
 

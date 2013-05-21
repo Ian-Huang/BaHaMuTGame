@@ -31,8 +31,14 @@ public class MouseClick : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Ray ray = GameObject.Find("Camera").camera.ScreenPointToRay(Input.mousePosition);
         rect = (Rect)(DisplayObject.GetType().GetField("_rect").GetValue(DisplayObject));
 
+        //Input.GetTouch(0).phase == TouchPhase.
+
+        //    Camera.mainCamera.ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x,Input.GetTouch(0).position.y,0));
+
+        //Camera.main.ScreenPointToRay
 
         if (rect.Contains(new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y)))
         {
@@ -42,6 +48,7 @@ public class MouseClick : MonoBehaviour
 
                     if (Input.GetKeyDown(keyCode))
                     {
+                        
                         if (Event)
                         {
                             GameObject newGameObject = (GameObject)Instantiate(Event);
@@ -50,6 +57,8 @@ public class MouseClick : MonoBehaviour
                         EffectObject.SetActive(true);
                     }
 
+                    if (Input.GetKeyUp(keyCode))
+                        EffectObject.SetActive(false);
 
                     break;
 
@@ -57,6 +66,7 @@ public class MouseClick : MonoBehaviour
 
                     if (Input.GetKeyUp(keyCode))
                     {
+                       
                         if (Event)
                         {
                             GameObject newGameObject = (GameObject)Instantiate(Event);
@@ -76,8 +86,10 @@ public class MouseClick : MonoBehaviour
 
                     if (pressDown)
                     {
+                       
                         if (Input.GetKeyUp(keyCode))
-                        {
+                        { 
+                            
                             if (Event)
                             {
                                 GameObject newGameObject = (GameObject)Instantiate(Event);
@@ -92,8 +104,10 @@ public class MouseClick : MonoBehaviour
 
                     if (Input.GetKeyDown(keyCode))
                     {
+
                         if (Time.time - intervalTime < 0.3)
                         {
+                            
                             if (Event)
                             {
                                 GameObject newGameObject = (GameObject)Instantiate(Event);
@@ -105,7 +119,7 @@ public class MouseClick : MonoBehaviour
                     }
 
 
-                    
+
                     break;
 
 

@@ -53,6 +53,13 @@ public class MEnum : MonoBehaviour
     //非み笆家Α
     public enum CursorActionType { KeyDown, KeyUp, KeyDownAndUp, DoubleKeyDown }
 
+    //疭挡 琌 セ篈 家Α
+    public enum ResetWhenEffectDone { False, True, True_ReDefinePreviousState }
+    //ン砆Disable琌セ篈 家Α
+    public enum ResetWhenDisable { False, True, True_ReDefinePreviousState }
+    //疭挡 ンDisable 家Α
+    public enum DisableWhenEffectDone { False, True }
+
     // 疭跑计 structure
     public struct EffectStruct
     {
@@ -82,6 +89,7 @@ public class MEnum : MonoBehaviour
 
         //HashCode - Hex
         public string hashcode;
+
     }
 
     /// <summary>
@@ -92,8 +100,23 @@ public class MEnum : MonoBehaviour
         //琌竚秨﹍篈
         public bool isReset;
 
+        //琌穝竚戈癟
+        public bool reDefinePreviousState;
+
         //HashCode - Hex
         public string hashcode;
+
+        //竚籔
+        public Rect rect;
+
+        //ゅ
+        public int fontSize;
+
+        //ゅ肅︹
+        public Color color;
+
+        //瞯
+        public Vector2 scale;
     }
 
 

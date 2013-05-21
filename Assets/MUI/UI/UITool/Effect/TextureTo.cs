@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 設定TextureTo效果變數
+/// </summary>
 public class TextureTo : MonoBehaviour
 {
     private Texture_2D texture_2D;

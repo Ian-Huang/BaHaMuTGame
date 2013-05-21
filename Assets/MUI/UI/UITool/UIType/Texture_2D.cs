@@ -3,20 +3,19 @@ using System.Collections;
 
 /// <summary>
 /// 介面 - 顯示圖片
-/// 13/03/20 Updated.
-/// 13/05/09 根據CenterPosition給予繪製中心點
 /// </summary>
 public class Texture_2D : UIBase
 {
-
+    //圖片縮放方式
+    public ScaleMode scaleMode;
     //Texture
     public Texture Texture2d;
-    public ScaleMode scaleMode;
 
     // Use this for initialization
     void Start()
     {
         UIBase_Start();
+        LogWarning();
     }
 
     void LogWarning()
@@ -35,10 +34,23 @@ public class Texture_2D : UIBase
     {
         GUI.color = color;
         GUI.depth = depth;
+
         GUIUtility.RotateAroundPivot(angle, CenterPosition);
-        GUIUtility.ScaleAroundPivot(scale, CenterPosition);
+
+        if (scale != Vector2.zero)
+            GUIUtility.ScaleAroundPivot(scale, CenterPosition);
+
         if (Texture2d)
-            GUI.DrawTexture(_rect, Texture2d, scaleMode);
-        
+        {
+
+            GUI.DrawTexture(new Rect(_rect.x, _rect.y, _rect.width, _rect.height), Texture2d, scaleMode);
+            //GUI.BeginGroup(new Rect(_rect.x, _rect.y, _rect.width * offset.x, _rect.height * offset.y));
+           // {
+           //     GUI.DrawTexture(new Rect(0, 0, _rect.width, _rect.height), Texture2d, scaleMode);
+           // }
+           // GUI.EndGroup();
+        }
     }
+
+
 }

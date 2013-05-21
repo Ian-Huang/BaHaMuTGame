@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 設定ScaleTo動畫效果變數
+/// </summary>
 public class ScaleTo : MonoBehaviour
 {
     public MEnum.EffectStruct _effectStruct;
@@ -11,7 +14,7 @@ public class ScaleTo : MonoBehaviour
     //顏色變化
     //public Color color;
     //放大倍率
-    public Vector2 scale;
+    public Vector2 scale = new Vector2(1, 1);
     //持續時間
     public float time;
     //延遲時間
@@ -25,6 +28,8 @@ public class ScaleTo : MonoBehaviour
     public float ResetAfterEffectDone_TimeOffset;
     //物件被Disable時是否回到原本狀態
     public bool ResetAfterDisable;
+    //特效結束時 物件Disable
+    public bool DisableWhenEffectDone;
 
     // Use this for initialization
     void Start()
@@ -38,8 +43,17 @@ public class ScaleTo : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
+    IEnumerator SendMessage()
+    {
+        yield return new WaitForSeconds(0);
+        this.transform.parent.SendMessage("ScaleTo", _effectStruct, SendMessageOptions.DontRequireReceiver);
+    }
+
+
     void OnEnable()
     {
+        //SendMessage("BackUp", _effectStruct, SendMessageOptions.DontRequireReceiver);
+
         _effectStruct.scale = this.scale;
         _effectStruct.time = this.time;
         _effectStruct.delay = this.delay;
@@ -47,16 +61,15 @@ public class ScaleTo : MonoBehaviour
         _effectStruct.looptype = this.looptype;
         _effectStruct.hashcode = string.Format("{0:X}",this.GetHashCode());
 
-        this.SendMessage("ScaleTo", _effectStruct, SendMessageOptions.DontRequireReceiver);
-        this.transform.parent.SendMessage("ScaleTo", _effectStruct, SendMessageOptions.DontRequireReceiver);
 
         if (ResetAfterEffectDone)
         {
             float delaytime = time + delay;
-            if (looptype == MEnum.loopType.pingPong)
-                delaytime *= 2;
+            if (looptype == MEnum.loopType.pingPong) delaytime *= 2;
             StartCoroutine(Recover(delaytime + ResetAfterEffectDone_TimeOffset));
         }
+
+        StartCoroutine(SendMessage());
 
     }
 
@@ -69,8 +82,6 @@ public class ScaleTo : MonoBehaviour
 
         this.SendMessage("StopScaleTo", _stopEffectStruct, SendMessageOptions.DontRequireReceiver);
         this.transform.parent.SendMessage("StopScaleTo", _stopEffectStruct, SendMessageOptions.DontRequireReceiver);
-
-        print("1");
     }
 
 }
