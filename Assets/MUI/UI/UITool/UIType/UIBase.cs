@@ -32,7 +32,7 @@ public class UIBase : MonoBehaviour
     public enum centerAlignment { UpperLeft, MiddleCenter };
     public centerAlignment CenterAlignment;
 
-    
+
     /// <summary>
     /// 自動根據解析度放大縮小
     /// None - 無
@@ -40,7 +40,7 @@ public class UIBase : MonoBehaviour
     /// HeightFixed - 固定高度
     /// AreaFixed - 根據面積
     /// </summary>
-    public enum AutoResolutionFix { None,WidthFixed, HeightFixed ,AreaFixed};
+    public enum AutoResolutionFix { None, WidthFixed, HeightFixed, AreaFixed };
     public AutoResolutionFix autoResolutionFix;
 
     [HideInInspector]
@@ -80,7 +80,7 @@ public class UIBase : MonoBehaviour
     /// Virtual Method UIBase_Start
     /// </summary>
     virtual public void UIBase_Start()
-    {       
+    {
         _ScreenSize = new Vector2(Screen.width, Screen.height);
         screenRatio = Screen.width / (float)Screen.height;
         ReDefinePreviousState();
@@ -159,6 +159,7 @@ public class UIBase : MonoBehaviour
             "easetype", effect.easeType.ToString(),
             "onupdate", "updateRect",
              "loopType", effect.looptype.ToString(),
+             "ignoretimescale", effect.ignoretimescale,
              "name", "RectTo" + effect.hashcode));
     }
 
@@ -177,6 +178,7 @@ public class UIBase : MonoBehaviour
            "easetype", effect.easeType.ToString(),
            "onupdate", "updateColor",
            "loopType", effect.looptype.ToString(),
+           "ignoretimescale", effect.ignoretimescale,
            "name", "ColorTo" + effect.hashcode));
     }
 
@@ -195,6 +197,7 @@ public class UIBase : MonoBehaviour
            "easetype", effect.easeType.ToString(),
            "onupdate", "updateScale",
            "loopType", effect.looptype.ToString(),
+           "ignoretimescale", effect.ignoretimescale,
            "name", "ScaleTo" + effect.hashcode));
     }
 

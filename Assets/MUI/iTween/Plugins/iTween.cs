@@ -4659,6 +4659,7 @@ public class iTween : MonoBehaviour{
 				//rewind:
 				percentage=0;
 				runningTime=0;
+                
 				apply();
 				
 				//replay:
@@ -4667,7 +4668,7 @@ public class iTween : MonoBehaviour{
 			case LoopType.pingPong:
 				reverse = !reverse;
 				runningTime=0;
-			
+                
 				//replay:
 				StartCoroutine("TweenRestart");
 				break;
@@ -7020,7 +7021,7 @@ public class iTween : MonoBehaviour{
         // Added by PressPlay   
         if (useRealTime)
         {
-            runningTime += (Time.realtimeSinceStartup - lastRealTime);      
+            runningTime += (Time.realtimeSinceStartup - lastRealTime);
         }
         else
         {

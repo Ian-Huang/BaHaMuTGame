@@ -84,8 +84,11 @@ public class MEnum : MonoBehaviour
         //循環方式
         public loopType looptype;
 
-        //Ease方式
+        //漸變函式
         public EaseType easeType;
+
+        //是否受TimeScale影響
+        public bool ignoretimescale;
 
         //HashCode - Hex
         public string hashcode;

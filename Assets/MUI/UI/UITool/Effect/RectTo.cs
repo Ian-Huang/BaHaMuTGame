@@ -3,6 +3,8 @@ using System.Collections;
 
 /// <summary>
 /// 設定RectTo動畫效果變數
+/// 目前以這為主 其他慢慢修改
+/// 尚待解決 ResetWhenEffectDone 的秒數與實際運行秒數不一致
 /// </summary>
 public class RectTo : MonoBehaviour
 {
@@ -30,14 +32,17 @@ public class RectTo : MonoBehaviour
     public bool on;
     float time2;
 
+    private bool ignoretimescale;
+
     //物件被Disable時是否回到原本狀態
     public MEnum.ResetWhenDisable _resetWhenDisable;
     //特效結束時 是否 回到原本狀態
     public MEnum.ResetWhenEffectDone _resetWhenEffectDone;
+    public float ResetWhenEffectDone_TimeOffset;
     //特效結束時 物件Disable
     public MEnum.DisableWhenEffectDone _disableWhenEffectDone;
 
-    public float ResetWhenEffectDone_TimeOffset;
+
 
     void Update()
     {
@@ -45,8 +50,22 @@ public class RectTo : MonoBehaviour
             time2 += Time.deltaTime;
     }
 
+    //錯誤修正與避免
+    void BugFix()
+    {
+        //* 根據 Issue 72 
+        //ITween使用delay時IgnoreTimeScale無效 ， 所以當delay大於0 會使用被TimeScale影響的函式 
+        //https://code.google.com/p/itween/issues/detail?id=72
+
+        if (delay > 0)
+            ignoretimescale = false;
+        else
+            ignoretimescale = true;
+    }
     void OnEnable()
     {
+        //錯誤修正
+        BugFix();
         //建立特效協程
         SetEffectStartCoroutine();
         //建立當特效結束協程
@@ -82,6 +101,7 @@ public class RectTo : MonoBehaviour
         _effectStruct.delay = this.delay;
         _effectStruct.easeType = this.easeType;
         _effectStruct.looptype = this.looptype;
+        _effectStruct.ignoretimescale = this.ignoretimescale;
         _effectStruct.hashcode = string.Format("{0:X}", this.GetHashCode());
 
         this.transform.parent.SendMessage("RectTo", _effectStruct, SendMessageOptions.DontRequireReceiver);
