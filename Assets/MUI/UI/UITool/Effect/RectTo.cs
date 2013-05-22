@@ -32,17 +32,17 @@ public class RectTo : MonoBehaviour
     public bool on;
     float time2;
 
-    private bool ignoretimescale;
-
     //物件被Disable時是否回到原本狀態
     public MEnum.ResetWhenDisable _resetWhenDisable;
     //特效結束時 是否 回到原本狀態
     public MEnum.ResetWhenEffectDone _resetWhenEffectDone;
+    //特效結束時 是否 回到原本狀態 的 時間偏移量
     public float ResetWhenEffectDone_TimeOffset;
     //特效結束時 物件Disable
     public MEnum.DisableWhenEffectDone _disableWhenEffectDone;
 
-
+    //是否無視TimeScale
+    private bool ignoretimescale;
 
     void Update()
     {
@@ -70,6 +70,12 @@ public class RectTo : MonoBehaviour
         SetEffectStartCoroutine();
         //建立當特效結束協程
         SetEffectDoneCoroutine();
+    }
+
+    void OnDisable()
+    {
+        if (_resetWhenDisable == MEnum.ResetWhenDisable.True)
+            ResetOrDefine();
     }
 
     /// <summary>

@@ -7,7 +7,7 @@ using System.Collections;
 public class SimpleButton : MonoBehaviour {
 
     //視窗大小
-    private Vector2 _ScreenSize = new Vector2(Screen.width, Screen.height);
+    private Vector2 _ScreenSize;
 
     //介面皮膚
     public GUISkin guiSkin;
@@ -26,6 +26,7 @@ public class SimpleButton : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        _ScreenSize = new Vector2(Screen.width, Screen.height);
         if (FontSize == 0)      Debug.LogWarning(this.name + "-FontSize" + "-Unset");
 	}
 	

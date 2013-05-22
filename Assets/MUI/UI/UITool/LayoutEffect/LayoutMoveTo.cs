@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+//居然給我跑N*N次 //需要修正
 /// <summary>
 /// 設定MoveTo動畫效果變數
 /// 與RectTo不同的是，MoveTo是給予一個移動變量
@@ -32,17 +32,20 @@ public class LayoutMoveTo : MonoBehaviour
 
     //特效開始延遲時間
     public float EffectStartDelay;
-    
+
 
     //物件被Disable時是否回到原本狀態
     public MEnum.ResetWhenDisable _resetWhenDisable;
     //特效結束時 是否 回到原本狀態
     public MEnum.ResetWhenEffectDone _resetWhenEffectDone;
+    //特效結束時 是否 回到原本狀態 的 時間偏移量
+    public float ResetWhenEffectDone_TimeOffset;
     //特效結束時 物件Disable
     public MEnum.DisableWhenEffectDone _disableWhenEffectDone;
-
-    public float ResetWhenEffectDone_TimeOffset;
     private Rect newRect;
+
+    //是否無視TimeScale
+    private bool ignoretimescale;
 
     // Use this for initialization
     void Start()
@@ -51,17 +54,41 @@ public class LayoutMoveTo : MonoBehaviour
 
 
     }
+    //錯誤修正與避免
+    void BugFix()
+    {
+        //* 根據 Issue 72 
+        //ITween使用delay時IgnoreTimeScale無效 ， 所以當delay大於0 會使用被TimeScale影響的函式 
+        //https://code.google.com/p/itween/issues/detail?id=72
 
+        if (delay > 0)
+            ignoretimescale = false;
+        else
+            ignoretimescale = true;
+    }
     void OnEnable()
     {
         foreach (Transform child in this.transform.parent.transform)
         {
             if (ChkObjectisUI(child))
             {
+                BugFix();
                 //建立特效協程
                 SetEffectStartCoroutine();
                 //建立當特效結束協程
                 SetEffectDoneCoroutine();
+            }
+        }
+    }
+
+    void OnDisable()
+    {
+        foreach (Transform child in this.transform.parent.transform)
+        {
+            if (ChkObjectisUI(child))
+            {
+                if (_resetWhenDisable == MEnum.ResetWhenDisable.True)
+                    ResetOrDefine();
             }
         }
     }
@@ -106,6 +133,7 @@ public class LayoutMoveTo : MonoBehaviour
                 _effectStruct.delay = this.delay;
                 _effectStruct.easeType = this.easeType;
                 _effectStruct.looptype = this.looptype;
+                _effectStruct.ignoretimescale = this.ignoretimescale;
                 _effectStruct.hashcode = string.Format("{0:X}", this.GetHashCode());
 
                 child.SendMessage("RectTo", _effectStruct, SendMessageOptions.DontRequireReceiver);

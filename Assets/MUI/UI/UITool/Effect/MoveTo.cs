@@ -31,16 +31,19 @@ public class MoveTo : MonoBehaviour
 
     //特效開始延遲時間
     public float EffectStartDelay;
-    
 
     //物件被Disable時是否回到原本狀態
     public MEnum.ResetWhenDisable _resetWhenDisable;
     //特效結束時 是否 回到原本狀態
     public MEnum.ResetWhenEffectDone _resetWhenEffectDone;
+    //特效結束時 是否 回到原本狀態 的 時間偏移量
+    public float ResetWhenEffectDone_TimeOffset;
     //特效結束時 物件Disable
     public MEnum.DisableWhenEffectDone _disableWhenEffectDone;
 
-    public float ResetWhenEffectDone_TimeOffset;
+    //是否無視TimeScale
+    private bool ignoretimescale;
+
     private Rect newRect;
 
     // Use this for initialization
@@ -51,11 +54,33 @@ public class MoveTo : MonoBehaviour
 
     }
 
+    //錯誤修正與避免
+    void BugFix()
+    {
+        //* 根據 Issue 72 
+        //ITween使用delay時IgnoreTimeScale無效 ， 所以當delay大於0 會使用被TimeScale影響的函式 
+        //https://code.google.com/p/itween/issues/detail?id=72
+
+        if (delay > 0)
+            ignoretimescale = false;
+        else
+            ignoretimescale = true;
+    }
+
     void OnEnable()
     {
+        //錯誤修正
+        BugFix();
+        //建立特效協程
         SetEffectStartCoroutine();
         //建立當特效結束協程
         SetEffectDoneCoroutine();
+    }
+
+    void OnDisable()
+    {
+        if (_resetWhenDisable == MEnum.ResetWhenDisable.True)
+            ResetOrDefine();
     }
 
     /// <summary>
@@ -95,6 +120,7 @@ public class MoveTo : MonoBehaviour
         _effectStruct.delay = this.delay;
         _effectStruct.easeType = this.easeType;
         _effectStruct.looptype = this.looptype;
+        _effectStruct.ignoretimescale = this.ignoretimescale;
         _effectStruct.hashcode = string.Format("{0:X}", this.GetHashCode());
 
         this.transform.parent.SendMessage("RectTo", _effectStruct, SendMessageOptions.DontRequireReceiver);
