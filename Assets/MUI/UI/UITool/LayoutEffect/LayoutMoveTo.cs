@@ -72,6 +72,7 @@ public class LayoutMoveTo : MonoBehaviour
         {
             if (ChkObjectisUI(child))
             {
+                //錯誤修正
                 BugFix();
                 //建立特效協程
                 SetEffectStartCoroutine();
