@@ -2,10 +2,13 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// 爆炸物件(法師火球撞擊敵人後產生)
+/// 遠距離(角色/敵人)發射的物件資訊
 /// </summary>
-public class ExplosiveObject : MonoBehaviour
+public class ShootObjectInfo : MonoBehaviour
 {
+    public int Damage;
+    public GameDefinition.AttackType AttackType;
+
     public Texture[] ChangeTextures;        //換圖的圖組
     public float ChangeTextureTime = 0.1f;  //貼圖交換時間間隔
     public LayerMask ExplosiveLayer;
@@ -30,14 +33,15 @@ public class ExplosiveObject : MonoBehaviour
                     Destroy(this.GetComponent<RegularChangePictures>());
 
                     //處理不同碰撞物的部分(敵人、主角)
-                    if (other.gameObject.layer == GameDefinition.Enemy_Layer)
-                        other.GetComponent<EnemyLife>().DecreaseLife(1);
-                    else if (other.gameObject.layer == GameDefinition.Role_Layer)
-                        print("Role is Attacked");
+                    if (other.gameObject.layer == (int)GameDefinition.GameLayout.Enemy)
+                        other.GetComponent<EnemyPropertyInfo>().DecreaseLife(this.Damage);
+                    else if (other.gameObject.layer == (int)GameDefinition.GameLayout.Role)
+                        other.GetComponent<RolePropertyInfo>().DecreaseLife(this.Damage);
                 }
             }
         }
     }
+
     // Use this for initialization
     void Start()
     {

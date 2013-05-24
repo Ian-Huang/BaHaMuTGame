@@ -2,17 +2,23 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// 控制敵人的血量
+/// 敵人的屬性資訊
 /// </summary>
-public class EnemyLife : MonoBehaviour
+public class EnemyPropertyInfo : MonoBehaviour
 {
-    public int TotalLife = 1;                   //物體生命總值
+    public GameDefinition.Enemy Enemy;
+    public int currentLife; //當前生命值
+    public int maxLife;     //最大生命值
+    public int cureRate;    //每秒回復生命速率
+    public int defence;     //防禦力
+    public int nearDamage;  //近距離攻擊傷害值
+    public int farDamage;   //遠距離攻擊傷害值
 
     public Texture[] DeadChangeTextures;        //攻擊的交換圖組
     public float ChangeTextureTime = 0.1f;             //交換時間間隔
 
     public bool isDead { get; private set; }
-    private int currentTextureIndex { get; set; }    
+    private int currentTextureIndex { get; set; }
     private float addValue { get; set; }
 
 
@@ -20,19 +26,41 @@ public class EnemyLife : MonoBehaviour
     void Start()
     {
         this.isDead = false;
+        GameDefinition.EnemyData getData = GameDefinition.EnemyList.Find((GameDefinition.EnemyData data) => { return data.EnemyName == Enemy; });
+        this.maxLife = getData.Life;
+        this.currentLife = getData.Life;
+        this.cureRate = getData.CureRate;
+        this.defence = getData.Defence;
+        this.nearDamage = getData.NearDamage;
+        this.farDamage = getData.FarDamage;
+
+        InvokeRepeating("RestoreLifePersecond", 0, 1);
     }
 
     /// <summary>
-    /// 減少物體血量函式
+    /// 每秒固定回復生命
+    /// </summary>
+    void RestoreLifePersecond()
+    {
+        this.currentLife += this.cureRate;
+        if (this.currentLife >= this.maxLife)
+            this.currentLife = this.maxLife;
+    }
+
+    /// <summary>
+    /// 減少敵人血量函式
     /// </summary>
     /// <param name="deLife">減少的數值</param>
     public void DecreaseLife(int deLife)
     {
+        deLife -= this.defence; //扣除防禦力
+        if (deLife <= 0)
+            deLife = 0;
 
-        this.TotalLife -= deLife;
-        
+        this.currentLife -= deLife;
+
         //當生命小於0，刪除物件
-        if (!this.isDead && this.TotalLife <= 0)
+        if (!this.isDead && this.currentLife <= 0)
         {
             this.isDead = true;
             Destroy(this.GetComponent<MoveController>());

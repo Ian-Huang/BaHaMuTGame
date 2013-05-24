@@ -5,9 +5,11 @@ using System.Collections.Generic;
 /// <summary>
 /// 近戰角色的攻擊控制
 /// </summary>
-public class BSKAttackController : MonoBehaviour
+public class NearAttackController : MonoBehaviour
 {
     public float AttackDistance = 2;
+
+    public GameDefinition.AttackType AttackType;        //攻擊類型
 
     public Texture[] ChangeTextureGroup1;   //圖組1
     public Texture[] ChangeTextureGroup2;   //圖組2
@@ -31,13 +33,15 @@ public class BSKAttackController : MonoBehaviour
     private List<float[]> ChangeTextureTimeList { get; set; }
     private List<int> AttackIndexList { get; set; }
 
+    private RolePropertyInfo roleInfo { get; set; }
+
     void OnTriggerStay(Collider other)
     {
         if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.AttackDistance)
         {
-            if (other.gameObject.layer == GameDefinition.Enemy_Layer)      //判定敵人的Layer
+            if (other.gameObject.layer == (int)GameDefinition.GameLayout.Enemy)      //判定敵人的Layer
             {
-                if (!other.gameObject.GetComponent<EnemyLife>().isDead)
+                if (!other.gameObject.GetComponent<EnemyPropertyInfo>().isDead)
                 {
                     if (!this.isAttacking)
                     {
@@ -91,6 +95,9 @@ public class BSKAttackController : MonoBehaviour
         //初始化偵測物件清單
         this.detectedObjectList = new List<GameObject>();
 
+        //載入角色資訊
+        this.roleInfo = this.GetComponent<RolePropertyInfo>();
+
         this.Reset();
     }
 
@@ -107,10 +114,10 @@ public class BSKAttackController : MonoBehaviour
                 {
                     foreach (var obj in this.detectedObjectList)
                     {
-                        if (obj.layer == GameDefinition.Enemy_Layer)      //判定敵人的Layer
+                        if (obj.layer == (int)GameDefinition.GameLayout.Enemy)      //判定敵人的Layer
                         {
                             if (obj != null)
-                                obj.GetComponent<EnemyLife>().DecreaseLife(1);
+                                obj.GetComponent<EnemyPropertyInfo>().DecreaseLife(this.roleInfo.nearDamage);
                         }
                         //else if (obj.layer == GameDefinition.Obstacle)      //判定障礙物的Layer
                         //{ 
