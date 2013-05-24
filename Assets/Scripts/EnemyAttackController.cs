@@ -14,10 +14,14 @@ public class EnemyAttackController : MonoBehaviour
     public GameDefinition.AttackMode attackMode;
     public GameObject ShootObject;
     public LayerMask AttackLayer;
-   
+
     private int currentTextureIndex { get; set; }
     private float addValue { get; set; }
     private bool isAttacking { get; set; }
+
+    private GameObject detectedRoleObject { get; set; }        //目前追蹤的玩家
+
+    private EnemyPropertyInfo enemyInfo { get; set; }
 
     void OnTriggerStay(Collider other)
     {
@@ -29,10 +33,11 @@ public class EnemyAttackController : MonoBehaviour
                 {
                     this.isAttacking = true;
                     this.renderer.material.mainTexture = this.AttackChangeTextures[this.currentTextureIndex];
-                    if (!this.GetComponent<EnemyLife>().isDead)      //判定追蹤的物體是否還存在
+                    if (!this.GetComponent<EnemyPropertyInfo>().isDead)      //判定追蹤的物體是否還存在
                     {
                         this.GetComponent<RegularChangePictures>().ChangeState(false);          //將一般移動的換圖暫停
                         this.GetComponent<MoveController>().ChangeSpeed(this.AttackMoveSpeed);  //改變攻擊時移動的速度
+                        this.detectedRoleObject = other.gameObject;                        //抓取進入範圍內的玩家
                     }
                 }
             }
@@ -42,6 +47,9 @@ public class EnemyAttackController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        //載入敵人資訊
+        this.enemyInfo = this.GetComponent<EnemyPropertyInfo>();
+
         this.Reset();
     }
 
@@ -57,11 +65,21 @@ public class EnemyAttackController : MonoBehaviour
                 if (this.currentTextureIndex == this.AttackIndex)   //攻擊判定
                 {
                     //待補(敵人攻擊後給於角色的回饋)
-                    if (this.attackMode == GameDefinition.AttackMode.Far)
+                    if (this.attackMode == GameDefinition.AttackMode.FarAttck)
                     {
-                        Instantiate(this.ShootObject, 
-                            new Vector3(this.transform.position.x,this.transform.position.y,GameDefinition.ShootObject_ZIndex),
+                        GameObject obj = (GameObject)Instantiate(this.ShootObject,
+                            new Vector3(this.transform.position.x, this.transform.position.y, GameDefinition.ShootObject_ZIndex),
                             this.ShootObject.transform.rotation);
+
+                        ShootObjectInfo info = obj.GetComponent<ShootObjectInfo>();
+                        info.Damage = this.enemyInfo.farDamage;
+                    }
+                    else
+                    {
+                        if (this.detectedRoleObject != null)      //判定追蹤的物體是否還存在
+                        {
+                            this.detectedRoleObject.GetComponent<RolePropertyInfo>().DecreaseLife(this.enemyInfo.nearDamage);
+                        }
                     }
                 }
 
