@@ -16,7 +16,12 @@ public class TextureOffset : MonoBehaviour
 
         if (this.renderer.material.mainTextureOffset.x >= 1)
             this.renderer.material.mainTextureOffset -= new Vector2(1, 0);
+        else if (this.renderer.material.mainTextureOffset.x <= -1)
+            this.renderer.material.mainTextureOffset += new Vector2(1, 0);
+
         if (this.renderer.material.mainTextureOffset.y >= 1)
             this.renderer.material.mainTextureOffset -= new Vector2(0, 1);
+        else if (this.renderer.material.mainTextureOffset.y <= -1)
+            this.renderer.material.mainTextureOffset += new Vector2(0, 1);
     }
 }
