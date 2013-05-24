@@ -68,18 +68,14 @@ public class LayoutScaleTo : MonoBehaviour
     }
     void OnEnable()
     {
-        foreach (Transform child in this.transform.parent.transform)
-        {
-            if (ChkObjectisUI(child))
-            {
-                //錯誤修正
-                BugFix();
-                //建立特效協程
-                SetEffectStartCoroutine();
-                //建立當特效結束協程
-                SetEffectDoneCoroutine();
-            }
-        }
+
+        //錯誤修正
+        BugFix();
+        //建立特效協程
+        SetEffectStartCoroutine();
+        //建立當特效結束協程
+        SetEffectDoneCoroutine();
+
     }
 
     void OnDisable()
@@ -116,13 +112,11 @@ public class LayoutScaleTo : MonoBehaviour
 
     IEnumerator WhenEffectStart(float delay)
     {
-        yield return new WaitForSeconds(delay);
-
         foreach (Transform child in this.transform.parent)
         {
             if (ChkObjectisUI(child))
             {
-                //居然給我跑N*N次 //需要修正
+                yield return new WaitForSeconds(delay);
                 _effectStruct.scale = scaleV2;
                 _effectStruct.time = this.time;
                 _effectStruct.delay = this.delay;
@@ -133,7 +127,6 @@ public class LayoutScaleTo : MonoBehaviour
 
                 child.SendMessage("ScaleTo", _effectStruct, SendMessageOptions.DontRequireReceiver);
             }
-            
         }
     }
 

@@ -38,10 +38,8 @@ public class PlatformButtonTypeA : MonoBehaviour
         {
             if (Input.GetKey(keyCode))
             {
-                if (EffectObjectWhenPress)
-                    EffectObjectWhenPress.SetActive(true); 
-                if (EffectObjectWhenRelease)
-                        EffectObjectWhenRelease.SetActive(false);
+                if (EffectObjectWhenPress)      EffectObjectWhenPress.SetActive(true); 
+                if (EffectObjectWhenRelease)    EffectObjectWhenRelease.SetActive(false);
                 pressDown = true;
             }
 
@@ -54,13 +52,8 @@ public class PlatformButtonTypeA : MonoBehaviour
                         GameObject newGameObject = (GameObject)Instantiate(Event);
                         newGameObject.SetActive(true);
                     }
-                    if (EffectObjectWhenPress)
-                        EffectObjectWhenPress.SetActive(false);
-                    if (EffectObjectWhenRelease)
-                        EffectObjectWhenRelease.SetActive(true);
-
-
-
+                    if (EffectObjectWhenPress)      EffectObjectWhenPress.SetActive(false);
+                    if (EffectObjectWhenRelease)    EffectObjectWhenRelease.SetActive(true);
                 }
             }
         }
@@ -68,17 +61,10 @@ public class PlatformButtonTypeA : MonoBehaviour
         {
             if (Input.GetKeyUp(keyCode))
             {
-
-                if (EffectObjectWhenPress)
-                    EffectObjectWhenPress.SetActive(false);
-
-                if (EffectObjectWhenRelease)
-                    EffectObjectWhenRelease.SetActive(true);
-
+                if (EffectObjectWhenPress)      EffectObjectWhenPress.SetActive(false);
+                if (EffectObjectWhenRelease)    EffectObjectWhenRelease.SetActive(true);
                 pressDown = false;
             }
-
         }
-
     }
 }

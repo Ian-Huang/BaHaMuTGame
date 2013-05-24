@@ -4,27 +4,9 @@ using System.Collections;
 /// <summary>
 /// 平板在偵測範圍裡面按鍵的特效
 /// </summary>
-public class PlatformButtonTypeB : MonoBehaviour
+public class PlatformButtonTypeB : MPlatformButton
 {
-
-    public Object DisplayObject;
-    private Rect rect;
-
-    public GameObject EffectObjectWhenPress;
-    public GameObject EffectObjectWhenRelease;
-
-    public GameObject Event;
-
-    public KeyCode keyCode;
-
-    private bool pressDown;
-
-    private float intervalTime;
-
-    Vector2[] torch;
-
-
-
+    private bool[] pressDownPlay = new bool[4];
     // Use this for initialization
     void Start()
     {
@@ -37,11 +19,10 @@ public class PlatformButtonTypeB : MonoBehaviour
     {
         //取得偵測範圍
         rect = (Rect)(DisplayObject.GetType().GetField("_rect").GetValue(DisplayObject));
-
+        
         int i = 0;
         while (i < Input.touchCount)
         {
-            torch[i] = Input.GetTouch(i).position;
             if (rect.Contains(new Vector2(Input.GetTouch(i).position.x, Screen.height - Input.GetTouch(i).position.y)))
             {
                 if (Input.GetTouch(i).phase == TouchPhase.Began)
@@ -50,9 +31,9 @@ public class PlatformButtonTypeB : MonoBehaviour
                         EffectObjectWhenPress.SetActive(true);
                     if (EffectObjectWhenRelease)
                         EffectObjectWhenRelease.SetActive(false);
-                    pressDown = true;
+                    pressDownPlay[i] = true;
                 }
-                if (pressDown)
+                if (pressDownPlay[i])
                 {
 
                     if (Input.GetTouch(i).phase == TouchPhase.Ended)
@@ -72,22 +53,36 @@ public class PlatformButtonTypeB : MonoBehaviour
             else
             {
 
-                if (EffectObjectWhenPress)
-                    EffectObjectWhenPress.SetActive(false);
+                if (Input.GetTouch(i).phase == TouchPhase.Ended)
+                {
+                    if (EffectObjectWhenPress)
+                        EffectObjectWhenPress.SetActive(false);
 
-                if (EffectObjectWhenRelease)
-                    EffectObjectWhenRelease.SetActive(true);
+                    if (EffectObjectWhenRelease)
+                        EffectObjectWhenRelease.SetActive(true);
 
-                pressDown = false;
+                    pressDownPlay[i] = false;
+                }
 
             }
+            i++;
         }
+
+       
     }
 
     void OnGUI()
     {
-        //GUI.Label(new Rect(0, 0, 100, 50), "12132111");
+        GUI.Label(new Rect(0, 0, 100, 50), Input.touchCount.ToString());
+
+        if (Input.touchCount > 0)
+        {
+            GUI.Label(new Rect(0, 50, 500, 50),rect.ToString());
+            GUI.Label(new Rect(0, 70, 500, 50), Input.GetTouch(0).position.x.ToString() + "   " + (Screen.height - Input.GetTouch(0).position.y).ToString());
+            GUI.Label(new Rect(0, 90, 500, 50), Input.GetTouch(0).position.x.ToString() + "   " + Input.GetTouch(0).position.y.ToString());
+            GUI.Label(new Rect(0, 110, 500, 50), Input.GetTouch(1).position.x.ToString() + "   " + Input.GetTouch(1).position.y.ToString());
+        }
 
     }
-    
+
 }
