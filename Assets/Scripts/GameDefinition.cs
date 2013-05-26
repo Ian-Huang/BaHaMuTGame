@@ -131,7 +131,10 @@ public class GameDefinition
         石巨人 = 401
     }
 
-
+    public enum ChangeRoleMode
+    {
+        OneAndTwo = 0, TwoAndThree, ThreeAndFour
+    }
 
     //物件Layer 數值必須跟 Game Layer相同
     public enum GameLayout

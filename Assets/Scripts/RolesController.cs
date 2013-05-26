@@ -35,6 +35,30 @@ public class RolesController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Touch使用交換人物位置的方法
+    /// </summary>
+    /// <param name="mode">交換的位置</param>
+    public void ChangeRolePosition(GameDefinition.ChangeRoleMode mode)
+    {
+        if (!this.isChanging)
+        {
+            switch (mode)
+            {
+                case GameDefinition.ChangeRoleMode.OneAndTwo:
+                    this.SetChange(ref this.Role1, ref this.Role2);
+                    break;
+                case GameDefinition.ChangeRoleMode.TwoAndThree:
+                    this.SetChange(ref this.Role2, ref this.Role3);
+                    break;
+                case GameDefinition.ChangeRoleMode.ThreeAndFour:
+                    this.SetChange(ref this.Role3, ref this.Role4);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
     /// <summary>
     /// 交換物體位置
