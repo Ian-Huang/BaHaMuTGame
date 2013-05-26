@@ -14,6 +14,13 @@ public class RolePropertyInfo : MonoBehaviour
     public int nearDamage;  //近距離攻擊傷害值
     public int farDamage;   //遠距離攻擊傷害值
 
+    public int WeakCureScale = 10;
+    public Texture[] WeakChangeTextures;        //攻擊的交換圖組
+    public float ChangeTextureTime = 0.1f;      //交換時間間隔    
+
+    public bool isWeak { get; private set; }
+    private int currentTextureIndex { get; set; }
+
     // Use this for initialization
     void Start()
     {
@@ -25,6 +32,7 @@ public class RolePropertyInfo : MonoBehaviour
         this.nearDamage = getData.NearDamage;
         this.farDamage = getData.FarDamage;
 
+        this.isWeak = false;
         InvokeRepeating("RestoreLifePersecond", 0, 1);
     }
 
@@ -40,17 +48,54 @@ public class RolePropertyInfo : MonoBehaviour
     /// <param name="deLife">減少的數值</param>
     public void DecreaseLife(int deLife)
     {
+
         deLife -= this.defence; //扣除防禦力
         if (deLife <= 0)
             deLife = 1;
 
-        this.currentLife -= deLife;
+        if (!this.isWeak)
+        {
+            //角色當前未虛弱，扣角色的生命值
+            this.currentLife -= deLife;
+        }
+        else
+        {
+            //角色當前虛弱，扣總士氣(未完成)
+        }
 
         //當生命小於0
-        if (this.currentLife <= 0)
+        if (!this.isWeak)
         {
-            print(this.name + " 死亡了！");
+            if (this.currentLife <= 0)
+            {
+                switch (this.Role)
+                {
+                    case GameDefinition.Role.Witch:
+                    case GameDefinition.Role.Hunter:
+                        this.GetComponent<FarJobAttackController>().ChangeState(false); //將攻擊的動作暫停                        
+                        break;
+
+                    case GameDefinition.Role.BSK:
+                    case GameDefinition.Role.Knight:
+                        this.GetComponent<NearAttackController>().ChangeState(false);   //將攻擊的動作暫停                        
+                        break;
+                }
+                this.GetComponent<RegularChangePictures>().ChangeState(false);  //將一般移動的換圖暫停
+                this.isWeak = true;
+                InvokeRepeating("ChangeWeakTexture", 0.1f, this.ChangeTextureTime);
+            }
         }
+    }
+
+    void ChangeWeakTexture()
+    {
+        print("!!!");
+        if ((this.currentTextureIndex + 1) >= this.WeakChangeTextures.Length)       //歸0，循環
+            this.currentTextureIndex = 0;
+        else
+            this.currentTextureIndex++;
+
+        this.renderer.material.mainTexture = this.WeakChangeTextures[this.currentTextureIndex];
     }
 
     /// <summary>
@@ -58,8 +103,36 @@ public class RolePropertyInfo : MonoBehaviour
     /// </summary>
     void RestoreLifePersecond()
     {
-        this.currentLife += this.cureRate;
-        if (this.currentLife >= this.maxLife)
-            this.currentLife = this.maxLife;
+        if (!this.isWeak)
+        {
+            this.currentLife += this.cureRate;
+            if (this.currentLife >= this.maxLife)
+                this.currentLife = this.maxLife;
+        }
+        else
+        {
+            this.currentLife += (this.cureRate * this.WeakCureScale);
+            if (this.currentLife >= this.maxLife)
+            {
+                this.currentLife = this.maxLife;
+
+                this.isWeak = false;
+                CancelInvoke("ChangeWeakTexture");
+                this.currentTextureIndex = 0;
+                this.GetComponent<RegularChangePictures>().ChangeState(true);  //將一般移動的換圖恢復運作
+                switch (this.Role)
+                {
+                    case GameDefinition.Role.Witch:
+                    case GameDefinition.Role.Hunter:
+                        this.GetComponent<FarJobAttackController>().ChangeState(true); //將攻擊的動作暫停                        
+                        break;
+
+                    case GameDefinition.Role.BSK:
+                    case GameDefinition.Role.Knight:
+                        this.GetComponent<NearAttackController>().ChangeState(true);   //將攻擊的動作暫停                        
+                        break;
+                }
+            }
+        }
     }
 }

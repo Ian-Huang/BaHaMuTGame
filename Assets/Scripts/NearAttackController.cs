@@ -7,6 +7,7 @@ using System.Collections.Generic;
 /// </summary>
 public class NearAttackController : MonoBehaviour
 {
+    public bool isAction = true;
     public float AttackDistance = 2;
 
     public GameDefinition.AttackType AttackType;        //攻擊類型
@@ -37,38 +38,41 @@ public class NearAttackController : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.AttackDistance)
+        if (this.isAction)
         {
-            if (other.gameObject.layer == (int)GameDefinition.GameLayout.Enemy)      //判定敵人的Layer
+            if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.AttackDistance)
             {
-                if (!other.gameObject.GetComponent<EnemyPropertyInfo>().isDead)
+                if (other.gameObject.layer == (int)GameDefinition.GameLayout.Enemy)      //判定敵人的Layer
                 {
-                    if (!this.isAttacking)
+                    if (!other.gameObject.GetComponent<EnemyPropertyInfo>().isDead)
                     {
-                        this.isAttacking = true;
-                        this.GetComponent<RegularChangePictures>().ChangeState(false);  //將一般移動的換圖暫停
-                        this.renderer.material.mainTexture = this.ChangeTextureList[this.currentGroupIndex][this.currentTextureIndex];
+                        if (!this.isAttacking)
+                        {
+                            this.isAttacking = true;
+                            this.GetComponent<RegularChangePictures>().ChangeState(false);  //將一般移動的換圖暫停
+                            this.renderer.material.mainTexture = this.ChangeTextureList[this.currentGroupIndex][this.currentTextureIndex];
+                        }
+                        if (!this.detectedObjectList.Contains(other.gameObject))
+                            this.detectedObjectList.Add(other.gameObject);              //抓取進入範圍內的敵人
                     }
-                    if (!this.detectedObjectList.Contains(other.gameObject))
-                        this.detectedObjectList.Add(other.gameObject);              //抓取進入範圍內的敵人
                 }
+
+                //else if (other.gameObject.layer == GameDefinition.Obstacle)      //判定障礙物的Layer
+                //{
+                //    if (other.tag == this.tag)  //如果障礙物Tag等於角色Tag，可對障礙物....(do something)
+                //    {
+                //        if (!this.isAttacking)
+                //        {
+                //            this.isAttacking = true;
+                //            this.GetComponent<RegularChangePictures>().ChangeState(false);  //將一般移動的換圖暫停
+                //            this.renderer.material.mainTexture = this.ChangeTextureList[this.currentGroupIndex][this.currentTextureIndex];
+                //        }
+
+                //        if (!this.detectedObjectList.Contains(other.gameObject))
+                //            this.detectedObjectList.Add(other.gameObject);              //抓取進入範圍內的敵人
+                //    }
+                //}
             }
-
-            //else if (other.gameObject.layer == GameDefinition.Obstacle)      //判定障礙物的Layer
-            //{
-            //    if (other.tag == this.tag)  //如果障礙物Tag等於角色Tag，可對障礙物....(do something)
-            //    {
-            //        if (!this.isAttacking)
-            //        {
-            //            this.isAttacking = true;
-            //            this.GetComponent<RegularChangePictures>().ChangeState(false);  //將一般移動的換圖暫停
-            //            this.renderer.material.mainTexture = this.ChangeTextureList[this.currentGroupIndex][this.currentTextureIndex];
-            //        }
-
-            //        if (!this.detectedObjectList.Contains(other.gameObject))
-            //            this.detectedObjectList.Add(other.gameObject);              //抓取進入範圍內的敵人
-            //    }
-            //}
         }
     }
 
@@ -104,39 +108,45 @@ public class NearAttackController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.isAttacking)
+        if (this.isAction)
         {
-            if (this.addValue >= this.ChangeTextureTimeList[this.currentGroupIndex][this.currentTextureIndex])
+            if (this.isAttacking)
             {
-                this.addValue = 0;
-
-                if (this.currentTextureIndex == this.AttackIndexList[this.currentGroupIndex])   //攻擊判定
+                if (this.addValue >= this.ChangeTextureTimeList[this.currentGroupIndex][this.currentTextureIndex])
                 {
-                    foreach (var obj in this.detectedObjectList)
+                    this.addValue = 0;
+
+                    if (this.currentTextureIndex == this.AttackIndexList[this.currentGroupIndex])   //攻擊判定
                     {
-                        if (obj.layer == (int)GameDefinition.GameLayout.Enemy)      //判定敵人的Layer
+                        foreach (var obj in this.detectedObjectList)
                         {
                             if (obj != null)
-                                obj.GetComponent<EnemyPropertyInfo>().DecreaseLife(this.roleInfo.nearDamage);
+                            {
+                                if (obj.layer == (int)GameDefinition.GameLayout.Enemy)      //判定敵人的Layer
+                                {
+
+                                    obj.GetComponent<EnemyPropertyInfo>().DecreaseLife(this.roleInfo.nearDamage);
+                                }
+                                //else if (obj.layer == GameDefinition.Obstacle)      //判定障礙物的Layer
+                                //{ 
+
+                                //}
+                            }
                         }
-                        //else if (obj.layer == GameDefinition.Obstacle)      //判定障礙物的Layer
-                        //{ 
-
-                        //}
                     }
+
+                    this.currentTextureIndex++;
+                    if (this.currentTextureIndex >= this.ChangeTextureList[this.currentGroupIndex].Length)
+                    {
+                        this.GetComponent<RegularChangePictures>().ChangeState(true);
+                        this.Reset();
+                        return;
+                    }
+                    renderer.material.mainTexture = this.ChangeTextureList[this.currentGroupIndex][this.currentTextureIndex];
                 }
 
-                this.currentTextureIndex++;
-                if (this.currentTextureIndex >= this.ChangeTextureList[this.currentGroupIndex].Length)
-                {
-                    this.GetComponent<RegularChangePictures>().ChangeState(true);
-                    this.Reset();
-                    return;
-                }
-                renderer.material.mainTexture = this.ChangeTextureList[this.currentGroupIndex][this.currentTextureIndex];
+                this.addValue += Time.deltaTime;
             }
-
-            this.addValue += Time.deltaTime;
         }
     }
 
@@ -156,5 +166,15 @@ public class NearAttackController : MonoBehaviour
         this.addValue = 0;
         this.isAttacking = false;
         this.detectedObjectList.Clear();
+    }
+
+    /// <summary>
+    /// 改變是否運行Attack的狀態
+    /// </summary>
+    /// <param name="isChange">是或否</param>
+    public void ChangeState(bool isChange)
+    {
+        this.isAction = isChange;
+        this.Reset();
     }
 }

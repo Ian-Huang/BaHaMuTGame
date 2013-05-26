@@ -7,6 +7,7 @@ using System.Collections.Generic;
 /// </summary>
 public class FarJobAttackController : MonoBehaviour
 {
+    public bool isAction = true;
     public float FarAttackDistance = 13;
     public float NearAttackDistance = 3;
 
@@ -36,27 +37,30 @@ public class FarJobAttackController : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if ((this.AttackLayer.value & (int)Mathf.Pow(2, other.gameObject.layer)) != 0)      //判定攻擊的Layer
+        if (this.isAction)
         {
-            if (!this.isAttacking)
+            if ((this.AttackLayer.value & (int)Mathf.Pow(2, other.gameObject.layer)) != 0)      //判定攻擊的Layer
             {
-                if (!other.gameObject.GetComponent<EnemyPropertyInfo>().isDead)
+                if (!this.isAttacking)
                 {
-                    if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.FarAttackDistance)
+                    if (!other.gameObject.GetComponent<EnemyPropertyInfo>().isDead)
                     {
-                        if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.NearAttackDistance)
+                        if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.FarAttackDistance)
                         {
-                            this.attackMode = GameDefinition.AttackMode.NearAttack;
-                            this.renderer.material.mainTexture = this.NearAttackChangeTextures[this.currentTextureIndex];
+                            if (Mathf.Abs(this.transform.position.x - other.transform.position.x) < this.NearAttackDistance)
+                            {
+                                this.attackMode = GameDefinition.AttackMode.NearAttack;
+                                this.renderer.material.mainTexture = this.NearAttackChangeTextures[this.currentTextureIndex];
+                            }
+                            else
+                            {
+                                this.attackMode = GameDefinition.AttackMode.FarAttck;
+                                this.renderer.material.mainTexture = this.FarAttackChangeTextures[this.currentTextureIndex];
+                            }
+                            this.isAttacking = true;
+                            this.detectedEnemyObject = other.gameObject;                        //抓取進入範圍內的敵人
+                            this.GetComponent<RegularChangePictures>().ChangeState(false);      //將一般移動的換圖暫停
                         }
-                        else
-                        {
-                            this.attackMode = GameDefinition.AttackMode.FarAttck;
-                            this.renderer.material.mainTexture = this.FarAttackChangeTextures[this.currentTextureIndex];
-                        }
-                        this.isAttacking = true;
-                        this.detectedEnemyObject = other.gameObject;                        //抓取進入範圍內的敵人
-                        this.GetComponent<RegularChangePictures>().ChangeState(false);      //將一般移動的換圖暫停
                     }
                 }
             }
@@ -75,66 +79,69 @@ public class FarJobAttackController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.isAttacking)
+        if (this.isAction)
         {
-            //遠距離攻擊模式設定
-            if (this.attackMode == GameDefinition.AttackMode.FarAttck)
+            if (this.isAttacking)
             {
-                if (this.addValue >= this.FarAttackChangeTextureTime[this.currentTextureIndex])
+                //遠距離攻擊模式設定
+                if (this.attackMode == GameDefinition.AttackMode.FarAttck)
                 {
-                    this.addValue = 0;
-
-                    if (this.currentTextureIndex == this.FarAttackIndex)   //攻擊判定
+                    if (this.addValue >= this.FarAttackChangeTextureTime[this.currentTextureIndex])
                     {
-                        if (this.detectedEnemyObject != null)      //判定追蹤的物體是否還存在
+                        this.addValue = 0;
+
+                        if (this.currentTextureIndex == this.FarAttackIndex)   //攻擊判定
                         {
-                            GameObject obj = (GameObject)Instantiate(this.ShootObject,
-                                new Vector3(this.transform.position.x, this.transform.position.y, GameDefinition.ShootObject_ZIndex),
-                                this.ShootObject.transform.rotation
-                            );
-                            ShootObjectInfo info = obj.GetComponent<ShootObjectInfo>();
-                            info.Damage = this.roleInfo.farDamage;
-                            info.AttackType = this.AttackType;
+                            if (this.detectedEnemyObject != null)      //判定追蹤的物體是否還存在
+                            {
+                                GameObject obj = (GameObject)Instantiate(this.ShootObject,
+                                    new Vector3(this.transform.position.x, this.transform.position.y, GameDefinition.ShootObject_ZIndex),
+                                    this.ShootObject.transform.rotation
+                                );
+                                ShootObjectInfo info = obj.GetComponent<ShootObjectInfo>();
+                                info.Damage = this.roleInfo.farDamage;
+                                info.AttackType = this.AttackType;
+                            }
                         }
-                    }
 
-                    this.currentTextureIndex++;
-                    if (this.currentTextureIndex >= this.FarAttackChangeTextures.Length)
-                    {
-                        this.GetComponent<RegularChangePictures>().ChangeState(true);
-                        this.Reset();
-                        return;
+                        this.currentTextureIndex++;
+                        if (this.currentTextureIndex >= this.FarAttackChangeTextures.Length)
+                        {
+                            this.GetComponent<RegularChangePictures>().ChangeState(true);
+                            this.Reset();
+                            return;
+                        }
+                        this.renderer.material.mainTexture = this.FarAttackChangeTextures[this.currentTextureIndex];
                     }
-                    this.renderer.material.mainTexture = this.FarAttackChangeTextures[this.currentTextureIndex];
                 }
-            }
-            //近距離攻擊模式設定
-            else
-            {
-                if (this.addValue >= this.NearAttackChangeTextureTime[this.currentTextureIndex])
+                //近距離攻擊模式設定
+                else
                 {
-                    this.addValue = 0;
-
-                    if (this.currentTextureIndex == this.NearAttackIndex)   //攻擊判定
+                    if (this.addValue >= this.NearAttackChangeTextureTime[this.currentTextureIndex])
                     {
-                        if (this.detectedEnemyObject != null)      //判定追蹤的物體是否還存在
+                        this.addValue = 0;
+
+                        if (this.currentTextureIndex == this.NearAttackIndex)   //攻擊判定
                         {
-                            this.detectedEnemyObject.GetComponent<EnemyPropertyInfo>().DecreaseLife(this.roleInfo.nearDamage);
+                            if (this.detectedEnemyObject != null)      //判定追蹤的物體是否還存在
+                            {
+                                this.detectedEnemyObject.GetComponent<EnemyPropertyInfo>().DecreaseLife(this.roleInfo.nearDamage);
+                            }
                         }
-                    }
 
-                    this.currentTextureIndex++;
-                    if (this.currentTextureIndex >= this.NearAttackChangeTextures.Length)
-                    {
-                        this.GetComponent<RegularChangePictures>().ChangeState(true);
-                        this.Reset();
-                        return;
+                        this.currentTextureIndex++;
+                        if (this.currentTextureIndex >= this.NearAttackChangeTextures.Length)
+                        {
+                            this.GetComponent<RegularChangePictures>().ChangeState(true);
+                            this.Reset();
+                            return;
+                        }
+                        renderer.material.mainTexture = this.NearAttackChangeTextures[this.currentTextureIndex];
                     }
-                    renderer.material.mainTexture = this.NearAttackChangeTextures[this.currentTextureIndex];
                 }
-            }
 
-            this.addValue += Time.deltaTime;
+                this.addValue += Time.deltaTime;
+            }
         }
     }
 
@@ -156,5 +163,15 @@ public class FarJobAttackController : MonoBehaviour
         this.currentTextureIndex = 0;
         this.addValue = 0;
         this.isAttacking = false;
+    }
+
+    /// <summary>
+    /// 改變是否運行Attack的狀態
+    /// </summary>
+    /// <param name="isChange">是或否</param>
+    public void ChangeState(bool isChange)
+    {
+        this.isAction = isChange;
+        this.Reset();
     }
 }

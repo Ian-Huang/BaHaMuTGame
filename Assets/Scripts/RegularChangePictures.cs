@@ -6,13 +6,12 @@ using System.Collections;
 /// </summary>
 public class RegularChangePictures : MonoBehaviour
 {
+    public bool isRunChang = true;
     public Texture[] ChangeTextures;
     public float ChangeTextureTime = 0.1f;             //交換時間間隔
 
     private int currentTextureIndex { get; set; }
     private float addValue { get; set; }
-
-    private bool isChanging { get; set; }
 
     // Use this for initialization
     void Start()
@@ -25,7 +24,6 @@ public class RegularChangePictures : MonoBehaviour
     /// </summary>
     void Reset()
     {
-        this.isChanging = true;
         this.addValue = 0;
         this.currentTextureIndex = 0;
         this.renderer.material.mainTexture = this.ChangeTextures[this.currentTextureIndex];
@@ -37,16 +35,14 @@ public class RegularChangePictures : MonoBehaviour
     /// <param name="isChange">是或否</param>
     public void ChangeState(bool isChange)
     {
-        if (isChange)
-            this.Reset();
-        else
-            this.isChanging = false;
+        this.isRunChang = isChange;
+        this.Reset();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (this.isChanging)
+        if (this.isRunChang)
         {
             if (this.addValue >= this.ChangeTextureTime)
             {
