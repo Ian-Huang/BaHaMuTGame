@@ -6,7 +6,6 @@ using System.Collections;
 /// </summary>
 public class PlatformButtonTypeB : MPlatformButton
 {
-    private bool[] pressDownPlay = new bool[4];
     // Use this for initialization
     void Start()
     {
@@ -71,18 +70,6 @@ public class PlatformButtonTypeB : MPlatformButton
        
     }
 
-    void OnGUI()
-    {
-        GUI.Label(new Rect(0, 0, 100, 50), Input.touchCount.ToString());
 
-        if (Input.touchCount > 0)
-        {
-            GUI.Label(new Rect(0, 50, 500, 50),rect.ToString());
-            GUI.Label(new Rect(0, 70, 500, 50), Input.GetTouch(0).position.x.ToString() + "   " + (Screen.height - Input.GetTouch(0).position.y).ToString());
-            GUI.Label(new Rect(0, 90, 500, 50), Input.GetTouch(0).position.x.ToString() + "   " + Input.GetTouch(0).position.y.ToString());
-            GUI.Label(new Rect(0, 110, 500, 50), Input.GetTouch(1).position.x.ToString() + "   " + Input.GetTouch(1).position.y.ToString());
-        }
-
-    }
 
 }

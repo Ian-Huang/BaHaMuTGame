@@ -4,22 +4,13 @@ using System.Collections;
 /// <summary>
 /// 平板在偵測範圍裡面按鍵的特效
 /// </summary>
-public class PlatformButtonTypeA : MonoBehaviour
+/// 註冊型
+public class PlatformButtonTypeA : MPlatformButton
 {
+    //註冊ID
+    int fingerID;
+    bool submit;
 
-    public Object DisplayObject;
-    private Rect rect;
-
-    public GameObject EffectObjectWhenPress;
-    public GameObject EffectObjectWhenRelease;
-
-    public GameObject Event;
-
-    public KeyCode keyCode;
-
-    private bool pressDown;
-
-    private float intervalTime;
     // Use this for initialization
     void Start()
     {
@@ -33,38 +24,71 @@ public class PlatformButtonTypeA : MonoBehaviour
         //取得偵測範圍
         rect = (Rect)(DisplayObject.GetType().GetField("_rect").GetValue(DisplayObject));
 
-
-        if (rect.Contains(new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y)))
+        int i = 0;
+        while (i < Input.touchCount)
         {
-            if (Input.GetKey(keyCode))
+            if (rect.Contains(new Vector2(Input.GetTouch(i).position.x, Screen.height - Input.GetTouch(i).position.y)))
             {
-                if (EffectObjectWhenPress)      EffectObjectWhenPress.SetActive(true); 
-                if (EffectObjectWhenRelease)    EffectObjectWhenRelease.SetActive(false);
-                pressDown = true;
-            }
-
-            if (pressDown)
-            {
-                if (Input.GetKeyUp(keyCode))
+                //ID註冊
+                if (Input.GetTouch(i).phase == TouchPhase.Began && !submit)
                 {
-                    if (Event)
+                    fingerID = Input.GetTouch(i).fingerId;
+                    submit = true;
+                }
+
+                if (submit && Input.GetTouch(i).fingerId == fingerID && (Input.GetTouch(i).phase == TouchPhase.Moved || Input.GetTouch(i).phase == TouchPhase.Began))
+                {
+                    if (EffectObjectWhenPress)
+                        EffectObjectWhenPress.SetActive(true);
+                    if (EffectObjectWhenRelease)
+                        EffectObjectWhenRelease.SetActive(false);
+                    pressDownPlay[i] = true;
+                }
+                if (pressDownPlay[i])
+                {
+
+                    if (Input.GetTouch(i).fingerId == fingerID && Input.GetTouch(i).phase == TouchPhase.Ended)
                     {
-                        GameObject newGameObject = (GameObject)Instantiate(Event);
-                        newGameObject.SetActive(true);
+                        if (Event)
+                        {
+                            GameObject newGameObject = (GameObject)Instantiate(Event);
+                            newGameObject.SetActive(true);
+                        }
+                        if (EffectObjectWhenPress)
+                            EffectObjectWhenPress.SetActive(false);
+                        if (EffectObjectWhenRelease)
+                            EffectObjectWhenRelease.SetActive(true);
                     }
-                    if (EffectObjectWhenPress)      EffectObjectWhenPress.SetActive(false);
-                    if (EffectObjectWhenRelease)    EffectObjectWhenRelease.SetActive(true);
                 }
             }
-        }
-        else
-        {
-            if (Input.GetKeyUp(keyCode))
+            else
             {
-                if (EffectObjectWhenPress)      EffectObjectWhenPress.SetActive(false);
-                if (EffectObjectWhenRelease)    EffectObjectWhenRelease.SetActive(true);
-                pressDown = false;
+                
+                if (Input.GetTouch(i).fingerId == fingerID && Input.GetTouch(i).phase == TouchPhase.Moved && pressDownPlay[i])
+                {
+                    if (EffectObjectWhenPress)
+                        EffectObjectWhenPress.SetActive(false);
+
+                    if (EffectObjectWhenRelease)
+                        EffectObjectWhenRelease.SetActive(true);
+
+                    pressDownPlay[i] = false;
+                    
+                }
+                if (Input.GetTouch(i).fingerId == fingerID && Input.GetTouch(i).phase == TouchPhase.Ended)
+                {
+                    submit = false;
+                }
+
             }
+            i++;
         }
+
+
+    }
+
+    void OnGUI()
+    {
+        GUI.Label(new Rect(400, 0, 500, 50), "fingerID：" + fingerID );
     }
 }
