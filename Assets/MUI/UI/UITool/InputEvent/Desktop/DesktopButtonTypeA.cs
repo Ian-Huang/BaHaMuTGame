@@ -41,14 +41,19 @@ public class DesktopButtonTypeA : MDesktopButton
                     if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(true);
                 }
             }
+
+
         }
         else
         {
-            if (Input.GetKeyUp(keyCode))
+            if (pressDown)
             {
-                if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(false);
-                if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(true);
-                pressDown = false;
+                if (Input.GetKeyUp(keyCode))
+                {
+                    if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(false);
+                    if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(true);
+                    pressDown = false;
+                }
             }
         }
     }
