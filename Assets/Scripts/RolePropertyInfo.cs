@@ -89,7 +89,6 @@ public class RolePropertyInfo : MonoBehaviour
 
     void ChangeWeakTexture()
     {
-        print("!!!");
         if ((this.currentTextureIndex + 1) >= this.WeakChangeTextures.Length)       //Âk0¡A´`Àô
             this.currentTextureIndex = 0;
         else
