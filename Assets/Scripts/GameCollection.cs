@@ -7,7 +7,7 @@ public class GameCollection : MonoBehaviour
 
     public int CurrentMorale;
     public int MoraleRestoreRate;
-    private int TotalMorale;
+    public int MaxMorale;
 
     void Awake()
     {
@@ -17,7 +17,7 @@ public class GameCollection : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        this.TotalMorale = GameDefinition.MaxMorale;
+        this.MaxMorale = GameDefinition.MaxMorale;
         this.CurrentMorale = GameDefinition.MaxMorale;
         this.MoraleRestoreRate = GameDefinition.MoraleRestoreRate;
 
@@ -36,7 +36,7 @@ public class GameCollection : MonoBehaviour
     void RestoreMoralePersecond()
     {
         this.CurrentMorale += this.MoraleRestoreRate;
-        if (this.CurrentMorale >= this.TotalMorale)
-            this.CurrentMorale = this.TotalMorale;
+        if (this.CurrentMorale >= this.MaxMorale)
+            this.CurrentMorale = this.MaxMorale;
     }
 }
