@@ -7,6 +7,8 @@ using System.Collections.Generic;
 /// </summary>
 public class RolesController : MonoBehaviour
 {
+    public static RolesController master;
+
     public GameObject Role1;
     public GameObject Role2;
     public GameObject Role3;

@@ -133,7 +133,7 @@ public class GameDefinition
 
     public enum ChangeRoleMode
     {
-        OneAndTwo = 0, TwoAndThree, ThreeAndFour
+        OneAndTwo, TwoAndThree, ThreeAndFour
     }
 
     //物件Layer 數值必須跟 Game Layer相同
