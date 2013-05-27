@@ -81,7 +81,10 @@ public class EnemyPropertyInfo : MonoBehaviour
                 if (this.currentTextureIndex >= this.DeadChangeTextures.Length)
                 {
                     //播完爆炸圖片後，刪除物件
-                    Destroy(this.gameObject);
+                    if (this.transform.parent.name.Contains("Clone"))
+                        Destroy(this.transform.parent.gameObject);
+                    else
+                        Destroy(this.gameObject);
                     return;
                 }
                 this.renderer.material.mainTexture = this.DeadChangeTextures[this.currentTextureIndex];

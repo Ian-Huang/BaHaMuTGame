@@ -134,6 +134,15 @@ public class GameDefinition
         ¥Û¥¨¤H = 401
     }
 
+    public enum Obstacle
+    {
+        ¸t¤k¥Û¸O = 101,
+        ÅK³´¨À = 201,
+        Àð¾À = 301,
+        ¤õµKÅ]ªk°} = 401,
+        ¾ð¤ì_01 = 501, ¾ð¤ì_02 = 502
+    }
+
     public enum ChangeRoleMode
     {
         OneAndTwo, TwoAndThree, ThreeAndFour
