@@ -24,6 +24,15 @@ public class GameCollection : MonoBehaviour
         InvokeRepeating("RestoreMoralePersecond", 0.1f, 1);
     }
 
+    /// <summary>
+    /// 取得當前士氣值，已轉換為0~100
+    /// </summary>
+    /// <returns></returns>
+    public float GetCurrentMorale()
+    {
+        return ((float)this.CurrentMorale / this.MaxMorale) * 100;
+    }
+
     // Update is called once per frame
     void Update()
     {
