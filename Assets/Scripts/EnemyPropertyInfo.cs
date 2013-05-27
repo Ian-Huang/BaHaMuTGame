@@ -34,7 +34,7 @@ public class EnemyPropertyInfo : MonoBehaviour
         this.nearDamage = getData.NearDamage;
         this.farDamage = getData.FarDamage;
 
-        InvokeRepeating("RestoreLifePersecond", 0, 1);
+        InvokeRepeating("RestoreLifePersecond", 0.1f, 1);
     }
 
     /// <summary>

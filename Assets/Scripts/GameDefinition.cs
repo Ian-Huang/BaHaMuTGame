@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 public class GameDefinition
 {
+    public static int MaxMorale = 10000;
+    public static int MoraleRestoreRate = 5;
+
     public static List<RoleData> RoleList = new List<RoleData>(){ 
         new RoleData(Role.BSK,500,10,50,130,0),
         new RoleData(Role.Knight,500,10,80,80,0),

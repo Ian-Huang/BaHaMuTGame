@@ -33,7 +33,7 @@ public class RolePropertyInfo : MonoBehaviour
         this.farDamage = getData.FarDamage;
 
         this.isWeak = false;
-        InvokeRepeating("RestoreLifePersecond", 0, 1);
+        InvokeRepeating("RestoreLifePersecond", 0.1f, 1);
     }
 
     // Update is called once per frame
@@ -61,6 +61,9 @@ public class RolePropertyInfo : MonoBehaviour
         else
         {
             //角色當前虛弱，扣總士氣(未完成)
+            GameCollection.master.CurrentMorale -= deLife;
+            if (GameCollection.master.CurrentMorale <= 0)
+                GameCollection.master.CurrentMorale = 0;
         }
 
         //當生命小於0
@@ -68,6 +71,7 @@ public class RolePropertyInfo : MonoBehaviour
         {
             if (this.currentLife <= 0)
             {
+                this.currentLife = 0;
                 switch (this.Role)
                 {
                     case GameDefinition.Role.Witch:
