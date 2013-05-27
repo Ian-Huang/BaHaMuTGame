@@ -32,7 +32,7 @@ public class PlatformButtonTypeA : MPlatformButton
                 //IDµù¥U
                 if (!FingerIDsubmit)
                 {
-                    if (submit)
+                    if (!submit)
                     {
                         if (Input.GetTouch(i).phase == TouchPhase.Began)
                         {

@@ -6,7 +6,7 @@ public class LoadLevel : MonoBehaviour {
     public string LoadLevelName;
 	// Use this for initialization
 	void Start () {
-        Application.LoadLevelAsync(LoadLevelName);
+        Application.LoadLevel(LoadLevelName);
         Destroy(this.gameObject);
 	}
 	

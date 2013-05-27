@@ -29,9 +29,6 @@ public class RectTo : MonoBehaviour
     //特效開始延遲時間
     public float EffectStartDelay;
 
-    public bool on;
-    float time2;
-
     //物件被Disable時是否回到原本狀態
     public MEnum.ResetWhenDisable _resetWhenDisable;
     //特效結束時 是否 回到原本狀態
@@ -46,8 +43,7 @@ public class RectTo : MonoBehaviour
 
     void Update()
     {
-        if (on)
-            time2 += Time.deltaTime;
+
     }
 
     //錯誤修正與避免

@@ -119,10 +119,20 @@ public class LayoutMoveTo : MonoBehaviour
             if (ChkObjectisUI(child))
             {
                 //取得當前rect
-                newRect = new Rect(child.GetComponent<Texture_2D>().rect.x + moveV2.x,
-                        child.GetComponent<Texture_2D>().rect.y + moveV2.y,
-                        child.GetComponent<Texture_2D>().rect.width,
-                        child.GetComponent<Texture_2D>().rect.height);
+                if (child.GetComponent<Texture_2D>())
+                {
+                    newRect = new Rect(child.GetComponent<Texture_2D>().rect.x + moveV2.x,
+                            child.GetComponent<Texture_2D>().rect.y + moveV2.y,
+                            child.GetComponent<Texture_2D>().rect.width,
+                            child.GetComponent<Texture_2D>().rect.height);
+                }
+                if (child.GetComponent<Label>())
+                {
+                    newRect = new Rect(child.GetComponent<Label>().rect.x + moveV2.x,
+                            child.GetComponent<Label>().rect.y + moveV2.y,
+                            child.GetComponent<Label>().rect.width,
+                            child.GetComponent<Label>().rect.height);
+                }
 
 
                 _effectStruct.rect = newRect;
