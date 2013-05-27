@@ -9,8 +9,8 @@ public class PlatformButtonTypeA : MPlatformButton
 {
     //µù¥UID
     int fingerID;
-    bool submit;
-
+    bool FingerIDsubmit;
+    static bool submit;
     // Use this for initialization
     void Start()
     {
@@ -30,12 +30,16 @@ public class PlatformButtonTypeA : MPlatformButton
             if (rect.Contains(new Vector2(Input.GetTouch(i).position.x, Screen.height - Input.GetTouch(i).position.y)))
             {
                 //IDµù¥U
-                if (!submit)
+                if (!FingerIDsubmit)
                 {
-                    if (Input.GetTouch(i).phase == TouchPhase.Began)
+                    if (submit)
                     {
-                        submit = true;
-                        fingerID = Input.GetTouch(i).fingerId;
+                        if (Input.GetTouch(i).phase == TouchPhase.Began)
+                        {
+                            FingerIDsubmit = true;
+                            fingerID = Input.GetTouch(i).fingerId;
+                            submit = true;
+                        }
                     }
                 }
                 else
@@ -46,6 +50,7 @@ public class PlatformButtonTypeA : MPlatformButton
                             if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(true);
                             if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(false);
                             pressDownPlatform[i] = true;
+                            submit = false;
                         }
                 }
 
@@ -75,10 +80,11 @@ public class PlatformButtonTypeA : MPlatformButton
                         if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(false);
                         if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(true);
                         pressDownPlatform[i] = false;
+                        submit = false;
                     }
                     if (Input.GetTouch(i).phase == TouchPhase.Ended)
                     {
-                        submit = false;
+                        FingerIDsubmit = false;
                     }
                 }
 

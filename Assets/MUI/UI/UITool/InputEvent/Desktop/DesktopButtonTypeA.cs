@@ -6,6 +6,9 @@ using System.Collections;
 /// </summary>
 public class DesktopButtonTypeA : MDesktopButton
 {
+    //µù¥U«¬Button
+    //µù¥Uª¬ºA
+    public static bool submit;
     // Use this for initialization
     void Start()
     {
@@ -21,28 +24,32 @@ public class DesktopButtonTypeA : MDesktopButton
 
         if (rect.Contains(new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y)))
         {
-            if (Input.GetKey(keyCode))
+            if (!submit)
             {
-                if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(true);
-                if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(false);
-                pressDown = true;
-            }
-
-            if (pressDown)
-            {
-                if (Input.GetKeyUp(keyCode))
+                if (Input.GetKey(keyCode))
                 {
-                    if (Event)
-                    {
-                        GameObject newGameObject = (GameObject)Instantiate(Event);
-                        newGameObject.SetActive(true);
-                    }
-                    if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(false);
-                    if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(true);
+                    if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(true);
+                    if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(false);
+                    pressDown = true;
+                    submit = true;
                 }
             }
 
-
+                if (pressDown)
+                {
+                    if (Input.GetKeyUp(keyCode))
+                    {
+                        if (Event)
+                        {
+                            GameObject newGameObject = (GameObject)Instantiate(Event);
+                            newGameObject.SetActive(true);
+                        }
+                        if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(false);
+                        if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(true);
+                        submit = false;
+                    }
+                }
+            
         }
         else
         {
@@ -53,6 +60,7 @@ public class DesktopButtonTypeA : MDesktopButton
                     if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(false);
                     if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(true);
                     pressDown = false;
+                    submit = false;
                 }
             }
         }
