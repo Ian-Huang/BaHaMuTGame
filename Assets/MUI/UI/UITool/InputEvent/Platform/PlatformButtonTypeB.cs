@@ -30,9 +30,9 @@ public class PlatformButtonTypeB : MPlatformButton
                         EffectObjectWhenPress.SetActive(true);
                     if (EffectObjectWhenRelease)
                         EffectObjectWhenRelease.SetActive(false);
-                    pressDownPlay[i] = true;
+                    pressDownPlatform[i] = true;
                 }
-                if (pressDownPlay[i])
+                if (pressDownPlatform[i])
                 {
 
                     if (Input.GetTouch(i).phase == TouchPhase.Ended)
@@ -60,7 +60,7 @@ public class PlatformButtonTypeB : MPlatformButton
                     if (EffectObjectWhenRelease)
                         EffectObjectWhenRelease.SetActive(true);
 
-                    pressDownPlay[i] = false;
+                    pressDownPlatform[i] = false;
                 }
 
             }

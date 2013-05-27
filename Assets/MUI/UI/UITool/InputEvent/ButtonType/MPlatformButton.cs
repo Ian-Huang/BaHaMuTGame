@@ -6,7 +6,7 @@ using System.Collections;
 /// </summary>
 public class MPlatformButton : MButton
 {
-    public bool[] pressDownPlay = new bool[4];
+    public bool[] pressDownPlatform = new bool[4];
     // Use this for initialization
     void Start()
     {
