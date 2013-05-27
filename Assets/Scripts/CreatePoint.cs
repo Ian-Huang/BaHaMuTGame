@@ -48,7 +48,8 @@ public class CreatePoint : MonoBehaviour
                 } while (this.tempObjectIndexList.Contains(tempObj));
                 this.tempObjectIndexList.Add(tempObj);
 
-                Instantiate(this.CreateObjects[tempObj], this.CreatePositions[tempPos].position,this.CreateObjects[tempObj].transform.rotation);
+                GameObject obj = (GameObject)Instantiate(this.CreateObjects[tempObj], this.CreatePositions[tempPos].position, this.CreateObjects[tempObj].transform.rotation);
+                obj.transform.parent = this.CreatePositions[tempPos];
             }
         }
     }
