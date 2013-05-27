@@ -44,9 +44,12 @@ public class DesktopButtonTypeB : MDesktopButton
         }
         else
         {
-            if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(false);
-            if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(true);
-            pressDown = false;
+            if (pressDown)
+            {
+                if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(false);
+                if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(true);
+                pressDown = false;
+            }
         }
 
     }

@@ -17,6 +17,11 @@ public class RolesController : MonoBehaviour
     public float changeTime = 1;
     public bool isChanging = false;
 
+
+    void Awake()
+    {
+        master = this;
+    }
     // Update is called once per frame
     void Update()
     {

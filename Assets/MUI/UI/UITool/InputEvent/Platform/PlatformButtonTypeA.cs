@@ -86,9 +86,4 @@ public class PlatformButtonTypeA : MPlatformButton
 
 
     }
-
-    void OnGUI()
-    {
-        GUI.Label(new Rect(400, 0, 500, 50), "fingerID¡G" + fingerID );
-    }
 }
