@@ -30,60 +30,61 @@ public class PlatformButtonTypeA : MPlatformButton
             if (rect.Contains(new Vector2(Input.GetTouch(i).position.x, Screen.height - Input.GetTouch(i).position.y)))
             {
                 //IDµù¥U
-                if (Input.GetTouch(i).phase == TouchPhase.Began && !submit)
+                if (!submit)
                 {
-                    fingerID = Input.GetTouch(i).fingerId;
-                    submit = true;
-                }
-
-                if (submit && Input.GetTouch(i).fingerId == fingerID && (Input.GetTouch(i).phase == TouchPhase.Moved || Input.GetTouch(i).phase == TouchPhase.Began))
-                {
-                    if (EffectObjectWhenPress)
-                        EffectObjectWhenPress.SetActive(true);
-                    if (EffectObjectWhenRelease)
-                        EffectObjectWhenRelease.SetActive(false);
-                    pressDownPlay[i] = true;
-                }
-                if (pressDownPlay[i])
-                {
-
-                    if (Input.GetTouch(i).fingerId == fingerID && Input.GetTouch(i).phase == TouchPhase.Ended)
+                    if (Input.GetTouch(i).phase == TouchPhase.Began)
                     {
-                        if (Event)
-                        {
-                            GameObject newGameObject = (GameObject)Instantiate(Event);
-                            newGameObject.SetActive(true);
-                        }
-                        if (EffectObjectWhenPress)
-                            EffectObjectWhenPress.SetActive(false);
-                        if (EffectObjectWhenRelease)
-                            EffectObjectWhenRelease.SetActive(true);
+                        submit = true;
+                        fingerID = Input.GetTouch(i).fingerId;
                     }
+                }
+                else
+                {
+                    if (Input.GetTouch(i).fingerId == fingerID)
+                        if (Input.GetTouch(i).phase == TouchPhase.Moved || Input.GetTouch(i).phase == TouchPhase.Began)
+                        {
+                            if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(true);
+                            if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(false);
+                            pressDownPlatform[i] = true;
+                        }
+                }
+
+                if (pressDownPlatform[i])
+                {
+
+                    if (Input.GetTouch(i).fingerId == fingerID)
+                        if (Input.GetTouch(i).phase == TouchPhase.Ended)
+                        {
+                            if (Event)
+                            {
+                                GameObject newGameObject = (GameObject)Instantiate(Event);
+                                newGameObject.SetActive(true);
+                            }
+                            if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(false);
+                            if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(true);
+                        }
                 }
             }
             else
             {
-                
-                if (Input.GetTouch(i).fingerId == fingerID && Input.GetTouch(i).phase == TouchPhase.Moved && pressDownPlay[i])
-                {
-                    if (EffectObjectWhenPress)
-                        EffectObjectWhenPress.SetActive(false);
 
-                    if (EffectObjectWhenRelease)
-                        EffectObjectWhenRelease.SetActive(true);
-
-                    pressDownPlay[i] = false;
-                    
-                }
-                if (Input.GetTouch(i).fingerId == fingerID && Input.GetTouch(i).phase == TouchPhase.Ended)
+                if (Input.GetTouch(i).fingerId == fingerID)
                 {
-                    submit = false;
+                    if (Input.GetTouch(i).phase == TouchPhase.Moved && pressDownPlatform[i])
+                    {
+                        if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(false);
+                        if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(true);
+                        pressDownPlatform[i] = false;
+                    }
+                    if (Input.GetTouch(i).phase == TouchPhase.Ended)
+                    {
+                        submit = false;
+                    }
                 }
 
             }
+            //i+1
             i++;
         }
-
-
     }
 }
