@@ -77,7 +77,7 @@ public class RolePropertyInfo : MonoBehaviour
 
                     case GameDefinition.Role.BSK:
                     case GameDefinition.Role.Knight:
-                        this.GetComponent<NearAttackController>().ChangeState(false);   //將攻擊的動作暫停                        
+                        this.GetComponent<NearJobAttackController>().ChangeState(false);   //將攻擊的動作暫停                        
                         break;
                 }
                 this.GetComponent<RegularChangePictures>().ChangeState(false);  //將一般移動的換圖暫停
@@ -128,7 +128,7 @@ public class RolePropertyInfo : MonoBehaviour
 
                     case GameDefinition.Role.BSK:
                     case GameDefinition.Role.Knight:
-                        this.GetComponent<NearAttackController>().ChangeState(true);   //將攻擊的動作暫停                        
+                        this.GetComponent<NearJobAttackController>().ChangeState(true);   //將攻擊的動作暫停                        
                         break;
                 }
             }

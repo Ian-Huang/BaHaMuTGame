@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// 近戰角色的攻擊控制
 /// </summary>
-public class NearAttackController : MonoBehaviour
+public class NearJobAttackController : MonoBehaviour
 {
     public bool isAction = true;
     public float AttackDistance = 2;
