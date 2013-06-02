@@ -8,8 +8,8 @@ using System.Collections;
 /// </summary>
 public class MoveTo : MonoBehaviour
 {
-    public MEnum.EffectStruct _effectStruct;
-    public MEnum.StopEffectStruct _stopEffectStruct;
+    public MUI_Enum.EffectStruct _effectStruct;
+    public MUI_Enum.StopEffectStruct _stopEffectStruct;
 
 
     //移動向量
@@ -25,21 +25,21 @@ public class MoveTo : MonoBehaviour
     //延遲時間
     public float delay;
     //Ease方式
-    public MEnum.EaseType easeType;
+    public MUI_Enum.EaseType easeType;
     //循環方式
-    public MEnum.loopType looptype;
+    public MUI_Enum.loopType looptype;
 
     //特效開始延遲時間
     public float EffectStartDelay;
 
     //物件被Disable時是否回到原本狀態
-    public MEnum.ResetWhenDisable _resetWhenDisable;
+    public MUI_Enum.ResetWhenDisable _resetWhenDisable;
     //特效結束時 是否 回到原本狀態
-    public MEnum.ResetWhenEffectDone _resetWhenEffectDone;
+    public MUI_Enum.ResetWhenEffectDone _resetWhenEffectDone;
     //特效結束時 是否 回到原本狀態 的 時間偏移量
     public float ResetWhenEffectDone_TimeOffset;
     //特效結束時 物件Disable
-    public MEnum.DisableWhenEffectDone _disableWhenEffectDone;
+    public MUI_Enum.DisableWhenEffectDone _disableWhenEffectDone;
 
     //是否無視TimeScale
     private bool ignoretimescale;
@@ -79,7 +79,7 @@ public class MoveTo : MonoBehaviour
 
     void OnDisable()
     {
-        if (_resetWhenDisable == MEnum.ResetWhenDisable.True)
+        if (_resetWhenDisable == MUI_Enum.ResetWhenDisable.True)
             ResetOrDefine();
     }
 
@@ -98,7 +98,7 @@ public class MoveTo : MonoBehaviour
     void SetEffectDoneCoroutine()
     {
         float delaytime = time + delay;
-        if (looptype == MEnum.loopType.pingPong) delaytime *= 2;
+        if (looptype == MUI_Enum.loopType.pingPong) delaytime *= 2;
         StartCoroutine(WhenEffectDone(delaytime + ResetWhenEffectDone_TimeOffset + this.EffectStartDelay));
     }
 
@@ -132,9 +132,9 @@ public class MoveTo : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        if (_resetWhenEffectDone == MEnum.ResetWhenEffectDone.True)
+        if (_resetWhenEffectDone == MUI_Enum.ResetWhenEffectDone.True)
             ResetOrDefine();
-        if (_disableWhenEffectDone == MEnum.DisableWhenEffectDone.True)
+        if (_disableWhenEffectDone == MUI_Enum.DisableWhenEffectDone.True)
         {
             ResetOrDefine();
             this.gameObject.SetActive(false);
@@ -156,8 +156,8 @@ public class MoveTo : MonoBehaviour
 
     bool isReset()
     {
-        if (_resetWhenEffectDone >= MEnum.ResetWhenEffectDone.True ||
-            _resetWhenDisable >= MEnum.ResetWhenDisable.True)
+        if (_resetWhenEffectDone >= MUI_Enum.ResetWhenEffectDone.True ||
+            _resetWhenDisable >= MUI_Enum.ResetWhenDisable.True)
             return true;
         else
             return false;
@@ -165,8 +165,8 @@ public class MoveTo : MonoBehaviour
 
     bool isReDefinePreviousState()
     {
-        if (_resetWhenEffectDone == MEnum.ResetWhenEffectDone.True_ReDefinePreviousState ||
-            _resetWhenDisable == MEnum.ResetWhenDisable.True_ReDefinePreviousState)
+        if (_resetWhenEffectDone == MUI_Enum.ResetWhenEffectDone.True_ReDefinePreviousState ||
+            _resetWhenDisable == MUI_Enum.ResetWhenDisable.True_ReDefinePreviousState)
             return true;
         else
             return false;

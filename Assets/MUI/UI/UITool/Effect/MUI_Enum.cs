@@ -1,8 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-public class MEnum : MonoBehaviour
+public class MUI_Enum : MonoBehaviour
 {
+    //介面型態
+    public enum MUIType { Lable, Texture2D};
     //文字型態
     public enum TextType { INT, FLOAT, STRING };
     //各種Ease的方式

@@ -36,7 +36,9 @@ public class GameCollection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //提供介面監控數值
+        //士氣
+        MUI_Monitor.script.SetValue("士氣值"+"x", ((float)this.CurrentMorale / this.MaxMorale) * 100);
     }
 
     /// <summary>

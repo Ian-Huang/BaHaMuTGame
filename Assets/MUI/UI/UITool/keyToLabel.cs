@@ -42,7 +42,7 @@ public class keyToLabel : MonoBehaviour
     public int depth;
 
     /// 文字形式
-    public MEnum.TextType textType = MEnum.TextType.INT;
+    public MUI_Enum.TextType textType = MUI_Enum.TextType.INT;
 
     //用字串當作金鑰來取得資料
     public string Key;
@@ -94,13 +94,13 @@ public class keyToLabel : MonoBehaviour
 
         switch (textType)
         {
-            case MEnum.TextType.INT:
+            case MUI_Enum.TextType.INT:
                 Text = PlayerPrefs.GetInt(Key).ToString();
                 break;
-            case MEnum.TextType.FLOAT:
+            case MUI_Enum.TextType.FLOAT:
                 Text = PlayerPrefs.GetFloat(Key).ToString();
                 break;
-            case MEnum.TextType.STRING:
+            case MUI_Enum.TextType.STRING:
                 Text = PlayerPrefs.GetString(Key).ToString();
                 break;
         }
@@ -126,7 +126,7 @@ public class keyToLabel : MonoBehaviour
     /// Name - RectTo
     /// </summary>
     /// <param name="effect">特效結構</param>
-    void RectTo(MEnum.EffectStruct effect)
+    void RectTo(MUI_Enum.EffectStruct effect)
     {
 
         iTween.ValueTo(gameObject, iTween.Hash(
@@ -145,7 +145,7 @@ public class keyToLabel : MonoBehaviour
     /// Name - RectTo
     /// </summary>
     /// <param name="effect">特效結構</param>
-    void ColorTo(MEnum.EffectStruct effect)
+    void ColorTo(MUI_Enum.EffectStruct effect)
     {
         iTween.ValueTo(gameObject, iTween.Hash(
            "from", TextColor,
@@ -165,7 +165,7 @@ public class keyToLabel : MonoBehaviour
     /// Name - RectTo
     /// </summary>
     /// <param name="effect">特效結構</param>
-    void FontSizeTo(MEnum.EffectStruct effect)
+    void FontSizeTo(MUI_Enum.EffectStruct effect)
     {
         iTween.ValueTo(gameObject, iTween.Hash(
            "from", FontSize,

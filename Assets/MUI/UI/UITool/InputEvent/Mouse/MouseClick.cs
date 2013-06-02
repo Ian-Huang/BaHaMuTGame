@@ -16,7 +16,7 @@ public class MouseClick : MonoBehaviour
 
     public KeyCode keyCode;
 
-    public MEnum.CursorActionType cursorActionType;
+    public MUI_Enum.CursorActionType cursorActionType;
 
     private bool pressDown;
 
@@ -43,7 +43,7 @@ public class MouseClick : MonoBehaviour
         {
             switch (cursorActionType)
             {
-                case MEnum.CursorActionType.KeyDown:
+                case MUI_Enum.CursorActionType.KeyDown:
 
                     if (Input.GetKeyDown(keyCode))
                     {
@@ -61,7 +61,7 @@ public class MouseClick : MonoBehaviour
 
                     break;
 
-                case MEnum.CursorActionType.KeyUp:
+                case MUI_Enum.CursorActionType.KeyUp:
 
                     if (Input.GetKeyUp(keyCode))
                     {
@@ -78,7 +78,7 @@ public class MouseClick : MonoBehaviour
                     break;
 
 
-                case MEnum.CursorActionType.KeyDownAndUp:
+                case MUI_Enum.CursorActionType.KeyDownAndUp:
 
                     if (Input.GetKeyDown(keyCode))
                         pressDown = true;
@@ -100,7 +100,7 @@ public class MouseClick : MonoBehaviour
                     }
                     break;
 
-                case MEnum.CursorActionType.DoubleKeyDown:
+                case MUI_Enum.CursorActionType.DoubleKeyDown:
 
                     if (Input.GetKeyDown(keyCode))
                     {

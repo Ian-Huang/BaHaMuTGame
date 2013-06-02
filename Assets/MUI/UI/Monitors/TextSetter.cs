@@ -22,5 +22,6 @@ public class TextSetter : MonoBehaviour {
 	void Update () {
         getText = (string)(Languages_Controller.ST.languageFile.GetType().GetField(MappingText).GetValue(Languages_Controller.ST.languageFile));
         label.Text = getText;
+        
 	}
 }

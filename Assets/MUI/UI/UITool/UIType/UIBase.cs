@@ -138,9 +138,6 @@ public class UIBase : MonoBehaviour
 
     }
 
-    void OnGUI()
-    {
-    }
 
     #region #特效系統
 
@@ -149,7 +146,7 @@ public class UIBase : MonoBehaviour
     /// Name - RectTo
     /// </summary>
     /// <param name="effect">特效結構</param>
-    void RectTo(MEnum.EffectStruct effect)
+    void RectTo(MUI_Enum.EffectStruct effect)
     {
         iTween.ValueTo(gameObject, iTween.Hash(
             "from", rect,
@@ -168,7 +165,7 @@ public class UIBase : MonoBehaviour
     /// Name - RectTo
     /// </summary>
     /// <param name="effect">特效結構</param>
-    void ColorTo(MEnum.EffectStruct effect)
+    void ColorTo(MUI_Enum.EffectStruct effect)
     {
         iTween.ValueTo(gameObject, iTween.Hash(
            "from", color,
@@ -187,7 +184,7 @@ public class UIBase : MonoBehaviour
     /// Name - ScaleTo
     /// </summary>
     /// <param name="effect">特效結構</param>
-    void ScaleTo(MEnum.EffectStruct effect)
+    void ScaleTo(MUI_Enum.EffectStruct effect)
     {
         iTween.ValueTo(gameObject, iTween.Hash(
            "from", scale,
@@ -202,7 +199,7 @@ public class UIBase : MonoBehaviour
     }
 
 
-    void StopRectTo(MEnum.StopEffectStruct stopEffect)
+    void StopRectTo(MUI_Enum.StopEffectStruct stopEffect)
     {
         if (stopEffect.reDefinePreviousState)
             _rect_previousState = stopEffect.rect;
@@ -212,7 +209,7 @@ public class UIBase : MonoBehaviour
 
         iTween.StopByName(this.gameObject, "RectTo" + stopEffect.hashcode);
     }
-    void StopColorTo(MEnum.StopEffectStruct stopEffect)
+    void StopColorTo(MUI_Enum.StopEffectStruct stopEffect)
     {
         if (stopEffect.reDefinePreviousState)
             _color_previousState = stopEffect.color;
@@ -222,7 +219,7 @@ public class UIBase : MonoBehaviour
 
         iTween.StopByName(this.gameObject, "ColorTo" + stopEffect.hashcode);
     }
-    void StopScaleTo(MEnum.StopEffectStruct stopEffect)
+    void StopScaleTo(MUI_Enum.StopEffectStruct stopEffect)
     {
         if (stopEffect.reDefinePreviousState)
             _scale_previousState = stopEffect.scale;

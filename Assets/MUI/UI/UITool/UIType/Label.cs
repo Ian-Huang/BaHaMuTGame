@@ -65,7 +65,7 @@ public class Label : UIBase
     /// Name - RectTo
     /// </summary>
     /// <param name="effect">¯S®Äµ²ºc</param>
-    void FontSizeTo(MEnum.EffectStruct effect)
+    void FontSizeTo(MUI_Enum.EffectStruct effect)
     {
         iTween.ValueTo(gameObject, iTween.Hash(
            "from", FontSize,

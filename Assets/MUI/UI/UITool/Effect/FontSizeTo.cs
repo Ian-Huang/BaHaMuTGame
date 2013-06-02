@@ -3,21 +3,21 @@ using System.Collections;
 
 public class FontSizeTo : MonoBehaviour
 {
-    public MEnum.EffectStruct _effectStruct;
+    public MUI_Enum.EffectStruct _effectStruct;
 
     //位置與大小
     //public Rect rect;
     //持續時間
     public float time;
     //是否循環
-    public MEnum.loopType looptype;
+    public MUI_Enum.loopType looptype;
     //顏色變化
     //public Color color;
     //延遲時間
     public float delay;
 
 
-    public MEnum.EaseType easeType;
+    public MUI_Enum.EaseType easeType;
 
 
     public int fontSize;
