@@ -41,11 +41,26 @@ public class RectTo : MonoBehaviour
     //是否無視TimeScale
     private bool ignoretimescale;
 
+
+    private bool EffectDone;
+
+    public GameObject link;
     void Update()
     {
-
+        if(EffectDone)
+            if (this.transform.parent.GetComponent<iTween>().percentage >= 1)
+            {
+                if (_resetWhenEffectDone == MUI_Enum.ResetWhenEffectDone.True)
+                    ResetOrDefine();
+                if (_disableWhenEffectDone == MUI_Enum.DisableWhenEffectDone.True)
+                {
+                    ResetOrDefine();
+                    this.gameObject.SetActive(false);
+                }
+                EffectDone = false;
+                link.SetActive(true);
+            }
     }
-
     //錯誤修正與避免
     void BugFix()
     {
@@ -113,14 +128,8 @@ public class RectTo : MonoBehaviour
     IEnumerator WhenEffectDone(float delay)
     {
         yield return new WaitForSeconds(delay);
+        EffectDone = true;
 
-        if (_resetWhenEffectDone == MUI_Enum.ResetWhenEffectDone.True)
-            ResetOrDefine();
-        if (_disableWhenEffectDone == MUI_Enum.DisableWhenEffectDone.True)
-        {
-            ResetOrDefine();
-            this.gameObject.SetActive(false);
-        }
 
     }
 

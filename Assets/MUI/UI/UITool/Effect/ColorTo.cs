@@ -39,7 +39,7 @@ public class ColorTo : MonoBehaviour
     //是否無視TimeScale
     private bool ignoretimescale;
 
-     //錯誤修正與避免
+    //錯誤修正與避免
     void BugFix()
     {
         //* 根據 Issue 72 
@@ -97,6 +97,7 @@ public class ColorTo : MonoBehaviour
         _effectStruct.delay = this.delay;
         _effectStruct.easeType = this.easeType;
         _effectStruct.looptype = this.looptype;
+        _effectStruct.ignoretimescale = this.ignoretimescale;
         _effectStruct.hashcode = string.Format("{0:X}", this.GetHashCode());
 
         this.transform.parent.SendMessage("ColorTo", _effectStruct, SendMessageOptions.DontRequireReceiver);

@@ -70,6 +70,7 @@ public class UIBase : MonoBehaviour
     public Rect _rect;
 
 
+
     // Use this for initialization
     void Start()
     {
@@ -244,8 +245,5 @@ public class UIBase : MonoBehaviour
     {
         scale = input;
     }
-
-
-
     #endregion 特效系統
 }

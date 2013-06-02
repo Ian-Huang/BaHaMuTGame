@@ -33,12 +33,6 @@ public class MouseClick : MonoBehaviour
     {
         rect = (Rect)(DisplayObject.GetType().GetField("_rect").GetValue(DisplayObject));
 
-        //Input.GetTouch(0).phase == TouchPhase.
-
-        //    Camera.mainCamera.ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x,Input.GetTouch(0).position.y,0));
-
-        //Camera.main.ScreenPointToRay
-
         if (rect.Contains(new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y)))
         {
             switch (cursorActionType)
