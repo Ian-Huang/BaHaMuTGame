@@ -202,35 +202,22 @@ public class UIBase : MonoBehaviour
 
     void StopRectTo(MUI_Enum.StopEffectStruct stopEffect)
     {
-        if (stopEffect.reDefinePreviousState)
-            _rect_previousState = stopEffect.rect;
-
-        if (stopEffect.isReset)
-            rect = _rect_previousState;
-
+        if (stopEffect.isReDefine)  _rect_previousState = stopEffect.rect;
+        if (stopEffect.isReset)     rect = _rect_previousState;
         iTween.StopByName(this.gameObject, "RectTo" + stopEffect.hashcode);
     }
     void StopColorTo(MUI_Enum.StopEffectStruct stopEffect)
     {
-        if (stopEffect.reDefinePreviousState)
-            _color_previousState = stopEffect.color;
-
-        if (stopEffect.isReset)
-            color = _color_previousState;
-
+        if (stopEffect.isReDefine)  _color_previousState = stopEffect.color;
+        if (stopEffect.isReset)     color = _color_previousState;
         iTween.StopByName(this.gameObject, "ColorTo" + stopEffect.hashcode);
     }
     void StopScaleTo(MUI_Enum.StopEffectStruct stopEffect)
     {
-        if (stopEffect.reDefinePreviousState)
-            _scale_previousState = stopEffect.scale;
-
-        if (stopEffect.isReset)
-            scale = _scale_previousState;
-
+        if (stopEffect.isReDefine)  _scale_previousState = stopEffect.scale;
+        if (stopEffect.isReset)     scale = _scale_previousState;
         iTween.StopByName(this.gameObject, "ScaleTo" + stopEffect.hashcode);
     }
-
 
     // Update callback for iTween
     void updateRect(Rect input)

@@ -155,7 +155,7 @@ public class LayoutScaleTo : MonoBehaviour
             if (ChkObjectisUI(child))
             {
                 _stopEffectStruct.isReset = this.isReset();
-                _stopEffectStruct.reDefinePreviousState = this.isReDefinePreviousState();
+                _stopEffectStruct.isReDefine = this.isReDefinePreviousState();
                 _stopEffectStruct.hashcode = string.Format("{0:X}", this.GetHashCode());
                 child.SendMessage("StopScaleTo", _stopEffectStruct, SendMessageOptions.DontRequireReceiver);
             }
@@ -175,8 +175,8 @@ public class LayoutScaleTo : MonoBehaviour
 
     bool isReDefinePreviousState()
     {
-        if (_resetWhenEffectDone == MUI_Enum.ResetWhenEffectDone.True_ReDefinePreviousState ||
-            _resetWhenDisable == MUI_Enum.ResetWhenDisable.True_ReDefinePreviousState)
+        if (_resetWhenEffectDone == MUI_Enum.ResetWhenEffectDone.True_ReDefine ||
+            _resetWhenDisable == MUI_Enum.ResetWhenDisable.True_ReDefine)
             return true;
         else
             return false;

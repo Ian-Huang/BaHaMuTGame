@@ -6,7 +6,7 @@ using System.Collections;
 /// 語系文字改變
 ///  * 以程式的方式填入文字訊息，修改MUI的Label的文字與GUISkin
 /// </summary>
-public class LanguageLable : MonoBehaviour {
+public class LanguageLabel : MonoBehaviour {
 
     private Label label;
     public string MappingText;

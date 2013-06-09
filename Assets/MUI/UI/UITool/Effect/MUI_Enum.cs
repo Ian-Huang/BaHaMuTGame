@@ -56,9 +56,9 @@ public class MUI_Enum : MonoBehaviour
     public enum CursorActionType { KeyDown, KeyUp, KeyDownAndUp, DoubleKeyDown }
 
     //特效結束時 是否 回到原本狀態 模式
-    public enum ResetWhenEffectDone { False, True, True_ReDefinePreviousState }
+    public enum ResetWhenEffectDone { False, True, True_ReDefine }
     //物件被Disable時是否回到原本狀態 模式
-    public enum ResetWhenDisable { False, True, True_ReDefinePreviousState }
+    public enum ResetWhenDisable { False, True, True_ReDefine }
     //特效結束時 物件Disable 模式
     public enum DisableWhenEffectDone { False, True }
 
@@ -106,7 +106,7 @@ public class MUI_Enum : MonoBehaviour
         public bool isReset;
 
         //是否更新重置資訊
-        public bool reDefinePreviousState;
+        public bool isReDefine;
 
         //HashCode - Hex
         public string hashcode;
