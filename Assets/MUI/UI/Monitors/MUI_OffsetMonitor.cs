@@ -27,8 +27,8 @@ public class MUI_OffsetMonitor : MUI_Monitor
         offset.y = Mathf.Lerp(From.y, To.y, Percentage.y / 100);
 
         //§∂≠±≈‹§∆
-        if (this.GetComponent<Texture_2D>()) this.GetComponent<Texture_2D>().offset = offset;
-        if (this.GetComponent<Label>()) this.GetComponent<Label>().offset = offset;
+        if (this.GetComponent<MUI_Texture_2D>()) this.GetComponent<MUI_Texture_2D>().offset = offset;
+        if (this.GetComponent<MUI_Label>()) this.GetComponent<MUI_Label>().offset = offset;
 
 
     }

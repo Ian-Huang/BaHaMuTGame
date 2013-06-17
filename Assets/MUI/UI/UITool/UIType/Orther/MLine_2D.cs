@@ -1,18 +1,22 @@
 using UnityEngine;
 using System.Collections;
 
+#region ＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃修正紀錄＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃
+/// 13/05/08    建置
+/// 13/06/17    去除ScaleAroundPivot上的Y+0.5 使線放大時由中心點放大
+///             自定義一個新材質 1*1 的白色Pixel (LinePixel.png)
+///             重新定義名稱 MLine_2D
+#endregion 
+
 /// <summary>
 /// 介面 - 繪製 2D 線
-/// 13/05/08 建置
 /// </summary>
 /// * BaseResolution    根據解析度大小重新定義Point數值 (Value 0 to 1)
 /// * BasePixel         根據像素大小重新定義Point數值
-/// ** 根據 BaseResolution 所算出的結果必須為INT不可為FLOAT
-public class Line_2D : MonoBehaviour
+/// ** 根據 BaseResolution 所算出的結果必須為INT不可為FLOAT 
+
+public class MLine_2D : MonoBehaviour
 {
-
-    public Material m;
-
     //視窗大小
     private Vector2 _ScreenSize = new Vector2(Screen.width, Screen.height);
 
@@ -47,15 +51,18 @@ public class Line_2D : MonoBehaviour
     {
         _ScreenSize = new Vector2(Screen.width, Screen.height);
     }
-    // Use this for initialization
-    void Start()
+
+    void Warning()
     {
         //警告通知
         if (pointStart_BaseResolution != Vector2.zero || pointEnd_BaseResolution != Vector2.zero)
             if (!BaseResolution)
                 Debug.LogError("If you want Vectors base on resolution , please set [BaseResolution] TRUE");
-
-
+    }
+    // Use this for initialization
+    void Start()
+    {
+        Warning();
     }
 
 
@@ -114,7 +121,7 @@ public class Line_2D : MonoBehaviour
         //  non-integer values for the width and length (such as sub 1 pixel widths).
         // Note that the pivot point is at +.5 from pointA.y, this is so that the width of the line
         //  is centered on the origin at pointA.
-        GUIUtility.ScaleAroundPivot(new Vector2(magnitude, width), new Vector2(pointA.x, pointA.y + 0.5f));
+        GUIUtility.ScaleAroundPivot(new Vector2(magnitude, width), new Vector2(pointA.x, pointA.y));
 
         // Set the rotation for the line.
         //  The angle was calculated with pointA as the origin.

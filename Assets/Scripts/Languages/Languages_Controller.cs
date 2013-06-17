@@ -70,6 +70,7 @@ public class Languages_Controller : MonoBehaviour {
                 break;
             default:
                 languageFile = language_zhTW;
+                languageGUISkin = GUISkin_zhTW;
                 break;
         }
     }

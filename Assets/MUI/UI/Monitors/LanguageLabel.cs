@@ -8,7 +8,7 @@ using System.Collections;
 /// </summary>
 public class LanguageLabel : MonoBehaviour {
 
-    private Label label;
+    private MUI_Label label;
     public string MappingText;
     private string getText;
 
@@ -16,8 +16,8 @@ public class LanguageLabel : MonoBehaviour {
 	// Use this for initialization
     void Start()
     {
-        if (this.gameObject.GetComponent<Label>())
-            label = this.gameObject.GetComponent<Label>();
+        if (this.gameObject.GetComponent<MUI_Label>())
+            label = this.gameObject.GetComponent<MUI_Label>();
 
         //警告通知
         if (!label) Debug.LogWarning(this.name + "-label" + "-Unset");

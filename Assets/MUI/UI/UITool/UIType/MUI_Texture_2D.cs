@@ -1,10 +1,16 @@
 using UnityEngine;
 using System.Collections;
 
+#region ＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃修正紀錄＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃
+/// 13/05/06    建置
+/// 13/06/17    重新定義名稱 MUI_Texture_2D           
+#endregion
+
 /// <summary>
-/// 介面 - 顯示圖片
+/// 介面 - 2D圖像介面
 /// </summary>
-public class Texture_2D : UIBase
+/// 獨立特效系統 - 製造FontSize動畫效果
+public class MUI_Texture_2D : MUI_Base
 {
     //圖片縮放方式
     public ScaleMode scaleMode;

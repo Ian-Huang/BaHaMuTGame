@@ -1,11 +1,18 @@
 using UnityEngine;
 using System.Collections;
 
+#region ＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃修正紀錄＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃
+/// 13/05/06    建置
+/// 13/06/17    重新定義名稱 MUI_Base  
+#endregion
+
 /// <summary>
 /// 介面基底 - 其他介面的父類別
-/// 13/05/06 Updated.
 /// </summary>
-public class UIBase : MonoBehaviour
+/// 特效系統 - 回傳變數並建立iTween執行動畫效果
+/// * 子類別   MUI_Label  文字標籤介面
+/// * 子類別   MUI_Texture_2D 2D圖像介面
+public class MUI_Base : MonoBehaviour
 {
     //介面皮膚
     public GUISkin guiSkin;
@@ -202,20 +209,20 @@ public class UIBase : MonoBehaviour
 
     void StopRectTo(MUI_Enum.StopEffectStruct stopEffect)
     {
-        if (stopEffect.isReDefine)  _rect_previousState = stopEffect.rect;
-        if (stopEffect.isReset)     rect = _rect_previousState;
+        if (stopEffect.isReDefine) _rect_previousState = stopEffect.rect;
+        if (stopEffect.isReset) rect = _rect_previousState;
         iTween.StopByName(this.gameObject, "RectTo" + stopEffect.hashcode);
     }
     void StopColorTo(MUI_Enum.StopEffectStruct stopEffect)
     {
-        if (stopEffect.isReDefine)  _color_previousState = stopEffect.color;
-        if (stopEffect.isReset)     color = _color_previousState;
+        if (stopEffect.isReDefine) _color_previousState = stopEffect.color;
+        if (stopEffect.isReset) color = _color_previousState;
         iTween.StopByName(this.gameObject, "ColorTo" + stopEffect.hashcode);
     }
     void StopScaleTo(MUI_Enum.StopEffectStruct stopEffect)
     {
-        if (stopEffect.isReDefine)  _scale_previousState = stopEffect.scale;
-        if (stopEffect.isReset)     scale = _scale_previousState;
+        if (stopEffect.isReDefine) _scale_previousState = stopEffect.scale;
+        if (stopEffect.isReset) scale = _scale_previousState;
         iTween.StopByName(this.gameObject, "ScaleTo" + stopEffect.hashcode);
     }
 
