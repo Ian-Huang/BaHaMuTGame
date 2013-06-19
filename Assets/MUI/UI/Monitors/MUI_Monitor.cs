@@ -13,8 +13,8 @@ public class MUI_Monitor : MonoBehaviour {
     public Vector2 To;
     public string Key;
 
+    [HideInInspector]
     public Vector2 Percentage;
-
     [HideInInspector]
     public MUI_Enum.MUIType MUI_Type;
 

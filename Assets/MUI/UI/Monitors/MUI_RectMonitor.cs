@@ -28,7 +28,7 @@ public class MUI_RectMonitor : MUI_Monitor
 
 
         //§∂≠±≈‹§∆
-        if (this.GetComponent<Texture_2D>()) this.GetComponent<Texture_2D>().rect = rect;
-        if (this.GetComponent<Label>()) this.GetComponent<Label>().rect = rect;
+        if (this.GetComponent<MUI_Texture_2D>()) this.GetComponent<MUI_Texture_2D>().rect = rect;
+        if (this.GetComponent<MUI_Label>()) this.GetComponent<MUI_Label>().rect = rect;
     }
 }

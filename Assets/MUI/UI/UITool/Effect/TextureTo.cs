@@ -6,7 +6,7 @@ using System.Collections;
 /// </summary>
 public class TextureTo : MonoBehaviour
 {
-    private Texture_2D texture_2D;
+    private MUI_Texture_2D texture_2D;
     private Texture textur_2D_backup;
     public Texture Texture2d;
 
@@ -15,10 +15,10 @@ public class TextureTo : MonoBehaviour
 
     void Awake()
     {
-        if (this.gameObject.GetComponent<Texture_2D>())
-            texture_2D = this.gameObject.GetComponent<Texture_2D>();
-        else if (this.transform.parent.GetComponent<Texture_2D>())
-            texture_2D = this.transform.parent.GetComponent<Texture_2D>();
+        if (this.gameObject.GetComponent<MUI_Texture_2D>())
+            texture_2D = this.gameObject.GetComponent<MUI_Texture_2D>();
+        else if (this.transform.parent.GetComponent<MUI_Texture_2D>())
+            texture_2D = this.transform.parent.GetComponent<MUI_Texture_2D>();
     }
     // Use this for initialization
     void Start()

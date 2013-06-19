@@ -13,6 +13,7 @@ public class RectTo : MUI_EffectTo
 
     void Update()
     {
+        
         if (this.transform.parent.GetComponent<iTween>())
         {
             if (this.transform.parent.GetComponent<iTween>().percentage >= 1)

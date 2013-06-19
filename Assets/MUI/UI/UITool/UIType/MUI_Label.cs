@@ -1,10 +1,16 @@
 using UnityEngine;
 using System.Collections;
 
+#region ＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃修正紀錄＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃
+/// 13/05/06    建置
+/// 13/06/17    重新定義名稱 MUI_Label            
+#endregion
+
 /// <summary>
-/// 介面 - 顯示文字
+/// 介面 - 文字標籤介面
 /// </summary>
-public class Label : UIBase
+/// 獨立特效系統 - 製造FontSize動畫效果
+public class MUI_Label : MUI_Base
 {
     //文字
     public string Text = "Type Text here";
@@ -27,6 +33,7 @@ public class Label : UIBase
     {
         if (FontSize == 0) Debug.LogWarning(this.name + "-FontSize" + "-Unset");
     }
+
     // Update is called once per frame
     void Update()
     {

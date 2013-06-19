@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Languages_jp : MonoBehaviour {
 
-    public string Level_select = "地域を選択してください";
+    public string Level_select = "�a��?��???????";
 
 	// Use this for initialization
 	void Start () {

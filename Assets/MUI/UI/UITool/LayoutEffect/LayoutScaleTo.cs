@@ -189,8 +189,8 @@ public class LayoutScaleTo : MonoBehaviour
     /// <returns>T/F</returns>
     bool ChkObjectisUI(Transform Object)
     {
-        if (Object.GetComponent<Texture_2D>() ||
-            Object.GetComponent<Label>())
+        if (Object.GetComponent<MUI_Texture_2D>() ||
+            Object.GetComponent<MUI_Label>())
             return true;
         else
             return false;

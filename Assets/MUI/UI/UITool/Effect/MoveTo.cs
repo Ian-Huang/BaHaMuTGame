@@ -67,10 +67,10 @@ public class MoveTo : MUI_EffectTo
         yield return new WaitForSeconds(delay);
 
         //取得當前rect
-        newRect = new Rect(this.transform.parent.GetComponent<Texture_2D>().rect.x + moveV2.x,
-                this.transform.parent.GetComponent<Texture_2D>().rect.y + moveV2.y,
-                this.transform.parent.GetComponent<Texture_2D>().rect.width,
-                this.transform.parent.GetComponent<Texture_2D>().rect.height);
+        newRect = new Rect(this.transform.parent.GetComponent<MUI_Texture_2D>().rect.x + moveV2.x,
+                this.transform.parent.GetComponent<MUI_Texture_2D>().rect.y + moveV2.y,
+                this.transform.parent.GetComponent<MUI_Texture_2D>().rect.width,
+                this.transform.parent.GetComponent<MUI_Texture_2D>().rect.height);
 
         _effectStruct.rect = newRect;
         _effectStruct.time = this.time;

@@ -119,19 +119,19 @@ public class LayoutMoveTo : MonoBehaviour
             if (ChkObjectisUI(child))
             {
                 //取得當前rect
-                if (child.GetComponent<Texture_2D>())
+                if (child.GetComponent<MUI_Texture_2D>())
                 {
-                    newRect = new Rect(child.GetComponent<Texture_2D>().rect.x + moveV2.x,
-                            child.GetComponent<Texture_2D>().rect.y + moveV2.y,
-                            child.GetComponent<Texture_2D>().rect.width,
-                            child.GetComponent<Texture_2D>().rect.height);
+                    newRect = new Rect(child.GetComponent<MUI_Texture_2D>().rect.x + moveV2.x,
+                            child.GetComponent<MUI_Texture_2D>().rect.y + moveV2.y,
+                            child.GetComponent<MUI_Texture_2D>().rect.width,
+                            child.GetComponent<MUI_Texture_2D>().rect.height);
                 }
-                if (child.GetComponent<Label>())
+                if (child.GetComponent<MUI_Label>())
                 {
-                    newRect = new Rect(child.GetComponent<Label>().rect.x + moveV2.x,
-                            child.GetComponent<Label>().rect.y + moveV2.y,
-                            child.GetComponent<Label>().rect.width,
-                            child.GetComponent<Label>().rect.height);
+                    newRect = new Rect(child.GetComponent<MUI_Label>().rect.x + moveV2.x,
+                            child.GetComponent<MUI_Label>().rect.y + moveV2.y,
+                            child.GetComponent<MUI_Label>().rect.width,
+                            child.GetComponent<MUI_Label>().rect.height);
                 }
 
 
@@ -207,8 +207,8 @@ public class LayoutMoveTo : MonoBehaviour
     /// <returns>T/F</returns>
     bool ChkObjectisUI(Transform Object)
     {
-        if (Object.GetComponent<Texture_2D>() ||
-            Object.GetComponent<Label>())
+        if (Object.GetComponent<MUI_Texture_2D>() ||
+            Object.GetComponent<MUI_Label>())
             return true;
         else
             return false;
