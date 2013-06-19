@@ -1,7 +1,23 @@
 using UnityEngine;
 using System.Collections;
 
-public class MUI_EffectTo : MonoBehaviour {
+#region ＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃修正紀錄＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃
+/// 13/05/08    建置
+/// 13/06/19    重新定義名稱 MUI_Effect
+#endregion
+/// <summary>
+/// 特效基底 - 其他特效的父類別
+/// </summary>
+/// * 子類別   MUI_RectTo      位置與大小的特效
+/// * 子類別   MUI_ColorTo     顏色的特效
+/// * 子類別   MUI_ScaleTo     大小的特效(不會重新採樣)
+/// * 子類別   MUI_MoveTo      純移動變量的特效
+/// 
+/// * 偵測ITween結束需要percentage變數，需要把ITween.cs的percentage設為Public ( iTween有oncomplete參數值可以使用但必須要傳"下一個動作"資料進去，會使資料不易整理)
+/// * DisableWhenEffectDone 當特效結束將物件Disable
+/// * ResetWhenDisable 當物件被Disable將物件狀態Reset到之前狀態
+/// * [已移除] ResetWhenEffectDone 當特效結束將物件狀態Reset到之前狀態 (可由上述兩者代替)
+public class MUI_Effect : MonoBehaviour {
 
     public MUI_Enum.EffectStruct _effectStruct;
     public MUI_Enum.StopEffectStruct _stopEffectStruct;
@@ -57,5 +73,6 @@ public class MUI_EffectTo : MonoBehaviour {
         else
             return false;
     }
+
 
 }

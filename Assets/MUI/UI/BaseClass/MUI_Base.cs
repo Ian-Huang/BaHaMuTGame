@@ -26,6 +26,10 @@ public class MUI_Base : MonoBehaviour
     //放大倍率
     public Vector2 scale = new Vector2(1, 1);
 
+     [HideInInspector]
+    //排版放大倍率
+    public Vector2 LayoutScale = new Vector2(1, 1);
+
     //圖案顏色
     public Color color = Color.white;
 
@@ -53,6 +57,10 @@ public class MUI_Base : MonoBehaviour
     [HideInInspector]
     //中心點
     public Vector2 CenterPosition;
+
+    [HideInInspector]
+    //排版中心點
+    public Vector2 LayoutCenterPosition;
 
     [HideInInspector]
     //解析度 - 依據1280為基準
@@ -87,7 +95,7 @@ public class MUI_Base : MonoBehaviour
     /// <summary>
     /// Virtual Method UIBase_Start
     /// </summary>
-    virtual public void UIBase_Start()
+    virtual public void MUI_Base_Start()
     {
         _ScreenSize = new Vector2(Screen.width, Screen.height);
         screenRatio = Screen.width / (float)Screen.height;
@@ -105,7 +113,7 @@ public class MUI_Base : MonoBehaviour
     /// <summary>
     /// Virtual Method UIBase_Update
     /// </summary>
-    virtual public void UIBase_Update()
+    virtual public void MUI_Base_Update()
     {
         if (angle >= 360 || angle <= -360)
             angle = 0;
@@ -206,6 +214,25 @@ public class MUI_Base : MonoBehaviour
            "name", "ScaleTo" + effect.hashcode));
     }
 
+    /// <summary>
+    /// 製造LayoutScale動畫效果 (Create)
+    /// Name - ScaleTo
+    /// </summary>
+    /// <param name="effect">特效結構</param>
+    void LayoutScaleTo(MUI_Enum.EffectStruct effect)
+    {
+        iTween.ValueTo(gameObject, iTween.Hash(
+           "from", scale,
+           "to", effect.scale,
+           "delay", effect.delay,
+           "time", effect.time,
+           "easetype", effect.easeType.ToString(),
+           "onupdate", "updateLayoutScale",
+           "loopType", effect.looptype.ToString(),
+           "ignoretimescale", effect.ignoretimescale,
+           "name", "ScaleTo" + effect.hashcode));
+    }
+
 
     void StopRectTo(MUI_Enum.StopEffectStruct stopEffect)
     {
@@ -225,6 +252,12 @@ public class MUI_Base : MonoBehaviour
         if (stopEffect.isReset) scale = _scale_previousState;
         iTween.StopByName(this.gameObject, "ScaleTo" + stopEffect.hashcode);
     }
+    void StopLayoutScaleTo(MUI_Enum.StopEffectStruct stopEffect)
+    {
+        if (stopEffect.isReDefine) _scale_previousState = stopEffect.scale;
+        if (stopEffect.isReset) scale = _scale_previousState;
+        iTween.StopByName(this.gameObject, "LayoutScaleTo" + stopEffect.hashcode);
+    }
 
     // Update callback for iTween
     void updateRect(Rect input)
@@ -238,6 +271,10 @@ public class MUI_Base : MonoBehaviour
     void updateScale(Vector2 input)
     {
         scale = input;
+    }
+    void updateLayoutScale(Vector2 input)
+    {
+        LayoutScale = input;
     }
     #endregion 特效系統
 }

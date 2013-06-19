@@ -7,6 +7,7 @@ public class SetTimeScale : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         Time.timeScale = TimeScale;
+        Destroy(this.gameObject);
 	}
 	
 	// Update is called once per frame

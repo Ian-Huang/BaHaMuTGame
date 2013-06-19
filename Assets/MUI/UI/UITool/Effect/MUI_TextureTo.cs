@@ -1,10 +1,18 @@
 using UnityEngine;
 using System.Collections;
 
+#region ＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃修正紀錄＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃
+/// 13/05/08    建置
+/// 13/06/19    重新定義名稱 MUI_TextureTo
+
+#endregion
 /// <summary>
-/// 設定TextureTo效果變數
+/// 換圖效果
 /// </summary>
-public class TextureTo : MonoBehaviour
+/// Enable時 作用
+/// Disable時 不作用
+/// 
+public class MUI_TextureTo : MonoBehaviour
 {
     private MUI_Texture_2D texture_2D;
     private Texture textur_2D_backup;

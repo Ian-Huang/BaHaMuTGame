@@ -1,12 +1,17 @@
 using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// 設定ScaleTo動畫效果變數
-/// </summary>
-public class ScaleTo : MUI_EffectTo
-{
+#region ＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃修正紀錄＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃
+/// 13/05/08    建置
+/// 13/06/19    重新定義名稱 MUI_ScaleTo
 
+#endregion
+/// <summary>
+/// 動畫 - 動態更變 Scale 變數
+/// </summary>
+/// ** Effect共同說明放置在MUI_Effect
+public class MUI_ScaleTo : MUI_Effect
+{
     //放大倍率
     public Vector2 scale = new Vector2(1, 1);
 
@@ -14,17 +19,17 @@ public class ScaleTo : MUI_EffectTo
     {
         if (this.transform.parent.GetComponent<iTween>())
         {
+            //當ITween執行結束(percentage = 1)
             if (this.transform.parent.GetComponent<iTween>().percentage >= 1)
             {
                 if (_disableWhenEffectDone == MUI_Enum.DisableWhenEffectDone.True)
                 {
-                    ResetOrDefine();
+                    ResetOrReDefine();
                     this.gameObject.SetActive(false);
                 }
                 if (NextEffect) NextEffect.SetActive(true);
             }
         }
-
     }
 
     /// <summary>
@@ -46,11 +51,10 @@ public class ScaleTo : MUI_EffectTo
     void OnDisable()
     {
         if (_resetWhenDisable == MUI_Enum.ResetWhenDisable.True)
-            ResetOrDefine();
+            ResetOrReDefine();
     }
 
-
-    void ResetOrDefine()
+    void ResetOrReDefine()
     {
         _stopEffectStruct.isReset = this.isReset();
         _stopEffectStruct.isReDefine = this.isReDefine();
@@ -72,7 +76,4 @@ public class ScaleTo : MUI_EffectTo
 
         this.transform.parent.SendMessage("ScaleTo", _effectStruct, SendMessageOptions.DontRequireReceiver);
     }
-
-
-
 }

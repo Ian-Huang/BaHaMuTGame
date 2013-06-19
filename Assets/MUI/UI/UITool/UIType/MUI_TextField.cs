@@ -24,13 +24,13 @@ public class MUI_TextField : MUI_Base
     {
         if (!guiSkin) Debug.LogWarning(this.name + "-guiSkin" + "-Unset");
         if (FontSize == 0) Debug.LogWarning(this.name + "-FontSize" + "-Unset");
-        UIBase_Start();
+        MUI_Base_Start();
     }
 
     // Update is called once per frame
     void Update()
     {
-        UIBase_Update();
+        MUI_Base_Update();
     }
 
 

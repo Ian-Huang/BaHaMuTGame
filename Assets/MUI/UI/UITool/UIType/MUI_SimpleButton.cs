@@ -17,22 +17,21 @@ public class MUI_SimpleButton : MUI_Base
     //文字大小
     public int FontSize = 10;
     //文字對準方式
-    public TextAnchor Alignment;
+    public TextAnchor Alignment = TextAnchor.MiddleCenter;
     //按鈕的回饋，使用GameObject做物件觸發
     public GameObject Event;
 
     // Use this for initialization
     void Start()
     {
-        if (!guiSkin) Debug.LogWarning(this.name + "-guiSkin" + "-Unset");
         if (FontSize == 0) Debug.LogWarning(this.name + "-FontSize" + "-Unset");
-        UIBase_Start();
+        MUI_Base_Start();
     }
 
     // Update is called once per frame
     void Update()
     {
-        UIBase_Update();
+        MUI_Base_Update();
     }
 
     void OnGUI()

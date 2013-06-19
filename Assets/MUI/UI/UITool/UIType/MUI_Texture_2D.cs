@@ -20,7 +20,7 @@ public class MUI_Texture_2D : MUI_Base
     // Use this for initialization
     void Start()
     {
-        UIBase_Start();
+        MUI_Base_Start();
         LogWarning();
     }
 
@@ -33,7 +33,7 @@ public class MUI_Texture_2D : MUI_Base
     void Update()
     {
         //UIBase auto update
-        UIBase_Update();
+        MUI_Base_Update();
     }
 
     void OnGUI()
@@ -45,6 +45,9 @@ public class MUI_Texture_2D : MUI_Base
 
         if (scale != Vector2.zero)
             GUIUtility.ScaleAroundPivot(scale, CenterPosition);
+
+        if (LayoutScale != Vector2.zero)
+            GUIUtility.ScaleAroundPivot(LayoutScale, LayoutCenterPosition);
 
         if (Texture2d)
         {

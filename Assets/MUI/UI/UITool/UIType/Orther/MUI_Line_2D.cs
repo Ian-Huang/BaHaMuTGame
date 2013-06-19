@@ -15,7 +15,7 @@ using System.Collections;
 /// * BasePixel         根據像素大小重新定義Point數值
 /// ** 根據 BaseResolution 所算出的結果必須為INT不可為FLOAT 
 
-public class MLine_2D : MonoBehaviour
+public class MUI_Line_2D : MonoBehaviour
 {
     //視窗大小
     private Vector2 _ScreenSize = new Vector2(Screen.width, Screen.height);
