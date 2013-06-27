@@ -7,7 +7,7 @@ using System.Collections.Generic;
 /// </summary>
 public class RolesController : MonoBehaviour
 {
-    public static RolesController master;
+    public static RolesController script;
 
     public GameObject Role1;
     public GameObject Role2;
@@ -20,7 +20,7 @@ public class RolesController : MonoBehaviour
 
     void Awake()
     {
-        master = this;
+        script = this;
     }
     // Update is called once per frame
     void Update()

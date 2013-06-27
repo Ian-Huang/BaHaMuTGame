@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class GameCollection : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public static GameCollection master;
+    public static GameManager script;
 
     public int CurrentMorale;
     public int MoraleRestoreRate;
@@ -11,7 +11,7 @@ public class GameCollection : MonoBehaviour
 
     void Awake()
     {
-        master = this;
+        script = this;
     }
 
     // Use this for initialization

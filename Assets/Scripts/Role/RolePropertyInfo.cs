@@ -61,9 +61,9 @@ public class RolePropertyInfo : MonoBehaviour
         else
         {
             //角色當前虛弱，扣總士氣(未完成)
-            GameCollection.master.CurrentMorale -= deLife;
-            if (GameCollection.master.CurrentMorale <= 0)
-                GameCollection.master.CurrentMorale = 0;
+            GameManager.script.CurrentMorale -= deLife;
+            if (GameManager.script.CurrentMorale <= 0)
+                GameManager.script.CurrentMorale = 0;
         }
 
         //當生命小於0

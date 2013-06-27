@@ -81,7 +81,7 @@ public class EnemyPropertyInfo : MonoBehaviour
                 if (this.currentTextureIndex >= this.DeadChangeTextures.Length)
                 {
                     //播完爆炸圖片後，刪除物件
-                    if (this.transform.parent.name.Contains("Clone"))
+                    if (this.transform.parent.name.Contains("Clone"))   //如有重新定位的怪物，則刪除父物件 EX:石巨人
                         Destroy(this.transform.parent.gameObject);
                     else
                         Destroy(this.gameObject);
