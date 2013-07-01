@@ -5,9 +5,9 @@ using System.Collections.Generic;
 /// <summary>
 /// 角色控制器(角色位置交換)
 /// </summary>
-public class RolesController : MonoBehaviour
+public class RolesCollection : MonoBehaviour
 {
-    public static RolesController script;
+    public static RolesCollection script;
 
     public GameObject Role1;
     public GameObject Role2;

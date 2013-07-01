@@ -8,7 +8,7 @@ public class Event_ChangeRolePosition : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        RolesController.script.ChangeRolePosition(changeMode);
+        RolesCollection.script.ChangeRolePosition(changeMode);
         Destroy(this.gameObject);
     }
 
