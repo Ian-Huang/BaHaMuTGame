@@ -35,21 +35,21 @@ public class DesktopButtonTypeA : MDesktopButton
                 }
             }
 
-                if (pressDown)
+            if (pressDown)
+            {
+                if (Input.GetKeyUp(keyCode))
                 {
-                    if (Input.GetKeyUp(keyCode))
+                    if (Event)
                     {
-                        if (Event)
-                        {
-                            GameObject newGameObject = (GameObject)Instantiate(Event);
-                            newGameObject.SetActive(true);
-                        }
-                        if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(false);
-                        if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(true);
-                        submit = false;
+                        GameObject newGameObject = (GameObject)Instantiate(Event);
+                        newGameObject.SetActive(true);
                     }
+                    if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(false);
+                    if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(true);
+                    submit = false;
                 }
-            
+            }
+
         }
         else
         {

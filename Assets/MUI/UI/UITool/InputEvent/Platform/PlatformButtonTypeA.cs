@@ -42,19 +42,18 @@ public class PlatformButtonTypeA : MPlatformButton
                         }
                     }
                 }
-                else
-                {
-                    if (Input.GetTouch(i).fingerId == fingerID)
+
+                if (submit && Input.GetTouch(i).fingerId == fingerID)
                         if (Input.GetTouch(i).phase == TouchPhase.Moved || Input.GetTouch(i).phase == TouchPhase.Began)
                         {
                             if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(true);
                             if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(false);
-                            pressDownPlatform[i] = true;
+                            isPress[i] = true;
                             submit = false;
                         }
-                }
+                
 
-                if (pressDownPlatform[i])
+                if (isPress[i])
                 {
 
                     if (Input.GetTouch(i).fingerId == fingerID)
@@ -75,12 +74,13 @@ public class PlatformButtonTypeA : MPlatformButton
 
                 if (Input.GetTouch(i).fingerId == fingerID)
                 {
-                    if (Input.GetTouch(i).phase == TouchPhase.Moved && pressDownPlatform[i])
+                    if (Input.GetTouch(i).phase == TouchPhase.Moved && isPress[i])
                     {
                         if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(false);
                         if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(true);
-                        pressDownPlatform[i] = false;
+                        isPress[i] = false;
                         submit = false;
+                        FingerIDsubmit = false;
                     }
                     if (Input.GetTouch(i).phase == TouchPhase.Ended)
                     {

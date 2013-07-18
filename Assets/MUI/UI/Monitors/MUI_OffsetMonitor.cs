@@ -14,8 +14,8 @@ public class MUI_OffsetMonitor : MUI_Monitor
     void Start()
     {
         //以Key為字串註冊一個索引
-        if (Key != "") MonitorDictionary.Add(Key + "x", 0);
-        if (Key != "") MonitorDictionary.Add(Key + "y", 0);
+        if (Key != "") SubmitKey(Key + "x");
+        if (Key != "") SubmitKey(Key + "y");
     }
 
     // Update is called once per frame
@@ -26,10 +26,9 @@ public class MUI_OffsetMonitor : MUI_Monitor
         offset.x = Mathf.Lerp(From.x, To.x, Percentage.x / 100);
         offset.y = Mathf.Lerp(From.y, To.y, Percentage.y / 100);
 
-        //介面變化
+
+        //驅動介面的變化
         if (this.GetComponent<MUI_Texture_2D>()) this.GetComponent<MUI_Texture_2D>().offset = offset;
         if (this.GetComponent<MUI_Label>()) this.GetComponent<MUI_Label>().offset = offset;
-
-
     }
 }

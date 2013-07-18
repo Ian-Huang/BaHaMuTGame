@@ -75,4 +75,13 @@ public class MUI_Monitor : MonoBehaviour {
             MonitorDictionary[key] = newValue;
     }
 
+
+    /// <summary>
+    /// 註冊Key，必須不存在在MD中才加入
+    /// </summary>
+    /// <param name="key">Key字串</param>
+    public void SubmitKey(string key)
+    {
+        if (!isValid(key)) MonitorDictionary.Add(key, 0);
+    }
 }

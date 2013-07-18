@@ -28,12 +28,15 @@ public class PlatformDebugInfo : MonoBehaviour
                                                     (Screen.height - Input.GetTouch(i).position.y).ToString());
         }
 
+        /*
         for (int i = Input.touchCount; i < 4; i++)
         {
             GUI.Label(new Rect(0, 200 + fontSize * i, 500, 50), "TouchCount" + i.ToString() + "¡G" + "NULL");
         }
-
-
+        */
+        GUI.Label(new Rect(0, 300, 500, 50), "deltaPosition" + "¡G" + Input.GetTouch(0).deltaPosition);
+        GUI.Label(new Rect(0, 320, 500, 50), "deltaTime" + "¡G" + Input.GetTouch(0).deltaTime);
+        GUI.Label(new Rect(0, 340, 500, 50), "tapCount" + "¡G" + Input.GetTouch(1).tapCount);
 
     }
 }
