@@ -7,10 +7,10 @@ public class GameDefinition
     public static int MoraleRestoreRate = 5;
 
     public static List<RoleData> RoleList = new List<RoleData>(){ 
-        new RoleData(Role.BSK,500,10,50,130,0),
-        new RoleData(Role.Knight,500,10,80,80,0),
-        new RoleData(Role.Witch,300,6,30,100,100),
-        new RoleData(Role.Hunter,350,8,40,60,130)
+        new RoleData(Role.狂戰士,500,10,50,130,0),
+        new RoleData(Role.騎士,500,10,80,80,0),
+        new RoleData(Role.法師,300,6,30,100,100),
+        new RoleData(Role.獵人,350,8,40,60,130)
     };
 
     public static List<EnemyData> EnemyList = new List<EnemyData>(){ 
@@ -107,10 +107,10 @@ public class GameDefinition
 
     public enum Role
     {
-        BSK = 0,
-        Hunter = 1,
-        Knight = 2,
-        Witch = 3
+        狂戰士 = 0,
+        獵人 = 1,
+        騎士 = 2,
+        法師 = 3
     }
 
     public enum Enemy

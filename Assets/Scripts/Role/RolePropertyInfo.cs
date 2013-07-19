@@ -14,7 +14,7 @@ public class RolePropertyInfo : MonoBehaviour
     public int nearDamage;  //近距離攻擊傷害值
     public int farDamage;   //遠距離攻擊傷害值
 
-    public int WeakCureScale = 10;
+    public int WeakCureScale = 10;              //Weak狀態 回復速率
     public Texture[] WeakChangeTextures;        //攻擊的交換圖組
     public float ChangeTextureTime = 0.1f;      //交換時間間隔    
 
@@ -74,13 +74,13 @@ public class RolePropertyInfo : MonoBehaviour
                 this.currentLife = 0;
                 switch (this.Role)
                 {
-                    case GameDefinition.Role.Witch:
-                    case GameDefinition.Role.Hunter:
+                    case GameDefinition.Role.法師:
+                    case GameDefinition.Role.獵人:
                         this.GetComponent<FarJobAttackController>().ChangeState(false); //將攻擊的動作暫停                        
                         break;
 
-                    case GameDefinition.Role.BSK:
-                    case GameDefinition.Role.Knight:
+                    case GameDefinition.Role.狂戰士:
+                    case GameDefinition.Role.騎士:
                         this.GetComponent<NearJobAttackController>().ChangeState(false);   //將攻擊的動作暫停                        
                         break;
                 }
@@ -125,13 +125,13 @@ public class RolePropertyInfo : MonoBehaviour
                 this.GetComponent<RegularChangePictures>().ChangeState(true);  //將一般移動的換圖恢復運作
                 switch (this.Role)
                 {
-                    case GameDefinition.Role.Witch:
-                    case GameDefinition.Role.Hunter:
+                    case GameDefinition.Role.法師:
+                    case GameDefinition.Role.獵人:
                         this.GetComponent<FarJobAttackController>().ChangeState(true); //將攻擊的動作暫停                        
                         break;
 
-                    case GameDefinition.Role.BSK:
-                    case GameDefinition.Role.Knight:
+                    case GameDefinition.Role.狂戰士:
+                    case GameDefinition.Role.騎士:
                         this.GetComponent<NearJobAttackController>().ChangeState(true);   //將攻擊的動作暫停                        
                         break;
                 }
