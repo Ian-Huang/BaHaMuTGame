@@ -8,7 +8,7 @@ public class GameDefinition
 
     public static List<RoleData> RoleList = new List<RoleData>(){ 
         new RoleData(Role.狂戰士,500,10,50,130,0),
-        new RoleData(Role.騎士,500,10,80,80,0),
+        new RoleData(Role.盾騎士,500,10,80,80,0),
         new RoleData(Role.法師,300,6,30,100,100),
         new RoleData(Role.獵人,350,8,40,60,130)
     };
@@ -109,7 +109,7 @@ public class GameDefinition
     {
         狂戰士 = 0,
         獵人 = 1,
-        騎士 = 2,
+        盾騎士 = 2,
         法師 = 3
     }
 

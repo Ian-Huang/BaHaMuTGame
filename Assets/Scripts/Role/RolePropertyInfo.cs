@@ -80,7 +80,7 @@ public class RolePropertyInfo : MonoBehaviour
                         break;
 
                     case GameDefinition.Role.狂戰士:
-                    case GameDefinition.Role.騎士:
+                    case GameDefinition.Role.盾騎士:
                         this.GetComponent<NearJobAttackController>().ChangeState(false);   //將攻擊的動作暫停                        
                         break;
                 }
@@ -131,7 +131,7 @@ public class RolePropertyInfo : MonoBehaviour
                         break;
 
                     case GameDefinition.Role.狂戰士:
-                    case GameDefinition.Role.騎士:
+                    case GameDefinition.Role.盾騎士:
                         this.GetComponent<NearJobAttackController>().ChangeState(true);   //將攻擊的動作暫停                        
                         break;
                 }
