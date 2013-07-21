@@ -16,12 +16,14 @@ public class RoleAnimationController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
-            this.boneAnimation.CrossFade("Walk");
+            this.boneAnimation.Play("walk");
+            //this.boneAnimation.CrossFade("walk", 0.2f, PlayMode.StopSameLayer);
         }
 
         if (Input.GetKeyDown(KeyCode.W))
         {
-            this.boneAnimation.CrossFade("weak");
+            this.boneAnimation.Play("weak");
+            //this.boneAnimation.CrossFade("weak", 0.2f, PlayMode.StopSameLayer);
         }
     }
 }
