@@ -1,14 +1,17 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 腳色動畫控制器(使用SmoothMove)
+/// </summary>
 public class RoleAnimationController : MonoBehaviour
 {
-    public SmoothMoves.BoneAnimation boneAnimation;
+    public SmoothMoves.BoneAnimation boneAnimation; //SmoothMove BoneAnimation
 
     // Use this for initialization
     void Start()
     {
-        this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
+        this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();    //get role's SmoothMove BoneAnimation
     }
 
     // Update is called once per frame
