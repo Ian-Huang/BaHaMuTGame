@@ -2,12 +2,15 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// 控制物體的移動(速度、方向)
+/// Create Date：2013-07-23
+/// Author：Ian
+/// Description：
+///     控制物體的移動(速度、方向)
 /// </summary>
 public class MoveController : MonoBehaviour
 {
-    public float MoveSpeed = 5;                         //物體移動速度
-    public Vector3 Direction = Vector3.zero;        //物體移動方向(使用Unity世界座標)
+    public float MoveSpeed = 5;                 //物體移動速度
+    public Vector3 Direction = Vector3.zero;    //物體移動方向(使用Unity世界座標)
 
     // Use this for initialization
     void Start()

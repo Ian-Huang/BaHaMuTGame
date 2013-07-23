@@ -148,6 +148,11 @@ public class GameDefinition
         OneAndTwo, TwoAndThree, ThreeAndFour
     }
 
+    public enum EventTriggerType
+    {
+        出怪點 = 0, 終點 = 1
+    }
+
     //物件Layer 數值必須跟 Game Layer相同
     public enum GameLayout
     {
