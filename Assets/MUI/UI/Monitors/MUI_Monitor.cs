@@ -2,32 +2,18 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MUI_Monitor : MonoBehaviour {
+public class MUI_Monitor
+{
 
     //繰篈捌セ
     public static MUI_Monitor script;
     //把计菏北Dictionary
-    public static Dictionary<string,float> MonitorDictionary = new Dictionary<string,float>();
+    public static Dictionary<string, float> MonitorDictionary = new Dictionary<string, float>();
 
-    public Vector2 From;
-    public Vector2 To;
-    public string Key;
-
-    [HideInInspector]
-    public Vector2 Percentage;
-    [HideInInspector]
-    public MUI_Enum.MUIType MUI_Type;
-
-	// Use this for initialization
-	void Start () {
+    public MUI_Monitor()
+    {
         script = this;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
-
+    }
 
     /// <summary>
     /// 块场戈癟
@@ -35,7 +21,7 @@ public class MUI_Monitor : MonoBehaviour {
     public void DumpAll()
     {
         foreach (var md in MonitorDictionary)
-            print("Key" + md.Key + "Value" + md.Value);
+            Debug.Log("Key" + md.Key + "Value" + md.Value);
     }
 
     /// <summary>
@@ -69,7 +55,7 @@ public class MUI_Monitor : MonoBehaviour {
     /// </summary>
     /// <param name="key">Key﹃</param>
     /// <param name="newValue">计</param>
-    public void SetValue(string key , float newValue)
+    public void SetValue(string key, float newValue)
     {
         if (MonitorDictionary.ContainsKey(key))
             MonitorDictionary[key] = newValue;
