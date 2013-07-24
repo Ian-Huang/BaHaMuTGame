@@ -6,7 +6,8 @@ public class LoadLevel : MonoBehaviour {
     public string LoadLevelName;
 	// Use this for initialization
 	void Start () {
-        LoadNextScene.SetLoadScene(LoadLevelName);
+        
+        LoadNextScene.script.LoadScene(LoadLevelName,2);
         //Application.LoadLevel(LoadLevelName);
         Destroy(this.gameObject);
 	}

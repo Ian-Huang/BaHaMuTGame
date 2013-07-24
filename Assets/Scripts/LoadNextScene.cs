@@ -3,14 +3,33 @@ using System.Collections;
 
 public class LoadNextScene : MonoBehaviour
 {
-    public bool showGUI;
-    public int GUIdepth;                            //貼圖深度(值越小越後畫)
-    public Texture TextureResoure;                  //貼圖素材
+    public static LoadNextScene script;
 
-    public static void SetLoadScene(string sceneName)
+    //目前驅動2D顯示的介面物件
+    public GameObject currentUserInterface;
+    //目前驅動3D顯示的物件(相機)
+    public Camera currentCamera;
+    //過場特效
+    public GameObject TransitionsEffect;
+
+    public static float DelayTime;
+
+    public void LoadScene(string sceneName, float delayTime)
+    { 
+        DelayTime = delayTime;
+        StartCoroutine("LoadSceneAsync", sceneName);
+       
+    }
+
+
+    IEnumerator LoadSceneAsync(string sceneName)
     {
         if (!Application.isLoadingLevel)
         {
+            if (TransitionsEffect)      TransitionsEffect.SetActive(true);
+            if (currentCamera)          currentCamera.enabled = false;
+            if (currentUserInterface)   currentUserInterface.SetActive(false);
+            yield return new WaitForSeconds(DelayTime);
             Application.LoadLevelAsync(sceneName);
         }
     }
@@ -18,34 +37,20 @@ public class LoadNextScene : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        script = this;
         DontDestroyOnLoad(this.gameObject);
-        //  iTween.ColorTo(this.gameObject, iTween.Hash("a", 0, "looptype", iTween.LoopType.pingPong));
     }
 
     void Update()
     {
-        if (Application.isLoadingLevel)
-        {
-            showGUI = true;
-        }
+
     }
 
     IEnumerator OnLevelWasLoaded(int level)
     {
-        yield return new WaitForSeconds(5.0F);
+        yield return new WaitForSeconds(0.0F);
+        TransitionsEffect.SetActive(false);
         Destroy(this.gameObject);
     }
 
-    void OnGUI()
-    {
-        if (!showGUI) return;
-        GUI.depth = this.GUIdepth;
-
-
-        GUI.DrawTexture(new Rect(
-            0, 0, Screen.width, Screen.height),
-            this.TextureResoure
-            );
-
-    }
 }
