@@ -14,16 +14,18 @@ public class RolePropertyInfo : MonoBehaviour
     public int nearDamage;  //近距離攻擊傷害值
     public int farDamage;   //遠距離攻擊傷害值
 
-    public int WeakCureScale = 10;              //Weak狀態 回復速率
-    public Texture[] WeakChangeTextures;        //攻擊的交換圖組
-    public float ChangeTextureTime = 0.1f;      //交換時間間隔    
-
     public bool isWeak { get; private set; }
-    private int currentTextureIndex { get; set; }
+    public int WeakCureScale = 10;              //Weak狀態 回復速率
+
+    private SmoothMoves.BoneAnimation boneAnimation;
 
     // Use this for initialization
     void Start()
     {
+        this.isWeak = false;
+
+        this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
+
         GameDefinition.RoleData getData = GameDefinition.RoleList.Find((GameDefinition.RoleData data) => { return data.RoleName == Role; });
         this.maxLife = getData.Life;
         this.currentLife = getData.Life;
@@ -32,14 +34,7 @@ public class RolePropertyInfo : MonoBehaviour
         this.nearDamage = getData.NearDamage;
         this.farDamage = getData.FarDamage;
 
-        this.isWeak = false;
         InvokeRepeating("RestoreLifePersecond", 0.1f, 1);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     /// <summary>
@@ -48,8 +43,8 @@ public class RolePropertyInfo : MonoBehaviour
     /// <param name="deLife">減少的數值</param>
     public void DecreaseLife(int deLife)
     {
-
-        deLife -= this.defence; //扣除防禦力
+        //扣除防禦力
+        deLife -= this.defence;
         if (deLife <= 0)
             deLife = 1;
 
@@ -66,39 +61,16 @@ public class RolePropertyInfo : MonoBehaviour
                 GameManager.script.CurrentMorale = 0;
         }
 
-        //當生命小於0
         if (!this.isWeak)
         {
+            //當生命小於0
             if (this.currentLife <= 0)
             {
                 this.currentLife = 0;
-                switch (this.Role)
-                {
-                    case GameDefinition.Role.法師:
-                    case GameDefinition.Role.獵人:
-                        this.GetComponent<FarJobAttackController>().ChangeState(false); //將攻擊的動作暫停                        
-                        break;
-
-                    case GameDefinition.Role.狂戰士:
-                    case GameDefinition.Role.盾騎士:
-                        this.GetComponent<NearJobAttackController>().ChangeState(false);   //將攻擊的動作暫停                        
-                        break;
-                }
-                this.GetComponent<RegularChangePictures>().ChangeState(false);  //將一般移動的換圖暫停
                 this.isWeak = true;
-                InvokeRepeating("ChangeWeakTexture", 0.1f, this.ChangeTextureTime);
+                this.boneAnimation.Play("weak");
             }
         }
-    }
-
-    void ChangeWeakTexture()
-    {
-        if ((this.currentTextureIndex + 1) >= this.WeakChangeTextures.Length)       //歸0，循環
-            this.currentTextureIndex = 0;
-        else
-            this.currentTextureIndex++;
-
-        this.renderer.material.mainTexture = this.WeakChangeTextures[this.currentTextureIndex];
     }
 
     /// <summary>
@@ -106,6 +78,7 @@ public class RolePropertyInfo : MonoBehaviour
     /// </summary>
     void RestoreLifePersecond()
     {
+        //未虛弱，回復速率正常
         if (!this.isWeak)
         {
             this.currentLife += this.cureRate;
@@ -114,27 +87,13 @@ public class RolePropertyInfo : MonoBehaviour
         }
         else
         {
+            //虛弱狀態，回復速率 * WeakCureScale
             this.currentLife += (this.cureRate * this.WeakCureScale);
             if (this.currentLife >= this.maxLife)
             {
                 this.currentLife = this.maxLife;
 
                 this.isWeak = false;
-                CancelInvoke("ChangeWeakTexture");
-                this.currentTextureIndex = 0;
-                this.GetComponent<RegularChangePictures>().ChangeState(true);  //將一般移動的換圖恢復運作
-                switch (this.Role)
-                {
-                    case GameDefinition.Role.法師:
-                    case GameDefinition.Role.獵人:
-                        this.GetComponent<FarJobAttackController>().ChangeState(true); //將攻擊的動作暫停                        
-                        break;
-
-                    case GameDefinition.Role.狂戰士:
-                    case GameDefinition.Role.盾騎士:
-                        this.GetComponent<NearJobAttackController>().ChangeState(true);   //將攻擊的動作暫停                        
-                        break;
-                }
             }
         }
     }
