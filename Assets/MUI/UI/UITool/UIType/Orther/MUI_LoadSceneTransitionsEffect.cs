@@ -1,26 +1,31 @@
 using UnityEngine;
 using System.Collections;
 
-public class LoadNextScene : MonoBehaviour
+public class MUI_LoadSceneTransitionsEffect : MonoBehaviour
 {
-    public static LoadNextScene script;
+    public static MUI_LoadSceneTransitionsEffect script;
 
-    //目前驅動2D顯示的介面物件
+    //[OPTIONAL]目前驅動2D顯示的介面物件
     public GameObject currentUserInterface;
-    //目前驅動3D顯示的物件(相機)
+    //[OPTIONAL]目前驅動3D顯示的物件(相機)
     public Camera currentCamera;
     //過場特效
     public GameObject TransitionsEffect;
 
+    public float DefaultDelayTime;
     public static float DelayTime;
 
+    /// <summary>
+    /// 不同步方式讀新場景，有過場特效
+    /// </summary>
+    /// <param name="sceneName">場景名</param>
+    /// <param name="delayTime">給"0"會以預設秒數讀取，非0為自定義秒數</param>
     public void LoadScene(string sceneName, float delayTime)
     { 
         DelayTime = delayTime;
+        if (DelayTime == 0) DelayTime = DefaultDelayTime;
         StartCoroutine("LoadSceneAsync", sceneName);
-       
     }
-
 
     IEnumerator LoadSceneAsync(string sceneName)
     {
@@ -41,16 +46,9 @@ public class LoadNextScene : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    void Update()
+    void OnLevelWasLoaded(int level)
     {
-
-    }
-
-    IEnumerator OnLevelWasLoaded(int level)
-    {
-        yield return new WaitForSeconds(0.0F);
         TransitionsEffect.SetActive(false);
-        Destroy(this.gameObject);
     }
 
 }

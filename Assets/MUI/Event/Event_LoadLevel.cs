@@ -1,14 +1,13 @@
 using UnityEngine;
 using System.Collections;
 
-public class LoadLevel : MonoBehaviour {
+public class Event_LoadLevel : MonoBehaviour {
 
     public string LoadLevelName;
+    public float DelayTime;
 	// Use this for initialization
 	void Start () {
-        
-        LoadNextScene.script.LoadScene(LoadLevelName,2);
-        //Application.LoadLevel(LoadLevelName);
+        MUI_LoadSceneTransitionsEffect.script.LoadScene(LoadLevelName, DelayTime);
         Destroy(this.gameObject);
 	}
 	
