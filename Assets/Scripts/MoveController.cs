@@ -12,6 +12,8 @@ public class MoveController : MonoBehaviour
     public float MoveSpeed = 5;                 //物體移動速度
     public Vector3 Direction = Vector3.zero;    //物體移動方向(使用Unity世界座標)
 
+    public bool isRunning = true;
+
     // Use this for initialization
     void Start()
     {
@@ -20,7 +22,8 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position += this.Direction * Time.deltaTime * this.MoveSpeed;
+        if (this.isRunning)
+            this.transform.position += this.Direction * Time.deltaTime * this.MoveSpeed;
     }
 
     /// <summary>

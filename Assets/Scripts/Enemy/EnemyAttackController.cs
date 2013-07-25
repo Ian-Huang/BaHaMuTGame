@@ -38,12 +38,18 @@ public class EnemyAttackController : MonoBehaviour
                 //tag = MainBody
                 if (this.hitData.collider.tag.CompareTo("MainBody") == 0)
                     if (!this.boneAnimation.IsPlaying("attack"))
+                    {
                         this.boneAnimation.Play("attack");
+                        this.GetComponent<MoveController>().isRunning = false;
+                    }
             }
             else
             {
-                if (!this.boneAnimation.IsPlaying("walk"))
+                if (!this.boneAnimation.IsPlaying("attack"))
+                {
                     this.boneAnimation.Play("walk");
+                    this.GetComponent<MoveController>().isRunning = true;
+                }
             }
         }
     }
