@@ -2,7 +2,11 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// 敵人的屬性資訊
+/// Create Date：2013-07-24
+/// Modify Date：2013-07-25
+/// Author：Ian
+/// Description：
+///     敵人的屬性資訊
 /// </summary>
 public class EnemyPropertyInfo : MonoBehaviour
 {
@@ -23,9 +27,11 @@ public class EnemyPropertyInfo : MonoBehaviour
     {
         this.isDead = false;
 
+        //設定BoneAnimation
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
         this.boneAnimation.RegisterUserTriggerDelegate(DeadDestroy);
 
+        //讀取系統儲存的怪物屬性資料
         GameDefinition.EnemyData getData = GameDefinition.EnemyList.Find((GameDefinition.EnemyData data) => { return data.EnemyName == Enemy; });
         this.maxLife = getData.Life;
         this.currentLife = getData.Life;
@@ -43,6 +49,7 @@ public class EnemyPropertyInfo : MonoBehaviour
     /// <param name="triggerEvent"></param>
     public void DeadDestroy(SmoothMoves.UserTriggerEvent triggerEvent)
     {
+        //確認已進入死亡狀態，才可刪除
         if (this.isDead)
             Destroy(this.gameObject);
     }

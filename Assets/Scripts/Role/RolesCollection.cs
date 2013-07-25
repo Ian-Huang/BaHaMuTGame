@@ -3,7 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// à︹北竟(à︹竚ユ传)
+/// Create Date2013-07-22
+/// Modify Date2013-07-25
+/// AuthorIan
+/// Description
+///     à︹北竟(à︹竚ユ传)
 /// </summary>
 public class RolesCollection : MonoBehaviour
 {
@@ -14,9 +18,8 @@ public class RolesCollection : MonoBehaviour
     public GameObject Role3;
     public GameObject Role4;
 
-    public float changeTime = 1;
+    public float changeTime;
     public bool isChanging = false;
-
 
     void Awake()
     {
@@ -100,6 +103,9 @@ public class RolesCollection : MonoBehaviour
         obj2 = tempGameObject;
     }
 
+    /// <summary>
+    /// à︹ユ传ЧΘ牟祇
+    /// </summary>
     void ChangeComplete()
     {
         this.isChanging = false;

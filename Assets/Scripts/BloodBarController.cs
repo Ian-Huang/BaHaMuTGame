@@ -1,8 +1,16 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Create Date：2013-07-25
+/// Modify Date：2013-07-25
+/// Author：Ian
+/// Description：
+///     血條顯示控制器
+/// </summary>
 public class BloodBarController : MonoBehaviour
 {
+    //確認是哪種類型的血條
     public enum WhichBlood
     { Role = 0, Enemy = 1 }
     public WhichBlood whichType;
@@ -27,6 +35,7 @@ public class BloodBarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //計算 (當前血量/最大血量)， 並帶入TextureOffset
         switch (this.whichType)
         {
             case WhichBlood.Role:

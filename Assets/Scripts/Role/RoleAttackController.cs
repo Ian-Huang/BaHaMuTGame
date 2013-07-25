@@ -3,9 +3,10 @@ using System.Collections;
 
 /// <summary>
 /// Create Date：2013-07-23
+/// Modify Date：2013-07-25
 /// Author：Ian
 /// Description：
-///     角色攻擊控制器(未完成)
+///     角色攻擊控制器
 /// </summary>
 public class RoleAttackController : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class RoleAttackController : MonoBehaviour
         //載入角色資訊
         this.roleInfo = this.GetComponent<RolePropertyInfo>();
 
+        //設定BoneAnimation
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
         this.boneAnimation.RegisterColliderTriggerDelegate(WeaponHit);
         this.boneAnimation.RegisterUserTriggerDelegate(ShootEvent);
@@ -31,6 +33,7 @@ public class RoleAttackController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 角色必須未虛弱
         if (!this.roleInfo.isWeak)
         {
             if (Physics.Raycast(this.transform.position, Vector3.right, out this.hitData, this.AttackDistance, this.AttackLayer))
@@ -39,14 +42,19 @@ public class RoleAttackController : MonoBehaviour
                 if (this.hitData.collider.tag.CompareTo("MainBody") == 0)
                     if (!this.hitData.collider.GetComponent<EnemyPropertyInfo>().isDead)    //確認enemy是否已經死亡
                         if (!this.boneAnimation.IsPlaying("attack"))
-                        {
                             this.boneAnimation.Play("attack");
-                        }
             }
             else
             {
+                //確認目前動畫狀態(必須沒再播attack)
                 if (!this.boneAnimation.IsPlaying("attack"))
-                    this.boneAnimation.Play("walk");
+                {
+                    //判定背景是否有在動，以此決定角色的動作狀態
+                    if (BackgroundController.script.isRunning)
+                        this.boneAnimation.Play("walk");
+                    else
+                        this.boneAnimation.Play("idle");
+                }
             }
         }
     }
@@ -57,6 +65,7 @@ public class RoleAttackController : MonoBehaviour
     /// <param name="triggerEvent">觸發相關資訊</param>
     public void WeaponHit(SmoothMoves.ColliderTriggerEvent triggerEvent)
     {
+        //確認是由"weapon"碰撞的collider
         if (triggerEvent.boneName == "weapon" && triggerEvent.triggerType == SmoothMoves.ColliderTriggerEvent.TRIGGER_TYPE.Enter)
         {
             if (((1 << triggerEvent.otherCollider.gameObject.layer) & this.AttackLayer.value) > 0)
@@ -74,9 +83,13 @@ public class RoleAttackController : MonoBehaviour
     /// <param name="triggerEvent">觸發相關資訊</param>
     public void ShootEvent(SmoothMoves.UserTriggerEvent triggerEvent)
     {
+        //確認是由"weapon"觸發的UserTrigger
         if (triggerEvent.boneName == "weapon")
         {
+            //產生射擊物件
             GameObject obj = (GameObject)Instantiate(this.ShootObject, this.transform.position - new Vector3(0, 0, 0.1f), this.ShootObject.transform.rotation);
+
+            //設定物件的parent 、 layer 、 Damage
             obj.layer = LayerMask.NameToLayer("ShootObject");
             obj.transform.parent = GameObject.Find("UselessObjectCollection").transform;
 

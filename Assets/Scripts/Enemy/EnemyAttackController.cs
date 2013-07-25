@@ -2,7 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// Create Date：2013-07-25
+/// Create Date：2013-07-23
+/// Modify Date：2013-07-25
 /// Author：Ian
 /// Description：
 ///     敵人攻擊控制器
@@ -23,6 +24,7 @@ public class EnemyAttackController : MonoBehaviour
         //載入敵人資訊
         this.enemyInfo = this.GetComponent<EnemyPropertyInfo>();
 
+        //設定BoneAnimation
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
         this.boneAnimation.RegisterColliderTriggerDelegate(WeaponHit);
         this.boneAnimation.RegisterUserTriggerDelegate(ShootEvent);
@@ -31,6 +33,7 @@ public class EnemyAttackController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 怪物必須未死亡
         if (!this.enemyInfo.isDead)
         {
             if (Physics.Raycast(this.transform.position, Vector3.left, out this.hitData, this.AttackDistance, this.AttackLayer))
@@ -45,6 +48,7 @@ public class EnemyAttackController : MonoBehaviour
             }
             else
             {
+                //確認目前動畫狀態(必須沒再播attack)
                 if (!this.boneAnimation.IsPlaying("attack"))
                 {
                     this.boneAnimation.Play("walk");
@@ -60,6 +64,7 @@ public class EnemyAttackController : MonoBehaviour
     /// <param name="triggerEvent">觸發相關資訊</param>
     public void WeaponHit(SmoothMoves.ColliderTriggerEvent triggerEvent)
     {
+        //確認是由"weapon"碰撞的collider
         if (triggerEvent.boneName == "weapon" && triggerEvent.triggerType == SmoothMoves.ColliderTriggerEvent.TRIGGER_TYPE.Enter)
         {
             if (((1 << triggerEvent.otherCollider.gameObject.layer) & this.AttackLayer.value) > 0)
@@ -77,9 +82,13 @@ public class EnemyAttackController : MonoBehaviour
     /// <param name="triggerEvent">觸發相關資訊</param>
     public void ShootEvent(SmoothMoves.UserTriggerEvent triggerEvent)
     {
+        //確認是由"weapon"觸發的UserTrigger
         if (triggerEvent.boneName == "weapon")
         {
+            //產生射擊物件
             GameObject obj = (GameObject)Instantiate(this.ShootObject, this.transform.position - new Vector3(0, 0, 0.1f), this.ShootObject.transform.rotation);
+
+            //設定物件的parent 、 layer 、 Damage
             obj.layer = LayerMask.NameToLayer("ShootObject");
             obj.transform.parent = GameObject.Find("UselessObjectCollection").transform;
 

@@ -10,16 +10,4 @@ using System.Collections;
 public class EventTriggerType : MonoBehaviour
 {
     public GameDefinition.EventTriggerType Type;
-
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

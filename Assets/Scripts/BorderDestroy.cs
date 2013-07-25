@@ -2,18 +2,16 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// 將超出邊界的物件刪除
+/// Create Date：2013-07-25
+/// Modify Date：2013-07-25
+/// Author：Ian
+/// Description：
+///     將超出邊界的物件刪除
 /// </summary>
 public class BorderDestroy : MonoBehaviour
 {
-    public float DestroyRadius = 15;     //邊界球形的半徑
-    public LayerMask DestroyLayer;
-
-    // Use this for initialization
-    void Start()
-    {
-
-    }
+    public float DestroyRadius;         //邊界球形的半徑
+    public LayerMask DestroyLayer;      //要被刪除的Layer
 
     // Update is called once per frame
     void Update()

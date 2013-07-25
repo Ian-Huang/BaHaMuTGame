@@ -4,27 +4,16 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Create Date：2013-07-23
+/// Modify Date：2013-07-25
 /// Author：Ian
 /// Description：
 ///     敵人產生點(當玩家觸發，開始製造敵人)
 /// </summary>
 public class EnemyCreatePoint : MonoBehaviour
 {
-    public int CreateCount;     //一次性產生多少隻怪( if CreateCount = 0 => Random 1 ~ RandomCreatePositionList.Count )
+    public int CreateCount;     //一次性產生多少隻怪(假如 CreateCount = 0 => Random (1 ~ RandomCreatePositionList.Count) )
     public GameObject[] RandomCreateEnemyKindList;      //隨機產生怪物的清單
-    public List<Transform> RandomCreatePositionList;    //產生點
-
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    public List<Transform> RandomCreatePositionList;    //隨機產生怪物的位置
 
     /// <summary>
     /// 開始製造敵人
@@ -46,7 +35,7 @@ public class EnemyCreatePoint : MonoBehaviour
                 this.RandomCreatePositionList[positionIndex].position,
                 this.RandomCreateEnemyKindList[enemyIndex].transform.rotation);
             this.RandomCreatePositionList.RemoveAt(positionIndex);
-
+            //設定物件的parent
             newObj.transform.parent = this.transform;
         }
     }

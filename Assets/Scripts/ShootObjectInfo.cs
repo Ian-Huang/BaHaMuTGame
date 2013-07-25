@@ -2,24 +2,26 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// 遠距離(角色/敵人)發射的物件資訊
+/// Create Date：2013-07-25
+/// Modify Date：2013-07-25
+/// Author：Ian
+/// Description：
+///     遠距離(角色/敵人)發射的物件資訊
 /// </summary>
 public class ShootObjectInfo : MonoBehaviour
 {
-    public int Damage;
-    public GameDefinition.AttackType AttackType;
-
-    public LayerMask ExplosiveLayer;
+    public int Damage;                              //造成的傷害值
+    public GameDefinition.AttackType AttackType;    //攻擊的類型(物理、魔法)
+    public LayerMask ExplosiveLayer;                //爆破的對象
 
     private bool isExplosion { get; set; }
-
     private SmoothMoves.BoneAnimation boneAnimation;
 
     void OnTriggerEnter(Collider other)
     {
         if (!this.isExplosion)
         {
-            if (((1 << other.collider.gameObject.layer) & this.ExplosiveLayer.value) > 0)   //判定欲爆炸的Layer
+            if (((1 << other.collider.gameObject.layer) & this.ExplosiveLayer.value) > 0)   //判定爆炸的Layer
             {
                 if (other.collider.tag.CompareTo("MainBody") == 0)
                 {
@@ -49,16 +51,19 @@ public class ShootObjectInfo : MonoBehaviour
     void Start()
     {
         this.isExplosion = false;
+
+        //設定BoneAnimation
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
         this.boneAnimation.RegisterUserTriggerDelegate(ExplosionDestroy);
     }
 
     /// <summary>
-    /// SmoothMove UserTrigger(當播完爆炸動畫後刪除自己)
+    /// SmoothMove UserTrigger(當播完動畫後刪除自己)
     /// </summary>
     /// <param name="triggerEvent"></param>
     public void ExplosionDestroy(SmoothMoves.UserTriggerEvent triggerEvent)
     {
-        Destroy(this.gameObject);
+        if (this.isExplosion)
+            Destroy(this.gameObject);
     }
 }

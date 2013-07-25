@@ -1,12 +1,16 @@
 using UnityEngine;
 using System.Collections;
+
 /// <summary>
-/// 角色的屬性資訊
+/// Create Date：2013-07-24
+/// Modify Date：2013-07-25
+/// Author：Ian
+/// Description：
+///     角色的屬性資訊
 /// </summary>
 public class RolePropertyInfo : MonoBehaviour
 {
     public GameDefinition.Role Role;
-
     public int currentLife; //當前生命值
     public int maxLife;     //最大生命值
     public int cureRate;    //每秒回復生命速率
@@ -24,8 +28,10 @@ public class RolePropertyInfo : MonoBehaviour
     {
         this.isWeak = false;
 
+        //設定BoneAnimation
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
 
+        //讀取系統儲存的角色屬性資料
         GameDefinition.RoleData getData = GameDefinition.RoleList.Find((GameDefinition.RoleData data) => { return data.RoleName == Role; });
         this.maxLife = getData.Life;
         this.currentLife = getData.Life;

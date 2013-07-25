@@ -3,6 +3,7 @@ using System.Collections;
 
 /// <summary>
 /// Create Date：2013-07-23
+/// Modify Date：2013-07-25
 /// Author：Ian
 /// Description：
 ///     事件控制器(用來偵測觸發事件)
@@ -21,16 +22,5 @@ public class EventController : MonoBehaviour
             //抵達終點，做以下處理(停止背景移動、腳色切換Idle狀態)
             BackgroundController.script.isRunning = false;
         }
-    }
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

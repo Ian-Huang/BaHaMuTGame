@@ -3,6 +3,7 @@ using System.Collections;
 
 /// <summary>
 /// Create Date：2013-07-23
+/// Modify Date：2013-07-25
 /// Author：Ian
 /// Description：
 ///     控制物體的移動(速度、方向)
@@ -12,12 +13,7 @@ public class MoveController : MonoBehaviour
     public float MoveSpeed = 5;                 //物體移動速度
     public Vector3 Direction = Vector3.zero;    //物體移動方向(使用Unity世界座標)
 
-    public bool isRunning = true;
-
-    // Use this for initialization
-    void Start()
-    {
-    }
+    public bool isRunning = true;               //控制是否運作
 
     // Update is called once per frame
     void Update()
