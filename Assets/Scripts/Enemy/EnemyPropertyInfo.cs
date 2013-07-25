@@ -43,7 +43,8 @@ public class EnemyPropertyInfo : MonoBehaviour
     /// <param name="triggerEvent"></param>
     public void DeadDestroy(SmoothMoves.UserTriggerEvent triggerEvent)
     {
-        Destroy(this.gameObject);
+        if (this.isDead)
+            Destroy(this.gameObject);
     }
 
     /// <summary>
