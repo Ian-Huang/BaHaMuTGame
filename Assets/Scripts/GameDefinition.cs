@@ -153,13 +153,13 @@ public class GameDefinition
         出怪點 = 0, 終點 = 1
     }
 
-    //物件Layer 數值必須跟 Game Layer相同
-    public enum GameLayout
-    {
-        Enemy = 8,
-        Role = 9,
-        Obstacle = 10
-    }
+    ////物件Layer 數值必須跟 Game Layer相同
+    //public enum GameLayout
+    //{
+    //    Enemy = 8,
+    //    Role = 9,
+    //    Obstacle = 10
+    //}
 
     public const float ShootObject_ZIndex = 11;
 }

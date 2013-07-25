@@ -9,33 +9,36 @@ public class ShootObjectInfo : MonoBehaviour
     public int Damage;
     public GameDefinition.AttackType AttackType;
 
-    public Texture[] ChangeTextures;        //換圖的圖組
-    public float ChangeTextureTime = 0.1f;  //貼圖交換時間間隔
     public LayerMask ExplosiveLayer;
 
-    private int currentTextureIndex { get; set; }
-    private bool isExplsion { get; set; }
-    private float addValue { get; set; }
+    private bool isExplosion { get; set; }
 
-    void OnTriggerStay(Collider other)
+    private SmoothMoves.BoneAnimation boneAnimation;
+
+    void OnTriggerEnter(Collider other)
     {
-        if (!this.isExplsion)
+        if (!this.isExplosion)
         {
-            if ((this.ExplosiveLayer.value & (int)Mathf.Pow(2, other.gameObject.layer)) != 0)      //判定欲爆炸的Layer
+            if (((1 << other.collider.gameObject.layer) & this.ExplosiveLayer.value) > 0)   //判定欲爆炸的Layer
             {
-                if (Mathf.Abs(other.transform.position.x - this.transform.position.x) < 1)
+                if (other.collider.tag.CompareTo("MainBody") == 0)
                 {
-                    this.isExplsion = true;
-                    this.renderer.material.mainTexture = this.ChangeTextures[this.currentTextureIndex];
+                    //如對象為敵人，需再檢查敵人本身是否已經死亡(EnemyPropertyInfo.isDead)
+                    if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                        if (other.GetComponent<EnemyPropertyInfo>().isDead)
+                            return;
+
+                    //以下產生爆炸事件
+                    this.isExplosion = true;
+                    this.boneAnimation.Play("explosion");
 
                     //移除Script，使爆炸位置固定、換圖正常
                     Destroy(this.GetComponent<MoveController>());
-                    Destroy(this.GetComponent<RegularChangePictures>());
 
                     //處理不同碰撞物的部分(敵人、主角)
-                    if (other.gameObject.layer == (int)GameDefinition.GameLayout.Enemy)
+                    if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                         other.GetComponent<EnemyPropertyInfo>().DecreaseLife(this.Damage);
-                    else if (other.gameObject.layer == (int)GameDefinition.GameLayout.Role)
+                    else if (other.gameObject.layer == LayerMask.NameToLayer("Role"))
                         other.GetComponent<RolePropertyInfo>().DecreaseLife(this.Damage);
                 }
             }
@@ -45,29 +48,17 @@ public class ShootObjectInfo : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        this.addValue = 0;
-        this.currentTextureIndex = 0;
-        this.isExplsion = false;
+        this.isExplosion = false;
+        this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
+        this.boneAnimation.RegisterUserTriggerDelegate(ExplosionDestroy);
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// SmoothMove UserTrigger(當播完爆炸動畫後刪除自己)
+    /// </summary>
+    /// <param name="triggerEvent"></param>
+    public void ExplosionDestroy(SmoothMoves.UserTriggerEvent triggerEvent)
     {
-        if (this.isExplsion)
-        {
-            if (this.addValue >= this.ChangeTextureTime)
-            {
-                this.addValue = 0;
-                this.currentTextureIndex++;
-                if (this.currentTextureIndex >= this.ChangeTextures.Length)
-                {
-                    //播完爆炸圖片後，刪除物件
-                    Destroy(this.gameObject);
-                    return;
-                }
-                this.renderer.material.mainTexture = this.ChangeTextures[this.currentTextureIndex];
-            }
-            this.addValue += Time.deltaTime;
-        }
+        Destroy(this.gameObject);
     }
 }
