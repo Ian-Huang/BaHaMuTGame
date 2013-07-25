@@ -45,7 +45,7 @@ public class RoleAttackController : MonoBehaviour
             }
             else
             {
-                if (!this.boneAnimation.IsPlaying("walk"))
+                if (!this.boneAnimation.IsPlaying("attack"))
                     this.boneAnimation.Play("walk");
             }
         }
@@ -76,7 +76,9 @@ public class RoleAttackController : MonoBehaviour
     {
         if (triggerEvent.boneName == "weapon")
         {
-            GameObject obj = (GameObject)Instantiate(this.ShootObject, this.transform.position - new Vector3(0, 0, 0.1f), this.ShootObject.transform.rotation);                      
+            GameObject obj = (GameObject)Instantiate(this.ShootObject, this.transform.position - new Vector3(0, 0, 0.1f), this.ShootObject.transform.rotation);
+            obj.layer = LayerMask.NameToLayer("ShootObject");
+            obj.transform.parent = GameObject.Find("UselessObjectCollection").transform;
 
             ShootObjectInfo info = obj.GetComponent<ShootObjectInfo>();
             info.Damage = this.roleInfo.farDamage;
