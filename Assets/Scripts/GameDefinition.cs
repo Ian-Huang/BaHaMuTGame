@@ -33,6 +33,14 @@ public class GameDefinition
         new EnemyData(Enemy.¥Û¥¨¤H,300,10,50,200,0),
     };
 
+    public static List<ObstacleData> ObstacleList = new List<ObstacleData>(){ 
+        new ObstacleData(Obstacle.¤õµKÅ]ªk°},500),
+        new ObstacleData(Obstacle.¾ð¤ì_01,500),
+        new ObstacleData(Obstacle.¾ð¤ì_02,300),
+        new ObstacleData(Obstacle.Àð¾À,350),
+        new ObstacleData(Obstacle.ÅK³´¨À,350)
+    };
+
     public class RoleData
     {
         public Role RoleName;
@@ -91,6 +99,23 @@ public class GameDefinition
         }
     }
 
+    public class ObstacleData
+    {
+        public Obstacle ObstacleName;
+        public int Damage;
+
+        /// <summary>
+        /// »ÙÃªª«¸ê®Æ«Øºc¦¡
+        /// </summary>
+        /// <param name="name">»ÙÃªª«¦W¦r</param>
+        /// <param name="damage">»ÙÃªª«¶Ë®`­È</param>
+        public ObstacleData(Obstacle name, int damage)
+        {
+            this.ObstacleName = name;
+            this.Damage = damage;
+        }
+    }
+
     public class BossData
     {
         public int Life;
@@ -136,11 +161,11 @@ public class GameDefinition
 
     public enum Obstacle
     {
-        ¸t¤k¥Û¸O = 101,
-        ÅK³´¨À = 201,
-        Àð¾À = 301,
-        ¤õµKÅ]ªk°} = 401,
-        ¾ð¤ì_01 = 501, ¾ð¤ì_02 = 502
+        ¸t¤k¥Û¸O = 101,              //¸tÃM¤h³B²z
+        ÅK³´¨À = 201,                //³´¨À³B²z
+        Àð¾À = 301,                  //¨g¾Ô¤h³B²z           
+        ¤õµKÅ]ªk°} = 401,            //ªk®v³B²z
+        ¾ð¤ì_01 = 501, ¾ð¤ì_02 = 502 //¨g¾Ô¤h³B²z
     }
 
     public enum ChangeRoleMode
