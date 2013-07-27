@@ -49,8 +49,8 @@ public class EnemyPropertyInfo : MonoBehaviour
     /// <param name="triggerEvent"></param>
     public void DeadDestroy(SmoothMoves.UserTriggerEvent triggerEvent)
     {
-        //確認已進入死亡狀態，才可刪除
-        if (this.isDead)
+        //確認已進入死亡狀態且撥放死亡動畫後，才可刪除
+        if (this.isDead && triggerEvent.animationName.CompareTo("defeat") == 0)
             Destroy(this.gameObject);
     }
 

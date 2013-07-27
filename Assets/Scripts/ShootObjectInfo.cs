@@ -63,7 +63,8 @@ public class ShootObjectInfo : MonoBehaviour
     /// <param name="triggerEvent"></param>
     public void ExplosionDestroy(SmoothMoves.UserTriggerEvent triggerEvent)
     {
-        if (this.isExplosion)
+        //確認已進入爆炸狀態且爆炸死亡動畫後，才可刪除
+        if (this.isExplosion && triggerEvent.animationName.CompareTo("explosion") == 0)
             Destroy(this.gameObject);
     }
 }
