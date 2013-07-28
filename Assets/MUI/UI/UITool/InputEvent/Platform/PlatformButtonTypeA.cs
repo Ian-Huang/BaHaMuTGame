@@ -5,6 +5,7 @@ using System.Collections;
 /// 平板在偵測範圍裡面按鍵的特效
 /// </summary>
 /// 註冊型
+/// 
 public class PlatformButtonTypeA : MPlatformButton
 {
     //註冊ID
@@ -21,12 +22,15 @@ public class PlatformButtonTypeA : MPlatformButton
     // Update is called once per frame
     void Update()
     {
+        if (!ButtonEnable) return;
+
         //取得偵測範圍
         rect = (Rect)(DisplayObject.GetType().GetField("_rect").GetValue(DisplayObject));
 
         int i = 0;
         while (i < Input.touchCount)
         {
+            //觸碰點在範圍內
             if (rect.Contains(new Vector2(Input.GetTouch(i).position.x, Screen.height - Input.GetTouch(i).position.y)))
             {
                 //ID註冊
@@ -44,7 +48,7 @@ public class PlatformButtonTypeA : MPlatformButton
                 }
 
                 if (submit && Input.GetTouch(i).fingerId == fingerID)
-                        if (Input.GetTouch(i).phase == TouchPhase.Moved || Input.GetTouch(i).phase == TouchPhase.Began)
+                        if (Input.GetTouch(i).phase == TouchPhase.Began || Input.GetTouch(i).phase == TouchPhase.Moved)
                         {
                             if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(true);
                             if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(false);
@@ -69,7 +73,7 @@ public class PlatformButtonTypeA : MPlatformButton
                         }
                 }
             }
-            else
+            else  //觸碰點不在範圍內
             {
 
                 if (Input.GetTouch(i).fingerId == fingerID)

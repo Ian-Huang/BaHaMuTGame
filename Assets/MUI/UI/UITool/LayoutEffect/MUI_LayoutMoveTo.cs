@@ -110,6 +110,7 @@ public class MUI_LayoutMoveTo : MUI_Effect
     {
         if (child.GetComponent<MUI_Texture_2D>()) return child.GetComponent<MUI_Texture_2D>().rect;
         if (child.GetComponent<MUI_Label>()) return child.GetComponent<MUI_Label>().rect;
+        if (child.GetComponent<MUI_AutoType>()) return child.GetComponent<MUI_AutoType>().rect;
         else return newRect;
     }
 
@@ -121,7 +122,8 @@ public class MUI_LayoutMoveTo : MUI_Effect
     bool Check_isMUI(Transform Object)
     {
         if (Object.GetComponent<MUI_Texture_2D>() ||
-            Object.GetComponent<MUI_Label>())
+            Object.GetComponent<MUI_Label>() ||
+            Object.GetComponent<MUI_AutoType>())
             return true;
         else
             return false;

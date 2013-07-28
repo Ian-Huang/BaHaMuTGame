@@ -18,7 +18,9 @@ public class DesktopButtonTypeA : MDesktopButton
     // Update is called once per frame
     void Update()
     {
-        //¨ú±o°»´ú½d³ò
+        if (!ButtonEnable) { isDone = false; return; }
+
+        //¨ú±o°»´ú½d³ò(Rect)
         rect = (Rect)(DisplayObject.GetType().GetField("_rect").GetValue(DisplayObject));
 
 
@@ -43,6 +45,7 @@ public class DesktopButtonTypeA : MDesktopButton
                     {
                         GameObject newGameObject = (GameObject)Instantiate(Event);
                         newGameObject.SetActive(true);
+                        isDone = true;
                     }
                     if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(false);
                     if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(true);

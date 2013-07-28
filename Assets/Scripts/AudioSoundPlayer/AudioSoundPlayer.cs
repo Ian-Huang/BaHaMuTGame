@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class AudioSoundPlayer : MonoBehaviour
 {
+    public GameObject ggg;
     public static AudioSoundPlayer script;
 
     //°Ñ¼ÆºÊ±±Dictionary
