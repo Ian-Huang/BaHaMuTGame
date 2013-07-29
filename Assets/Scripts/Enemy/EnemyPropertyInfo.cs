@@ -81,7 +81,8 @@ public class EnemyPropertyInfo : MonoBehaviour
         {
             this.isDead = true;
             this.boneAnimation.Play("defeat");
-            Destroy(this.GetComponent<MoveController>());
+            Destroy(this.GetComponent<MoveController>());   //死亡:停止敵人移動
+            CancelInvoke("RestoreLifePersecond");           //死亡:停止敵人回復生命
         }
     }
 }
