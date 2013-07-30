@@ -6,7 +6,7 @@ using System.Collections;
 
 #endregion
 /// <summary>
-/// 教學系統 - 鎖定並高亮指定按鈕
+/// 教學系統 - 將指定Tex2D的深度改變成-10001而需要設定深度門檻為-10000(SetDepthThreshold)
 /// </summary>
 /// ** 將Texture_2D 指定depth為-1001，而黑幕depth為-1000
 public class TeachingSystem_ButtonControl : MonoBehaviour
@@ -19,14 +19,14 @@ public class TeachingSystem_ButtonControl : MonoBehaviour
     public MUI_Texture_2D Texture_2D;
 
     //不運作的按鈕(桌上型)
-    public MDesktopButton[] disableButtons_desktop;
+    //public MDesktopButton[] disableButtons_desktop;
     //運作的按鈕(桌上型)
-    public MDesktopButton enableButton_desktop;
+    //public MDesktopButton enableButton_desktop;
 
     //不運作的按鈕(平板型)
-    public MPlatformButton[] disableButtons_platform;
+    //public MPlatformButton[] disableButtons_platform;
     //運作的按鈕(平板型)
-    public MPlatformButton enableButton_platform;
+    //public MPlatformButton enableButton_platform;
 
 
     // 備註：遮些按鈕繼承MButton　都有共同變數布林　isDone 但是當拖拉物件GameObject物件到MButton型態時，會以第一個出現使用MButton為主
@@ -42,7 +42,8 @@ public class TeachingSystem_ButtonControl : MonoBehaviour
         oldDepth = Texture_2D.depth;
         Texture_2D.depth = newDepth;
 
-
+        Texture_2D.gameObject.transform.GetComponent<MDesktopButton>().isDone = false;
+        Texture_2D.gameObject.transform.GetComponent<MPlatformButton>().isDone = false;
         ////disable all button active
         //foreach (MDesktopButton mbutton in disableButtons_desktop)
         //{
@@ -57,7 +58,7 @@ public class TeachingSystem_ButtonControl : MonoBehaviour
     void Update()
     {
         //當按鈕isDone　= true 時　，當按鈕Event產生時
-        if (enableButton_desktop.isDone)
+        if (Texture_2D.gameObject.transform.GetComponent<MDesktopButton>().isDone || Texture_2D.gameObject.transform.GetComponent<MPlatformButton>().isDone)
         {
             //下一個段落
             TeachingSystem.script.NextPart();

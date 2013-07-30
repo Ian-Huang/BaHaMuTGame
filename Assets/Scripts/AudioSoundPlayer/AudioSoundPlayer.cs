@@ -2,6 +2,11 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// 音效庫播放
+/// </summary>
+/// 使用方法
+/// AudioSoundPlayer.script.PlayAudio("音樂名稱");
 public class AudioSoundPlayer : MonoBehaviour
 {
     public static AudioSoundPlayer script;
@@ -20,13 +25,13 @@ public class AudioSoundPlayer : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        
         DontDestroyOnLoad(this.gameObject);
 
         if (!this.GetComponent<AudioSource>())
             this.gameObject.AddComponent<AudioSource>();
 
         script = this;
-
 
         //Dump "Sound Data" to Dictionary , so we can use "key" to get the value
         foreach (Sound sound in audios)
@@ -39,6 +44,10 @@ public class AudioSoundPlayer : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 播放音效
+    /// </summary>
+    /// <param name="name">音效名稱</param>
     public void PlayAudio(string name)
     {
         if (SoundDictionary.ContainsKey(name))

@@ -9,7 +9,7 @@ public class MUI_AutoType : MUI_Base
     //文字
     public string Text = "Type Text here";
 
-    //文字
+    //顯示中的文字
     public string ShowText = "";
 
     //文字大小

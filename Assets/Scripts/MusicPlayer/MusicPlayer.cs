@@ -4,10 +4,15 @@ using System.Collections;
 /// <summary>
 /// 淡入淡出背景音樂
 /// </summary>
+/// 使用方法
+/// MusicPlayer.script.ChangeBackgroungMusic(號碼);
+/// 
 public class MusicPlayer : MonoBehaviour
 {
-    public float FadeTime;
-
+    public static MusicPlayer script;
+    //淡入淡出時間
+    public float FadeTime = 2;
+    //指定歌曲號碼
     public int number;
 
     public bool test;
@@ -23,6 +28,7 @@ public class MusicPlayer : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        script = this;
         if (!this.GetComponent<AudioSource>()) this.gameObject.AddComponent<AudioSource>();
     }
 
@@ -71,9 +77,18 @@ public class MusicPlayer : MonoBehaviour
             this.audio.clip = BGM[number].audioClip;
             BGM_FadeIn();
         }
-
     }
 
+
+    /// <summary>
+    /// 改變音樂音效
+    /// </summary>
+    /// <param name="number">背景音樂編號</param>
+    public void ChangeBackgroungMusic(int number)
+    {
+        this.number = number;
+        StartCoroutine("ChangeBackgroundMusic");
+    }
 
 
 }
