@@ -3,16 +3,17 @@ using System.Collections;
 
 /// <summary>
 /// Create Date：2013-07-23
-/// Modify Date：2013-07-25
+/// Modify Date：2013-07-31
 /// Author：Ian
 /// Description：
-///     角色攻擊控制器
+///     角色攻擊控制器 (敵人、障礙物)
 /// </summary>
 public class RoleAttackController : MonoBehaviour
 {
     public float AttackDistance;        //攻擊距離
     public GameObject ShootObject;      //遠距離攻擊發射出的物件
-    public LayerMask AttackLayer;       //攻擊判定的Layer
+    public LayerMask EnemyLayer;       //判定是否攻擊的敵人Layer
+    public LayerMask ObstacleLayer;       //判定是否攻擊的障礙物Layer
 
     private RolePropertyInfo roleInfo { get; set; }
     private SmoothMoves.BoneAnimation boneAnimation;
@@ -36,13 +37,23 @@ public class RoleAttackController : MonoBehaviour
         // 角色必須未虛弱
         if (!this.roleInfo.isWeak)
         {
-            if (Physics.Raycast(this.transform.position, Vector3.right, out this.hitData, this.AttackDistance, this.AttackLayer))
+            //判別物件為何？  敵人與障礙物有不同的處理
+            if (Physics.Raycast(this.transform.position, Vector3.right, out this.hitData, this.AttackDistance, this.EnemyLayer))
             {
-                //tag = MainBody
+                //tag = MainBody  (物件主體)
                 if (this.hitData.collider.tag.CompareTo("MainBody") == 0)
-                    if (!this.hitData.collider.GetComponent<EnemyPropertyInfo>().isDead)    //確認enemy是否已經死亡
+                    if (!this.hitData.collider.GetComponent<EnemyPropertyInfo>().isDead)    //確認Enemy是否已經死亡
                         if (!this.boneAnimation.IsPlaying("attack"))
                             this.boneAnimation.Play("attack");
+            }
+            else if (Physics.Raycast(this.transform.position, Vector3.right, out this.hitData, this.AttackDistance, this.ObstacleLayer))
+            {
+                //tag = MainBody  (物件主體)
+                if (this.hitData.collider.tag.CompareTo("MainBody") == 0)
+                    if (!this.hitData.collider.GetComponent<ObstaclePropertyInfo>().isDisappear)    //確認Obstacle是否已經消失
+                        if (this.GetComponent<ObstacleSystem>().ObstacleList.Contains(this.hitData.collider.GetComponent<ObstaclePropertyInfo>().Obstacle))
+                            if (!this.boneAnimation.IsPlaying("attack"))
+                                this.boneAnimation.Play("attack");
             }
             else
             {
@@ -68,11 +79,15 @@ public class RoleAttackController : MonoBehaviour
         //確認是由"weapon"碰撞的collider
         if (triggerEvent.boneName == "weapon" && triggerEvent.triggerType == SmoothMoves.ColliderTriggerEvent.TRIGGER_TYPE.Enter)
         {
-            if (((1 << triggerEvent.otherCollider.gameObject.layer) & this.AttackLayer.value) > 0)
+            //tag = MainBody  (物件主體)
+            if (triggerEvent.otherCollider.tag.CompareTo("MainBody") == 0)
             {
-                //tag = MainBody
-                if (triggerEvent.otherCollider.tag.CompareTo("MainBody") == 0)
+                //判別物件為何？  敵人與障礙物有不同的處理
+                if (((1 << triggerEvent.otherCollider.gameObject.layer) & this.EnemyLayer.value) > 0)
                     triggerEvent.otherCollider.GetComponent<EnemyPropertyInfo>().DecreaseLife(this.roleInfo.nearDamage);
+
+                else if (((1 << triggerEvent.otherCollider.gameObject.layer) & this.ObstacleLayer.value) > 0)
+                    triggerEvent.otherCollider.GetComponent<ObstaclePropertyInfo>().CheckObstacle(true);
             }
         }
     }

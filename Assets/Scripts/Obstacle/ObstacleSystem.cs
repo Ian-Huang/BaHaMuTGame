@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Create Date：2013-07-29
-/// Modify Date：2013-07-29
+/// Modify Date：2013-07-31
 /// Author：Ian
 /// Description：
 ///     障礙物系統 
@@ -37,11 +37,5 @@ public class ObstacleSystem : MonoBehaviour
     {
         //載入角色資訊
         this.roleInfo = this.GetComponent<RolePropertyInfo>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

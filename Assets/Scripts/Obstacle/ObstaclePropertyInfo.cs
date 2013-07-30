@@ -3,15 +3,14 @@ using System.Collections;
 
 /// <summary>
 /// Create Date：2013-07-27
-/// Modify Date：2013-07-29
+/// Modify Date：2013-07-31
 /// Author：Ian
 /// Description：
 ///     障礙物的屬性資訊
 /// </summary>
 public class ObstaclePropertyInfo : MonoBehaviour
 {
-    public GameDefinition.Obstacle Obstacle;
-
+    public GameDefinition.Obstacle Obstacle;    //障礙物名稱
     public int Damage;   //陷阱傷害值
 
     public bool isDisappear { get; private set; }

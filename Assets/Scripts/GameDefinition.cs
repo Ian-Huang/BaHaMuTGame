@@ -37,7 +37,7 @@ public class GameDefinition
         new ObstacleData(Obstacle.火焰魔法陣,500),
         new ObstacleData(Obstacle.樹木_01,500),
         new ObstacleData(Obstacle.樹木_02,300),
-        new ObstacleData(Obstacle.牆壁,350),
+        new ObstacleData(Obstacle.斷壁,350),
         new ObstacleData(Obstacle.鐵陷阱,350)
     };
 
@@ -163,7 +163,7 @@ public class GameDefinition
     {
         聖女石碑 = 101,              //聖騎士處理
         鐵陷阱 = 201,                //陷阱處理
-        牆壁 = 301,                  //狂戰士處理           
+        斷壁 = 301,                  //狂戰士處理           
         火焰魔法陣 = 401,            //法師處理
         樹木_01 = 501, 樹木_02 = 502 //狂戰士處理
     }
