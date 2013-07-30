@@ -6,17 +6,6 @@ using System.Collections;
 /// </summary>
 public class MPlatformButton : MButton
 {
+    [HideInInspector]
     public bool[] isPress = new bool[4];
-    // Use this for initialization
-    void Start()
-    {
-
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-     
-    } 
 }

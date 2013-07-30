@@ -14,7 +14,7 @@ public class TeachingSystem_ButtonControl : MonoBehaviour
 
     //圖片原本的深度
     private int oldDepth;
-    private static int newDepth = -1001;
+    private static int newDepth = -10001;
     //指定按鈕的Texture2D
     public MUI_Texture_2D Texture_2D;
 
@@ -43,14 +43,14 @@ public class TeachingSystem_ButtonControl : MonoBehaviour
         Texture_2D.depth = newDepth;
 
 
-        //disable all button active
-        foreach (MDesktopButton mbutton in disableButtons_desktop)
-        {
-            mbutton.isDone = false;
-            mbutton.ButtonEnable = false;
-        }
-        //enable the one button you set
-        enableButton_desktop.ButtonEnable = true;
+        ////disable all button active
+        //foreach (MDesktopButton mbutton in disableButtons_desktop)
+        //{
+        //    mbutton.isDone = false;
+        //    mbutton.ButtonEnable = false;
+        //}
+        ////enable the one button you set
+        //enableButton_desktop.ButtonEnable = true;
     }
 
     // Update is called once per frame
@@ -64,11 +64,11 @@ public class TeachingSystem_ButtonControl : MonoBehaviour
             //圖片回到原本Depth
             Texture_2D.depth = oldDepth;
 
-            //enable all button you set
-            foreach (MButton mbutton in disableButtons_desktop)
-            {
-                mbutton.ButtonEnable = true;
-            }
+            ////enable all button you set
+            //foreach (MButton mbutton in disableButtons_desktop)
+            //{
+            //    mbutton.ButtonEnable = true;
+            //}
         }
     }
 

@@ -15,13 +15,14 @@ public class PlatformButtonTypeA : MPlatformButton
     // Use this for initialization
     void Start()
     {
-
-
+        //初始化
+        base.Start();
     }
 
     // Update is called once per frame
     void Update()
     {
+        base.Update();
         if (!ButtonEnable) return;
 
         //取得偵測範圍

@@ -12,13 +12,15 @@ public class DesktopButtonTypeA : MDesktopButton
     // Use this for initialization
     void Start()
     {
-
+        //初始化
+        base.Start();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!ButtonEnable) { isDone = false; return; }
+        base.Update();
+        if (!ButtonEnable) return;
 
         //取得偵測範圍(Rect)
         rect = (Rect)(DisplayObject.GetType().GetField("_rect").GetValue(DisplayObject));
