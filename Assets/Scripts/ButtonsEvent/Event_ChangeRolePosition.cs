@@ -10,8 +10,9 @@ public class Event_ChangeRolePosition : MonoBehaviour
     {
         RolesCollection.script.ChangeRolePosition(changeMode);
         Destroy(this.gameObject);
-        AudioSoundPlayer.script.PlayAudio("¤}½b¤âµo®g½b¥Ú");
-    }
+        if (AudioSoundPlayer.script)
+            AudioSoundPlayer.script.PlayAudio("¤}½b¤âµo®g½b¥Ú");
+    } 
 
     // Update is called once per frame
     void Update()
