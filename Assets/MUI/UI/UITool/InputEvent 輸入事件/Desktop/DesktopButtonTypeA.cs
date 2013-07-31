@@ -47,8 +47,8 @@ public class DesktopButtonTypeA : MDesktopButton
                     {
                         GameObject newGameObject = (GameObject)Instantiate(Event);
                         newGameObject.SetActive(true);
-                        isDone = true;
                     }
+                    isDone = true;
                     if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(false);
                     if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(true);
                     submit = false;

@@ -35,28 +35,30 @@ public class PlatformButtonTypeA : MPlatformButton
             if (rect.Contains(new Vector2(Input.GetTouch(i).position.x, Screen.height - Input.GetTouch(i).position.y)))
             {
                 //ID註冊
-                if (!FingerIDsubmit)
-                {
+                //if (!FingerIDsubmit)
+                //{
                     if (!submit)
                     {
+                        //當按下，進行註冊
                         if (Input.GetTouch(i).phase == TouchPhase.Began)
                         {
-                            FingerIDsubmit = true;
+                            //FingerIDsubmit = true;
                             fingerID = Input.GetTouch(i).fingerId;
                             submit = true;
                         }
                     }
-                }
+                //}
 
+                //註冊後
                 if (submit && Input.GetTouch(i).fingerId == fingerID)
-                        if (Input.GetTouch(i).phase == TouchPhase.Began || Input.GetTouch(i).phase == TouchPhase.Moved)
-                        {
-                            if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(true);
-                            if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(false);
-                            isPress[i] = true;
-                            submit = false;
-                        }
-                
+                    if (Input.GetTouch(i).phase == TouchPhase.Began || Input.GetTouch(i).phase == TouchPhase.Moved)
+                    {
+                        if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(true);
+                        if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(false);
+                        isPress[i] = true;
+                        submit = false;
+                    }
+
 
                 if (isPress[i])
                 {
@@ -69,6 +71,8 @@ public class PlatformButtonTypeA : MPlatformButton
                                 GameObject newGameObject = (GameObject)Instantiate(Event);
                                 newGameObject.SetActive(true);
                             }
+                            isDone = true;
+                            isPress[i] = false;
                             if (EffectObjectWhenPress) EffectObjectWhenPress.SetActive(false);
                             if (EffectObjectWhenRelease) EffectObjectWhenRelease.SetActive(true);
                         }
@@ -76,7 +80,6 @@ public class PlatformButtonTypeA : MPlatformButton
             }
             else  //觸碰點不在範圍內
             {
-
                 if (Input.GetTouch(i).fingerId == fingerID)
                 {
                     if (Input.GetTouch(i).phase == TouchPhase.Moved && isPress[i])
@@ -90,6 +93,7 @@ public class PlatformButtonTypeA : MPlatformButton
                     if (Input.GetTouch(i).phase == TouchPhase.Ended)
                     {
                         FingerIDsubmit = false;
+                        submit = false;
                     }
                 }
 
