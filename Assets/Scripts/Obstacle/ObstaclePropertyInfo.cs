@@ -42,6 +42,10 @@ public class ObstaclePropertyInfo : MonoBehaviour
             Destroy(this.gameObject);
     }
 
+    /// <summary>
+    /// 設定角色對應障礙物的狀態以及播放的動畫
+    /// </summary>
+    /// <param name="state">true，播放correct動畫；false，播放fail動畫</param>
     public void CheckObstacle(bool state)
     {
         if (state)

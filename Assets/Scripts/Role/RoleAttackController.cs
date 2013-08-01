@@ -3,7 +3,7 @@ using System.Collections;
 
 /// <summary>
 /// Create Date：2013-07-23
-/// Modify Date：2013-07-31
+/// Modify Date：2013-08-01
 /// Author：Ian
 /// Description：
 ///     角色攻擊控制器 (敵人、障礙物)
@@ -12,6 +12,7 @@ public class RoleAttackController : MonoBehaviour
 {
     public float AttackDistance;        //攻擊距離
     public GameObject ShootObject;      //遠距離攻擊發射出的物件
+    public SmoothMoves.BoneAnimation EffectAnimation;   //效果動畫物件
     public LayerMask EnemyLayer;       //判定是否攻擊的敵人Layer
     public LayerMask ObstacleLayer;       //判定是否攻擊的障礙物Layer
 
@@ -84,10 +85,33 @@ public class RoleAttackController : MonoBehaviour
             {
                 //判別物件為何？  敵人與障礙物有不同的處理
                 if (((1 << triggerEvent.otherCollider.gameObject.layer) & this.EnemyLayer.value) > 0)
+                {
                     triggerEvent.otherCollider.GetComponent<EnemyPropertyInfo>().DecreaseLife(this.roleInfo.nearDamage);
 
+                    //創建 斬擊特效BoneAnimation
+                    SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
+                    obj.mLocalTransform.position = triggerEvent.otherColliderClosestPointToBone - new Vector3(0, 0, 0.2f);
+                    obj.playAutomatically = false;
+                    //隨機撥放 1 或 2 動畫片段
+                    if (Random.Range(0, 2) == 0)
+                        obj.Play("斬擊特效01");
+                    else
+                        obj.Play("斬擊特效02");
+                }
                 else if (((1 << triggerEvent.otherCollider.gameObject.layer) & this.ObstacleLayer.value) > 0)
+                {
                     triggerEvent.otherCollider.GetComponent<ObstaclePropertyInfo>().CheckObstacle(true);
+
+                    //創建 斬擊特效BoneAnimation
+                    SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
+                    obj.mLocalTransform.position = triggerEvent.otherColliderClosestPointToBone - new Vector3(0, 0, 0.2f);
+                    obj.playAutomatically = false;
+                    //隨機撥放 1 或 2 動畫片段
+                    if (Random.Range(0, 2) == 0)
+                        obj.Play("斬擊特效01");
+                    else
+                        obj.Play("斬擊特效02");
+                }
             }
         }
     }

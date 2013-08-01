@@ -3,7 +3,7 @@ using System.Collections;
 
 /// <summary>
 /// Create Date：2013-07-23
-/// Modify Date：2013-07-25
+/// Modify Date：2013-08-01
 /// Author：Ian
 /// Description：
 ///     敵人攻擊控制器
@@ -12,6 +12,7 @@ public class EnemyAttackController : MonoBehaviour
 {
     public float AttackDistance;        //攻擊距離
     public GameObject ShootObject;      //遠距離攻擊發射出的物件
+    public SmoothMoves.BoneAnimation EffectAnimation;   //效果動畫物件
     public LayerMask AttackLayer;       //攻擊判定的Layer
 
     private EnemyPropertyInfo enemyInfo { get; set; }
@@ -71,7 +72,19 @@ public class EnemyAttackController : MonoBehaviour
             {
                 //tag = MainBody
                 if (triggerEvent.otherCollider.tag.CompareTo("MainBody") == 0)
+                {
                     triggerEvent.otherCollider.GetComponent<RolePropertyInfo>().DecreaseLife(this.enemyInfo.nearDamage);
+
+                    //創建 斬擊特效BoneAnimation
+                    SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
+                    obj.mLocalTransform.position = triggerEvent.otherColliderClosestPointToBone - new Vector3(0, 0, 0.2f);
+                    obj.playAutomatically = false;
+                    //隨機撥放 1 或 2 動畫片段
+                    if (Random.Range(0, 2) == 0)
+                        obj.Play("斬擊特效01");
+                    else
+                        obj.Play("斬擊特效02");
+                }
             }
         }
     }
