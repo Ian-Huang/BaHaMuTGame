@@ -18,6 +18,8 @@ public class EnemyPropertyInfo : MonoBehaviour
     public int nearDamage;  //近距離攻擊傷害值
     public int farDamage;   //遠距離攻擊傷害值
 
+    public Material CurrentMaterial;    //設定物件Material (null => 使用預設Material)
+
     public bool isDead { get; private set; }
 
     private SmoothMoves.BoneAnimation boneAnimation;
@@ -30,6 +32,11 @@ public class EnemyPropertyInfo : MonoBehaviour
         //設定BoneAnimation
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
         this.boneAnimation.RegisterUserTriggerDelegate(DeadDestroy);
+        if (this.CurrentMaterial != null)
+        {
+            this.boneAnimation.RestoreOriginalMaterials();
+            this.boneAnimation.SwapMaterial(this.boneAnimation.mMaterialSource[0], this.CurrentMaterial);
+        }
 
         //讀取系統儲存的怪物屬性資料
         GameDefinition.EnemyData getData = GameDefinition.EnemyList.Find((GameDefinition.EnemyData data) => { return data.EnemyName == Enemy; });
