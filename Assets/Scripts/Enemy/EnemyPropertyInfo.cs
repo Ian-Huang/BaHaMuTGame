@@ -3,7 +3,7 @@ using System.Collections;
 
 /// <summary>
 /// Create Date：2013-07-24
-/// Modify Date：2013-07-25
+/// Modify Date：2013-08-02
 /// Author：Ian
 /// Description：
 ///     敵人的屬性資訊
@@ -32,6 +32,7 @@ public class EnemyPropertyInfo : MonoBehaviour
         //設定BoneAnimation
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
         this.boneAnimation.RegisterUserTriggerDelegate(DeadDestroy);
+        //如CurrentMaterial有值，則設定當前物件Material
         if (this.CurrentMaterial != null)
         {
             this.boneAnimation.RestoreOriginalMaterials();
