@@ -1,19 +1,17 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
-public class Event_GameObjectsSetActive : MonoBehaviour
+public class Event_DistroyGameObject : MonoBehaviour
 {
-    //Activeªºª¬ºA
-    public bool ActiveStatus;
+    public bool isThisGameObject;
     public GameObject[] gameObjects;
-
     // Use this for initialization
     void Start()
     {
         foreach (GameObject gameobject in gameObjects)
-            gameobject.SetActive(ActiveStatus);
-
-        //Destroy(this.gameObject);
+            Destroy(gameobject);
+        if (isThisGameObject)
+            Destroy(this.gameObject);
     }
 
     // Update is called once per frame

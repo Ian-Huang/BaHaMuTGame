@@ -1,16 +1,16 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerHitPoint : MonoBehaviour {
+public class Event_SetTimeScale : MonoBehaviour {
 
-    public int playerHitPoint;
+    public float TimeScale;
 	// Use this for initialization
 	void Start () {
-	
+        Time.timeScale = TimeScale;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        PlayerPrefs.SetInt("PlayerHitPoints", playerHitPoint);
+	
 	}
 }

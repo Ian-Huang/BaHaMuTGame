@@ -1,8 +1,8 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(MUI_AutoType_Text)), CanEditMultipleObjects]
-public class TextAreaEditor : Editor
+[CustomEditor(typeof(MUI_TextEditor)), CanEditMultipleObjects]
+public class TextEditor : Editor
 {
     public SerializedProperty longStringProp;
     void OnEnable()
