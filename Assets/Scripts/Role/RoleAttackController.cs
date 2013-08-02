@@ -3,7 +3,7 @@ using System.Collections;
 
 /// <summary>
 /// Create Date：2013-07-23
-/// Modify Date：2013-08-01
+/// Modify Date：2013-08-02
 /// Author：Ian
 /// Description：
 ///     角色攻擊控制器 (敵人、障礙物)
@@ -56,17 +56,15 @@ public class RoleAttackController : MonoBehaviour
                             if (!this.boneAnimation.IsPlaying("attack"))
                                 this.boneAnimation.Play("attack");
             }
-            else
+
+            //確認目前動畫狀態(必須沒再播attack)
+            if (!this.boneAnimation.IsPlaying("attack"))
             {
-                //確認目前動畫狀態(必須沒再播attack)
-                if (!this.boneAnimation.IsPlaying("attack"))
-                {
-                    //判定背景是否有在動，以此決定角色的動作狀態
-                    if (BackgroundController.script.isRunning)
-                        this.boneAnimation.Play("walk");
-                    else
-                        this.boneAnimation.Play("idle");
-                }
+                //判定背景是否有在動，以此決定角色的動作狀態
+                if (BackgroundController.script.isRunning)
+                    this.boneAnimation.Play("walk");
+                else
+                    this.boneAnimation.Play("idle");
             }
         }
     }
