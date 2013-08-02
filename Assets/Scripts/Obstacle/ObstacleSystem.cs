@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Create Date：2013-07-29
-/// Modify Date：2013-08-01
+/// Modify Date：2013-08-03
 /// Author：Ian
 /// Description：
 ///     障礙物系統 
@@ -31,15 +31,15 @@ public class ObstacleSystem : MonoBehaviour
         }
         else
         {
-            //創建 受傷特效BoneAnimation
+            //創建 撞擊特效BoneAnimation
             SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
             obj.mLocalTransform.position = other.ClosestPointOnBounds(this.transform.position) - new Vector3(0, 0, 0.2f);
             obj.playAutomatically = false;
             //隨機撥放 1 或 2 動畫片段
             if (Random.Range(0, 2) == 0)
-                obj.Play("受傷特效01");
+                obj.Play("撞擊特效01");
             else
-                obj.Play("受傷特效02");
+                obj.Play("撞擊特效02");
 
             infoScript.CheckObstacle(false);
             //給予角色傷害

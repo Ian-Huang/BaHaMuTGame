@@ -3,7 +3,7 @@ using System.Collections;
 
 /// <summary>
 /// Create Date：2013-07-23
-/// Modify Date：2013-08-01
+/// Modify Date：2013-08-03
 /// Author：Ian
 /// Description：
 ///     敵人攻擊控制器
@@ -79,11 +79,31 @@ public class EnemyAttackController : MonoBehaviour
                     SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
                     obj.mLocalTransform.position = triggerEvent.otherColliderClosestPointToBone - new Vector3(0, 0, 0.2f);
                     obj.playAutomatically = false;
-                    //隨機撥放 1 或 2 動畫片段
-                    if (Random.Range(0, 2) == 0)
-                        obj.Play("斬擊特效01");
-                    else
-                        obj.Play("斬擊特效02");
+
+                    //不同種類的怪物產生不同的攻擊特效
+                    switch (this.enemyInfo.Enemy)
+                    {
+                        case GameDefinition.Enemy.史萊姆:
+                        case GameDefinition.Enemy.火焰史萊姆:
+                        case GameDefinition.Enemy.硬化史萊姆:
+                        case GameDefinition.Enemy.中型史萊姆:
+                        case GameDefinition.Enemy.中型火焰史萊姆:
+                        case GameDefinition.Enemy.中型硬化史萊姆:
+                            //隨機撥放 1 或 2 動畫片段
+                            if (Random.Range(0, 2) == 0)
+                                obj.Play("撞擊特效01");
+                            else
+                                obj.Play("撞擊特效02");
+                            break;
+
+                        default:
+                            //隨機撥放 1 或 2 動畫片段
+                            if (Random.Range(0, 2) == 0)
+                                obj.Play("斬擊特效01");
+                            else
+                                obj.Play("斬擊特效02");
+                            break;
+                    }
                 }
             }
         }
