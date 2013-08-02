@@ -77,7 +77,7 @@ public class EnemyAttackController : MonoBehaviour
 
                     //創建 斬擊特效BoneAnimation
                     SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
-                    obj.mLocalTransform.position = triggerEvent.otherColliderClosestPointToBone - new Vector3(0, 0, 0.2f);
+                    obj.mLocalTransform.position = triggerEvent.otherColliderClosestPointToBone - Vector3.forward;
                     obj.playAutomatically = false;
 
                     //不同種類的怪物產生不同的攻擊特效

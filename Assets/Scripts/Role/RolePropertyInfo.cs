@@ -3,7 +3,7 @@ using System.Collections;
 
 /// <summary>
 /// Create Date：2013-07-24
-/// Modify Date：2013-07-25
+/// Modify Date：2013-08-03
 /// Author：Ian
 /// Description：
 ///     角色的屬性資訊
@@ -74,7 +74,11 @@ public class RolePropertyInfo : MonoBehaviour
             {
                 this.currentLife = 0;
                 this.isWeak = true;
-                this.boneAnimation.Play("weak");
+                //判斷當前背景移動狀況，如果無移動則使用"idleweak"
+                if (BackgroundController.script.isRunning)
+                    this.boneAnimation.Play("walkweak");
+                else
+                    this.boneAnimation.Play("idleweak");
             }
         }
     }
