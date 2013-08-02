@@ -33,7 +33,7 @@ public class ObstacleSystem : MonoBehaviour
         {
             //創建 撞擊特效BoneAnimation
             SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
-            obj.mLocalTransform.position = other.ClosestPointOnBounds(this.transform.position) - new Vector3(0, 0, 0.2f);
+            obj.mLocalTransform.position = other.ClosestPointOnBounds(this.transform.position) - Vector3.forward;
             obj.playAutomatically = false;
             //隨機撥放 1 或 2 動畫片段
             if (Random.Range(0, 2) == 0)
