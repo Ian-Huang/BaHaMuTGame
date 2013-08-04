@@ -100,6 +100,7 @@ public class MUI_Base : MonoBehaviour
         _ScreenSize = new Vector2(Screen.width, Screen.height);
         screenRatio = Screen.width / (float)Screen.height;
         ReDefinePreviousState();
+        MUI_Base_Update();
     }
     //Set Backup
     public void ReDefinePreviousState()

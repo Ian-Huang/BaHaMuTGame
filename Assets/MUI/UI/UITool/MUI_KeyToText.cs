@@ -19,6 +19,7 @@ public class MUI_KeyToText : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Update();
     }
 
     // Update is called once per frame

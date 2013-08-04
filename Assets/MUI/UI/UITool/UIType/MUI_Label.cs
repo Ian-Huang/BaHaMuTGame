@@ -21,6 +21,7 @@ public class MUI_Label : MUI_Base
 
     private int _fontSize_backup;
 
+
     // Use this for initialization
     void Start()
     {
