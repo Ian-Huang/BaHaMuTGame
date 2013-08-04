@@ -18,7 +18,7 @@ public class MUI_AutoType : MUI_Base
     public TextAnchor Alignment;
 
     // Use this for initialization
-    void Start()
+    new void Start()
     {
         if (!this.GetComponent<AudioSource>())
             this.gameObject.AddComponent<AudioSource>();
@@ -26,7 +26,7 @@ public class MUI_AutoType : MUI_Base
         ShowText = "";
         StartCoroutine(TypeText());
 
-        base.MUI_Base_Start();
+        base.Start();
     }
 
     IEnumerator TypeText()
@@ -41,9 +41,9 @@ public class MUI_AutoType : MUI_Base
         }
     }
 
-    void Update()
+    new void Update()
     {
-        MUI_Base_Update();
+        base.Update();
     }
 
     void OnGUI()

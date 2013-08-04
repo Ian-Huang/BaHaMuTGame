@@ -7,14 +7,14 @@ using System.Collections;
 public class PlatformButtonTypeB : MPlatformButton
 {
     // Use this for initialization
-    void Start()
+    new void Start()
     {
 
 
     }
 
     // Update is called once per frame
-    void Update()
+    new void Update()
     {
         //¨ú±o°»´ú½d³ò
         rect = (Rect)(DisplayObject.GetType().GetField("_rect").GetValue(DisplayObject));

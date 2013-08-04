@@ -87,34 +87,17 @@ public class MUI_Base : MonoBehaviour
 
 
     // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    /// <summary>
-    /// Virtual Method UIBase_Start
-    /// </summary>
-    virtual public void MUI_Base_Start()
+    virtual public void Start()
     {
         _ScreenSize = new Vector2(Screen.width, Screen.height);
         screenRatio = Screen.width / (float)Screen.height;
         ReDefinePreviousState();
-        MUI_Base_Update();
-    }
-    //Set Backup
-    public void ReDefinePreviousState()
-    {
-        _rect_previousState = rect;
-        _color_previousState = color;
-        _scale_previousState = scale;
+
+        //在Start先進行一次Update，可以避免當Enable時 顯示字體會有極短暫閃爍的情形
+        Update();
     }
 
-
-    /// <summary>
-    /// Virtual Method UIBase_Update
-    /// </summary>
-    virtual public void MUI_Base_Update()
+    virtual public void Update()
     {
         if (angle >= 360 || angle <= -360)
             angle = 0;
@@ -152,8 +135,18 @@ public class MUI_Base : MonoBehaviour
             rect.width = float.Parse((_ScreenSize.y * sqrt_x).ToString("0.0000"));
             rect.height = float.Parse((_ScreenSize.x * sqrt_x).ToString("0.0000"));
         }
-
     }
+
+
+    //Set Backup
+    public void ReDefinePreviousState()
+    {
+        _rect_previousState = rect;
+        _color_previousState = color;
+        _scale_previousState = scale;
+    }
+
+
 
 
     #region #特效系統

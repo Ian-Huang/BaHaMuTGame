@@ -10,14 +10,14 @@ public class DesktopButtonTypeA : MDesktopButton
     //µù¥Uª¬ºA
     public static bool submit;
     // Use this for initialization
-    void Start()
+    new void Start()
     {
         //ªì©l¤Æ
         base.Start();
     }
 
     // Update is called once per frame
-    void Update()
+    new void Update()
     {
         base.Update();
         if (!ButtonEnable) return;

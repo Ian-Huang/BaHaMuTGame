@@ -22,16 +22,16 @@ public class MUI_SimpleButton : MUI_Base
     public GameObject Event;
 
     // Use this for initialization
-    void Start()
+    new void Start()
     {
         if (FontSize == 0) Debug.LogWarning(this.name + "-FontSize" + "-Unset");
-        MUI_Base_Start();
+        base.Start();
     }
 
     // Update is called once per frame
-    void Update()
+    new void Update()
     {
-        MUI_Base_Update();
+        base.Update();
     }
 
     void OnGUI()

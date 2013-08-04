@@ -18,9 +18,9 @@ public class MUI_Texture_2D : MUI_Base
     public Texture Texture2d;
 
     // Use this for initialization
-    void Start()
+    new void Start()
     {
-        MUI_Base_Start();
+        base.Start();
         LogWarning();
     }
 
@@ -30,10 +30,10 @@ public class MUI_Texture_2D : MUI_Base
     }
 
     // Update is called once per frame
-    void Update()
+    new void Update()
     {
         //UIBase auto update
-        MUI_Base_Update();
+        base.Update();
     }
 
     void OnGUI()

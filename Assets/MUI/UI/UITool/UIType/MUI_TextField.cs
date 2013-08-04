@@ -20,17 +20,17 @@ public class MUI_TextField : MUI_Base
     public TextAnchor Alignment;
 
     // Use this for initialization
-    void Start()
+    new void Start()
     {
         if (!guiSkin) Debug.LogWarning(this.name + "-guiSkin" + "-Unset");
         if (FontSize == 0) Debug.LogWarning(this.name + "-FontSize" + "-Unset");
-        MUI_Base_Start();
+        base.Start();
     }
 
     // Update is called once per frame
-    void Update()
+    new void Update()
     {
-        MUI_Base_Update();
+        base.Update();
     }
 
 

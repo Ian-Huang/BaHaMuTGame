@@ -23,10 +23,10 @@ public class MUI_Label : MUI_Base
 
 
     // Use this for initialization
-    void Start()
+    new void Start()
     {
         _fontSize_backup = FontSize;
-        MUI_Base_Start();
+        base.Start();
         LogWarning();
     }
 
@@ -36,10 +36,10 @@ public class MUI_Label : MUI_Base
     }
 
     // Update is called once per frame
-    void Update()
+    new void Update()
     {
         //UIBase auto update
-        MUI_Base_Update();
+        base.Update();
     }
     
     void OnGUI()

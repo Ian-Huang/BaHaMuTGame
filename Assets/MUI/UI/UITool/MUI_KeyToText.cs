@@ -19,6 +19,7 @@ public class MUI_KeyToText : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        //在Start先進行一次Update，可以避免當Enable時 顯示字體會有極短暫閃爍的情形
         Update();
     }
 
