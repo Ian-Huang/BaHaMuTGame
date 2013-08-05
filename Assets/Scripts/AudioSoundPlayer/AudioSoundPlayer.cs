@@ -55,4 +55,17 @@ public class AudioSoundPlayer : MonoBehaviour
         else
             Debug.Log("Error Name , Dictionary not Contain the name : " + name);
     }
+
+
+
+    public float GetAudioLength(string name)
+    {
+        if (SoundDictionary.ContainsKey(name))
+            return SoundDictionary[name].length;
+        else
+        {
+            Debug.Log("Error Name , Dictionary not Contain the name : " + name);
+            return 0;
+        }
+    }
 }
