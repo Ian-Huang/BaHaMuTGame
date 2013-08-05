@@ -48,7 +48,7 @@ public class MUI_Enum : MonoBehaviour
         easeOutElastic,
         easeInOutElastic,
         /* GFX47 MOD END */
-        punch
+        //punch
     }
     //Itween的循環方式
     public enum loopType { none, pingPong, loop }

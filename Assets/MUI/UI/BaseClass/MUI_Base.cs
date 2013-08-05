@@ -87,7 +87,7 @@ public class MUI_Base : MonoBehaviour
 
 
     // Use this for initialization
-    virtual public void Start()
+    public void Start()
     {
         _ScreenSize = new Vector2(Screen.width, Screen.height);
         screenRatio = Screen.width / (float)Screen.height;
@@ -97,7 +97,7 @@ public class MUI_Base : MonoBehaviour
         Update();
     }
 
-    virtual public void Update()
+    public void Update()
     {
         if (angle >= 360 || angle <= -360)
             angle = 0;
