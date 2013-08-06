@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Create Date：2013-07-22
-/// Modify Date：2013-07-25
+/// Modify Date：2013-08-06
 /// Author：Ian
 /// Description：
 ///     角色控制器(角色位置交換)
@@ -12,11 +12,8 @@ using System.Collections.Generic;
 public class RolesCollection : MonoBehaviour
 {
     public static RolesCollection script;
-
-    public GameObject Role1;
-    public GameObject Role2;
-    public GameObject Role3;
-    public GameObject Role4;
+    
+    public GameObject[] Roles = new GameObject[4];
 
     public float changeTime;
     public bool isChanging = false;
@@ -32,15 +29,15 @@ public class RolesCollection : MonoBehaviour
         {
             if (Input.GetKeyUp(KeyCode.A))
             {
-                this.SetChange(ref this.Role1, ref this.Role2);
+                this.SetChange(ref this.Roles[0], ref this.Roles[1]);
             }
             else if (Input.GetKeyUp(KeyCode.S))
             {
-                this.SetChange(ref this.Role2, ref this.Role3);
+                this.SetChange(ref this.Roles[1], ref this.Roles[2]);
             }
             else if (Input.GetKeyUp(KeyCode.D))
             {
-                this.SetChange(ref this.Role3, ref this.Role4);
+                this.SetChange(ref this.Roles[2], ref this.Roles[3]);
             }
         }
     }
@@ -56,13 +53,13 @@ public class RolesCollection : MonoBehaviour
             switch (mode)
             {
                 case GameDefinition.ChangeRoleMode.OneAndTwo:
-                    this.SetChange(ref this.Role1, ref this.Role2);
+                    this.SetChange(ref this.Roles[0], ref this.Roles[1]);
                     break;
                 case GameDefinition.ChangeRoleMode.TwoAndThree:
-                    this.SetChange(ref this.Role2, ref this.Role3);
+                    this.SetChange(ref this.Roles[1], ref this.Roles[2]);
                     break;
                 case GameDefinition.ChangeRoleMode.ThreeAndFour:
-                    this.SetChange(ref this.Role3, ref this.Role4);
+                    this.SetChange(ref this.Roles[2], ref this.Roles[3]);
                     break;
                 default:
                     break;

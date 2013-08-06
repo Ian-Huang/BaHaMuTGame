@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BossController : MonoBehaviour
 {
@@ -7,13 +8,16 @@ public class BossController : MonoBehaviour
 
     private Vector3 originScale;
 
-    private MoveController moveController;
+    private MoveController moveController { get; set; }
+    private EnemyPropertyInfo enemyInfo { get; set; }
     private SmoothMoves.BoneAnimation boneAnimation;
-
 
     // Use this for initialization
     void Start()
     {
+        //載入敵人資訊
+        this.enemyInfo = this.GetComponent<EnemyPropertyInfo>();
+
         //設定BoneAnimation
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
         this.boneAnimation.RegisterUserTriggerDelegate(UserTrigger);
@@ -23,6 +27,28 @@ public class BossController : MonoBehaviour
         this.originScale = this.transform.localScale;
     }
 
+    private List<int> saveShootIndexList = new List<int>();
+    private bool isShooting = false;
+    IEnumerator ReadyFarAttack(float time)
+    {
+        this.isShooting = true;
+
+        int shootCount = Random.Range(3, 5);
+        for (int i = 0; i < shootCount; i++)
+        {
+            int temp = Random.Range(0, 4);
+            while (saveShootIndexList.Contains(temp))
+                temp = Random.Range(0, 4);
+
+            this.saveShootIndexList.Add(temp);
+            Instantiate(EffectCreator.script.道路危險提示[temp]);
+        }
+
+        yield return new WaitForSeconds(time);
+
+        this.boneAnimation.Play("發射");
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -30,35 +56,9 @@ public class BossController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            this.boneAnimation.Play("發射");
-            Instantiate(EffectCreator.script.道路危險提示[0]);
-            //Instantiate(EffectCreator.script.道路危險提示[0]);
-            //Vector3 Posv3 = RolesCollection.script.Role1.transform.position;
-            //Posv3.x = this.transform.position.x;
-            //Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
+            if (!this.isShooting)
+                StartCoroutine(ReadyFarAttack(1));
         }
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            Instantiate(EffectCreator.script.道路危險提示[1]);
-            Vector3 Posv3 = RolesCollection.script.Role2.transform.position;
-            Posv3.x = this.transform.position.x;
-            Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            Instantiate(EffectCreator.script.道路危險提示[2]);
-            Vector3 Posv3 = RolesCollection.script.Role3.transform.position;
-            Posv3.x = this.transform.position.x;
-            Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            Instantiate(EffectCreator.script.道路危險提示[3]);
-            Vector3 Posv3 = RolesCollection.script.Role4.transform.position;
-            Posv3.x = this.transform.position.x;
-            Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
-        }
-
 
         this.transform.localScale = this.originScale;
 
@@ -124,10 +124,15 @@ public class BossController : MonoBehaviour
         else if (triggerEvent.animationName == "發射")
         {
             //發射史萊姆砲
-
-            Vector3 Posv3 = RolesCollection.script.Role1.transform.position;
-            Posv3.x = this.transform.position.x;
-            Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
+            foreach (var temp in this.saveShootIndexList)
+            {
+                Vector3 Posv3 = RolesCollection.script.Roles[temp].transform.position;
+                Posv3.x = this.transform.position.x;
+                GameObject newObj = (GameObject)Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
+                newObj.GetComponent<ShootObjectInfo>().Damage = this.enemyInfo.farDamage;
+            }
+            this.saveShootIndexList.Clear();
+            this.isShooting = false;
         }
     }
 }
