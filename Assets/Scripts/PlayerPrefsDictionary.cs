@@ -20,21 +20,45 @@ public class PlayerPrefsDictionary : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         script = this;
-        InvokeRepeating("DumpToPlayerPref", 0,0.5F);
+        InvokeRepeating("DumpToPlayerPref", 0, 0.5F);
         //////////////////////////////////
         //金幣
-        PlayerPrefDictionary.Add("Money", 0);
+        this.AddValue("Money");
 
         //角色類
+        this.AddValue("BSK_ATK");
+        this.AddValue("BSK_DEF");
+        this.AddValue("BSK_HP");
+        this.AddValue("BSK_ATK_ADD",10);
+        this.AddValue("BSK_DEF_ADD",5);
+        this.AddValue("BSK_HP_ADD",20);
 
+        this.AddValue("WIZ_ATK");
+        this.AddValue("WIZ_DEF");
+        this.AddValue("WIZ_HP");
+        this.AddValue("WIZ_ATK_ADD");
+        this.AddValue("WIZ_DEF_ADD");
+        this.AddValue("WIZ_HP_ADD");
 
+        this.AddValue("HUN_ATK");
+        this.AddValue("HUN_DEF");
+        this.AddValue("HUN_HP");
+        this.AddValue("HUN_ATK_ADD");
+        this.AddValue("HUN_DEF_ADD");
+        this.AddValue("HUN_HP_ADD");
 
+        this.AddValue("KNI_ATK");
+        this.AddValue("KNI_DEF");
+        this.AddValue("KNI_HP");
+        this.AddValue("KNI_ATK_ADD");
+        this.AddValue("KNI_DEF_ADD");
+        this.AddValue("KNI_HP_ADD");
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        this.SetValue("Money", 50);
     }
     /// <summary>
     /// 輸出全部資訊
@@ -52,8 +76,7 @@ public class PlayerPrefsDictionary : MonoBehaviour
     {
         foreach (var md in PlayerPrefDictionary)
         {
-            if (!PlayerPrefs.HasKey(md.Key.ToString()))
-                PlayerPrefs.SetInt(md.Key.ToString(), md.Value);
+            PlayerPrefs.SetInt(md.Key.ToString(), md.Value);
         }
     }
 
@@ -96,12 +119,33 @@ public class PlayerPrefsDictionary : MonoBehaviour
 
 
     /// <summary>
-    /// 註冊Key，必須不存在在MD中才加入
+    /// 增加數值
     /// </summary>
     /// <param name="key">Key字串</param>
-    public void SubmitKey(string key)
+    public void AddValue(string key)
     {
-        if (!isValid(key)) PlayerPrefDictionary.Add(key, 0);
+        if (!PlayerPrefs.HasKey(key))
+            PlayerPrefDictionary.Add(key.ToString(), 0);
+        else
+        {
+            if (isValid(key))
+                SetValue(key.ToString(), GetValue(key));
+            else
+                PlayerPrefDictionary.Add(key.ToString(), GetValue(key));
+        }
+    }
+
+    public void AddValue(string key, int value)
+    {
+        if (!PlayerPrefs.HasKey(key))
+            PlayerPrefDictionary.Add(key.ToString(), value);
+        else
+        {
+            if (isValid(key))
+                SetValue(key.ToString(), GetValue(key));
+            else
+                PlayerPrefDictionary.Add(key.ToString(), GetValue(key));
+        }
     }
 }
 
