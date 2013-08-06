@@ -19,6 +19,8 @@ public class MUI_LayoutMoveTo : MUI_Effect
 
     void Update()
     {
+        if (!isEffectStart) return;
+
         foreach (Transform child in this.transform.parent.transform)
         {
             if (Check_isMUI(child))
@@ -37,6 +39,7 @@ public class MUI_LayoutMoveTo : MUI_Effect
                 }
             }
         }
+
     }
 
     /// <summary>
@@ -49,6 +52,7 @@ public class MUI_LayoutMoveTo : MUI_Effect
 
     void OnEnable()
     {
+        isEffectStart = false;
         //錯誤修正
         BugFix();
         //建立特效協程
@@ -65,7 +69,7 @@ public class MUI_LayoutMoveTo : MUI_Effect
                     ResetOrReDefine(child);
             }
         }
-                
+
     }
 
     void ResetOrReDefine(Transform child)
@@ -78,12 +82,13 @@ public class MUI_LayoutMoveTo : MUI_Effect
 
     IEnumerator WhenEffectStart(float delay)
     {
+        yield return new WaitForSeconds(delay);
+        isEffectStart = true;
+
         foreach (Transform child in this.transform.parent.transform)
         {
             if (Check_isMUI(child))
             {
-                yield return new WaitForSeconds(delay);
-
                 newRect = Get_MUI_Rect(child);
                 //取得當前rect
                 newRect = new Rect(

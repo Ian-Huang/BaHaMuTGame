@@ -44,6 +44,9 @@ public class MUI_Effect : MonoBehaviour {
 
     //特效結束後下一個效果物件
     public GameObject NextEffect;
+    [HideInInspector]
+    //配合"特效結束後下一個效果物件"的效果物件
+    public bool isEffectStart;
 
 
     //錯誤修正與避免

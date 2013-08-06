@@ -18,6 +18,8 @@ public class MUI_LayoutScaleTo : MUI_Effect
 
     void Update()
     {
+        if (!isEffectStart) return;
+
         foreach (Transform child in this.transform.parent.transform)
         {
             if (Check_isMUI(child))
@@ -48,6 +50,7 @@ public class MUI_LayoutScaleTo : MUI_Effect
 
     void OnEnable()
     {
+        isEffectStart = false;
         //錯誤修正
         BugFix();
         //建立特效協程
@@ -77,12 +80,13 @@ public class MUI_LayoutScaleTo : MUI_Effect
 
     IEnumerator WhenEffectStart(float delay)
     {
+        yield return new WaitForSeconds(delay);
+        isEffectStart = true;
+
         foreach (Transform child in this.transform.parent.transform)
         {
             if (Check_isMUI(child))
             {
-                yield return new WaitForSeconds(delay);
-
                 _effectStruct.scale = this.scaleV2;
                 _effectStruct.time = this.time;
                 _effectStruct.delay = this.delay;

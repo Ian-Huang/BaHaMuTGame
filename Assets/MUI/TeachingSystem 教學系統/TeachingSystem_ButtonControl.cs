@@ -60,8 +60,10 @@ public class TeachingSystem_ButtonControl : MonoBehaviour
         //當按鈕isDone　= true 時　，當按鈕Event產生時
         if (Texture_2D.gameObject.transform.GetComponent<MDesktopButton>().isDone || Texture_2D.gameObject.transform.GetComponent<MPlatformButton>().isDone)
         {
+
             //下一個段落
             TeachingSystem.script.NextPart();
+
             //圖片回到原本Depth
             Texture_2D.depth = oldDepth;
 
