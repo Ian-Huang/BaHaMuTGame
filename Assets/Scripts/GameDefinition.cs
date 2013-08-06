@@ -104,6 +104,11 @@ public class GameDefinition
         public Obstacle ObstacleName;
         public int Damage;
 
+        public int AddCureLifeRate;
+        public int AddCureeLifeRateTime;
+        public int AttackSpeed;
+        public int AttackSpeedTime;
+
         /// <summary>
         /// 障礙物資料建構式
         /// </summary>
@@ -167,6 +172,44 @@ public class GameDefinition
         火焰魔法陣 = 401,            //法師處理
         樹木_01 = 501, 樹木_02 = 502 //狂戰士處理
     }
+
+    /// <summary>
+    /// 暫時記錄區
+    /// 
+    /// *****Buff效果*****
+    /// 1.Buff物品觸發方式：
+    /// 正確觸發-> 角色播放觸發動作、Buff物品播放(correct animation)
+    /// 錯誤觸發->角色無反應、Buff無反應(fail animation)
+    /// 
+    /// 2.增益內容
+    /// 全體回復一定Hp、 一定時間(個體/全體)回復量+X
+    /// 
+    /// ※(全體回復一定Hp 寫法暫存)
+    /// RolesCollection gameobject find RolePropertyInfo.cs  currentLife + cureValue
+    /// 
+    /// ※一定時間(個體/全體)回復量+X
+    /// RolesCollection gameobject find RolePropertyInfo.cs  cureRate + addValue
+    /// 
+    /// 3.減益內容
+    /// 全體攻速下降、一定時間(個體/全體)回復量-X
+    /// 
+    /// ※全體攻速下降：新增指令
+    ///     this.boneAnimation["attack"].speed = newSpeed;
+    ///     
+    /// ※一定時間(個體/全體)回復量-X
+    /// RolesCollection gameobject find RolePropertyInfo.cs  cureRate - deValue    
+    /// 
+    /// ※BuffData 預定會有的參數
+    /// BuffName 狀態名稱
+    /// Damage 傷害值 (假如要跟陷阱系統合併...)  (傷害、回復生命可以合併)
+    /// CureHp  回復生命
+    /// CureRateHp  回復生命速率(增加/減少)值
+    /// CureRateTime    (增加/減少)持續時間
+    /// AttackSpeed     攻速(增加/減少)
+    /// AttackSpeedTime 攻速(增加/減少)持續時間
+    /// 
+    /// *****Buff效果*****
+    /// </summary>
 
     public enum ChangeRoleMode
     {
