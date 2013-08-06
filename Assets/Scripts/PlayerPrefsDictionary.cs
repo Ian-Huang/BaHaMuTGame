@@ -23,7 +23,7 @@ public class PlayerPrefsDictionary : MonoBehaviour
         InvokeRepeating("DumpToPlayerPref", 0,0.5F);
         //////////////////////////////////
         //金幣
-        PlayerPrefDictionary.Add("Coin", 0);
+        PlayerPrefDictionary.Add("Money", 0);
 
         //角色類
 
@@ -51,7 +51,10 @@ public class PlayerPrefsDictionary : MonoBehaviour
     public void DumpToPlayerPref()
     {
         foreach (var md in PlayerPrefDictionary)
-            PlayerPrefs.SetInt(md.Key.ToString(), md.Value);
+        {
+            if (!PlayerPrefs.HasKey(md.Key.ToString()))
+                PlayerPrefs.SetInt(md.Key.ToString(), md.Value);
+        }
     }
 
     /// <summary>
