@@ -3,7 +3,7 @@ using System.Collections;
 
 /// <summary>
 /// Create Date：2013-07-24
-/// Modify Date：2013-08-02
+/// Modify Date：2013-08-06
 /// Author：Ian
 /// Description：
 ///     敵人的屬性資訊
@@ -40,13 +40,16 @@ public class EnemyPropertyInfo : MonoBehaviour
         }
 
         //讀取系統儲存的怪物屬性資料
-        GameDefinition.EnemyData getData = GameDefinition.EnemyList.Find((GameDefinition.EnemyData data) => { return data.EnemyName == Enemy; });
-        this.maxLife = getData.Life;
-        this.currentLife = getData.Life;
-        this.cureRate = getData.CureRate;
-        this.defence = getData.Defence;
-        this.nearDamage = getData.NearDamage;
-        this.farDamage = getData.FarDamage;
+        if (this.Enemy != GameDefinition.Enemy.自訂)  //如是"自訂"怪物，則不讀取系統資料
+        {
+            GameDefinition.EnemyData getData = GameDefinition.EnemyList.Find((GameDefinition.EnemyData data) => { return data.EnemyName == Enemy; });
+            this.maxLife = getData.Life;
+            this.currentLife = getData.Life;
+            this.cureRate = getData.CureRate;
+            this.defence = getData.Defence;
+            this.nearDamage = getData.NearDamage;
+            this.farDamage = getData.FarDamage;
+        }
 
         InvokeRepeating("RestoreLifePersecond", 0.1f, 1);
     }

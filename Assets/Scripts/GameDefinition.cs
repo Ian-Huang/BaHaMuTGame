@@ -145,6 +145,8 @@ public class GameDefinition
 
     public enum Enemy
     {
+        自訂 = 0,     //給我們自訂怪物能力值使用
+
         史萊姆 = 101,
         火焰史萊姆 = 102,
         硬化史萊姆 = 103,
