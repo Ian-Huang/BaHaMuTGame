@@ -124,7 +124,7 @@ public class BossController : MonoBehaviour
         else if (triggerEvent.animationName == "發射")
         {
             //發射史萊姆砲
-            
+
             Vector3 Posv3 = RolesCollection.script.Role1.transform.position;
             Posv3.x = this.transform.position.x;
             Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
