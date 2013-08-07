@@ -13,8 +13,8 @@ public class Event_ChangeRolePosition : MonoBehaviour
         if (AudioSoundPlayer.script)
             AudioSoundPlayer.script.PlayAudio("¤}½b¤âµo®g½b¥Ú");
 
-        PlayerPrefsDictionary.script.SetValue("Money", 10);
-    } 
+
+    }
 
     // Update is called once per frame
     void Update()

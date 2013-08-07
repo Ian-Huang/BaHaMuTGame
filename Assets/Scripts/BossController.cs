@@ -11,8 +11,27 @@ using System.Collections.Generic;
 /// </summary>
 public class BossController : MonoBehaviour
 {
+    public enum BossPosition
+    {
+        Top = 1, Bottom = 2
+    }
+    public BossPosition BossPos;
+    public string TopPositionName;
+    public string BottomPositionName;
+    public Transform TopPosition;
+    public Transform BottomPosition;
+    public float ChangewalkMoveTime;
+    private bool isChangeWalk = false;
+
+
+    public float NearAttackRunDistance;
+    public float NearAttackMoveTime;
+    private bool isRuntoAttack = false;
+
     public GameObject FarShootObject;   //遠距離射擊物件
 
+    public SmoothMoves.BoneAnimation EffectAnimation;   //效果動畫物件
+    public LayerMask AttackLayer;       //攻擊判定的Layer
     private Vector3 originScale;        //原始尺寸
 
     private MoveController moveController { get; set; }
@@ -29,9 +48,15 @@ public class BossController : MonoBehaviour
         //設定BoneAnimation
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
         this.boneAnimation.RegisterUserTriggerDelegate(UserTrigger);
+        this.boneAnimation.RegisterColliderTriggerDelegate(WeaponHit);
 
         //紀錄原始Scale
         this.originScale = this.transform.localScale;
+
+        //Boss Top、Bottom 點
+        this.TopPosition = GameObject.Find(TopPositionName).transform;
+        this.BottomPosition = GameObject.Find(BottomPositionName).transform;
+
     }
 
     private List<int> saveShootIndexList = new List<int>(); //紀錄射擊目標的清單
@@ -45,7 +70,7 @@ public class BossController : MonoBehaviour
     {
         this.isShooting = true;
 
-        int shootCount = Random.Range(2, 4);    //攻擊目標隨機為2~3人
+        int shootCount = 2;    //攻擊目標為2人
         //紀錄準備被攻擊的目標，並顯示提示提醒玩家
         for (int i = 0; i < shootCount; i++)
         {
@@ -65,63 +90,182 @@ public class BossController : MonoBehaviour
         this.boneAnimation.Play("發射");
     }
 
+    void ChangeWalkComplete(BossPosition pos)
+    {
+        this.BossPos = pos;
+        this.isChangeWalk = false;
+    }
+
+    void NearAttackMoveComplete()
+    {
+        this.isRuntoAttack = false;
+        this.boneAnimation.Play("突刺");
+        StartCoroutine(BacktoOriginPosition(2.0f));
+    }
+
+    void NearAttackFinishBackComplete()
+    {
+        this.isRuntoAttack = false;
+        this.boneAnimation.Play("idle");
+    }
+
+    IEnumerator BacktoOriginPosition(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        iTween.MoveTo(this.gameObject, iTween.Hash(
+                            "x", this.transform.position.x + this.NearAttackRunDistance,
+                            "time", this.NearAttackMoveTime,
+                            "easetype", iTween.EaseType.linear,
+                            "oncomplete", "NearAttackFinishBackComplete"
+                        ));
+        Vector3 v3Scale = this.originScale;
+        v3Scale.x = -Mathf.Abs(v3Scale.x);
+        this.boneAnimation.mLocalTransform.localScale = v3Scale;
+        this.isRuntoAttack = true;
+    }
+
+
     // Update is called once per frame
     void Update()
     {
-        #region TEST
-
-        if (Input.GetKeyDown(KeyCode.Y))
+        if (this.isChangeWalk)
         {
-            if (!this.isShooting)
-                StartCoroutine(ReadyFarAttack(1));  //等待n秒後，進行遠距離攻擊
-        }
-
-        this.transform.localScale = this.originScale;
-
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            this.boneAnimation.Play("run");
-            this.moveController.ChangeSpeed(15);
-
-        }
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
-            this.boneAnimation.Play("run");
-            Vector3 v3Scale = this.originScale;
-            v3Scale.x = -Mathf.Abs(v3Scale.x);
-            this.boneAnimation.mLocalTransform.localScale = v3Scale;
-            this.moveController.ChangeSpeed(-15);
-        }
-        else if (Input.GetKey(KeyCode.UpArrow))
-        {
-            this.boneAnimation.Play("walk");
-            this.transform.Translate(0, Time.deltaTime, 0);
             this.moveController.ChangeSpeed(0);
-        }
-        else if (Input.GetKey(KeyCode.DownArrow))
-        {
             this.boneAnimation.Play("walk");
-            this.transform.Translate(0, -Time.deltaTime, 0);
+        }
+        else if (this.isRuntoAttack)
+        {
             this.moveController.ChangeSpeed(0);
-        }
-        else if (Input.GetKeyDown(KeyCode.J))
-        {
-            this.boneAnimation.Play("出現");
-        }
-        else if (Input.GetKeyDown(KeyCode.K))
-        {
-            this.boneAnimation.Play("突刺");
+            this.boneAnimation.Play("run");
         }
         else
         {
-            if (!this.animation.isPlaying)
-                this.boneAnimation.Play("idle");
-            this.moveController.ChangeSpeed(0);
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                iTween.MoveTo(this.gameObject, iTween.Hash(
+                            "x", this.transform.position.x - this.NearAttackRunDistance,
+                            "time", this.NearAttackMoveTime,
+                            "easetype", iTween.EaseType.linear,
+                            "oncomplete", "NearAttackMoveComplete"
+                        ));
+
+                this.isRuntoAttack = true;
+            }
+
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                if (this.BossPos == BossPosition.Bottom)
+                {
+                    iTween.MoveTo(this.gameObject, iTween.Hash(
+                            "x", this.TopPosition.position.x,
+                            "y", this.TopPosition.position.y,
+                            "time", this.ChangewalkMoveTime,
+                            "easetype", iTween.EaseType.linear,
+                            "oncomplete", "ChangeWalkComplete",
+                            "oncompleteparams", BossPosition.Top
+                        ));
+                }
+                else
+                {
+                    iTween.MoveTo(this.gameObject, iTween.Hash(
+                              "x", this.BottomPosition.position.x,
+                              "y", this.BottomPosition.position.y,
+                              "time", this.ChangewalkMoveTime,
+                              "easetype", iTween.EaseType.linear,
+                              "oncomplete", "ChangeWalkComplete",
+                              "oncompleteparams", BossPosition.Bottom
+                          ));
+                }
+
+                this.isChangeWalk = true;
+
+            }
+            #region TEST
+
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                if (!this.isShooting)
+                    StartCoroutine(ReadyFarAttack(1));  //等待n秒後，進行遠距離攻擊
+            }
+
+            this.transform.localScale = this.originScale;
+
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                this.boneAnimation.Play("run");
+                this.moveController.ChangeSpeed(15);
+
+            }
+            else if (Input.GetKey(KeyCode.RightArrow))
+            {
+                this.boneAnimation.Play("run");
+                Vector3 v3Scale = this.originScale;
+                v3Scale.x = -Mathf.Abs(v3Scale.x);
+                this.boneAnimation.mLocalTransform.localScale = v3Scale;
+                this.moveController.ChangeSpeed(-15);
+            }
+            else if (Input.GetKey(KeyCode.UpArrow))
+            {
+                this.boneAnimation.Play("walk");
+                this.transform.Translate(0, Time.deltaTime, 0);
+                this.moveController.ChangeSpeed(0);
+            }
+            else if (Input.GetKey(KeyCode.DownArrow))
+            {
+                this.boneAnimation.Play("walk");
+                this.transform.Translate(0, -Time.deltaTime, 0);
+                this.moveController.ChangeSpeed(0);
+            }
+            else if (Input.GetKeyDown(KeyCode.J))
+            {
+                this.boneAnimation.Play("出現");
+            }
+            else if (Input.GetKeyDown(KeyCode.K))
+            {
+                this.boneAnimation.Play("突刺");
+            }
+            else
+            {
+                if (!this.animation.isPlaying)
+                    this.boneAnimation.Play("idle");
+                this.moveController.ChangeSpeed(0);
+            }
+
+            #endregion
         }
-
-        #endregion
-
     }
+
+    /// <summary>
+    /// 綁在敵人武器上的Collider，觸發攻擊判定(近距離攻擊使用)
+    /// </summary>
+    /// <param name="triggerEvent">觸發相關資訊</param>
+    public void WeaponHit(SmoothMoves.ColliderTriggerEvent triggerEvent)
+    {
+        //確認是由"weapon"碰撞的collider
+        if (triggerEvent.boneName == "weapon" && triggerEvent.triggerType == SmoothMoves.ColliderTriggerEvent.TRIGGER_TYPE.Enter)
+        {
+            if (((1 << triggerEvent.otherCollider.gameObject.layer) & this.AttackLayer.value) > 0)
+            {
+                //tag = MainBody
+                if (triggerEvent.otherCollider.tag.CompareTo("MainBody") == 0)
+                {
+                    triggerEvent.otherCollider.GetComponent<RolePropertyInfo>().DecreaseLife(this.enemyInfo.nearDamage);
+
+                    //創建 斬擊特效BoneAnimation
+                    SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
+                    obj.mLocalTransform.position = triggerEvent.otherColliderClosestPointToBone - Vector3.forward;
+                    obj.playAutomatically = false;
+                    //隨機撥放 1 或 2 動畫片段
+                    if (Random.Range(0, 2) == 0)
+                        obj.Play("撞擊特效01");
+                    else
+                        obj.Play("撞擊特效02");
+                }
+            }
+        }
+    }
+
 
     /// <summary>
     /// UserTrigger，觸發判定

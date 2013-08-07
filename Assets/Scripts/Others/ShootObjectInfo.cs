@@ -32,7 +32,7 @@ public class ShootObjectInfo : MonoBehaviour
 
                     //以下產生爆炸事件
                     this.isExplosion = true;
-                    this.boneAnimation.mLocalTransform.position = other.ClosestPointOnBounds(this.transform.position) - new Vector3(0, 0, 0.1f);   //爆炸中心為Collider交錯點
+                    this.boneAnimation.mLocalTransform.position = other.ClosestPointOnBounds(this.transform.position) - new Vector3(0, 0, 1);   //爆炸中心為Collider交錯點
                     this.boneAnimation.Play("explosion");
 
                     //移除Script，使爆炸位置固定、換圖正常
