@@ -32,6 +32,7 @@ public class BossController : MonoBehaviour
     public float NearAttackMoveTime;    //近距離攻擊移動時間
     private bool checkRunningNearAttack = false;    //確認是否正在移動準備近距離攻擊
 
+    private bool checkShooting = false;        //確認現在是否為射擊狀態
     public GameObject FarShootObject;   //遠距離射擊物件
 
     public SmoothMoves.BoneAnimation EffectAnimation;   //效果動畫物件
@@ -62,8 +63,6 @@ public class BossController : MonoBehaviour
             pos.PositionTransform = GameObject.Find(pos.PositionName).transform;
     }
 
-    private List<int> saveShootIndexList = new List<int>(); //紀錄射擊目標的清單
-    private bool checkShooting = false;        //確認現在是否為射擊狀態
     /// <summary>
     /// 魔王準備進行遠距離攻擊
     /// </summary>
@@ -73,20 +72,9 @@ public class BossController : MonoBehaviour
     {
         this.checkShooting = true;
 
-        int shootCount = 2;    //攻擊目標為2人
-        //紀錄準備被攻擊的目標，並顯示提示提醒玩家
-        for (int i = 0; i < shootCount; i++)
-        {
-            int temp;
-            do
-            {
-                //選擇的目標，必須不重複
-                temp = Random.Range(0, 4);
-            } while (saveShootIndexList.Contains(temp));
-
-            this.saveShootIndexList.Add(temp);
-            Instantiate(EffectCreator.script.道路危險提示[temp]);
-        }
+        //顯示提示提醒玩家(目標為BOSS面前兩位角色)
+        Instantiate(EffectCreator.script.道路危險提示[this.currentPositionIndex]);
+        Instantiate(EffectCreator.script.道路危險提示[this.currentPositionIndex + 1]);
 
         yield return new WaitForSeconds(time);      //等待n秒
 
@@ -293,15 +281,15 @@ public class BossController : MonoBehaviour
             //計算Boss與角色的距離
             float distance = Mathf.Abs(RolesCollection.script.Roles[0].transform.position.x - this.transform.position.x);
 
-            //發射史萊姆砲
-            foreach (var temp in this.saveShootIndexList)
-            {
-                Vector3 Posv3 = RolesCollection.script.Roles[temp].transform.position + new Vector3(distance, 0, 0);
-                GameObject newObj = (GameObject)Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
-                newObj.GetComponent<ShootObjectInfo>().Damage = this.enemyInfo.farDamage;
-            }
-            //清空紀錄標記的清單
-            this.saveShootIndexList.Clear();
+            //發射史萊姆砲(目標為BOSS面前兩位角色)
+            Vector3 Posv3 = RolesCollection.script.Roles[this.currentPositionIndex].transform.position + new Vector3(distance, 0, 0);
+            GameObject newObj = (GameObject)Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
+            newObj.GetComponent<ShootObjectInfo>().Damage = this.enemyInfo.farDamage;
+
+            Posv3 = RolesCollection.script.Roles[this.currentPositionIndex + 1].transform.position + new Vector3(distance, 0, 0);
+            newObj = (GameObject)Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
+            newObj.GetComponent<ShootObjectInfo>().Damage = this.enemyInfo.farDamage;
+
             this.checkShooting = false;
         }
     }
