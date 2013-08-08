@@ -3,7 +3,7 @@ using System.Collections;
 
 /// <summary>
 /// Create Date：2013-07-25
-/// Modify Date：2013-08-05
+/// Modify Date：2013-08-08
 /// Author：Ian
 /// Description：
 ///     遠距離(角色/敵人)發射的物件資訊
@@ -32,7 +32,12 @@ public class ShootObjectInfo : MonoBehaviour
 
                     //以下產生爆炸事件
                     this.isExplosion = true;
-                    this.boneAnimation.mLocalTransform.position = other.ClosestPointOnBounds(this.transform.position) - new Vector3(0, 0, 1);   //爆炸中心為Collider交錯點
+
+                    //爆炸中心為Collider交錯點
+                    Vector3 expPos = other.ClosestPointOnBounds(this.transform.position);
+                    expPos.z = other.gameObject.transform.position.z - 1;
+                    this.boneAnimation.mLocalTransform.position = expPos;
+
                     this.boneAnimation.Play("explosion");
 
                     //移除Script，使爆炸位置固定、換圖正常

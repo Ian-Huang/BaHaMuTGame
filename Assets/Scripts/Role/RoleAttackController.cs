@@ -3,7 +3,7 @@ using System.Collections;
 
 /// <summary>
 /// Create Date：2013-07-23
-/// Modify Date：2013-08-02
+/// Modify Date：2013-08-08
 /// Author：Ian
 /// Description：
 ///     角色攻擊控制器 (敵人、障礙物)
@@ -88,7 +88,10 @@ public class RoleAttackController : MonoBehaviour
 
                     //創建 斬擊特效BoneAnimation
                     SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
-                    obj.mLocalTransform.position = triggerEvent.otherColliderClosestPointToBone - new Vector3(0, 0, 0.2f);
+                    //設定動畫播放中心點
+                    Vector3 expPos = triggerEvent.otherColliderClosestPointToBone;
+                    expPos.z = triggerEvent.otherCollider.gameObject.transform.position.z - 1;
+                    obj.mLocalTransform.position = expPos;
                     obj.playAutomatically = false;
                     //隨機撥放 1 或 2 動畫片段
                     if (Random.Range(0, 2) == 0)
@@ -102,7 +105,10 @@ public class RoleAttackController : MonoBehaviour
 
                     //創建 斬擊特效BoneAnimation
                     SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
-                    obj.mLocalTransform.position = triggerEvent.otherColliderClosestPointToBone - new Vector3(0, 0, 0.2f);
+                    //設定動畫播放中心點
+                    Vector3 expPos = triggerEvent.otherColliderClosestPointToBone;
+                    expPos.z = triggerEvent.otherCollider.gameObject.transform.position.z - 1;
+                    obj.mLocalTransform.position = expPos;
                     obj.playAutomatically = false;
                     //隨機撥放 1 或 2 動畫片段
                     if (Random.Range(0, 2) == 0)

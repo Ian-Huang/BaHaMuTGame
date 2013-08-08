@@ -3,7 +3,7 @@ using System.Collections;
 
 /// <summary>
 /// Create Date：2013-07-23
-/// Modify Date：2013-08-03
+/// Modify Date：2013-08-08
 /// Author：Ian
 /// Description：
 ///     敵人攻擊控制器
@@ -77,7 +77,11 @@ public class EnemyAttackController : MonoBehaviour
 
                     //創建 斬擊特效BoneAnimation
                     SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
-                    obj.mLocalTransform.position = triggerEvent.otherColliderClosestPointToBone - Vector3.forward;
+
+                    //設定動畫播放中心點
+                    Vector3 expPos = triggerEvent.otherColliderClosestPointToBone;
+                    expPos.z = triggerEvent.otherCollider.gameObject.transform.position.z -1;
+                    obj.mLocalTransform.position = expPos;
                     obj.playAutomatically = false;
 
                     //不同種類的怪物產生不同的攻擊特效
