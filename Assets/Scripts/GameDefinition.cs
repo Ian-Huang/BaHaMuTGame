@@ -30,7 +30,7 @@ public class GameDefinition
         new EnemyData(Enemy.獸人弓箭手,100,10,25,0,140),
         new EnemyData(Enemy.獸人法師,100,5,15,0,170),
 
-        new EnemyData(Enemy.石巨人,300,10,50,200,0),
+        new EnemyData(Enemy.石頭人,300,10,50,200,0),
     };
 
     public static List<ObstacleData> ObstacleList = new List<ObstacleData>(){ 
@@ -163,7 +163,7 @@ public class GameDefinition
         獸人弓箭手 = 302,
         獸人法師 = 303,
 
-        石巨人 = 401
+        石頭人 = 401
     }
 
     public enum Obstacle
