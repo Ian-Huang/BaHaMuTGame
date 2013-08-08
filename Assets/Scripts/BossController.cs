@@ -39,6 +39,8 @@ public class BossController : MonoBehaviour
     public LayerMask AttackLayer;       //攻擊判定的Layer
     private Vector3 originScale;        //原始尺寸
 
+    private bool bossReadyAppear = false;   //魔王出現確認(true => 魔王正在出現中)
+
     private MoveController moveController { get; set; }
     private EnemyPropertyInfo enemyInfo { get; set; }
     private SmoothMoves.BoneAnimation boneAnimation;
@@ -61,6 +63,36 @@ public class BossController : MonoBehaviour
         //抓到Boss的定位點
         foreach (var pos in this.PositionList)
             pos.PositionTransform = GameObject.Find(pos.PositionName).transform;
+
+        //測試用，進行魔王登場
+        this.BossReadyAppear();
+    }
+
+    /// <summary>
+    /// 魔王登場定位完成後，執行此函式
+    /// </summary>
+    void BossAppearComplete()
+    {
+        this.bossReadyAppear = false;
+        this.boneAnimation.Play("出現");  //播放"出現"動畫
+    }
+
+    /// <summary>
+    /// 魔王登場設定，並開始執行
+    /// </summary>
+    void BossReadyAppear()
+    {
+        //魔王出現定位點為所有定位點清單中間值
+        this.currentPositionIndex = this.PositionList.Count / 2;
+
+        //魔王從出生點移動到定位點
+        iTween.MoveTo(this.gameObject, iTween.Hash(
+                    "position", this.PositionList[this.currentPositionIndex].PositionTransform.position,
+                    "time", 2.5f,   //移動過程秒數
+                    "easetype", iTween.EaseType.easeInOutQuad,
+                    "oncomplete", "BossAppearComplete"
+                ));
+        this.bossReadyAppear = true;
     }
 
     /// <summary>
@@ -131,7 +163,12 @@ public class BossController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.checkChangeWalk)
+        if (this.bossReadyAppear)
+        {
+            this.moveController.ChangeSpeed(0);
+            this.boneAnimation.Play("run");
+        }
+        else if (this.checkChangeWalk)
         {
             this.moveController.ChangeSpeed(0);
             this.boneAnimation.Play("walk");
@@ -161,13 +198,12 @@ public class BossController : MonoBehaviour
                 int random;
                 do
                 {
-                    //選擇的目標，必須不重複
+                    //選擇定位點，必須與當前定位點不同
                     random = Random.Range(0, this.PositionList.Count);
                 } while (this.currentPositionIndex == random);
 
                 iTween.MoveTo(this.gameObject, iTween.Hash(
-                            "x", this.PositionList[random].PositionTransform.position.x,
-                            "y", this.PositionList[random].PositionTransform.position.y,
+                            "position", this.PositionList[random].PositionTransform.position,
                             "time", this.ChangeWalksideMoveTime,
                             "easetype", iTween.EaseType.linear,
                             "oncomplete", "ChangeWalkComplete",
@@ -269,12 +305,16 @@ public class BossController : MonoBehaviour
     public void UserTrigger(SmoothMoves.UserTriggerEvent triggerEvent)
     {
         //確認是由"出現"觸發的UserTrigger
-        if (triggerEvent.animationName == "出現")
+        if (triggerEvent.animationName == "出現" & triggerEvent.boneName != "ChangeLayer")
         {
             //鏡頭震動
             iTween.ShakePosition(Camera.main.gameObject, new Vector3(1, 1, 0), 0.15f);
         }
-
+        //改變魔王Layer，更改為Enemy Layer，角色開始攻擊
+        else if (triggerEvent.animationName == "出現" & triggerEvent.boneName == "ChangeLayer")
+        {
+            this.gameObject.layer = LayerMask.NameToLayer("Enemy");
+        }
         //確認是由"發射"觸發的UserTrigger
         else if (triggerEvent.animationName == "發射")
         {
@@ -282,10 +322,11 @@ public class BossController : MonoBehaviour
             float distance = Mathf.Abs(RolesCollection.script.Roles[0].transform.position.x - this.transform.position.x);
 
             //發射史萊姆砲(目標為BOSS面前兩位角色)
+            //目標為第一位角色
             Vector3 Posv3 = RolesCollection.script.Roles[this.currentPositionIndex].transform.position + new Vector3(distance, 0, 0);
             GameObject newObj = (GameObject)Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
             newObj.GetComponent<ShootObjectInfo>().Damage = this.enemyInfo.farDamage;
-
+            //目標為第二位角色
             Posv3 = RolesCollection.script.Roles[this.currentPositionIndex + 1].transform.position + new Vector3(distance, 0, 0);
             newObj = (GameObject)Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
             newObj.GetComponent<ShootObjectInfo>().Damage = this.enemyInfo.farDamage;

@@ -220,6 +220,6 @@ public class GameDefinition
 
     public enum EventTriggerType
     {
-        出怪點 = 0, 終點 = 1
+        出怪點 = 0, 魔王警告點 = 1, 終點 = 2
     }
 }
