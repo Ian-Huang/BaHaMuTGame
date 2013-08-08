@@ -11,15 +11,15 @@ using System.Collections.Generic;
 /// </summary>
 public class BossController : MonoBehaviour
 {
-    public enum BossPosition
+    [System.Serializable]
+    public class PositionData
     {
-        Top = 1, Bottom = 2
+        public string PositionName;
+        public Transform PositionTransform;
     }
-    public BossPosition BossPos;
-    public string TopPositionName;
-    public string BottomPositionName;
-    public Transform TopPosition;
-    public Transform BottomPosition;
+    public List<PositionData> PositionList = new List<PositionData>();
+    private int currentPositionIndex = -1;
+
     public float ChangewalkMoveTime;
     private bool isChangeWalk = false;
 
@@ -53,9 +53,11 @@ public class BossController : MonoBehaviour
         //紀錄原始Scale
         this.originScale = this.transform.localScale;
 
-        //Boss Top、Bottom 點
-        this.TopPosition = GameObject.Find(TopPositionName).transform;
-        this.BottomPosition = GameObject.Find(BottomPositionName).transform;
+        //抓到Boss的定位點
+        foreach (var pos in this.PositionList)
+        {
+            pos.PositionTransform = GameObject.Find(pos.PositionName).transform;
+        }
 
     }
 
@@ -90,9 +92,9 @@ public class BossController : MonoBehaviour
         this.boneAnimation.Play("發射");
     }
 
-    void ChangeWalkComplete(BossPosition pos)
+    void ChangeWalkComplete(int index)
     {
-        this.BossPos = pos;
+        this.currentPositionIndex = index;
         this.isChangeWalk = false;
     }
 
@@ -141,6 +143,8 @@ public class BossController : MonoBehaviour
         }
         else
         {
+            #region TEST
+
             if (Input.GetKeyDown(KeyCode.I))
             {
                 iTween.MoveTo(this.gameObject, iTween.Hash(
@@ -155,33 +159,24 @@ public class BossController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.U))
             {
-                if (this.BossPos == BossPosition.Bottom)
+                int random;
+                do
                 {
-                    iTween.MoveTo(this.gameObject, iTween.Hash(
-                            "x", this.TopPosition.position.x,
-                            "y", this.TopPosition.position.y,
+                    //選擇的目標，必須不重複
+                    random = Random.Range(0, this.PositionList.Count);
+                } while (this.currentPositionIndex == random);
+
+                iTween.MoveTo(this.gameObject, iTween.Hash(
+                            "x", this.PositionList[random].PositionTransform.position.x,
+                            "y", this.PositionList[random].PositionTransform.position.y,
                             "time", this.ChangewalkMoveTime,
                             "easetype", iTween.EaseType.linear,
                             "oncomplete", "ChangeWalkComplete",
-                            "oncompleteparams", BossPosition.Top
+                            "oncompleteparams", random
                         ));
-                }
-                else
-                {
-                    iTween.MoveTo(this.gameObject, iTween.Hash(
-                              "x", this.BottomPosition.position.x,
-                              "y", this.BottomPosition.position.y,
-                              "time", this.ChangewalkMoveTime,
-                              "easetype", iTween.EaseType.linear,
-                              "oncomplete", "ChangeWalkComplete",
-                              "oncompleteparams", BossPosition.Bottom
-                          ));
-                }
-
                 this.isChangeWalk = true;
-
             }
-            #region TEST
+
 
             if (Input.GetKeyDown(KeyCode.Y))
             {
