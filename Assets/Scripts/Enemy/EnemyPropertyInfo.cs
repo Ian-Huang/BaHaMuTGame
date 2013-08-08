@@ -3,7 +3,7 @@ using System.Collections;
 
 /// <summary>
 /// Create Date：2013-07-24
-/// Modify Date：2013-08-06
+/// Modify Date：2013-08-08
 /// Author：Ian
 /// Description：
 ///     敵人的屬性資訊
@@ -90,10 +90,22 @@ public class EnemyPropertyInfo : MonoBehaviour
         //當生命小於0，刪除物件
         if (!this.isDead && this.currentLife <= 0)
         {
-            this.isDead = true;
-            this.boneAnimation.Play("defeat");
-            Destroy(this.GetComponent<MoveController>());   //死亡:停止敵人移動
-            CancelInvoke("RestoreLifePersecond");           //死亡:停止敵人回復生命
+            //特定enemy死亡(王怪死亡，連同小兵一起死亡)
+            if (this.Enemy == GameDefinition.Enemy.自訂)
+                foreach (var script in this.transform.parent.gameObject.GetComponentsInChildren<EnemyPropertyInfo>())
+                    script.EnemyDead();
+            //一般enemy死亡
+            else
+                this.EnemyDead();
         }
+    }
+
+    public void EnemyDead()
+    {
+        this.currentLife = 0;
+        this.isDead = true;
+        this.boneAnimation.Play("defeat");
+        Destroy(this.GetComponent<MoveController>());   //死亡:停止敵人移動
+        CancelInvoke("RestoreLifePersecond");           //死亡:停止敵人回復生命
     }
 }
