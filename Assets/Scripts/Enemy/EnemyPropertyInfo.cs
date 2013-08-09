@@ -64,6 +64,7 @@ public class EnemyPropertyInfo : MonoBehaviour
         //確認已進入死亡狀態且撥放死亡動畫後，才可刪除
         if (this.isDead && triggerEvent.animationName.CompareTo("defeat") == 0)
         {
+            //移除物件的同時，移除註冊於GameManager AllBoneAnimationList中的資訊
             if (GameManager.script.AllBoneAnimationList.ContainsKey(this.boneAnimation))
                 GameManager.script.AllBoneAnimationList.Remove(this.boneAnimation);
             Destroy(this.gameObject);
