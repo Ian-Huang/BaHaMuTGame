@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Modify Date：2013-08-09
 /// Description：
-///     敵人攻擊控制器
+///     全域遊戲管理系統
 ///     0809新增：新增角色、怪物BoneAnimation管理系統，以控制Animation
 /// </summary>
 public class GameManager : MonoBehaviour
