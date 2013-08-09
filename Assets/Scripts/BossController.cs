@@ -4,10 +4,11 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Create Date：2013-08-04
-/// Modify Date：2013-08-08
+/// Modify Date：2013-08-09
 /// Author：Ian
 /// Description：
 ///     魔王控制器(測試用)
+///     0809新增：註冊BoneAnimation到GameManager，方便管理
 /// </summary>
 public class BossController : MonoBehaviour
 {
@@ -56,6 +57,7 @@ public class BossController : MonoBehaviour
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
         this.boneAnimation.RegisterUserTriggerDelegate(UserTrigger);
         this.boneAnimation.RegisterColliderTriggerDelegate(WeaponHit);
+        GameManager.script.RegisterBoneAnimation(this.boneAnimation);   //註冊BoneAnimation，GameManager統一管理
 
         //紀錄原始Scale
         this.originScale = this.transform.localScale;
@@ -163,103 +165,107 @@ public class BossController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.bossReadyAppear)
+        //從GameManager 確認BoneAnimation的狀態
+        if (GameManager.script.GetBoneAnimationState(this.boneAnimation))
         {
-            this.moveController.ChangeSpeed(0);
-            this.boneAnimation.Play("run");
-        }
-        else if (this.checkChangeWalk)
-        {
-            this.moveController.ChangeSpeed(0);
-            this.boneAnimation.Play("walk");
-        }
-        else if (this.checkRunningNearAttack)
-        {
-            this.moveController.ChangeSpeed(0);
-            this.boneAnimation.Play("run");
-        }
-        else
-        {
-
-            if (Input.GetKeyDown(KeyCode.I))
+            if (this.bossReadyAppear)
             {
-                iTween.MoveTo(this.gameObject, iTween.Hash(
-                            "x", this.transform.position.x - this.NearAttackRunDistance,
-                            "time", this.NearAttackMoveTime,
-                            "easetype", iTween.EaseType.linear,
-                            "oncomplete", "NearAttackMoveComplete"
-                        ));
-
-                this.checkRunningNearAttack = true;
-            }
-
-            if (Input.GetKeyDown(KeyCode.U))
-            {
-                int random;
-                do
-                {
-                    //選擇定位點，必須與當前定位點不同
-                    random = Random.Range(0, this.PositionList.Count);
-                } while (this.currentPositionIndex == random);
-
-                iTween.MoveTo(this.gameObject, iTween.Hash(
-                            "position", this.PositionList[random].PositionTransform.position,
-                            "time", this.ChangeWalksideMoveTime,
-                            "easetype", iTween.EaseType.linear,
-                            "oncomplete", "ChangeWalkComplete",
-                            "oncompleteparams", random
-                        ));
-                this.checkChangeWalk = true;
-            }
-
-
-            if (Input.GetKeyDown(KeyCode.Y))
-            {
-                if (!this.checkShooting)
-                    StartCoroutine(ReadyFarAttack(1));  //等待n秒後，進行遠距離攻擊
-            }
-
-            this.transform.localScale = this.originScale;
-
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                this.boneAnimation.Play("run");
-                this.moveController.ChangeSpeed(15);
-
-            }
-            else if (Input.GetKey(KeyCode.RightArrow))
-            {
-                this.boneAnimation.Play("run");
-                Vector3 v3Scale = this.originScale;
-                v3Scale.x = -Mathf.Abs(v3Scale.x);
-                this.boneAnimation.mLocalTransform.localScale = v3Scale;
-                this.moveController.ChangeSpeed(-15);
-            }
-            else if (Input.GetKey(KeyCode.UpArrow))
-            {
-                this.boneAnimation.Play("walk");
-                this.transform.Translate(0, Time.deltaTime, 0);
                 this.moveController.ChangeSpeed(0);
+                this.boneAnimation.Play("run");
             }
-            else if (Input.GetKey(KeyCode.DownArrow))
+            else if (this.checkChangeWalk)
             {
-                this.boneAnimation.Play("walk");
-                this.transform.Translate(0, -Time.deltaTime, 0);
                 this.moveController.ChangeSpeed(0);
+                this.boneAnimation.Play("walk");
             }
-            else if (Input.GetKeyDown(KeyCode.J))
+            else if (this.checkRunningNearAttack)
             {
-                this.boneAnimation.Play("出現");
-            }
-            else if (Input.GetKeyDown(KeyCode.K))
-            {
-                this.boneAnimation.Play("突刺");
+                this.moveController.ChangeSpeed(0);
+                this.boneAnimation.Play("run");
             }
             else
             {
-                if (!this.animation.isPlaying)
-                    this.boneAnimation.Play("idle");
-                this.moveController.ChangeSpeed(0);
+
+                if (Input.GetKeyDown(KeyCode.I))
+                {
+                    iTween.MoveTo(this.gameObject, iTween.Hash(
+                                "x", this.transform.position.x - this.NearAttackRunDistance,
+                                "time", this.NearAttackMoveTime,
+                                "easetype", iTween.EaseType.linear,
+                                "oncomplete", "NearAttackMoveComplete"
+                            ));
+
+                    this.checkRunningNearAttack = true;
+                }
+
+                if (Input.GetKeyDown(KeyCode.U))
+                {
+                    int random;
+                    do
+                    {
+                        //選擇定位點，必須與當前定位點不同
+                        random = Random.Range(0, this.PositionList.Count);
+                    } while (this.currentPositionIndex == random);
+
+                    iTween.MoveTo(this.gameObject, iTween.Hash(
+                                "position", this.PositionList[random].PositionTransform.position,
+                                "time", this.ChangeWalksideMoveTime,
+                                "easetype", iTween.EaseType.linear,
+                                "oncomplete", "ChangeWalkComplete",
+                                "oncompleteparams", random
+                            ));
+                    this.checkChangeWalk = true;
+                }
+
+
+                if (Input.GetKeyDown(KeyCode.Y))
+                {
+                    if (!this.checkShooting)
+                        StartCoroutine(ReadyFarAttack(1));  //等待n秒後，進行遠距離攻擊
+                }
+
+                this.transform.localScale = this.originScale;
+
+                if (Input.GetKey(KeyCode.LeftArrow))
+                {
+                    this.boneAnimation.Play("run");
+                    this.moveController.ChangeSpeed(15);
+
+                }
+                else if (Input.GetKey(KeyCode.RightArrow))
+                {
+                    this.boneAnimation.Play("run");
+                    Vector3 v3Scale = this.originScale;
+                    v3Scale.x = -Mathf.Abs(v3Scale.x);
+                    this.boneAnimation.mLocalTransform.localScale = v3Scale;
+                    this.moveController.ChangeSpeed(-15);
+                }
+                else if (Input.GetKey(KeyCode.UpArrow))
+                {
+                    this.boneAnimation.Play("walk");
+                    this.transform.Translate(0, Time.deltaTime, 0);
+                    this.moveController.ChangeSpeed(0);
+                }
+                else if (Input.GetKey(KeyCode.DownArrow))
+                {
+                    this.boneAnimation.Play("walk");
+                    this.transform.Translate(0, -Time.deltaTime, 0);
+                    this.moveController.ChangeSpeed(0);
+                }
+                else if (Input.GetKeyDown(KeyCode.J))
+                {
+                    this.boneAnimation.Play("出現");
+                }
+                else if (Input.GetKeyDown(KeyCode.K))
+                {
+                    this.boneAnimation.Play("突刺");
+                }
+                else
+                {
+                    if (!this.animation.isPlaying)
+                        this.boneAnimation.Play("idle");
+                    this.moveController.ChangeSpeed(0);
+                }
             }
         }
     }

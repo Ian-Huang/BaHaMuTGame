@@ -3,10 +3,11 @@ using System.Collections;
 
 /// <summary>
 /// Create Date：2013-07-23
-/// Modify Date：2013-08-08
+/// Modify Date：2013-08-09
 /// Author：Ian
 /// Description：
 ///     敵人攻擊控制器
+///     0809新增：註冊BoneAnimation到GameManager，方便管理
 /// </summary>
 public class EnemyAttackController : MonoBehaviour
 {
@@ -29,31 +30,36 @@ public class EnemyAttackController : MonoBehaviour
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
         this.boneAnimation.RegisterColliderTriggerDelegate(WeaponHit);
         this.boneAnimation.RegisterUserTriggerDelegate(ShootEvent);
+        GameManager.script.RegisterBoneAnimation(this.boneAnimation);   //註冊BoneAnimation，GameManager統一管理
     }
 
     // Update is called once per frame
     void Update()
     {
-        // 怪物必須未死亡
-        if (!this.enemyInfo.isDead)
+        //從GameManager 確認BoneAnimation的狀態
+        if (GameManager.script.GetBoneAnimationState(this.boneAnimation))
         {
-            if (Physics.Raycast(this.transform.position, Vector3.left, out this.hitData, this.AttackDistance, this.AttackLayer))
+            // 怪物必須未死亡
+            if (!this.enemyInfo.isDead)
             {
-                //tag = MainBody
-                if (this.hitData.collider.tag.CompareTo("MainBody") == 0)
+                if (Physics.Raycast(this.transform.position, Vector3.left, out this.hitData, this.AttackDistance, this.AttackLayer))
+                {
+                    //tag = MainBody
+                    if (this.hitData.collider.tag.CompareTo("MainBody") == 0)
+                        if (!this.boneAnimation.IsPlaying("attack"))
+                        {
+                            this.boneAnimation.Play("attack");
+                            this.GetComponent<MoveController>().isRunning = false;
+                        }
+                }
+                else
+                {
+                    //確認目前動畫狀態(必須沒再播attack)
                     if (!this.boneAnimation.IsPlaying("attack"))
                     {
-                        this.boneAnimation.Play("attack");
-                        this.GetComponent<MoveController>().isRunning = false;
+                        this.boneAnimation.Play("walk");
+                        this.GetComponent<MoveController>().isRunning = true;
                     }
-            }
-            else
-            {
-                //確認目前動畫狀態(必須沒再播attack)
-                if (!this.boneAnimation.IsPlaying("attack"))
-                {
-                    this.boneAnimation.Play("walk");
-                    this.GetComponent<MoveController>().isRunning = true;
                 }
             }
         }
@@ -80,7 +86,7 @@ public class EnemyAttackController : MonoBehaviour
 
                     //設定動畫播放中心點
                     Vector3 expPos = triggerEvent.otherColliderClosestPointToBone;
-                    expPos.z = triggerEvent.otherCollider.gameObject.transform.position.z -1;
+                    expPos.z = triggerEvent.otherCollider.gameObject.transform.position.z - 1;
                     obj.mLocalTransform.position = expPos;
                     obj.playAutomatically = false;
 

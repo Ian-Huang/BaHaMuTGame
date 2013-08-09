@@ -1,6 +1,13 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
+/// <summary>
+/// Modify Date：2013-08-09
+/// Description：
+///     敵人攻擊控制器
+///     0809新增：新增角色、怪物BoneAnimation管理系統，以控制Animation
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager script;
@@ -8,6 +15,46 @@ public class GameManager : MonoBehaviour
     public int CurrentMorale;
     public int MoraleRestoreRate;
     public int MaxMorale;
+
+    public Dictionary<SmoothMoves.BoneAnimation, bool> AllBoneAnimationList = new Dictionary<SmoothMoves.BoneAnimation, bool>();
+
+    /// <summary>
+    /// 註冊BoneAnimation(角色、敵人必須註冊，方便系統控制)
+    /// </summary>
+    /// <param name="boneAnimation">角色/敵人的BoneAnimation</param>
+    public void RegisterBoneAnimation(SmoothMoves.BoneAnimation boneAnimation)
+    {
+        this.AllBoneAnimationList.Add(boneAnimation, true);
+    }
+
+    /// <summary>
+    /// 得到目前BoneAnimation的狀態(True為正在使用、False為暫停使用)
+    /// </summary>
+    /// <param name="boneAnimation">角色/敵人的BoneAnimation</param>
+    /// <returns>目前BoneAnimation的狀態</returns>
+    public bool GetBoneAnimationState(SmoothMoves.BoneAnimation boneAnimation)
+    {
+        return this.AllBoneAnimationList[boneAnimation];
+    }
+
+    /// <summary>
+    /// 暫停所有註冊的BoneAnimation
+    /// </summary>
+    public void StopAllBoneAnimation()
+    {
+        lock (this.AllBoneAnimationList)
+        {
+            //從AllBoneAnimation 複製到local arrays
+            SmoothMoves.BoneAnimation[] allAnimations = new SmoothMoves.BoneAnimation[this.AllBoneAnimationList.Keys.Count];
+            this.AllBoneAnimationList.Keys.CopyTo(allAnimations, 0);
+
+            for (int i = 0; i < allAnimations.Length; i++)
+            {
+                allAnimations[i].Stop();    //暫停BoneAnimation的運作
+                this.AllBoneAnimationList[allAnimations[i]] = false;    //將狀態改為停止
+            }
+        }
+    }
 
     void Awake()
     {
@@ -38,7 +85,13 @@ public class GameManager : MonoBehaviour
     {
         //提供介面監控數值
         //士氣
-        MUI_Monitor.script.SetValue("士氣值"+"x", ((float)this.CurrentMorale / this.MaxMorale) * 100);
+        MUI_Monitor.script.SetValue("士氣值" + "x", ((float)this.CurrentMorale / this.MaxMorale) * 100);
+
+        //測試用，暫停所有註冊的BoneAnimation
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            GameManager.script.StopAllBoneAnimation();
+        }
     }
 
     /// <summary>

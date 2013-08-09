@@ -3,10 +3,11 @@ using System.Collections;
 
 /// <summary>
 /// Create Date：2013-07-24
-/// Modify Date：2013-08-08
+/// Modify Date：2013-08-09
 /// Author：Ian
 /// Description：
 ///     敵人的屬性資訊
+///     0809新增：移除敵人的同時，移除註冊於GameManager AllBoneAnimationList中的資訊
 /// </summary>
 public class EnemyPropertyInfo : MonoBehaviour
 {
@@ -62,7 +63,11 @@ public class EnemyPropertyInfo : MonoBehaviour
     {
         //確認已進入死亡狀態且撥放死亡動畫後，才可刪除
         if (this.isDead && triggerEvent.animationName.CompareTo("defeat") == 0)
+        {
+            if (GameManager.script.AllBoneAnimationList.ContainsKey(this.boneAnimation))
+                GameManager.script.AllBoneAnimationList.Remove(this.boneAnimation);
             Destroy(this.gameObject);
+        }
     }
 
     /// <summary>

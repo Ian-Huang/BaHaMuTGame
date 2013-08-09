@@ -3,10 +3,11 @@ using System.Collections;
 
 /// <summary>
 /// Create Date：2013-07-23
-/// Modify Date：2013-08-08
+/// Modify Date：2013-08-09
 /// Author：Ian
 /// Description：
 ///     角色攻擊控制器 (敵人、障礙物)
+///     0809新增：註冊BoneAnimation到GameManager，方便管理
 /// </summary>
 public class RoleAttackController : MonoBehaviour
 {
@@ -30,41 +31,46 @@ public class RoleAttackController : MonoBehaviour
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
         this.boneAnimation.RegisterColliderTriggerDelegate(WeaponHit);
         this.boneAnimation.RegisterUserTriggerDelegate(ShootEvent);
+        GameManager.script.RegisterBoneAnimation(this.boneAnimation);   //註冊BoneAnimation，GameManager統一管理
     }
 
     // Update is called once per frame
     void Update()
     {
-        // 角色必須未虛弱
-        if (!this.roleInfo.isWeak)
+        //從GameManager 確認BoneAnimation的狀態
+        if (GameManager.script.GetBoneAnimationState(this.boneAnimation))
         {
-            //判別物件為何？  敵人與障礙物有不同的處理
-            if (Physics.Raycast(this.transform.position, Vector3.right, out this.hitData, this.AttackDistance, this.EnemyLayer))
+            // 角色必須未虛弱
+            if (!this.roleInfo.isWeak)
             {
-                //tag = MainBody  (物件主體)
-                if (this.hitData.collider.tag.CompareTo("MainBody") == 0)
-                    if (!this.hitData.collider.GetComponent<EnemyPropertyInfo>().isDead)    //確認Enemy是否已經死亡
-                        if (!this.boneAnimation.IsPlaying("attack"))
-                            this.boneAnimation.Play("attack");
-            }
-            else if (Physics.Raycast(this.transform.position, Vector3.right, out this.hitData, this.AttackDistance, this.ObstacleLayer))
-            {
-                //tag = MainBody  (物件主體)
-                if (this.hitData.collider.tag.CompareTo("MainBody") == 0)
-                    if (!this.hitData.collider.GetComponent<ObstaclePropertyInfo>().isDisappear)    //確認Obstacle是否已經消失
-                        if (this.GetComponent<ObstacleSystem>().ObstacleList.Contains(this.hitData.collider.GetComponent<ObstaclePropertyInfo>().Obstacle))
+                //判別物件為何？  敵人與障礙物有不同的處理
+                if (Physics.Raycast(this.transform.position, Vector3.right, out this.hitData, this.AttackDistance, this.EnemyLayer))
+                {
+                    //tag = MainBody  (物件主體)
+                    if (this.hitData.collider.tag.CompareTo("MainBody") == 0)
+                        if (!this.hitData.collider.GetComponent<EnemyPropertyInfo>().isDead)    //確認Enemy是否已經死亡
                             if (!this.boneAnimation.IsPlaying("attack"))
                                 this.boneAnimation.Play("attack");
-            }
+                }
+                else if (Physics.Raycast(this.transform.position, Vector3.right, out this.hitData, this.AttackDistance, this.ObstacleLayer))
+                {
+                    //tag = MainBody  (物件主體)
+                    if (this.hitData.collider.tag.CompareTo("MainBody") == 0)
+                        if (!this.hitData.collider.GetComponent<ObstaclePropertyInfo>().isDisappear)    //確認Obstacle是否已經消失
+                            if (this.GetComponent<ObstacleSystem>().ObstacleList.Contains(this.hitData.collider.GetComponent<ObstaclePropertyInfo>().Obstacle))
+                                if (!this.boneAnimation.IsPlaying("attack"))
+                                    this.boneAnimation.Play("attack");
+                }
 
-            //確認目前動畫狀態(必須沒再播attack)
-            if (!this.boneAnimation.IsPlaying("attack"))
-            {
-                //判定背景是否有在動，以此決定角色的動作狀態
-                if (BackgroundController.script.isRunning)
-                    this.boneAnimation.Play("walk");
-                else
-                    this.boneAnimation.Play("idle");
+                //確認目前動畫狀態(必須沒再播attack)
+                if (!this.boneAnimation.IsPlaying("attack"))
+                {
+                    //判定背景是否有在動，以此決定角色的動作狀態
+                    if (BackgroundController.script.isRunning)
+                        this.boneAnimation.Play("walk");
+                    else
+                        this.boneAnimation.Play("idle");
+                }
             }
         }
     }
