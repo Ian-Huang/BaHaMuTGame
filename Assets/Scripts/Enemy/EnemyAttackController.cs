@@ -54,8 +54,8 @@ public class EnemyAttackController : MonoBehaviour
                 }
                 else
                 {
-                    //確認目前動畫狀態(必須沒再播attack)
-                    if (!this.boneAnimation.IsPlaying("attack"))
+                    //確認目前動畫狀態(必須沒在播其他動畫)
+                    if (!this.boneAnimation.isPlaying)
                     {
                         this.boneAnimation.Play("walk");
                         this.GetComponent<MoveController>().isRunning = true;
