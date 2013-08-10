@@ -13,22 +13,8 @@ using System.Collections.Generic;
 /// </summary>
 public class BossController : MonoBehaviour
 {
-    [System.Serializable]
-    public class ActionTimerData
-    {
-        public bool isRunTimer { get; private set; }
-        public float 切換跑道後後下次行動時間;
-        public float 近距離攻擊後下次行動時間;
-        public float 遠距離攻擊後下次行動時間;
-
-        public void ChangeTimerState(bool state)
-        {
-            this.isRunTimer = state;
-        }
-    }
-
     public ActionTimerData ActionTimer = new ActionTimerData();
-    public float tempTime;
+    private float NextActionTime;
 
     public List<PositionData> BattlePositionList = new List<PositionData>();    //戰鬥定位點資訊清單
     private int currentBattlePositionIndex = -1;                                //當前定位點的Index
@@ -67,7 +53,7 @@ public class BossController : MonoBehaviour
         foreach (var pos in this.BattlePositionList)
             pos.PositionTransform = GameObject.Find(pos.PositionName).transform;
 
-        this.tempTime = 0;
+        this.NextActionTime = 0;
 
         //測試用，進行魔王登場
         this.BossReadyAppear();
@@ -120,61 +106,47 @@ public class BossController : MonoBehaviour
         //從GameManager 確認BoneAnimation的狀態
         if (GameManager.script.GetBoneAnimationState(this.boneAnimation))
         {
-            if (this.currentBossAction == BossAction.登場中 | this.currentBossAction == BossAction.近距離攻擊)
-                this.boneAnimation.Play("run");
-
-            else if (this.currentBossAction == BossAction.切換跑道)
-                this.boneAnimation.Play("walk");
-
-            else if (this.currentBossAction == BossAction.閒置)
+            // 魔王必須未死亡
+            if (!this.enemyInfo.isDead)
             {
-                //近距離攻擊
-                if (Input.GetKeyDown(KeyCode.I))
-                {
-                    this.NearAttack();
-                }
+                if (this.currentBossAction == BossAction.登場中 | this.currentBossAction == BossAction.近距離攻擊)
+                    this.boneAnimation.Play("run");
 
-                //切換跑道
-                if (Input.GetKeyDown(KeyCode.U))
-                {
-                    this.ChangeWalkside();
-                }
+                else if (this.currentBossAction == BossAction.切換跑道)
+                    this.boneAnimation.Play("walk");
 
-                //遠距離攻擊
-                if (Input.GetKeyDown(KeyCode.Y))
+                else if (this.currentBossAction == BossAction.閒置)
                 {
-                    this.FarAttack();
-                }
-
-                if (this.ActionTimer.isRunTimer)
-                {
-                    this.tempTime -= Time.deltaTime;
-                    if (this.tempTime < 0)
+                    if (this.ActionTimer.isRunTimer)
                     {
-                        switch (Random.Range(0, 3))
+                        this.NextActionTime -= Time.deltaTime;
+                        if (this.NextActionTime < 0)
                         {
-                            //切換跑道
-                            case 0:
-                                this.ChangeWalkside();
-                                this.tempTime = this.ActionTimer.切換跑道後後下次行動時間;
-                                break;
-                            //近距離攻擊
-                            case 1:
-                                this.NearAttack();
-                                this.tempTime = this.ActionTimer.近距離攻擊後下次行動時間;
-                                break;
-                            //遠距離攻擊
-                            case 2:
-                                this.FarAttack();
-                                this.tempTime = this.ActionTimer.遠距離攻擊後下次行動時間;
-                                break;
+                            switch (Random.Range(0, 3))
+                            {
+                                //切換跑道
+                                case 0:
+                                    this.ChangeWalkside();
+                                    this.NextActionTime = this.ActionTimer.切換跑道後下次行動時間;
+                                    break;
+                                //近距離攻擊
+                                case 1:
+                                    this.NearAttack();
+                                    this.NextActionTime = this.ActionTimer.近距離攻擊後下次行動時間;
+                                    break;
+                                //遠距離攻擊
+                                case 2:
+                                    this.FarAttack();
+                                    this.NextActionTime = this.ActionTimer.遠距離攻擊後下次行動時間;
+                                    break;
+                            }
                         }
                     }
-                }
 
-                this.transform.localScale = this.originScale;
-                if (!this.boneAnimation.isPlaying)
-                    this.boneAnimation.Play("idle");
+                    this.transform.localScale = this.originScale;
+                    if (!this.boneAnimation.isPlaying)
+                        this.boneAnimation.Play("idle");
+                }
             }
         }
     }
@@ -355,6 +327,23 @@ public class BossController : MonoBehaviour
             newObj.GetComponent<ShootObjectInfo>().Damage = this.enemyInfo.farDamage;
 
             this.currentBossAction = BossAction.閒置;
+        }
+    }
+
+    /// <summary>
+    /// 動作計時器
+    /// </summary>
+    [System.Serializable]
+    public class ActionTimerData
+    {
+        public bool isRunTimer { get; private set; }
+        public float 切換跑道後下次行動時間;
+        public float 近距離攻擊後下次行動時間;
+        public float 遠距離攻擊後下次行動時間;
+
+        public void ChangeTimerState(bool state)
+        {
+            this.isRunTimer = state;
         }
     }
 

@@ -97,7 +97,7 @@ public class EnemyPropertyInfo : MonoBehaviour
         if (!this.isDead && this.currentLife <= 0)
         {
             //特定enemy死亡(王怪死亡，連同小兵一起死亡)
-            if (this.Enemy == GameDefinition.Enemy.自訂)
+            if (this.Enemy == GameDefinition.Enemy.巨型史萊姆BOSS)
                 foreach (var script in this.transform.parent.gameObject.GetComponentsInChildren<EnemyPropertyInfo>())
                     script.EnemyDead();
             //一般enemy死亡

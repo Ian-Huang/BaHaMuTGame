@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// 遊戲定義檔
+/// </summary>
 public class GameDefinition
 {
     public static int MaxMorale = 10000;
@@ -20,25 +23,30 @@ public class GameDefinition
         new EnemyData(Enemy.中型史萊姆,500,30,10,100,0),
         new EnemyData(Enemy.中型火焰史萊姆,700,30,20,150,0),
         new EnemyData(Enemy.中型硬化史萊姆,1000,20,50,80,0),
+        new EnemyData(Enemy.巨型史萊姆BOSS,2500,30,30,200,200),
 
         new EnemyData(Enemy.骷髏戰士,100,10,20,100,0),
         new EnemyData(Enemy.骷髏弓箭手,80,10,20,0,120),
         new EnemyData(Enemy.骷髏騎士,300,20,50,100,0),
         new EnemyData(Enemy.骷髏法師,100,5,10,0,150),
 
+        new EnemyData(Enemy.樹人,200,10,35,150,0),
+        new EnemyData(Enemy.胖樹人,300,15,45,200,0),
+        new EnemyData(Enemy.長爪樹人,200,15,30,100,0),
+
+        new EnemyData(Enemy.石頭人,300,10,50,200,0),
+
         new EnemyData(Enemy.獸人戰士,150,15,25,120,0),
         new EnemyData(Enemy.獸人弓箭手,100,10,25,0,140),
         new EnemyData(Enemy.獸人法師,100,5,15,0,170),
-
-        new EnemyData(Enemy.石頭人,300,10,50,200,0),
     };
 
     public static List<ObstacleData> ObstacleList = new List<ObstacleData>(){ 
-        new ObstacleData(Obstacle.火焰魔法陣,500),
-        new ObstacleData(Obstacle.樹木_01,500),
-        new ObstacleData(Obstacle.樹木_02,300),
-        new ObstacleData(Obstacle.斷壁,350),
-        new ObstacleData(Obstacle.鐵陷阱,350)
+        new ObstacleData(Obstacle.火焰魔法陣,250),
+        new ObstacleData(Obstacle.樹木_01,200),
+        new ObstacleData(Obstacle.樹木_02,200),
+        new ObstacleData(Obstacle.斷壁,250),
+        new ObstacleData(Obstacle.鐵陷阱,200)
     };
 
     public class RoleData
@@ -121,14 +129,6 @@ public class GameDefinition
         }
     }
 
-    public class BossData
-    {
-        public int Life;
-        public int CureRate;
-        public int Defence;
-        //
-    }
-
     public enum AttackMode
     { NearAttack = 0, FarAttck }
 
@@ -153,26 +153,31 @@ public class GameDefinition
         中型史萊姆 = 104,
         中型火焰史萊姆 = 105,
         中型硬化史萊姆 = 106,
+        巨型史萊姆BOSS = 199,
 
         骷髏戰士 = 201,
         骷髏弓箭手 = 202,
         骷髏騎士 = 203,
         骷髏法師 = 204,
 
-        獸人戰士 = 301,
-        獸人弓箭手 = 302,
-        獸人法師 = 303,
+        樹人 = 301,
+        胖樹人 = 302,
+        長爪樹人 = 303,
 
-        石頭人 = 401
+        石頭人 = 401,
+
+        獸人戰士 = 501,
+        獸人弓箭手 = 502,
+        獸人法師 = 503
     }
 
     public enum Obstacle
     {
-        聖女石碑 = 101,              //聖騎士處理
+        聖女石碑 = 101,              //盾騎士處理
         鐵陷阱 = 201,                //陷阱處理
-        斷壁 = 301,                  //狂戰士處理           
+        斷壁 = 301,                  //盾騎士、狂戰士處理           
         火焰魔法陣 = 401,            //法師處理
-        樹木_01 = 501, 樹木_02 = 502 //狂戰士處理
+        樹木_01 = 501, 樹木_02 = 502 //盾騎士、狂戰士處理
     }
 
     public enum ChangeRoleMode
