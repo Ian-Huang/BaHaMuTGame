@@ -4,14 +4,23 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Create Date：2013-07-23
-/// Modify Date：2013-08-08
+/// Modify Date：2013-08-10
 /// Author：Ian
 /// Description：
 ///     敵人產生點(當玩家觸發，開始製造敵人)
-///     新增王點設定：一段時間間隔出小兵
+///     0808：新增王點設定，一段時間間隔出小兵
+///     0810：修正生怪數的設定方式(CreateCountMin、CreateCountMax)
 /// </summary>
 public class EnemyCreatePoint : MonoBehaviour
 {
+    public int CreateCountMin;  //最小生怪數
+    public int CreateCountMax;  //最大生怪數
+
+    public GameObject[] RandomCreateEnemyKindList;      //隨機產生怪物的清單
+    public List<Transform> RandomCreatePositionList;    //隨機產生怪物的位置
+    [HideInInspector]
+    public List<Transform> originRandomCreatePositionList;
+
     //-------Boss 專用參數-------
     public bool isBossPoint = false;    //確認是否為出王點
     public GameObject Boss;             //魔王物件
@@ -20,15 +29,17 @@ public class EnemyCreatePoint : MonoBehaviour
     public float DelayTimeStartCreate;  //產生魔王後，幾秒後開始出第一批小兵
     //-------Boss 專用參數-------
 
-    public int CreateCount;     //一次性產生多少隻怪(假如 CreateCount = 0 => Random (1 ~ RandomCreatePositionList.Count) )
-    public GameObject[] RandomCreateEnemyKindList;      //隨機產生怪物的清單
-    public List<Transform> RandomCreatePositionList;    //隨機產生怪物的位置
-    [HideInInspector]
-    public List<Transform> originRandomCreatePositionList;
-
     void Start()
     {
         this.originRandomCreatePositionList.AddRange(this.RandomCreatePositionList);
+
+        //防呆用，避免CreateCountMin > CreateCountMax
+        if (this.CreateCountMin > this.CreateCountMax)
+        {
+            int temp = this.CreateCountMin;
+            this.CreateCountMin = this.CreateCountMax;
+            this.CreateCountMax = temp;
+        }
     }
 
     /// <summary>
@@ -36,14 +47,28 @@ public class EnemyCreatePoint : MonoBehaviour
     /// </summary>
     public void CreateEnemy()
     {
-        // 確認是否為持續生產怪物點
-        if (!this.isBossPoint)
+        // 確認是否為持續生產怪物點(Boss專用)
+        if (this.isBossPoint)
         {
-            //  CreateCount = 0 , 產生敵人為隨機數
-            if (this.CreateCount == 0)
-                this.CreateCount = Random.Range(0, this.RandomCreatePositionList.Count) + 1;
+            GameObject newObj = (GameObject)Instantiate(
+                    this.Boss,
+                    this.RandomCreatePositionList[Random.Range(0, this.RandomCreatePositionList.Count)].position,
+                    this.Boss.transform.rotation);
 
-            for (int i = 0; i < this.CreateCount; i++)
+            //設定物件的parent
+            newObj.transform.parent = this.transform;
+            StartCoroutine(AutoCreateEnemy(this.DelayTimeStartCreate));
+        }
+        else
+        {
+            //隨機生怪 CreateCountMin~CreateCountMax 之間，假如CreateCountMax大於生怪位置數，則等於生怪位置數
+            int createCount;
+            if (this.CreateCountMax > this.RandomCreatePositionList.Count)
+                createCount = Random.Range(this.CreateCountMin, this.RandomCreatePositionList.Count + 1);
+            else
+                createCount = Random.Range(this.CreateCountMin, this.CreateCountMax + 1);
+
+            for (int i = 0; i < createCount; i++)
             {
                 int enemyIndex = Random.Range(0, RandomCreateEnemyKindList.Length);
                 int positionIndex = Random.Range(0, RandomCreatePositionList.Count);
@@ -58,17 +83,6 @@ public class EnemyCreatePoint : MonoBehaviour
                 //設定物件的parent
                 newObj.transform.parent = this.transform;
             }
-        }
-        else
-        {
-            GameObject newObj = (GameObject)Instantiate(
-                    this.Boss,
-                    this.RandomCreatePositionList[Random.Range(0, this.RandomCreatePositionList.Count)].position,
-                    this.Boss.transform.rotation);
-
-            //設定物件的parent
-            newObj.transform.parent = this.transform;
-            StartCoroutine(AutoCreateEnemy(this.DelayTimeStartCreate));
         }
     }
 
@@ -85,14 +99,14 @@ public class EnemyCreatePoint : MonoBehaviour
         this.RandomCreatePositionList.Clear();
         this.RandomCreatePositionList.AddRange(this.originRandomCreatePositionList);
 
-        //  CreateCount = 0 , 產生敵人為隨機數
-        int count;
-        if (this.CreateCount == 0)
-            count = Random.Range(0, this.RandomCreatePositionList.Count) + 1;
+        //隨機生怪 CreateCountMin~CreateCountMax 之間，假如CreateCountMax大於生怪位置數，則等於生怪位置數
+        int createCount;
+        if (this.CreateCountMax > this.RandomCreatePositionList.Count)
+            createCount = Random.Range(this.CreateCountMin, this.RandomCreatePositionList.Count + 1);
         else
-            count = this.CreateCount;
+            createCount = Random.Range(this.CreateCountMin, this.CreateCountMax + 1);
 
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < createCount; i++)
         {
             int enemyIndex = Random.Range(0, RandomCreateEnemyKindList.Length);
             int positionIndex = Random.Range(0, RandomCreatePositionList.Count);
@@ -110,5 +124,4 @@ public class EnemyCreatePoint : MonoBehaviour
 
         StartCoroutine(AutoCreateEnemy(Random.Range(this.AutocreateMintime, this.AutocreateMaxtime)));
     }
-
 }
