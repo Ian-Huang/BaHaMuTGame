@@ -1,19 +1,19 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
-#region ¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­­×¥¿¬ö¿ı¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­
-/// 13/05/08    «Ø¸m
-/// 13/06/19    ­«·s©w¸q¦WºÙ MUI_MoveTo
+#region ï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒä¿®æ­£ç´€éŒ„ï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒ
+/// 13/05/08    å»ºç½®
+/// 13/06/19    é‡æ–°å®šç¾©åç¨± MUI_MoveTo
 
 #endregion
 /// <summary>
-/// °Êµe - °ÊºA§óÅÜ Rect ÅÜ¼Æ
+/// å‹•ç•« - å‹•æ…‹æ›´è®Š Rect è®Šæ•¸
 /// </summary>
-/// * ¥H¥Ø«eRectÅÜ¼Æ¥h­pºâ·sªºRect¨Ó»s³y²¾°Ê®ÄªG
-/// ** Effect¦@¦P»¡©ú©ñ¸m¦bMUI_Effect
+/// * ä»¥ç›®å‰Rectè®Šæ•¸å»è¨ˆç®—æ–°çš„Rectä¾†è£½é€ ç§»å‹•æ•ˆæœ
+/// ** Effectå…±åŒèªªæ˜æ”¾ç½®åœ¨MUI_Effect
 public class MUI_LayoutScaleTo : MUI_Effect
 {
-    //©ñ¤j¦V¶q
+    //æ”¾å¤§å‘é‡
     public Vector2 scaleV2;
 
     void Update()
@@ -26,7 +26,7 @@ public class MUI_LayoutScaleTo : MUI_Effect
             {
                 if (child.GetComponent<iTween>())
                 {
-                    //·íITween°õ¦æµ²§ô(percentage = 1)
+                    //ç•¶ITweenåŸ·è¡ŒçµæŸ(percentage = 1)
                     if (child.GetComponent<iTween>().percentage >= 1)
                     {
                         if (_disableWhenEffectDone == MUI_Enum.DisableWhenEffectDone.True)
@@ -41,7 +41,7 @@ public class MUI_LayoutScaleTo : MUI_Effect
     }
 
     /// <summary>
-    /// ¯S®Ä¶}©l¨óµ{
+    /// ç‰¹æ•ˆé–‹å§‹å”ç¨‹
     /// </summary>
     void SetEffectStartCoroutine()
     {
@@ -51,9 +51,9 @@ public class MUI_LayoutScaleTo : MUI_Effect
     void OnEnable()
     {
         isEffectStart = false;
-        //¿ù»~­×¥¿
+        //éŒ¯èª¤ä¿®æ­£
         BugFix();
-        //«Ø¥ß¯S®Ä¨óµ{
+        //å»ºç«‹ç‰¹æ•ˆå”ç¨‹
         SetEffectStartCoroutine();
     }
 
@@ -101,9 +101,9 @@ public class MUI_LayoutScaleTo : MUI_Effect
     }
 
     /// <summary>
-    /// §PÂ_ª«¥ó¬O§_¬°UIª«¥ó
+    /// åˆ¤æ–·ç‰©ä»¶æ˜¯å¦ç‚ºUIç‰©ä»¶
     /// </summary>
-    /// <param name="Object">ª«¥ó</param>
+    /// <param name="Object">ç‰©ä»¶</param>
     /// <returns>T/F</returns>
     bool Check_isMUI(Transform Object)
     {

@@ -1,19 +1,19 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
-#region ¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­­×¥¿¬ö¿ı¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­
-/// 13/05/08    «Ø¸m
-/// 13/06/19    ­«·s©w¸q¦WºÙ MUI_MoveTo
+#region ï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒä¿®æ­£ç´€éŒ„ï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒ
+/// 13/05/08    å»ºç½®
+/// 13/06/19    é‡æ–°å®šç¾©åç¨± MUI_MoveTo
 
 #endregion
 /// <summary>
-/// °Êµe - °ÊºA§óÅÜ Rect ÅÜ¼Æ
+/// å‹•ç•« - å‹•æ…‹æ›´è®Š Rect è®Šæ•¸
 /// </summary>
-/// * ¥H¥Ø«eRectÅÜ¼Æ¥h­pºâ·sªºRect¨Ó»s³y²¾°Ê®ÄªG
-/// ** Effect¦@¦P»¡©ú©ñ¸m¦bMUI_Effect
+/// * ä»¥ç›®å‰Rectè®Šæ•¸å»è¨ˆç®—æ–°çš„Rectä¾†è£½é€ ç§»å‹•æ•ˆæœ
+/// ** Effectå…±åŒèªªæ˜æ”¾ç½®åœ¨MUI_Effect
 public class MUI_MoveTo : MUI_Effect
 {
-    //²¾°Ê¦V¶q
+    //ç§»å‹•å‘é‡
     public Vector2 moveV2;
     private Rect newRect;
 
@@ -21,7 +21,7 @@ public class MUI_MoveTo : MUI_Effect
     {
         if (this.transform.parent.GetComponent<iTween>())
         {
-            //·íITween°õ¦æµ²§ô(percentage = 1)
+            //ç•¶ITweenåŸ·è¡ŒçµæŸ(percentage = 1)
             if (this.transform.parent.GetComponent<iTween>().percentage >= 1)
             {
                 if (_disableWhenEffectDone == MUI_Enum.DisableWhenEffectDone.True)
@@ -35,7 +35,7 @@ public class MUI_MoveTo : MUI_Effect
     }
 
     /// <summary>
-    /// ¯S®Ä¶}©l¨óµ{
+    /// ç‰¹æ•ˆé–‹å§‹å”ç¨‹
     /// </summary>
     void SetEffectStartCoroutine()
     {
@@ -44,9 +44,9 @@ public class MUI_MoveTo : MUI_Effect
 
     void OnEnable()
     {
-        //¿ù»~­×¥¿
+        //éŒ¯èª¤ä¿®æ­£
         BugFix();
-        //«Ø¥ß¯S®Ä¨óµ{
+        //å»ºç«‹ç‰¹æ•ˆå”ç¨‹
         SetEffectStartCoroutine();
     }
 
@@ -69,7 +69,7 @@ public class MUI_MoveTo : MUI_Effect
         yield return new WaitForSeconds(delay);
 
         newRect = Get_MUI_Rect();
-        //¨ú±o·í«erect
+        //å–å¾—ç•¶å‰rect
         newRect = new Rect(
                 newRect.x + moveV2.x,
                 newRect.y + moveV2.y,
@@ -90,8 +90,8 @@ public class MUI_MoveTo : MUI_Effect
 
     Rect Get_MUI_Rect()
     {
-        if (this.transform.parent.GetComponent<MUI_Texture_2D>())   return this.transform.parent.GetComponent<MUI_Texture_2D>().rect;
-        if (this.transform.parent.GetComponent<MUI_Label>())        return this.transform.parent.GetComponent<MUI_Label>().rect;
+        if (this.transform.parent.GetComponent<MUI_Texture_2D>()) return this.transform.parent.GetComponent<MUI_Texture_2D>().rect;
+        if (this.transform.parent.GetComponent<MUI_Label>()) return this.transform.parent.GetComponent<MUI_Label>().rect;
         else return newRect;
     }
 }

@@ -1,4 +1,4 @@
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(MUI_TextEditor)), CanEditMultipleObjects]
@@ -12,11 +12,10 @@ public class TextEditor : Editor
 
     public override void OnInspectorGUI()
     {
-       
         serializedObject.Update();
 
         longStringProp.stringValue = EditorGUILayout.TextArea(longStringProp.stringValue, GUILayout.MaxHeight(100));
-      
+
         serializedObject.ApplyModifiedProperties();
     }
 }

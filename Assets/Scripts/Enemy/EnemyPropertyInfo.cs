@@ -1,25 +1,25 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// Create Date¡G2013-07-24
-/// Modify Date¡G2013-08-09
-/// Author¡GIan
-/// Description¡G
-///     ¼Ä¤HªºÄİ©Ê¸ê°T
-///     0809·s¼W¡G²¾°£¼Ä¤Hªº¦P®É¡A²¾°£µù¥U©óGameManager AllBoneAnimationList¤¤ªº¸ê°T
+/// Create Dateï¼š2013-07-24
+/// Modify Dateï¼š2013-08-09
+/// Authorï¼šIan
+/// Descriptionï¼š
+///     æ•µäººçš„å±¬æ€§è³‡è¨Š
+///     0809æ–°å¢ï¼šç§»é™¤æ•µäººçš„åŒæ™‚ï¼Œç§»é™¤è¨»å†Šæ–¼GameManager AllBoneAnimationListä¸­çš„è³‡è¨Š
 /// </summary>
 public class EnemyPropertyInfo : MonoBehaviour
 {
     public GameDefinition.Enemy Enemy;
-    public int currentLife; //·í«e¥Í©R­È
-    public int maxLife;     //³Ì¤j¥Í©R­È
-    public int cureRate;    //¨C¬í¦^´_¥Í©R³t²v
-    public int defence;     //¨¾¿m¤O
-    public int nearDamage;  //ªñ¶ZÂ÷§ğÀ»¶Ë®`­È
-    public int farDamage;   //»·¶ZÂ÷§ğÀ»¶Ë®`­È
+    public int currentLife; //ç•¶å‰ç”Ÿå‘½å€¼
+    public int maxLife;     //æœ€å¤§ç”Ÿå‘½å€¼
+    public int cureRate;    //æ¯ç§’å›å¾©ç”Ÿå‘½é€Ÿç‡
+    public int defence;     //é˜²ç¦¦åŠ›
+    public int nearDamage;  //è¿‘è·é›¢æ”»æ“Šå‚·å®³å€¼
+    public int farDamage;   //é è·é›¢æ”»æ“Šå‚·å®³å€¼
 
-    public Material CurrentMaterial;    //³]©wª«¥óMaterial (null => ¨Ï¥Î¹w³]Material)
+    public Material CurrentMaterial;    //è¨­å®šç‰©ä»¶Material (null => ä½¿ç”¨é è¨­Material)
 
     public bool isDead { get; private set; }
 
@@ -30,18 +30,18 @@ public class EnemyPropertyInfo : MonoBehaviour
     {
         this.isDead = false;
 
-        //³]©wBoneAnimation
+        //è¨­å®šBoneAnimation
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
         this.boneAnimation.RegisterUserTriggerDelegate(DeadDestroy);
-        //¦pCurrentMaterial¦³­È¡A«h³]©w·í«eª«¥óMaterial
+        //å¦‚CurrentMaterialæœ‰å€¼ï¼Œå‰‡è¨­å®šç•¶å‰ç‰©ä»¶Material
         if (this.CurrentMaterial != null)
         {
             this.boneAnimation.RestoreOriginalMaterials();
             this.boneAnimation.SwapMaterial(this.boneAnimation.mMaterialSource[0], this.CurrentMaterial);
         }
 
-        //Åª¨ú¨t²ÎÀx¦sªº©Çª«Äİ©Ê¸ê®Æ
-        if (this.Enemy != GameDefinition.Enemy.¦Û­q)  //¦p¬O"¦Û­q"©Çª«¡A«h¤£Åª¨ú¨t²Î¸ê®Æ
+        //è®€å–ç³»çµ±å„²å­˜çš„æ€ªç‰©å±¬æ€§è³‡æ–™
+        if (this.Enemy != GameDefinition.Enemy.è‡ªè¨‚)  //å¦‚æ˜¯"è‡ªè¨‚"æ€ªç‰©ï¼Œå‰‡ä¸è®€å–ç³»çµ±è³‡æ–™
         {
             GameDefinition.EnemyData getData = GameDefinition.EnemyList.Find((GameDefinition.EnemyData data) => { return data.EnemyName == Enemy; });
             this.maxLife = getData.Life;
@@ -56,15 +56,15 @@ public class EnemyPropertyInfo : MonoBehaviour
     }
 
     /// <summary>
-    /// SmoothMove UserTrigger(·í¼½§¹¦º¤`°Êµe«á§R°£¦Û¤v)
+    /// SmoothMove UserTrigger(ç•¶æ’­å®Œæ­»äº¡å‹•ç•«å¾Œåˆªé™¤è‡ªå·±)
     /// </summary>
     /// <param name="triggerEvent"></param>
     public void DeadDestroy(SmoothMoves.UserTriggerEvent triggerEvent)
     {
-        //½T»{¤w¶i¤J¦º¤`ª¬ºA¥B¼·©ñ¦º¤`°Êµe«á¡A¤~¥i§R°£
+        //ç¢ºèªå·²é€²å…¥æ­»äº¡ç‹€æ…‹ä¸”æ’¥æ”¾æ­»äº¡å‹•ç•«å¾Œï¼Œæ‰å¯åˆªé™¤
         if (this.isDead && triggerEvent.animationName.CompareTo("defeat") == 0)
         {
-            //²¾°£ª«¥óªº¦P®É¡A²¾°£µù¥U©óGameManager AllBoneAnimationList¤¤ªº¸ê°T
+            //ç§»é™¤ç‰©ä»¶çš„åŒæ™‚ï¼Œç§»é™¤è¨»å†Šæ–¼GameManager AllBoneAnimationListä¸­çš„è³‡è¨Š
             if (GameManager.script.AllBoneAnimationList.ContainsKey(this.boneAnimation))
                 GameManager.script.AllBoneAnimationList.Remove(this.boneAnimation);
             Destroy(this.gameObject);
@@ -72,7 +72,7 @@ public class EnemyPropertyInfo : MonoBehaviour
     }
 
     /// <summary>
-    /// ¨C¬í©T©w¦^´_¥Í©R
+    /// æ¯ç§’å›ºå®šå›å¾©ç”Ÿå‘½
     /// </summary>
     void RestoreLifePersecond()
     {
@@ -82,25 +82,25 @@ public class EnemyPropertyInfo : MonoBehaviour
     }
 
     /// <summary>
-    /// ´î¤Ö¼Ä¤H¦å¶q¨ç¦¡
+    /// æ¸›å°‘æ•µäººè¡€é‡å‡½å¼
     /// </summary>
-    /// <param name="deLife">´î¤Öªº¼Æ­È</param>
+    /// <param name="deLife">æ¸›å°‘çš„æ•¸å€¼</param>
     public void DecreaseLife(int deLife)
     {
-        deLife -= this.defence; //¦©°£¨¾¿m¤O
+        deLife -= this.defence; //æ‰£é™¤é˜²ç¦¦åŠ›
         if (deLife <= 0)
             deLife = 0;
 
         this.currentLife -= deLife;
 
-        //·í¥Í©R¤p©ó0¡A§R°£ª«¥ó
+        //ç•¶ç”Ÿå‘½å°æ–¼0ï¼Œåˆªé™¤ç‰©ä»¶
         if (!this.isDead && this.currentLife <= 0)
         {
-            //¯S©wenemy¦º¤`(¤ı©Ç¦º¤`¡A³s¦P¤p§L¤@°_¦º¤`)
-            if (this.Enemy == GameDefinition.Enemy.¦Û­q)
+            //ç‰¹å®šenemyæ­»äº¡(ç‹æ€ªæ­»äº¡ï¼Œé€£åŒå°å…µä¸€èµ·æ­»äº¡)
+            if (this.Enemy == GameDefinition.Enemy.è‡ªè¨‚)
                 foreach (var script in this.transform.parent.gameObject.GetComponentsInChildren<EnemyPropertyInfo>())
                     script.EnemyDead();
-            //¤@¯ëenemy¦º¤`
+            //ä¸€èˆ¬enemyæ­»äº¡
             else
                 this.EnemyDead();
         }
@@ -111,7 +111,7 @@ public class EnemyPropertyInfo : MonoBehaviour
         this.currentLife = 0;
         this.isDead = true;
         this.boneAnimation.Play("defeat");
-        Destroy(this.GetComponent<MoveController>());   //¦º¤`:°±¤î¼Ä¤H²¾°Ê
-        CancelInvoke("RestoreLifePersecond");           //¦º¤`:°±¤î¼Ä¤H¦^´_¥Í©R
+        Destroy(this.GetComponent<MoveController>());   //æ­»äº¡:åœæ­¢æ•µäººç§»å‹•
+        CancelInvoke("RestoreLifePersecond");           //æ­»äº¡:åœæ­¢æ•µäººå›å¾©ç”Ÿå‘½
     }
 }

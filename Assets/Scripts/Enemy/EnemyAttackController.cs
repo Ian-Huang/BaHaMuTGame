@@ -1,20 +1,20 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// Create Date¡G2013-07-23
-/// Modify Date¡G2013-08-09
-/// Author¡GIan
-/// Description¡G
-///     ¼Ä¤H§ğÀ»±±¨î¾¹
-///     0809·s¼W¡Gµù¥UBoneAnimation¨ìGameManager¡A¤è«KºŞ²z
+/// Create Dateï¼š2013-07-23
+/// Modify Dateï¼š2013-08-09
+/// Authorï¼šIan
+/// Descriptionï¼š
+///     æ•µäººæ”»æ“Šæ§åˆ¶å™¨
+///     0809æ–°å¢ï¼šè¨»å†ŠBoneAnimationåˆ°GameManagerï¼Œæ–¹ä¾¿ç®¡ç†
 /// </summary>
 public class EnemyAttackController : MonoBehaviour
 {
-    public float AttackDistance;        //§ğÀ»¶ZÂ÷
-    public GameObject ShootObject;      //»·¶ZÂ÷§ğÀ»µo®g¥Xªºª«¥ó
-    public SmoothMoves.BoneAnimation EffectAnimation;   //®ÄªG°Êµeª«¥ó
-    public LayerMask AttackLayer;       //§ğÀ»§P©wªºLayer
+    public float AttackDistance;        //æ”»æ“Šè·é›¢
+    public GameObject ShootObject;      //é è·é›¢æ”»æ“Šç™¼å°„å‡ºçš„ç‰©ä»¶
+    public SmoothMoves.BoneAnimation EffectAnimation;   //æ•ˆæœå‹•ç•«ç‰©ä»¶
+    public LayerMask AttackLayer;       //æ”»æ“Šåˆ¤å®šçš„Layer
 
     private EnemyPropertyInfo enemyInfo { get; set; }
     private SmoothMoves.BoneAnimation boneAnimation;
@@ -23,23 +23,23 @@ public class EnemyAttackController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //¸ü¤J¼Ä¤H¸ê°T
+        //è¼‰å…¥æ•µäººè³‡è¨Š
         this.enemyInfo = this.GetComponent<EnemyPropertyInfo>();
 
-        //³]©wBoneAnimation
+        //è¨­å®šBoneAnimation
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
         this.boneAnimation.RegisterColliderTriggerDelegate(WeaponHit);
         this.boneAnimation.RegisterUserTriggerDelegate(ShootEvent);
-        GameManager.script.RegisterBoneAnimation(this.boneAnimation);   //µù¥UBoneAnimation¡AGameManager²Î¤@ºŞ²z
+        GameManager.script.RegisterBoneAnimation(this.boneAnimation);   //è¨»å†ŠBoneAnimationï¼ŒGameManagerçµ±ä¸€ç®¡ç†
     }
 
     // Update is called once per frame
     void Update()
     {
-        //±qGameManager ½T»{BoneAnimationªºª¬ºA
+        //å¾GameManager ç¢ºèªBoneAnimationçš„ç‹€æ…‹
         if (GameManager.script.GetBoneAnimationState(this.boneAnimation))
         {
-            // ©Çª«¥²¶·¥¼¦º¤`
+            // æ€ªç‰©å¿…é ˆæœªæ­»äº¡
             if (!this.enemyInfo.isDead)
             {
                 if (Physics.Raycast(this.transform.position, Vector3.left, out this.hitData, this.AttackDistance, this.AttackLayer))
@@ -54,7 +54,7 @@ public class EnemyAttackController : MonoBehaviour
                 }
                 else
                 {
-                    //½T»{¥Ø«e°Êµeª¬ºA(¥²¶·¨S¦A¼½attack)
+                    //ç¢ºèªç›®å‰å‹•ç•«ç‹€æ…‹(å¿…é ˆæ²’å†æ’­attack)
                     if (!this.boneAnimation.IsPlaying("attack"))
                     {
                         this.boneAnimation.Play("walk");
@@ -66,12 +66,12 @@ public class EnemyAttackController : MonoBehaviour
     }
 
     /// <summary>
-    /// ¸j¦b¼Ä¤HªZ¾¹¤WªºCollider¡AÄ²µo§ğÀ»§P©w(ªñ¶ZÂ÷§ğÀ»¨Ï¥Î)
+    /// ç¶åœ¨æ•µäººæ­¦å™¨ä¸Šçš„Colliderï¼Œè§¸ç™¼æ”»æ“Šåˆ¤å®š(è¿‘è·é›¢æ”»æ“Šä½¿ç”¨)
     /// </summary>
-    /// <param name="triggerEvent">Ä²µo¬ÛÃö¸ê°T</param>
+    /// <param name="triggerEvent">è§¸ç™¼ç›¸é—œè³‡è¨Š</param>
     public void WeaponHit(SmoothMoves.ColliderTriggerEvent triggerEvent)
     {
-        //½T»{¬O¥Ñ"weapon"¸I¼²ªºcollider
+        //ç¢ºèªæ˜¯ç”±"weapon"ç¢°æ’çš„collider
         if (triggerEvent.boneName == "weapon" && triggerEvent.triggerType == SmoothMoves.ColliderTriggerEvent.TRIGGER_TYPE.Enter)
         {
             if (((1 << triggerEvent.otherCollider.gameObject.layer) & this.AttackLayer.value) > 0)
@@ -81,37 +81,37 @@ public class EnemyAttackController : MonoBehaviour
                 {
                     triggerEvent.otherCollider.GetComponent<RolePropertyInfo>().DecreaseLife(this.enemyInfo.nearDamage);
 
-                    //³Ğ«Ø ±ÙÀ»¯S®ÄBoneAnimation
+                    //å‰µå»º æ–¬æ“Šç‰¹æ•ˆBoneAnimation
                     SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
 
-                    //³]©w°Êµe¼½©ñ¤¤¤ßÂI
+                    //è¨­å®šå‹•ç•«æ’­æ”¾ä¸­å¿ƒé»
                     Vector3 expPos = triggerEvent.otherColliderClosestPointToBone;
                     expPos.z = triggerEvent.otherCollider.gameObject.transform.position.z - 1;
                     obj.mLocalTransform.position = expPos;
                     obj.playAutomatically = false;
 
-                    //¤£¦PºØÃşªº©Çª«²£¥Í¤£¦Pªº§ğÀ»¯S®Ä
+                    //ä¸åŒç¨®é¡çš„æ€ªç‰©ç”¢ç”Ÿä¸åŒçš„æ”»æ“Šç‰¹æ•ˆ
                     switch (this.enemyInfo.Enemy)
                     {
-                        case GameDefinition.Enemy.¥vµÜ©i:
-                        case GameDefinition.Enemy.¤õµK¥vµÜ©i:
-                        case GameDefinition.Enemy.µw¤Æ¥vµÜ©i:
-                        case GameDefinition.Enemy.¤¤«¬¥vµÜ©i:
-                        case GameDefinition.Enemy.¤¤«¬¤õµK¥vµÜ©i:
-                        case GameDefinition.Enemy.¤¤«¬µw¤Æ¥vµÜ©i:
-                            //ÀH¾÷¼·©ñ 1 ©Î 2 °Êµe¤ù¬q
+                        case GameDefinition.Enemy.å²èŠå§†:
+                        case GameDefinition.Enemy.ç«ç„°å²èŠå§†:
+                        case GameDefinition.Enemy.ç¡¬åŒ–å²èŠå§†:
+                        case GameDefinition.Enemy.ä¸­å‹å²èŠå§†:
+                        case GameDefinition.Enemy.ä¸­å‹ç«ç„°å²èŠå§†:
+                        case GameDefinition.Enemy.ä¸­å‹ç¡¬åŒ–å²èŠå§†:
+                            //éš¨æ©Ÿæ’¥æ”¾ 1 æˆ– 2 å‹•ç•«ç‰‡æ®µ
                             if (Random.Range(0, 2) == 0)
-                                obj.Play("¼²À»¯S®Ä01");
+                                obj.Play("æ’æ“Šç‰¹æ•ˆ01");
                             else
-                                obj.Play("¼²À»¯S®Ä02");
+                                obj.Play("æ’æ“Šç‰¹æ•ˆ02");
                             break;
 
                         default:
-                            //ÀH¾÷¼·©ñ 1 ©Î 2 °Êµe¤ù¬q
+                            //éš¨æ©Ÿæ’¥æ”¾ 1 æˆ– 2 å‹•ç•«ç‰‡æ®µ
                             if (Random.Range(0, 2) == 0)
-                                obj.Play("±ÙÀ»¯S®Ä01");
+                                obj.Play("æ–¬æ“Šç‰¹æ•ˆ01");
                             else
-                                obj.Play("±ÙÀ»¯S®Ä02");
+                                obj.Play("æ–¬æ“Šç‰¹æ•ˆ02");
                             break;
                     }
                 }
@@ -120,18 +120,18 @@ public class EnemyAttackController : MonoBehaviour
     }
 
     /// <summary>
-    /// ¸j¦b¼Ä¤HªZ¾¹¤WªºUserTrigger¡AÄ²µo§ğÀ»§P©w(»·¶ZÂ÷§ğÀ»¨Ï¥Î)
+    /// ç¶åœ¨æ•µäººæ­¦å™¨ä¸Šçš„UserTriggerï¼Œè§¸ç™¼æ”»æ“Šåˆ¤å®š(é è·é›¢æ”»æ“Šä½¿ç”¨)
     /// </summary>
-    /// <param name="triggerEvent">Ä²µo¬ÛÃö¸ê°T</param>
+    /// <param name="triggerEvent">è§¸ç™¼ç›¸é—œè³‡è¨Š</param>
     public void ShootEvent(SmoothMoves.UserTriggerEvent triggerEvent)
     {
-        //½T»{¬O¥Ñ"weapon"Ä²µoªºUserTrigger
+        //ç¢ºèªæ˜¯ç”±"weapon"è§¸ç™¼çš„UserTrigger
         if (triggerEvent.boneName == "weapon")
         {
-            //²£¥Í®gÀ»ª«¥ó
+            //ç”¢ç”Ÿå°„æ“Šç‰©ä»¶
             GameObject obj = (GameObject)Instantiate(this.ShootObject, this.transform.position - new Vector3(0, 0, 0.1f), this.ShootObject.transform.rotation);
 
-            //³]©wª«¥óªºparent ¡B layer ¡B Damage
+            //è¨­å®šç‰©ä»¶çš„parent ã€ layer ã€ Damage
             obj.layer = LayerMask.NameToLayer("ShootObject");
             obj.transform.parent = GameObject.Find("UselessObjectCollection").transform;
 
@@ -142,7 +142,7 @@ public class EnemyAttackController : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        //µe¥X°»´ú½u
+        //ç•«å‡ºåµæ¸¬ç·š
         Gizmos.color = Color.black;
         Gizmos.DrawRay(this.transform.position, Vector3.left * this.AttackDistance);
     }

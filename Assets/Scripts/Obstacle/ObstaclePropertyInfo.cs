@@ -1,17 +1,17 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// Create Date¡G2013-07-27
-/// Modify Date¡G2013-07-31
-/// Author¡GIan
-/// Description¡G
-///     »ÙÃªª«ªºÄİ©Ê¸ê°T
+/// Create Dateï¼š2013-07-27
+/// Modify Dateï¼š2013-07-31
+/// Authorï¼šIan
+/// Descriptionï¼š
+///     éšœç¤™ç‰©çš„å±¬æ€§è³‡è¨Š
 /// </summary>
 public class ObstaclePropertyInfo : MonoBehaviour
 {
-    public GameDefinition.Obstacle Obstacle;    //»ÙÃªª«¦WºÙ
-    public int Damage;   //³´¨À¶Ë®`­È
+    public GameDefinition.Obstacle Obstacle;    //éšœç¤™ç‰©åç¨±
+    public int Damage;   //é™·é˜±å‚·å®³å€¼
 
     public bool isDisappear { get; private set; }
 
@@ -22,30 +22,30 @@ public class ObstaclePropertyInfo : MonoBehaviour
     {
         this.isDisappear = false;
 
-        //³]©wBoneAnimation
+        //è¨­å®šBoneAnimation
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
         this.boneAnimation.RegisterUserTriggerDelegate(DisappearDestroy);
 
-        //Åª¨ú¨t²ÎÀx¦sªº»ÙÃªª«Äİ©Ê¸ê®Æ
+        //è®€å–ç³»çµ±å„²å­˜çš„éšœç¤™ç‰©å±¬æ€§è³‡æ–™
         GameDefinition.ObstacleData getData = GameDefinition.ObstacleList.Find((GameDefinition.ObstacleData data) => { return data.ObstacleName == Obstacle; });
         this.Damage = getData.Damage;
     }
 
     /// <summary>
-    /// SmoothMove UserTrigger(·í¼½§¹®ø¥¢°Êµe«á§R°£¦Û¤v)
+    /// SmoothMove UserTrigger(ç•¶æ’­å®Œæ¶ˆå¤±å‹•ç•«å¾Œåˆªé™¤è‡ªå·±)
     /// </summary>
     /// <param name="triggerEvent"></param>
     void DisappearDestroy(SmoothMoves.UserTriggerEvent triggerEvent)
     {
-        //½T»{¤w¶i¤J®ø¥¢ª¬ºA¥B¼·©ñ®ø¥¢°Êµe«á¡A¤~¥i§R°£
+        //ç¢ºèªå·²é€²å…¥æ¶ˆå¤±ç‹€æ…‹ä¸”æ’¥æ”¾æ¶ˆå¤±å‹•ç•«å¾Œï¼Œæ‰å¯åˆªé™¤
         if (this.isDisappear && (triggerEvent.animationName.CompareTo("correct") == 0 || triggerEvent.animationName.CompareTo("fail") == 0))
             Destroy(this.gameObject);
     }
 
     /// <summary>
-    /// ³]©w¨¤¦â¹ïÀ³»ÙÃªª«ªºª¬ºA¥H¤Î¼½©ñªº°Êµe
+    /// è¨­å®šè§’è‰²å°æ‡‰éšœç¤™ç‰©çš„ç‹€æ…‹ä»¥åŠæ’­æ”¾çš„å‹•ç•«
     /// </summary>
-    /// <param name="state">true¡A¼½©ñcorrect°Êµe¡Ffalse¡A¼½©ñfail°Êµe</param>
+    /// <param name="state">trueï¼Œæ’­æ”¾correctå‹•ç•«ï¼›falseï¼Œæ’­æ”¾failå‹•ç•«</param>
     public void CheckObstacle(bool state)
     {
         if (state)

@@ -1,24 +1,24 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
-#region ¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­­×¥¿¬ö¿ı¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­
-/// 13/05/05    «Ø¸m
-/// 13/06/17    ­«·s©w¸q¦WºÙ MUI_SimpleButton
+#region ï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒä¿®æ­£ç´€éŒ„ï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒ
+/// 13/05/05    å»ºç½®
+/// 13/06/17    é‡æ–°å®šç¾©åç¨± MUI_SimpleButton
 #endregion
 
 /// <summary>
-/// ¤¶­± - Â²©ö«ö¶s¤¶­±
+/// ä»‹é¢ - ç°¡æ˜“æŒ‰éˆ•ä»‹é¢
 /// </summary>
-/// * Event - ³Ğ³y·sEvent¨ÃSetActive ¬° True
+/// * Event - å‰µé€ æ–°Eventä¸¦SetActive ç‚º True
 public class MUI_SimpleButton : MUI_Base
 {
-    //¤å¦r
+    //æ–‡å­—
     public string Text = "";
-    //¤å¦r¤j¤p
+    //æ–‡å­—å¤§å°
     public int FontSize = 10;
-    //¤å¦r¹ï·Ç¤è¦¡
+    //æ–‡å­—å°æº–æ–¹å¼
     public TextAnchor Alignment = TextAnchor.MiddleCenter;
-    //«ö¶sªº¦^õX¡A¨Ï¥ÎGameObject°µª«¥óÄ²µo
+    //æŒ‰éˆ•çš„å›é¥‹ï¼Œä½¿ç”¨GameObjectåšç‰©ä»¶è§¸ç™¼
     public GameObject Event;
 
     // Use this for initialization
@@ -51,7 +51,7 @@ public class MUI_SimpleButton : MUI_Base
         {
             GUI.BeginGroup(new Rect(_rect.x, _rect.y, _rect.width * offset.x, _rect.height * offset.y));
             {
-                //¦pªG«ö¤U«ö¶s
+                //å¦‚æœæŒ‰ä¸‹æŒ‰éˆ•
                 if (GUI.Button(new Rect(0, 0, _rect.width, _rect.height), Text))
                 {
                     if (Event)

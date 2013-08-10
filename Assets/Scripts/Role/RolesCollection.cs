@@ -1,18 +1,18 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Create Date¡G2013-07-22
-/// Modify Date¡G2013-08-06
-/// Author¡GIan
-/// Description¡G
-///     ¨¤¦â±±¨î¾¹(¨¤¦â¦ì¸m¥æ´«)
+/// Create Dateï¼š2013-07-22
+/// Modify Dateï¼š2013-08-06
+/// Authorï¼šIan
+/// Descriptionï¼š
+///     è§’è‰²æ§åˆ¶å™¨(è§’è‰²ä½ç½®äº¤æ›)
 /// </summary>
 public class RolesCollection : MonoBehaviour
 {
     public static RolesCollection script;
-    
+
     public GameObject[] Roles = new GameObject[4];
 
     public float changeTime;
@@ -43,9 +43,9 @@ public class RolesCollection : MonoBehaviour
     }
 
     /// <summary>
-    /// Touch¨Ï¥Î¥æ´«¤Hª«¦ì¸mªº¤èªk
+    /// Touchä½¿ç”¨äº¤æ›äººç‰©ä½ç½®çš„æ–¹æ³•
     /// </summary>
-    /// <param name="mode">¥æ´«ªº¦ì¸m</param>
+    /// <param name="mode">äº¤æ›çš„ä½ç½®</param>
     public void ChangeRolePosition(GameDefinition.ChangeRoleMode mode)
     {
         if (!this.isChanging)
@@ -68,10 +68,10 @@ public class RolesCollection : MonoBehaviour
     }
 
     /// <summary>
-    /// ¥æ´«ª«Åé¦ì¸m
+    /// äº¤æ›ç‰©é«”ä½ç½®
     /// </summary>
-    /// <param name="obj1">ª«Åé1</param>
-    /// <param name="obj2">ª«Åé2</param>
+    /// <param name="obj1">ç‰©é«”1</param>
+    /// <param name="obj2">ç‰©é«”2</param>
     void SetChange(ref GameObject obj1, ref GameObject obj2)
     {
         this.isChanging = true;
@@ -101,7 +101,7 @@ public class RolesCollection : MonoBehaviour
     }
 
     /// <summary>
-    /// ¨¤¦â¥æ´«§¹¦¨«áÄ²µo
+    /// è§’è‰²äº¤æ›å®Œæˆå¾Œè§¸ç™¼
     /// </summary>
     void ChangeComplete()
     {

@@ -1,11 +1,11 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// Create Date¡G2013-07-23
-/// Author¡GIan
-/// Description¡G
-///     ³]©w¨Æ¥óÄ²µoºØÃþ(public ³]©w)
+/// Create Dateï¼š2013-07-23
+/// Authorï¼šIan
+/// Descriptionï¼š
+///     è¨­å®šäº‹ä»¶è§¸ç™¼ç¨®é¡ž(public è¨­å®š)
 /// </summary>
 public class EventTriggerType : MonoBehaviour
 {

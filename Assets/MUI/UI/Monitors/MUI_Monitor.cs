@@ -1,13 +1,12 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 public class MUI_Monitor
 {
-
-    //ÀRºA°Æ¥»
+    //éœæ…‹å‰¯æœ¬
     public static MUI_Monitor script;
-    //°Ñ¼ÆºÊ±±Dictionary
+    //åƒæ•¸ç›£æ§Dictionary
     public static Dictionary<string, float> MonitorDictionary = new Dictionary<string, float>();
 
     public MUI_Monitor()
@@ -16,18 +15,18 @@ public class MUI_Monitor
     }
 
     /// <summary>
-    /// ¿é¥X¥ş³¡¸ê°T
+    /// è¼¸å‡ºå…¨éƒ¨è³‡è¨Š
     /// </summary>
     public void DumpAll()
     {
         foreach (var md in MonitorDictionary)
-            Debug.Log("Key¡G" + md.Key + "Value¡G" + md.Value);
+            Debug.Log("Keyï¼š" + md.Key + "Valueï¼š" + md.Value);
     }
 
     /// <summary>
-    /// ¬O§_¦s¦b
+    /// æ˜¯å¦å­˜åœ¨
     /// </summary>
-    /// <param name="key">Key¦r¦ê</param>
+    /// <param name="key">Keyå­—ä¸²</param>
     /// <returns></returns>
     public bool isValid(string key)
     {
@@ -38,9 +37,9 @@ public class MUI_Monitor
     }
 
     /// <summary>
-    /// ¨ú±o¼Æ­È
+    /// å–å¾—æ•¸å€¼
     /// </summary>
-    /// <param name="key">Key¦r¦ê</param>
+    /// <param name="key">Keyå­—ä¸²</param>
     /// <returns></returns>
     public float GetValue(string key)
     {
@@ -51,10 +50,10 @@ public class MUI_Monitor
     }
 
     /// <summary>
-    /// ³]©w¼Æ­È
+    /// è¨­å®šæ•¸å€¼
     /// </summary>
-    /// <param name="key">Key¦r¦ê</param>
-    /// <param name="newValue">¨ú¥Nªº¼Æ­È</param>
+    /// <param name="key">Keyå­—ä¸²</param>
+    /// <param name="newValue">å–ä»£çš„æ•¸å€¼</param>
     public void SetValue(string key, float newValue)
     {
         if (MonitorDictionary.ContainsKey(key))
@@ -63,9 +62,9 @@ public class MUI_Monitor
 
 
     /// <summary>
-    /// µù¥UKey¡A¥²¶·¤£¦s¦b¦bMD¤¤¤~¥[¤J
+    /// è¨»å†ŠKeyï¼Œå¿…é ˆä¸å­˜åœ¨åœ¨MDä¸­æ‰åŠ å…¥
     /// </summary>
-    /// <param name="key">Key¦r¦ê</param>
+    /// <param name="key">Keyå­—ä¸²</param>
     public void SubmitKey(string key)
     {
         if (!isValid(key)) MonitorDictionary.Add(key, 0);

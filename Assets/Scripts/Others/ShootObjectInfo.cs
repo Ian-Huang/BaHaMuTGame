@@ -1,18 +1,18 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// Create Date¡G2013-07-25
-/// Modify Date¡G2013-08-08
-/// Author¡GIan
-/// Description¡G
-///     »·¶ZÂ÷(¨¤¦â/¼Ä¤H)µo®gªºª«¥ó¸ê°T
+/// Create Dateï¼š2013-07-25
+/// Modify Dateï¼š2013-08-08
+/// Authorï¼šIan
+/// Descriptionï¼š
+///     é è·é›¢(è§’è‰²/æ•µäºº)ç™¼å°„çš„ç‰©ä»¶è³‡è¨Š
 /// </summary>
 public class ShootObjectInfo : MonoBehaviour
 {
-    public int Damage;                              //³y¦¨ªº¶Ë®`­È
-    public GameDefinition.AttackType AttackType;    //§ğÀ»ªºÃş«¬(ª«²z¡BÅ]ªk)
-    public LayerMask ExplosiveLayer;                //Ãz¯}ªº¹ï¶H
+    public int Damage;                              //é€ æˆçš„å‚·å®³å€¼
+    public GameDefinition.AttackType AttackType;    //æ”»æ“Šçš„é¡å‹(ç‰©ç†ã€é­”æ³•)
+    public LayerMask ExplosiveLayer;                //çˆ†ç ´çš„å°è±¡
 
     private bool isExplosion { get; set; }
     private SmoothMoves.BoneAnimation boneAnimation;
@@ -21,29 +21,29 @@ public class ShootObjectInfo : MonoBehaviour
     {
         if (!this.isExplosion)
         {
-            if (((1 << other.collider.gameObject.layer) & this.ExplosiveLayer.value) > 0)   //§P©wÃz¬µªºLayer
+            if (((1 << other.collider.gameObject.layer) & this.ExplosiveLayer.value) > 0)   //åˆ¤å®šçˆ†ç‚¸çš„Layer
             {
                 if (other.collider.tag.CompareTo("MainBody") == 0)
                 {
-                    //¦p¹ï¶H¬°¼Ä¤H¡A»İ¦AÀË¬d¼Ä¤H¥»¨­¬O§_¤w¸g¦º¤`(EnemyPropertyInfo.isDead)
+                    //å¦‚å°è±¡ç‚ºæ•µäººï¼Œéœ€å†æª¢æŸ¥æ•µäººæœ¬èº«æ˜¯å¦å·²ç¶“æ­»äº¡(EnemyPropertyInfo.isDead)
                     if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                         if (other.GetComponent<EnemyPropertyInfo>().isDead)
                             return;
 
-                    //¥H¤U²£¥ÍÃz¬µ¨Æ¥ó
+                    //ä»¥ä¸‹ç”¢ç”Ÿçˆ†ç‚¸äº‹ä»¶
                     this.isExplosion = true;
 
-                    //Ãz¬µ¤¤¤ß¬°Collider¥æ¿ùÂI
+                    //çˆ†ç‚¸ä¸­å¿ƒç‚ºCollideräº¤éŒ¯é»
                     Vector3 expPos = other.ClosestPointOnBounds(this.transform.position);
                     expPos.z = other.gameObject.transform.position.z - 1;
                     this.boneAnimation.mLocalTransform.position = expPos;
 
                     this.boneAnimation.Play("explosion");
 
-                    //²¾°£Script¡A¨ÏÃz¬µ¦ì¸m©T©w¡B´«¹Ï¥¿±`
+                    //ç§»é™¤Scriptï¼Œä½¿çˆ†ç‚¸ä½ç½®å›ºå®šã€æ›åœ–æ­£å¸¸
                     Destroy(this.GetComponent<MoveController>());
 
-                    //³B²z¤£¦P¸I¼²ª«ªº³¡¤À(¼Ä¤H¡B¥D¨¤)
+                    //è™•ç†ä¸åŒç¢°æ’ç‰©çš„éƒ¨åˆ†(æ•µäººã€ä¸»è§’)
                     if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                         other.GetComponent<EnemyPropertyInfo>().DecreaseLife(this.Damage);
                     else if (other.gameObject.layer == LayerMask.NameToLayer("Role"))
@@ -58,18 +58,18 @@ public class ShootObjectInfo : MonoBehaviour
     {
         this.isExplosion = false;
 
-        //³]©wBoneAnimation
+        //è¨­å®šBoneAnimation
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
         this.boneAnimation.RegisterUserTriggerDelegate(ExplosionDestroy);
     }
 
     /// <summary>
-    /// SmoothMove UserTrigger(·í¼½§¹°Êµe«á§R°£¦Û¤v)
+    /// SmoothMove UserTrigger(ç•¶æ’­å®Œå‹•ç•«å¾Œåˆªé™¤è‡ªå·±)
     /// </summary>
     /// <param name="triggerEvent"></param>
     public void ExplosionDestroy(SmoothMoves.UserTriggerEvent triggerEvent)
     {
-        //½T»{¤w¶i¤JÃz¬µª¬ºA¥BÃz¬µ¦º¤`°Êµe«á¡A¤~¥i§R°£
+        //ç¢ºèªå·²é€²å…¥çˆ†ç‚¸ç‹€æ…‹ä¸”çˆ†ç‚¸æ­»äº¡å‹•ç•«å¾Œï¼Œæ‰å¯åˆªé™¤
         if (this.isExplosion && triggerEvent.animationName.CompareTo("explosion") == 0)
             Destroy(this.gameObject);
     }

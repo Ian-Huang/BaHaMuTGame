@@ -1,10 +1,10 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// Rect ºÊ±±
-/// §ïÅÜ¡@Texture2D¡@©Î¡@Label ªº Rect ­È
-///  * ¥HKeyªº¤è¦¡´M§äºÊ±±Dictionary¹ïÀ³ªº¸ê®Æ
+/// Rect ç›£æ§
+/// æ”¹è®Šã€€Texture2Dã€€æˆ–ã€€Label çš„ Rect å€¼
+///  * ä»¥Keyçš„æ–¹å¼å°‹æ‰¾ç›£æ§Dictionaryå°æ‡‰çš„è³‡æ–™
 /// </summary>
 public class MUI_RectMonitor : MonoBehaviour
 {
@@ -22,7 +22,7 @@ public class MUI_RectMonitor : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //¥HKey¬°¦r¦êµù¥U¤@­Ó¯Á¤Ş
+        //ä»¥Keyç‚ºå­—ä¸²è¨»å†Šä¸€å€‹ç´¢å¼•
         //if (Key != "") MonitorDictionary.Add(Key + "x", 0);
         //if (Key != "") MonitorDictionary.Add(Key + "y", 0);
     }
@@ -30,13 +30,13 @@ public class MUI_RectMonitor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       // if (isValid(Key + "x")) Percentage.x = MonitorDictionary[Key + "x"];
+        // if (isValid(Key + "x")) Percentage.x = MonitorDictionary[Key + "x"];
         //if (isValid(Key + "y")) Percentage.y = MonitorDictionary[Key + "y"];
         //rect.x = Mathf.Lerp(From.x, To.x, Percentage.x / 100);
         //rect.y = Mathf.Lerp(From.y, To.y, Percentage.y / 100);
 
 
-        //¤¶­±ÅÜ¤Æ
+        //ä»‹é¢è®ŠåŒ–
         if (this.GetComponent<MUI_Texture_2D>()) this.GetComponent<MUI_Texture_2D>().rect = rect;
         if (this.GetComponent<MUI_Label>()) this.GetComponent<MUI_Label>().rect = rect;
     }

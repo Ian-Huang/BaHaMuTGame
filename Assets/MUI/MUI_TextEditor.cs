@@ -3,7 +3,6 @@ using System.Collections;
 
 public class MUI_TextEditor : MonoBehaviour
 {
-
     public string longString;
 
     void Awake()

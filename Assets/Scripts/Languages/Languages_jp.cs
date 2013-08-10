@@ -1,17 +1,20 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using System.Collections;
 
-public class Languages_jp : MonoBehaviour {
+public class Languages_jp : MonoBehaviour
+{
 
-    public string Level_select = "¶a∞Ï?øÔ???????";
+    public string Level_select = "Âú∞Âüü?ÈÅ∏???????";
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }

@@ -1,5 +1,5 @@
-// ArrayPrefs2 v 1.3
-// �аѾ\ http://wiki.unity3d.com/index.php/ArrayPrefs2
+﻿// ArrayPrefs2 v 1.3
+// 請參閱 http://wiki.unity3d.com/index.php/ArrayPrefs2
 
 using UnityEngine;
 using System;

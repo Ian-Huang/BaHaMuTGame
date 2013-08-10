@@ -1,18 +1,18 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Create Date¡G2013-07-29
-/// Modify Date¡G2013-08-03
-/// Author¡GIan
-/// Description¡G
-///     »ÙÃªª«¨t²Î 
+/// Create Dateï¼š2013-07-29
+/// Modify Dateï¼š2013-08-03
+/// Authorï¼šIan
+/// Descriptionï¼š
+///     éšœç¤™ç‰©ç³»çµ± 
 /// </summary>
 public class ObstacleSystem : MonoBehaviour
 {
-    public List<GameDefinition.Obstacle> ObstacleList = new List<GameDefinition.Obstacle>();    //¥i³B²zªº»ÙÃªª«²M³æ
-    public SmoothMoves.BoneAnimation EffectAnimation;   //®ÄªG°Êµeª«¥ó
+    public List<GameDefinition.Obstacle> ObstacleList = new List<GameDefinition.Obstacle>();    //å¯è™•ç†çš„éšœç¤™ç‰©æ¸…å–®
+    public SmoothMoves.BoneAnimation EffectAnimation;   //æ•ˆæœå‹•ç•«ç‰©ä»¶
 
     private RolePropertyInfo roleInfo { get; set; }
 
@@ -20,29 +20,29 @@ public class ObstacleSystem : MonoBehaviour
     {
         ObstaclePropertyInfo infoScript = other.gameObject.GetComponent<ObstaclePropertyInfo>();
 
-        //¦pªG¶i¤JTriggerª«¥óµLObstaclePropertyinfo ¡A«hÂ÷¶}¦¹¨ç¦¡
+        //å¦‚æœé€²å…¥Triggerç‰©ä»¶ç„¡ObstaclePropertyinfo ï¼Œå‰‡é›¢é–‹æ­¤å‡½å¼
         if (infoScript == null)
             return;
 
-        //½T»{¨¤¦â¥»¨­¬O§_¹ïÀ³¥¿½Tªº»ÙÃªª«
+        //ç¢ºèªè§’è‰²æœ¬èº«æ˜¯å¦å°æ‡‰æ­£ç¢ºçš„éšœç¤™ç‰©
         if (this.ObstacleList.Contains(infoScript.Obstacle))
         {
             infoScript.CheckObstacle(true);
         }
         else
         {
-            //³Ğ«Ø ¼²À»¯S®ÄBoneAnimation
+            //å‰µå»º æ’æ“Šç‰¹æ•ˆBoneAnimation
             SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
             obj.mLocalTransform.position = other.ClosestPointOnBounds(this.transform.position) - Vector3.forward;
             obj.playAutomatically = false;
-            //ÀH¾÷¼·©ñ 1 ©Î 2 °Êµe¤ù¬q
+            //éš¨æ©Ÿæ’¥æ”¾ 1 æˆ– 2 å‹•ç•«ç‰‡æ®µ
             if (Random.Range(0, 2) == 0)
-                obj.Play("¼²À»¯S®Ä01");
+                obj.Play("æ’æ“Šç‰¹æ•ˆ01");
             else
-                obj.Play("¼²À»¯S®Ä02");
+                obj.Play("æ’æ“Šç‰¹æ•ˆ02");
 
             infoScript.CheckObstacle(false);
-            //µ¹¤©¨¤¦â¶Ë®`
+            //çµ¦äºˆè§’è‰²å‚·å®³
             this.roleInfo.DecreaseLife(infoScript.Damage);
         }
     }
@@ -50,7 +50,7 @@ public class ObstacleSystem : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //¸ü¤J¨¤¦â¸ê°T
+        //è¼‰å…¥è§’è‰²è³‡è¨Š
         this.roleInfo = this.GetComponent<RolePropertyInfo>();
     }
 }

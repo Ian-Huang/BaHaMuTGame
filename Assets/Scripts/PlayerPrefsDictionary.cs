@@ -7,12 +7,10 @@ using System.Collections.Generic;
 /// </summary>
 public class PlayerPrefsDictionary : MonoBehaviour
 {
-
     public static PlayerPrefsDictionary script;
 
     //參數監控Dictionary
     public static Dictionary<string, int> PlayerPrefDictionary = new Dictionary<string, int>();
-
 
     // Use this for initialization
     void Start()
@@ -29,9 +27,9 @@ public class PlayerPrefsDictionary : MonoBehaviour
         this.AddValue("BSK_ATK");
         this.AddValue("BSK_DEF");
         this.AddValue("BSK_HP");
-        this.AddValue("BSK_ATK_ADD",10);
-        this.AddValue("BSK_DEF_ADD",5);
-        this.AddValue("BSK_HP_ADD",20);
+        this.AddValue("BSK_ATK_ADD", 10);
+        this.AddValue("BSK_DEF_ADD", 5);
+        this.AddValue("BSK_HP_ADD", 20);
 
         this.AddValue("WIZ_ATK");
         this.AddValue("WIZ_DEF");

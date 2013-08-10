@@ -1,12 +1,12 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Modify Date¡G2013-08-09
-/// Description¡G
-///     ¥ş°ì¹CÀ¸ºŞ²z¨t²Î
-///     0809·s¼W¡G·s¼W¨¤¦â¡B©Çª«BoneAnimationºŞ²z¨t²Î¡A¥H±±¨îAnimation
+/// Modify Dateï¼š2013-08-09
+/// Descriptionï¼š
+///     å…¨åŸŸéŠæˆ²ç®¡ç†ç³»çµ±
+///     0809æ–°å¢ï¼šæ–°å¢è§’è‰²ã€æ€ªç‰©BoneAnimationç®¡ç†ç³»çµ±ï¼Œä»¥æ§åˆ¶Animation
 /// </summary>
 public class GameManager : MonoBehaviour
 {
@@ -19,39 +19,39 @@ public class GameManager : MonoBehaviour
     public Dictionary<SmoothMoves.BoneAnimation, bool> AllBoneAnimationList = new Dictionary<SmoothMoves.BoneAnimation, bool>();
 
     /// <summary>
-    /// µù¥UBoneAnimation(¨¤¦â¡B¼Ä¤H¥²¶·µù¥U¡A¤è«K¨t²Î±±¨î)
+    /// è¨»å†ŠBoneAnimation(è§’è‰²ã€æ•µäººå¿…é ˆè¨»å†Šï¼Œæ–¹ä¾¿ç³»çµ±æ§åˆ¶)
     /// </summary>
-    /// <param name="boneAnimation">¨¤¦â/¼Ä¤HªºBoneAnimation</param>
+    /// <param name="boneAnimation">è§’è‰²/æ•µäººçš„BoneAnimation</param>
     public void RegisterBoneAnimation(SmoothMoves.BoneAnimation boneAnimation)
     {
         this.AllBoneAnimationList.Add(boneAnimation, true);
     }
 
     /// <summary>
-    /// ±o¨ì¥Ø«eBoneAnimationªºª¬ºA(True¬°¥¿¦b¨Ï¥Î¡BFalse¬°¼È°±¨Ï¥Î)
+    /// å¾—åˆ°ç›®å‰BoneAnimationçš„ç‹€æ…‹(Trueç‚ºæ­£åœ¨ä½¿ç”¨ã€Falseç‚ºæš«åœä½¿ç”¨)
     /// </summary>
-    /// <param name="boneAnimation">¨¤¦â/¼Ä¤HªºBoneAnimation</param>
-    /// <returns>¥Ø«eBoneAnimationªºª¬ºA</returns>
+    /// <param name="boneAnimation">è§’è‰²/æ•µäººçš„BoneAnimation</param>
+    /// <returns>ç›®å‰BoneAnimationçš„ç‹€æ…‹</returns>
     public bool GetBoneAnimationState(SmoothMoves.BoneAnimation boneAnimation)
     {
         return this.AllBoneAnimationList[boneAnimation];
     }
 
     /// <summary>
-    /// ¼È°±©Ò¦³µù¥UªºBoneAnimation
+    /// æš«åœæ‰€æœ‰è¨»å†Šçš„BoneAnimation
     /// </summary>
     public void StopAllBoneAnimation()
     {
         lock (this.AllBoneAnimationList)
         {
-            //±qAllBoneAnimation ½Æ»s¨ìlocal arrays
+            //å¾AllBoneAnimation è¤‡è£½åˆ°local arrays
             SmoothMoves.BoneAnimation[] allAnimations = new SmoothMoves.BoneAnimation[this.AllBoneAnimationList.Keys.Count];
             this.AllBoneAnimationList.Keys.CopyTo(allAnimations, 0);
 
             for (int i = 0; i < allAnimations.Length; i++)
             {
-                allAnimations[i].Stop();    //¼È°±BoneAnimationªº¹B§@
-                this.AllBoneAnimationList[allAnimations[i]] = false;    //±Nª¬ºA§ï¬°°±¤î
+                allAnimations[i].Stop();    //æš«åœBoneAnimationçš„é‹ä½œ
+                this.AllBoneAnimationList[allAnimations[i]] = false;    //å°‡ç‹€æ…‹æ”¹ç‚ºåœæ­¢
             }
         }
     }
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ¨ú±o·í«e¤h®ğ­È¡A¤wÂà´«¬°0~100
+    /// å–å¾—ç•¶å‰å£«æ°£å€¼ï¼Œå·²è½‰æ›ç‚º0~100
     /// </summary>
     /// <returns></returns>
     public float GetCurrentMorale()
@@ -83,11 +83,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //´£¨Ñ¤¶­±ºÊ±±¼Æ­È
-        //¤h®ğ
-        MUI_Monitor.script.SetValue("¤h®ğ­È" + "x", ((float)this.CurrentMorale / this.MaxMorale) * 100);
+        //æä¾›ä»‹é¢ç›£æ§æ•¸å€¼
+        //å£«æ°£
+        MUI_Monitor.script.SetValue("å£«æ°£å€¼" + "x", ((float)this.CurrentMorale / this.MaxMorale) * 100);
 
-        //´ú¸Õ¥Î¡A¼È°±©Ò¦³µù¥UªºBoneAnimation
+        //æ¸¬è©¦ç”¨ï¼Œæš«åœæ‰€æœ‰è¨»å†Šçš„BoneAnimation
         if (Input.GetKeyDown(KeyCode.V))
         {
             GameManager.script.StopAllBoneAnimation();
@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ¨C¬í©T©w¦^´_¤h®ğ­È
+    /// æ¯ç§’å›ºå®šå›å¾©å£«æ°£å€¼
     /// </summary>
     void RestoreMoralePersecond()
     {

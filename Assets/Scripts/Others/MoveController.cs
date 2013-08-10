@@ -1,19 +1,19 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// Create Date¡G2013-07-23
-/// Modify Date¡G2013-07-25
-/// Author¡GIan
-/// Description¡G
-///     ±±¨îª«Åéªº²¾°Ê(³t«×¡B¤è¦V)
+/// Create Dateï¼š2013-07-23
+/// Modify Dateï¼š2013-07-25
+/// Authorï¼šIan
+/// Descriptionï¼š
+///     æ§åˆ¶ç‰©é«”çš„ç§»å‹•(é€Ÿåº¦ã€æ–¹å‘)
 /// </summary>
 public class MoveController : MonoBehaviour
 {
-    public float MoveSpeed = 5;                 //ª«Åé²¾°Ê³t«×
-    public Vector3 Direction = Vector3.zero;    //ª«Åé²¾°Ê¤è¦V(¨Ï¥ÎUnity¥@¬É®y¼Ğ)
+    public float MoveSpeed = 5;                 //ç‰©é«”ç§»å‹•é€Ÿåº¦
+    public Vector3 Direction = Vector3.zero;    //ç‰©é«”ç§»å‹•æ–¹å‘(ä½¿ç”¨Unityä¸–ç•Œåº§æ¨™)
 
-    public bool isRunning = true;               //±±¨î¬O§_¹B§@
+    public bool isRunning = true;               //æ§åˆ¶æ˜¯å¦é‹ä½œ
 
     // Update is called once per frame
     void Update()
@@ -23,9 +23,9 @@ public class MoveController : MonoBehaviour
     }
 
     /// <summary>
-    /// §ïÅÜª«¥óªº²¾°Ê³t«×
+    /// æ”¹è®Šç‰©ä»¶çš„ç§»å‹•é€Ÿåº¦
     /// </summary>
-    /// <param name="speed">§ïÅÜ«áªº³t«×­È</param>
+    /// <param name="speed">æ”¹è®Šå¾Œçš„é€Ÿåº¦å€¼</param>
     public void ChangeSpeed(float speed)
     {
         this.MoveSpeed = speed;

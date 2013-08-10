@@ -1,22 +1,22 @@
-using UnityEngine;
+я╗┐using UnityEngine;
 using System.Collections;
 
-#region бнбнбнбнбнбнбнбнбнбнбнбнбнбнбнбнбнбнбнбнбнбнбнн╫е┐мЎ┐¤бнбнбнбнбнбнбнбнбнбнбнбнбнбнбнбнбнбнбнбнбнбнбн
-/// 13/05/05    л╪╕m
-/// 13/06/17    нл╖sйw╕qжW║┘ MUI_TextField
+#region я╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гф┐оцнгч┤АщМДя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Гя╝Г
+/// 13/05/05    х╗║ч╜о
+/// 13/06/17    щЗНцЦ░хоЪч╛йхРНчи▒ MUI_TextField
 #endregion
 
 /// <summary>
-/// д╢н▒ - ┐щдJдхжrо╪д╢н▒
+/// ф╗ЛщЭв - ш╝╕хЕецЦЗхнЧцбЖф╗ЛщЭв
 /// </summary>
 
 public class MUI_TextField : MUI_Base
 {
-    //дхжr
+    //цЦЗхнЧ
     public string Text = "";
-    //дхжrдjдp
+    //цЦЗхнЧхдзх░П
     public int FontSize = 10;
-    //дхжr╣я╖╟дшжб
+    //цЦЗхнЧх░Нц║ЦцЦ╣х╝П
     public TextAnchor Alignment;
 
     // Use this for initialization
@@ -60,7 +60,7 @@ public class MUI_TextField : MUI_Base
     }
 
     /// <summary>
-    /// ▓M░гжrжъ
+    /// ц╕ЕщЩдхнЧф╕▓
     /// </summary>
     public void Clear()
     {

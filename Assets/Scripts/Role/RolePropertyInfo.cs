@@ -1,25 +1,25 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// Create Date¡G2013-07-24
-/// Modify Date¡G2013-08-03
-/// Author¡GIan
-/// Description¡G
-///     ¨¤¦âªºÄİ©Ê¸ê°T
+/// Create Dateï¼š2013-07-24
+/// Modify Dateï¼š2013-08-03
+/// Authorï¼šIan
+/// Descriptionï¼š
+///     è§’è‰²çš„å±¬æ€§è³‡è¨Š
 /// </summary>
 public class RolePropertyInfo : MonoBehaviour
 {
     public GameDefinition.Role Role;
-    public int currentLife; //·í«e¥Í©R­È
-    public int maxLife;     //³Ì¤j¥Í©R­È
-    public int cureRate;    //¨C¬í¦^´_¥Í©R³t²v
-    public int defence;     //¨¾¿m¤O
-    public int nearDamage;  //ªñ¶ZÂ÷§ğÀ»¶Ë®`­È
-    public int farDamage;   //»·¶ZÂ÷§ğÀ»¶Ë®`­È
+    public int currentLife; //ç•¶å‰ç”Ÿå‘½å€¼
+    public int maxLife;     //æœ€å¤§ç”Ÿå‘½å€¼
+    public int cureRate;    //æ¯ç§’å›å¾©ç”Ÿå‘½é€Ÿç‡
+    public int defence;     //é˜²ç¦¦åŠ›
+    public int nearDamage;  //è¿‘è·é›¢æ”»æ“Šå‚·å®³å€¼
+    public int farDamage;   //é è·é›¢æ”»æ“Šå‚·å®³å€¼
 
     public bool isWeak { get; private set; }
-    public int WeakCureScale = 10;              //Weakª¬ºA ¦^´_³t²v
+    public int WeakCureScale = 10;              //Weakç‹€æ…‹ å›å¾©é€Ÿç‡
 
     private SmoothMoves.BoneAnimation boneAnimation;
 
@@ -28,10 +28,10 @@ public class RolePropertyInfo : MonoBehaviour
     {
         this.isWeak = false;
 
-        //³]©wBoneAnimation
+        //è¨­å®šBoneAnimation
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
 
-        //Åª¨ú¨t²ÎÀx¦sªº¨¤¦âÄİ©Ê¸ê®Æ
+        //è®€å–ç³»çµ±å„²å­˜çš„è§’è‰²å±¬æ€§è³‡æ–™
         GameDefinition.RoleData getData = GameDefinition.RoleList.Find((GameDefinition.RoleData data) => { return data.RoleName == Role; });
         this.maxLife = getData.Life;
         this.currentLife = getData.Life;
@@ -44,24 +44,24 @@ public class RolePropertyInfo : MonoBehaviour
     }
 
     /// <summary>
-    /// ´î¤Ö¨¤¦â¦å¶q¨ç¦¡
+    /// æ¸›å°‘è§’è‰²è¡€é‡å‡½å¼
     /// </summary>
-    /// <param name="deLife">´î¤Öªº¼Æ­È</param>
+    /// <param name="deLife">æ¸›å°‘çš„æ•¸å€¼</param>
     public void DecreaseLife(int deLife)
     {
-        //¦©°£¨¾¿m¤O
+        //æ‰£é™¤é˜²ç¦¦åŠ›
         deLife -= this.defence;
         if (deLife <= 0)
             deLife = 1;
 
         if (!this.isWeak)
         {
-            //¨¤¦â·í«e¥¼µê®z¡A¦©¨¤¦âªº¥Í©R­È
+            //è§’è‰²ç•¶å‰æœªè™›å¼±ï¼Œæ‰£è§’è‰²çš„ç”Ÿå‘½å€¼
             this.currentLife -= deLife;
         }
         else
         {
-            //¨¤¦â·í«eµê®z¡A¦©Á`¤h®ğ(¥¼§¹¦¨)
+            //è§’è‰²ç•¶å‰è™›å¼±ï¼Œæ‰£ç¸½å£«æ°£(æœªå®Œæˆ)
             GameManager.script.CurrentMorale -= deLife;
             if (GameManager.script.CurrentMorale <= 0)
                 GameManager.script.CurrentMorale = 0;
@@ -69,12 +69,12 @@ public class RolePropertyInfo : MonoBehaviour
 
         if (!this.isWeak)
         {
-            //·í¥Í©R¤p©ó0
+            //ç•¶ç”Ÿå‘½å°æ–¼0
             if (this.currentLife <= 0)
             {
                 this.currentLife = 0;
                 this.isWeak = true;
-                //§PÂ_·í«e­I´º²¾°Êª¬ªp¡A¦pªGµL²¾°Ê«h¨Ï¥Î"idleweak"
+                //åˆ¤æ–·ç•¶å‰èƒŒæ™¯ç§»å‹•ç‹€æ³ï¼Œå¦‚æœç„¡ç§»å‹•å‰‡ä½¿ç”¨"idleweak"
                 if (BackgroundController.script.isRunning)
                     this.boneAnimation.Play("walkweak");
                 else
@@ -84,11 +84,11 @@ public class RolePropertyInfo : MonoBehaviour
     }
 
     /// <summary>
-    /// ¨C¬í©T©w¦^´_¥Í©R
+    /// æ¯ç§’å›ºå®šå›å¾©ç”Ÿå‘½
     /// </summary>
     void RestoreLifePersecond()
     {
-        //¥¼µê®z¡A¦^´_³t²v¥¿±`
+        //æœªè™›å¼±ï¼Œå›å¾©é€Ÿç‡æ­£å¸¸
         if (!this.isWeak)
         {
             this.currentLife += this.cureRate;
@@ -97,7 +97,7 @@ public class RolePropertyInfo : MonoBehaviour
         }
         else
         {
-            //µê®zª¬ºA¡A¦^´_³t²v * WeakCureScale
+            //è™›å¼±ç‹€æ…‹ï¼Œå›å¾©é€Ÿç‡ * WeakCureScale
             this.currentLife += (this.cureRate * this.WeakCureScale);
             if (this.currentLife >= this.maxLife)
             {

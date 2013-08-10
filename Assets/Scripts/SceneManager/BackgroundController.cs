@@ -1,20 +1,20 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Create Date¡G2013-07-22
-/// Modify Date¡G2013-07-30
-/// Author¡GIan
-/// Description¡G
-///     ­I´º±±¨î¾¹(±±¨î­I´º²¾°Ê¡B§PÂ_­I´º²¾°Êªºª¬ºA)
+/// Create Dateï¼š2013-07-22
+/// Modify Dateï¼š2013-07-30
+/// Authorï¼šIan
+/// Descriptionï¼š
+///     èƒŒæ™¯æ§åˆ¶å™¨(æ§åˆ¶èƒŒæ™¯ç§»å‹•ã€åˆ¤æ–·èƒŒæ™¯ç§»å‹•çš„ç‹€æ…‹)
 /// </summary>
 public class BackgroundController : MonoBehaviour
 {
     public static BackgroundController script;
 
     /// <summary>
-    /// ­I´º¸ê®Æ¶°¦X
+    /// èƒŒæ™¯è³‡æ–™é›†åˆ
     /// </summary>
     [System.Serializable]
     public class BackgroundData
@@ -23,9 +23,9 @@ public class BackgroundController : MonoBehaviour
         public GameObject Background;
         public float MoveSpeed;
     }
-    public List<BackgroundData> BackgroundList = new List<BackgroundData>();    //­I´º¸ê®Æ¶°¦X²M³æ
+    public List<BackgroundData> BackgroundList = new List<BackgroundData>();    //èƒŒæ™¯è³‡æ–™é›†åˆæ¸…å–®
 
-    public bool isRunning;              //±±¨î¬O§_¹B§@
+    public bool isRunning;              //æ§åˆ¶æ˜¯å¦é‹ä½œ
 
     void Awake()
     {
@@ -35,10 +35,10 @@ public class BackgroundController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //§PÂ_¬O§_­n²¾°Ê­I´º
+        //åˆ¤æ–·æ˜¯å¦è¦ç§»å‹•èƒŒæ™¯
         if (this.isRunning)
         {
-            //Åª¨ú­I´º²M³æ¤º¸ê°T¡A¨Ì¾Ú¤£¦P¼Æ­È±±¨î²¾°Ê³t«×
+            //è®€å–èƒŒæ™¯æ¸…å–®å…§è³‡è¨Šï¼Œä¾æ“šä¸åŒæ•¸å€¼æ§åˆ¶ç§»å‹•é€Ÿåº¦
             foreach (var data in this.BackgroundList)
                 data.Background.transform.Translate(-data.MoveSpeed * Time.deltaTime, 0, 0);
         }

@@ -1,6 +1,6 @@
-//************************************
-// key2Label ÃöÁä¦r§ä­È¿é¥X¦¨Lable
-// * ¨Ï¥ÎPlayerPrefs
+ï»¿//************************************
+// key2Label é—œéµå­—æ‰¾å€¼è¼¸å‡ºæˆLable
+// * ä½¿ç”¨PlayerPrefs
 //****************************
 
 using UnityEngine;
@@ -8,47 +8,47 @@ using System.Collections;
 
 public class keyToLabel : MonoBehaviour
 {
-    //¸ÑªR«× - ¨Ì¾Ú1280¬°°ò·Ç
+    //è§£æåº¦ - ä¾æ“š1280ç‚ºåŸºæº–
     public int Resolution = 1280;
 
-    //µøµ¡¤j¤p
+    //è¦–çª—å¤§å°
     private Vector2 _ScreenSize = new Vector2(Screen.width, Screen.height);
 
-    //¤¶­±¥Ö½§
+    //ä»‹é¢çš®è†š
     public GUISkin guiSkin;
 
-    //¦ì¸m»P¤j¤p
+    //ä½ç½®èˆ‡å¤§å°
     public Rect rect;
 
-    //¨¤«×
+    //è§’åº¦
     public int angle;
 
-    //­¿²v
+    //å€ç‡
     public Vector2 scale = new Vector2(1, 1);
 
-    //¤å¦r
+    //æ–‡å­—
     public string Text = "Type Text here";
 
-    //¤å¦r¤j¤p
+    //æ–‡å­—å¤§å°
     public int FontSize = 10;
-    
-    //¤å¦rÃC¦â
+
+    //æ–‡å­—é¡è‰²
     public Color TextColor = Color.white;
 
-    //¤å¦r¹ï·Ç¤è¦¡
+    //æ–‡å­—å°æº–æ–¹å¼
     public TextAnchor Alignment;
-    
-    //¤¶­±²`«× - ¥¿­È¶V«e­±
+
+    //ä»‹é¢æ·±åº¦ - æ­£å€¼è¶Šå‰é¢
     public int depth;
 
-    /// ¤å¦r§Î¦¡
+    /// æ–‡å­—å½¢å¼
     public MUI_Enum.TextType textType = MUI_Enum.TextType.INT;
 
-    //¥Î¦r¦ê·í§@ª÷Æ_¨Ó¨ú±o¸ê®Æ
+    //ç”¨å­—ä¸²ç•¶ä½œé‡‘é‘°ä¾†å–å¾—è³‡æ–™
     public string Key;
 
 
-    //³Æ¥÷¸ê°T (BackUp)
+    //å‚™ä»½è³‡è¨Š (BackUp)
     private Rect _rect_backup;
     private Color _textColor_backup;
     private int _fontSize_backup;
@@ -59,7 +59,7 @@ public class keyToLabel : MonoBehaviour
     {
         if (!guiSkin) Debug.LogWarning(this.name + "-guiSkin" + "-Unset");
         if (FontSize == 0) Debug.LogWarning(this.name + "-FontSize" + "-Unset");
-        
+
         //Set Backup
         _rect_backup = rect;
         _textColor_backup = TextColor;
@@ -107,7 +107,7 @@ public class keyToLabel : MonoBehaviour
         GUI.Label(_rect, Text);
 
 
-        
+
     }
 
 
@@ -119,13 +119,13 @@ public class keyToLabel : MonoBehaviour
     }
 
 
-    #region #¯S®Ä¨t²Î
+    #region #ç‰¹æ•ˆç³»çµ±
 
     /// <summary>
-    /// »s³yRect°Êµe®ÄªG (Create)
+    /// è£½é€ Rectå‹•ç•«æ•ˆæœ (Create)
     /// Name - RectTo
     /// </summary>
-    /// <param name="effect">¯S®Äµ²ºc</param>
+    /// <param name="effect">ç‰¹æ•ˆçµæ§‹</param>
     void RectTo(MUI_Enum.EffectStruct effect)
     {
 
@@ -141,10 +141,10 @@ public class keyToLabel : MonoBehaviour
     }
 
     /// <summary>
-    /// »s³yColor°Êµe®ÄªG (Create)
+    /// è£½é€ Colorå‹•ç•«æ•ˆæœ (Create)
     /// Name - RectTo
     /// </summary>
-    /// <param name="effect">¯S®Äµ²ºc</param>
+    /// <param name="effect">ç‰¹æ•ˆçµæ§‹</param>
     void ColorTo(MUI_Enum.EffectStruct effect)
     {
         iTween.ValueTo(gameObject, iTween.Hash(
@@ -156,15 +156,15 @@ public class keyToLabel : MonoBehaviour
            "onupdate", "updateColor",
            "loopType", effect.looptype.ToString(),
            "name", "ColorTo"));
-        
+
 
     }
 
     /// <summary>
-    /// »s³yFontSize°Êµe®ÄªG (Create)
+    /// è£½é€ FontSizeå‹•ç•«æ•ˆæœ (Create)
     /// Name - RectTo
     /// </summary>
-    /// <param name="effect">¯S®Äµ²ºc</param>
+    /// <param name="effect">ç‰¹æ•ˆçµæ§‹</param>
     void FontSizeTo(MUI_Enum.EffectStruct effect)
     {
         iTween.ValueTo(gameObject, iTween.Hash(
@@ -213,5 +213,5 @@ public class keyToLabel : MonoBehaviour
         FontSize = input;
     }
 
-    #endregion ¯S®Ä¨t²Î
+    #endregion ç‰¹æ•ˆç³»çµ±
 }

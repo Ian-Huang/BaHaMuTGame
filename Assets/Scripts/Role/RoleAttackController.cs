@@ -1,21 +1,21 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// Create Date¡G2013-07-23
-/// Modify Date¡G2013-08-09
-/// Author¡GIan
-/// Description¡G
-///     ¨¤¦â§ğÀ»±±¨î¾¹ (¼Ä¤H¡B»ÙÃªª«)
-///     0809·s¼W¡Gµù¥UBoneAnimation¨ìGameManager¡A¤è«KºŞ²z
+/// Create Dateï¼š2013-07-23
+/// Modify Dateï¼š2013-08-09
+/// Authorï¼šIan
+/// Descriptionï¼š
+///     è§’è‰²æ”»æ“Šæ§åˆ¶å™¨ (æ•µäººã€éšœç¤™ç‰©)
+///     0809æ–°å¢ï¼šè¨»å†ŠBoneAnimationåˆ°GameManagerï¼Œæ–¹ä¾¿ç®¡ç†
 /// </summary>
 public class RoleAttackController : MonoBehaviour
 {
-    public float AttackDistance;        //§ğÀ»¶ZÂ÷
-    public GameObject ShootObject;      //»·¶ZÂ÷§ğÀ»µo®g¥Xªºª«¥ó
-    public SmoothMoves.BoneAnimation EffectAnimation;   //®ÄªG°Êµeª«¥ó
-    public LayerMask EnemyLayer;       //§P©w¬O§_§ğÀ»ªº¼Ä¤HLayer
-    public LayerMask ObstacleLayer;       //§P©w¬O§_§ğÀ»ªº»ÙÃªª«Layer
+    public float AttackDistance;        //æ”»æ“Šè·é›¢
+    public GameObject ShootObject;      //é è·é›¢æ”»æ“Šç™¼å°„å‡ºçš„ç‰©ä»¶
+    public SmoothMoves.BoneAnimation EffectAnimation;   //æ•ˆæœå‹•ç•«ç‰©ä»¶
+    public LayerMask EnemyLayer;       //åˆ¤å®šæ˜¯å¦æ”»æ“Šçš„æ•µäººLayer
+    public LayerMask ObstacleLayer;       //åˆ¤å®šæ˜¯å¦æ”»æ“Šçš„éšœç¤™ç‰©Layer
 
     private RolePropertyInfo roleInfo { get; set; }
     private SmoothMoves.BoneAnimation boneAnimation;
@@ -24,48 +24,48 @@ public class RoleAttackController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //¸ü¤J¨¤¦â¸ê°T
+        //è¼‰å…¥è§’è‰²è³‡è¨Š
         this.roleInfo = this.GetComponent<RolePropertyInfo>();
 
-        //³]©wBoneAnimation
+        //è¨­å®šBoneAnimation
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
         this.boneAnimation.RegisterColliderTriggerDelegate(WeaponHit);
         this.boneAnimation.RegisterUserTriggerDelegate(ShootEvent);
-        GameManager.script.RegisterBoneAnimation(this.boneAnimation);   //µù¥UBoneAnimation¡AGameManager²Î¤@ºŞ²z
+        GameManager.script.RegisterBoneAnimation(this.boneAnimation);   //è¨»å†ŠBoneAnimationï¼ŒGameManagerçµ±ä¸€ç®¡ç†
     }
 
     // Update is called once per frame
     void Update()
     {
-        //±qGameManager ½T»{BoneAnimationªºª¬ºA
+        //å¾GameManager ç¢ºèªBoneAnimationçš„ç‹€æ…‹
         if (GameManager.script.GetBoneAnimationState(this.boneAnimation))
         {
-            // ¨¤¦â¥²¶·¥¼µê®z
+            // è§’è‰²å¿…é ˆæœªè™›å¼±
             if (!this.roleInfo.isWeak)
             {
-                //§P§Oª«¥ó¬°¦ó¡H  ¼Ä¤H»P»ÙÃªª«¦³¤£¦Pªº³B²z
+                //åˆ¤åˆ¥ç‰©ä»¶ç‚ºä½•ï¼Ÿ  æ•µäººèˆ‡éšœç¤™ç‰©æœ‰ä¸åŒçš„è™•ç†
                 if (Physics.Raycast(this.transform.position, Vector3.right, out this.hitData, this.AttackDistance, this.EnemyLayer))
                 {
-                    //tag = MainBody  (ª«¥ó¥DÅé)
+                    //tag = MainBody  (ç‰©ä»¶ä¸»é«”)
                     if (this.hitData.collider.tag.CompareTo("MainBody") == 0)
-                        if (!this.hitData.collider.GetComponent<EnemyPropertyInfo>().isDead)    //½T»{Enemy¬O§_¤w¸g¦º¤`
+                        if (!this.hitData.collider.GetComponent<EnemyPropertyInfo>().isDead)    //ç¢ºèªEnemyæ˜¯å¦å·²ç¶“æ­»äº¡
                             if (!this.boneAnimation.IsPlaying("attack"))
                                 this.boneAnimation.Play("attack");
                 }
                 else if (Physics.Raycast(this.transform.position, Vector3.right, out this.hitData, this.AttackDistance, this.ObstacleLayer))
                 {
-                    //tag = MainBody  (ª«¥ó¥DÅé)
+                    //tag = MainBody  (ç‰©ä»¶ä¸»é«”)
                     if (this.hitData.collider.tag.CompareTo("MainBody") == 0)
-                        if (!this.hitData.collider.GetComponent<ObstaclePropertyInfo>().isDisappear)    //½T»{Obstacle¬O§_¤w¸g®ø¥¢
+                        if (!this.hitData.collider.GetComponent<ObstaclePropertyInfo>().isDisappear)    //ç¢ºèªObstacleæ˜¯å¦å·²ç¶“æ¶ˆå¤±
                             if (this.GetComponent<ObstacleSystem>().ObstacleList.Contains(this.hitData.collider.GetComponent<ObstaclePropertyInfo>().Obstacle))
                                 if (!this.boneAnimation.IsPlaying("attack"))
                                     this.boneAnimation.Play("attack");
                 }
 
-                //½T»{¥Ø«e°Êµeª¬ºA(¥²¶·¨S¦A¼½attack)
+                //ç¢ºèªç›®å‰å‹•ç•«ç‹€æ…‹(å¿…é ˆæ²’å†æ’­attack)
                 if (!this.boneAnimation.IsPlaying("attack"))
                 {
-                    //§P©w­I´º¬O§_¦³¦b°Ê¡A¥H¦¹¨M©w¨¤¦âªº°Ê§@ª¬ºA
+                    //åˆ¤å®šèƒŒæ™¯æ˜¯å¦æœ‰åœ¨å‹•ï¼Œä»¥æ­¤æ±ºå®šè§’è‰²çš„å‹•ä½œç‹€æ…‹
                     if (BackgroundController.script.isRunning)
                         this.boneAnimation.Play("walk");
                     else
@@ -76,69 +76,69 @@ public class RoleAttackController : MonoBehaviour
     }
 
     /// <summary>
-    /// ¸j¦b¨¤¦âªZ¾¹¤WªºCollider¡AÄ²µo§ğÀ»§P©w(ªñ¶ZÂ÷§ğÀ»¨Ï¥Î)
+    /// ç¶åœ¨è§’è‰²æ­¦å™¨ä¸Šçš„Colliderï¼Œè§¸ç™¼æ”»æ“Šåˆ¤å®š(è¿‘è·é›¢æ”»æ“Šä½¿ç”¨)
     /// </summary>
-    /// <param name="triggerEvent">Ä²µo¬ÛÃö¸ê°T</param>
+    /// <param name="triggerEvent">è§¸ç™¼ç›¸é—œè³‡è¨Š</param>
     public void WeaponHit(SmoothMoves.ColliderTriggerEvent triggerEvent)
     {
-        //½T»{¬O¥Ñ"weapon"¸I¼²ªºcollider
+        //ç¢ºèªæ˜¯ç”±"weapon"ç¢°æ’çš„collider
         if (triggerEvent.boneName == "weapon" && triggerEvent.triggerType == SmoothMoves.ColliderTriggerEvent.TRIGGER_TYPE.Enter)
         {
-            //tag = MainBody  (ª«¥ó¥DÅé)
+            //tag = MainBody  (ç‰©ä»¶ä¸»é«”)
             if (triggerEvent.otherCollider.tag.CompareTo("MainBody") == 0)
             {
-                //§P§Oª«¥ó¬°¦ó¡H  ¼Ä¤H»P»ÙÃªª«¦³¤£¦Pªº³B²z
+                //åˆ¤åˆ¥ç‰©ä»¶ç‚ºä½•ï¼Ÿ  æ•µäººèˆ‡éšœç¤™ç‰©æœ‰ä¸åŒçš„è™•ç†
                 if (((1 << triggerEvent.otherCollider.gameObject.layer) & this.EnemyLayer.value) > 0)
                 {
                     triggerEvent.otherCollider.GetComponent<EnemyPropertyInfo>().DecreaseLife(this.roleInfo.nearDamage);
 
-                    //³Ğ«Ø ±ÙÀ»¯S®ÄBoneAnimation
+                    //å‰µå»º æ–¬æ“Šç‰¹æ•ˆBoneAnimation
                     SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
-                    //³]©w°Êµe¼½©ñ¤¤¤ßÂI
+                    //è¨­å®šå‹•ç•«æ’­æ”¾ä¸­å¿ƒé»
                     Vector3 expPos = triggerEvent.otherColliderClosestPointToBone;
                     expPos.z = triggerEvent.otherCollider.gameObject.transform.position.z - 1;
                     obj.mLocalTransform.position = expPos;
                     obj.playAutomatically = false;
-                    //ÀH¾÷¼·©ñ 1 ©Î 2 °Êµe¤ù¬q
+                    //éš¨æ©Ÿæ’¥æ”¾ 1 æˆ– 2 å‹•ç•«ç‰‡æ®µ
                     if (Random.Range(0, 2) == 0)
-                        obj.Play("±ÙÀ»¯S®Ä01");
+                        obj.Play("æ–¬æ“Šç‰¹æ•ˆ01");
                     else
-                        obj.Play("±ÙÀ»¯S®Ä02");
+                        obj.Play("æ–¬æ“Šç‰¹æ•ˆ02");
                 }
                 else if (((1 << triggerEvent.otherCollider.gameObject.layer) & this.ObstacleLayer.value) > 0)
                 {
                     triggerEvent.otherCollider.GetComponent<ObstaclePropertyInfo>().CheckObstacle(true);
 
-                    //³Ğ«Ø ±ÙÀ»¯S®ÄBoneAnimation
+                    //å‰µå»º æ–¬æ“Šç‰¹æ•ˆBoneAnimation
                     SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
-                    //³]©w°Êµe¼½©ñ¤¤¤ßÂI
+                    //è¨­å®šå‹•ç•«æ’­æ”¾ä¸­å¿ƒé»
                     Vector3 expPos = triggerEvent.otherColliderClosestPointToBone;
                     expPos.z = triggerEvent.otherCollider.gameObject.transform.position.z - 1;
                     obj.mLocalTransform.position = expPos;
                     obj.playAutomatically = false;
-                    //ÀH¾÷¼·©ñ 1 ©Î 2 °Êµe¤ù¬q
+                    //éš¨æ©Ÿæ’¥æ”¾ 1 æˆ– 2 å‹•ç•«ç‰‡æ®µ
                     if (Random.Range(0, 2) == 0)
-                        obj.Play("±ÙÀ»¯S®Ä01");
+                        obj.Play("æ–¬æ“Šç‰¹æ•ˆ01");
                     else
-                        obj.Play("±ÙÀ»¯S®Ä02");
+                        obj.Play("æ–¬æ“Šç‰¹æ•ˆ02");
                 }
             }
         }
     }
 
     /// <summary>
-    /// ¸j¦b¨¤¦âªZ¾¹¤WªºUserTrigger¡AÄ²µo§ğÀ»§P©w(»·¶ZÂ÷§ğÀ»¨Ï¥Î)
+    /// ç¶åœ¨è§’è‰²æ­¦å™¨ä¸Šçš„UserTriggerï¼Œè§¸ç™¼æ”»æ“Šåˆ¤å®š(é è·é›¢æ”»æ“Šä½¿ç”¨)
     /// </summary>
-    /// <param name="triggerEvent">Ä²µo¬ÛÃö¸ê°T</param>
+    /// <param name="triggerEvent">è§¸ç™¼ç›¸é—œè³‡è¨Š</param>
     public void ShootEvent(SmoothMoves.UserTriggerEvent triggerEvent)
     {
-        //½T»{¬O¥Ñ"weapon"Ä²µoªºUserTrigger
+        //ç¢ºèªæ˜¯ç”±"weapon"è§¸ç™¼çš„UserTrigger
         if (triggerEvent.boneName == "weapon")
         {
-            //²£¥Í®gÀ»ª«¥ó
+            //ç”¢ç”Ÿå°„æ“Šç‰©ä»¶
             GameObject obj = (GameObject)Instantiate(this.ShootObject, this.transform.position - new Vector3(0, 0, 0.1f), this.ShootObject.transform.rotation);
 
-            //³]©wª«¥óªºparent ¡B layer ¡B Damage
+            //è¨­å®šç‰©ä»¶çš„parent ã€ layer ã€ Damage
             obj.layer = LayerMask.NameToLayer("ShootObject");
             obj.transform.parent = GameObject.Find("UselessObjectCollection").transform;
 
@@ -149,7 +149,7 @@ public class RoleAttackController : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        //µe¥X°»´ú½u
+        //ç•«å‡ºåµæ¸¬ç·š
         Gizmos.DrawRay(this.transform.position, Vector3.right * this.AttackDistance);
     }
 }

@@ -1,49 +1,49 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
-#region ¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­­×¥¿¬ö¿ı¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­
-/// 13/05/08    «Ø¸m
-/// 13/06/17    ¥h°£ScaleAroundPivot¤WªºY+0.5 ¨Ï½u©ñ¤j®É¥Ñ¤¤¤ßÂI©ñ¤j
-///             ¦Û©w¸q¤@­Ó·s§÷½è 1*1 ªº¥Õ¦âPixel (LinePixel.png)
-///             ­«·s©w¸q¦WºÙ MLine_2D
-#endregion 
+#region ï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒä¿®æ­£ç´€éŒ„ï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒ
+/// 13/05/08    å»ºç½®
+/// 13/06/17    å»é™¤ScaleAroundPivotä¸Šçš„Y+0.5 ä½¿ç·šæ”¾å¤§æ™‚ç”±ä¸­å¿ƒé»æ”¾å¤§
+///             è‡ªå®šç¾©ä¸€å€‹æ–°æè³ª 1*1 çš„ç™½è‰²Pixel (LinePixel.png)
+///             é‡æ–°å®šç¾©åç¨± MLine_2D
+#endregion
 
 /// <summary>
-/// ¤¶­± - Ã¸»s 2D ½u
+/// ä»‹é¢ - ç¹ªè£½ 2D ç·š
 /// </summary>
-/// * BaseResolution    ®Ú¾Ú¸ÑªR«×¤j¤p­«·s©w¸qPoint¼Æ­È (Value 0 to 1)
-/// * BasePixel         ®Ú¾Ú¹³¯À¤j¤p­«·s©w¸qPoint¼Æ­È
-/// ** ®Ú¾Ú BaseResolution ©Òºâ¥Xªºµ²ªG¥²¶·¬°INT¤£¥i¬°FLOAT 
+/// * BaseResolution    æ ¹æ“šè§£æåº¦å¤§å°é‡æ–°å®šç¾©Pointæ•¸å€¼ (Value 0 to 1)
+/// * BasePixel         æ ¹æ“šåƒç´ å¤§å°é‡æ–°å®šç¾©Pointæ•¸å€¼
+/// ** æ ¹æ“š BaseResolution æ‰€ç®—å‡ºçš„çµæœå¿…é ˆç‚ºINTä¸å¯ç‚ºFLOAT 
 
 public class MUI_Line_2D : MonoBehaviour
 {
-    //µøµ¡¤j¤p
+    //è¦–çª—å¤§å°
     private Vector2 _ScreenSize = new Vector2(Screen.width, Screen.height);
 
-    //½uªº§÷½è
+    //ç·šçš„æè³ª
     public Texture2D lineTex;
     public static Texture2D lineTex_static;
 
-    //®Ú¾Ú¸ÑªR«×µ¹ªºVector¼Æ­È
+    //æ ¹æ“šè§£æåº¦çµ¦çš„Vectoræ•¸å€¼
     public bool BaseResolution;
     public Vector2 pointStart_BaseResolution;
     public Vector2 pointEnd_BaseResolution;
 
-    //®Ú¾ÚPixelª½±µµ¹¤©¦V¶q¼Æ­È
+    //æ ¹æ“šPixelç›´æ¥çµ¦äºˆå‘é‡æ•¸å€¼
     public Vector2 pointStart_BasePixel;
     public Vector2 pointEnd_BasePixel;
 
-    //ABÂIªº¦V¶q
+    //ABé»çš„å‘é‡
     private Vector2 pointA;
     private Vector2 pointB;
 
-    //¹]µ§¤j¤p
+    //é‰›ç­†å¤§å°
     public float penSize = 1;
 
-    //ÃC¦â
+    //é¡è‰²
     public Color color = Color.white;
 
-    //¤¶­±²`«×
+    //ä»‹é¢æ·±åº¦
     public int depth;
 
 
@@ -54,7 +54,7 @@ public class MUI_Line_2D : MonoBehaviour
 
     void Warning()
     {
-        //Äµ§i³qª¾
+        //è­¦å‘Šé€šçŸ¥
         if (pointStart_BaseResolution != Vector2.zero || pointEnd_BaseResolution != Vector2.zero)
             if (!BaseResolution)
                 Debug.LogError("If you want Vectors base on resolution , please set [BaseResolution] TRUE");
@@ -88,7 +88,7 @@ public class MUI_Line_2D : MonoBehaviour
 
 
 
-    // ¥H 1*1 ªº Texture ©ñ¤j»P±ÛÂà¨ÃÃ¸¥Xª½½u
+    // ä»¥ 1*1 çš„ Texture æ”¾å¤§èˆ‡æ—‹è½‰ä¸¦ç¹ªå‡ºç›´ç·š
     public void DrawLine(Vector2 pointA, Vector2 pointB, Color color, float width)
     {
         // Save the current GUI matrix, since we're going to make changes to it.

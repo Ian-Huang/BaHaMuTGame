@@ -1,23 +1,23 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// Create Date¡G2013-07-31
-/// Modify Date¡G2013-07-31
-/// Author¡GIan
-/// Description¡G
-///     ÀH¾÷²£¥Í³õ´º¤¤ªº¸Ë¹¢ª«¥ó
+/// Create Dateï¼š2013-07-31
+/// Modify Dateï¼š2013-07-31
+/// Authorï¼šIan
+/// Descriptionï¼š
+///     éš¨æ©Ÿç”¢ç”Ÿå ´æ™¯ä¸­çš„è£é£¾ç‰©ä»¶
 /// </summary>
 public class CreateSceneObjectPoint : MonoBehaviour
 {
-    public float CreateTimeMin;         //¥Í¦¨ª«¥ó®É¶¡³Ì¤p­È(¬í)
-    public float CreateTimeMax;         //¥Í¦¨ª«¥ó®É¶¡³Ì¤j­È(¬í)
-    public float CreateOffsetY;         //¥Í¦¨ª«¥óY¶b®t­È(ÀH¾÷¥Í¦¨©ó -Y ~ Y ­È)
-    public GameObject ParentObject;     //¥Í¦¨ª«¥óªº¤÷ª«¥ó
-    public GameObject[] CreateObjects;  //¥Í¦¨ª«¥ó²M³æ(ÀH¾÷¥Í¦¨)
+    public float CreateTimeMin;         //ç”Ÿæˆç‰©ä»¶æ™‚é–“æœ€å°å€¼(ç§’)
+    public float CreateTimeMax;         //ç”Ÿæˆç‰©ä»¶æ™‚é–“æœ€å¤§å€¼(ç§’)
+    public float CreateOffsetY;         //ç”Ÿæˆç‰©ä»¶Yè»¸å·®å€¼(éš¨æ©Ÿç”Ÿæˆæ–¼ -Y ~ Y å€¼)
+    public GameObject ParentObject;     //ç”Ÿæˆç‰©ä»¶çš„çˆ¶ç‰©ä»¶
+    public GameObject[] CreateObjects;  //ç”Ÿæˆç‰©ä»¶æ¸…å–®(éš¨æ©Ÿç”Ÿæˆ)
 
     /// <summary>
-    /// ²£¥Í³õ´ºªº¸Ë¹¢ª«¥ó
+    /// ç”¢ç”Ÿå ´æ™¯çš„è£é£¾ç‰©ä»¶
     /// </summary>
     void CreateSceneObject()
     {
@@ -32,7 +32,7 @@ public class CreateSceneObjectPoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //½T»{³õ´º¬O§_¦A²¾°Ê¡A¦pªG¨S¦³¤£¶i¦æ²£¥Íª«¥ó
+        //ç¢ºèªå ´æ™¯æ˜¯å¦å†ç§»å‹•ï¼Œå¦‚æœæ²’æœ‰ä¸é€²è¡Œç”¢ç”Ÿç‰©ä»¶
         if (BackgroundController.script.isRunning)
             if (!IsInvoking("CreateSceneObject"))
                 Invoke("CreateSceneObject", Random.Range(this.CreateTimeMin, this.CreateTimeMax));

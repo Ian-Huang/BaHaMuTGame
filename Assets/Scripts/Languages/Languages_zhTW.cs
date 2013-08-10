@@ -1,17 +1,19 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
-public class Languages_zhTW : MonoBehaviour {
+public class Languages_zhTW : MonoBehaviour
+{
+    public string Level_select = "è«‹å…ˆé¸æ“‡é—œå¡";
 
-    public string Level_select = "½Ğ¥ı¿ï¾ÜÃö¥d";
+    // Use this for initialization
+    void Start()
+    {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }

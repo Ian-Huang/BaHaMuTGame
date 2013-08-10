@@ -1,16 +1,16 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
-#region ¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­­×¥¿¬ö¿ı¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­
-/// 13/05/08    «Ø¸m
-/// 13/06/19    ­«·s©w¸q¦WºÙ MUI_TextureTo
+#region ï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒä¿®æ­£ç´€éŒ„ï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒ
+/// 13/05/08    å»ºç½®
+/// 13/06/19    é‡æ–°å®šç¾©åç¨± MUI_TextureTo
 
 #endregion
 /// <summary>
-/// ´«¹Ï®ÄªG
+/// æ›åœ–æ•ˆæœ
 /// </summary>
-/// Enable®É §@¥Î
-/// Disable®É ¤£§@¥Î
+/// Enableæ™‚ ä½œç”¨
+/// Disableæ™‚ ä¸ä½œç”¨
 /// 
 public class MUI_TextureTo : MonoBehaviour
 {
@@ -18,7 +18,7 @@ public class MUI_TextureTo : MonoBehaviour
     private Texture textur_2D_backup;
     public Texture Texture2d;
 
-    //ª«¥ó³QDisable®É¬O§_¦^¨ì­ì¥»ª¬ºA
+    //ç‰©ä»¶è¢«Disableæ™‚æ˜¯å¦å›åˆ°åŸæœ¬ç‹€æ…‹
     public bool ResetAfterDisable;
 
     void Awake()

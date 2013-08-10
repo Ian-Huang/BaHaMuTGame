@@ -1,29 +1,29 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// Create Date¡G2013-07-25
-/// Modify Date¡G2013-08-09
-/// Author¡GIan
-/// Description¡G
-///     ±N¶W¥XÃä¬Éªºª«¥ó§R°£
-///     0809·s¼W¡G²¾°£ª«¥óªº¦P®É¡A²¾°£µù¥U©óGameManager AllBoneAnimationList¤¤ªº¸ê°T
+/// Create Dateï¼š2013-07-25
+/// Modify Dateï¼š2013-08-09
+/// Authorï¼šIan
+/// Descriptionï¼š
+///     å°‡è¶…å‡ºé‚Šç•Œçš„ç‰©ä»¶åˆªé™¤
+///     0809æ–°å¢ï¼šç§»é™¤ç‰©ä»¶çš„åŒæ™‚ï¼Œç§»é™¤è¨»å†Šæ–¼GameManager AllBoneAnimationListä¸­çš„è³‡è¨Š
 /// </summary>
 public class BorderDestroy : MonoBehaviour
 {
-    public float DestroyRadius;         //Ãä¬É²y§Îªº¥b®|
-    public LayerMask DestroyLayer;      //­n³Q§R°£ªºLayer
+    public float DestroyRadius;         //é‚Šç•Œçƒå½¢çš„åŠå¾‘
+    public LayerMask DestroyLayer;      //è¦è¢«åˆªé™¤çš„Layer
 
     // Update is called once per frame
     void Update()
     {
-        //½T»{¬O§_¦³ª«Åé¶i¤J½d³ò
+        //ç¢ºèªæ˜¯å¦æœ‰ç‰©é«”é€²å…¥ç¯„åœ
         if (Physics.CheckSphere(this.transform.position, this.DestroyRadius, this.DestroyLayer))
         {
-            //§R°£¶i¤J½d³ò¤ºªºª«¥ó
+            //åˆªé™¤é€²å…¥ç¯„åœå…§çš„ç‰©ä»¶
             foreach (var obj in Physics.OverlapSphere(this.transform.position, this.DestroyRadius, this.DestroyLayer))
             {
-                //²¾°£ª«¥óªº¦P®É¡A²¾°£µù¥U©óGameManager AllBoneAnimationList¤¤ªº¸ê°T
+                //ç§»é™¤ç‰©ä»¶çš„åŒæ™‚ï¼Œç§»é™¤è¨»å†Šæ–¼GameManager AllBoneAnimationListä¸­çš„è³‡è¨Š
                 SmoothMoves.BoneAnimation boneAnimation = obj.gameObject.GetComponent<SmoothMoves.BoneAnimation>();
                 if (boneAnimation != null)
                     if (GameManager.script.AllBoneAnimationList.ContainsKey(boneAnimation))
@@ -36,7 +36,7 @@ public class BorderDestroy : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        //µe¥X°»´úÃä¬É
+        //ç•«å‡ºåµæ¸¬é‚Šç•Œ
         Gizmos.DrawWireSphere(this.transform.position, this.DestroyRadius);
     }
 }

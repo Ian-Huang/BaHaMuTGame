@@ -1,12 +1,11 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// ·Æ¹««öÁä¦b°»´ú½d³ò¸Ì­±«öÁäªº¯S®Ä
+/// æ»‘é¼ æŒ‰éµåœ¨åµæ¸¬ç¯„åœè£¡é¢æŒ‰éµçš„ç‰¹æ•ˆ
 /// </summary>
 public class MouseClick : MonoBehaviour
 {
-
     public Object DisplayObject;
     private Rect rect;
 
@@ -41,7 +40,7 @@ public class MouseClick : MonoBehaviour
 
                     if (Input.GetKeyDown(keyCode))
                     {
-                        
+
                         if (Event)
                         {
                             GameObject newGameObject = (GameObject)Instantiate(Event);
@@ -59,7 +58,7 @@ public class MouseClick : MonoBehaviour
 
                     if (Input.GetKeyUp(keyCode))
                     {
-                       
+
                         if (Event)
                         {
                             GameObject newGameObject = (GameObject)Instantiate(Event);
@@ -79,16 +78,16 @@ public class MouseClick : MonoBehaviour
 
                     if (pressDown)
                     {
-                       
+
                         if (Input.GetKeyUp(keyCode))
-                        { 
-                            
+                        {
+
                             if (Event)
                             {
                                 GameObject newGameObject = (GameObject)Instantiate(Event);
                                 newGameObject.SetActive(true);
                             }
-                            if( EffectObject)
+                            if (EffectObject)
                                 EffectObject.SetActive(true);
                         }
                     }
@@ -101,7 +100,7 @@ public class MouseClick : MonoBehaviour
 
                         if (Time.time - intervalTime < 0.3)
                         {
-                            
+
                             if (Event)
                             {
                                 GameObject newGameObject = (GameObject)Instantiate(Event);
@@ -122,16 +121,16 @@ public class MouseClick : MonoBehaviour
         else
         {
 
-                            pressDown = false;
-            if( EffectObject)
+            pressDown = false;
+            if (EffectObject)
                 if (Input.GetKeyUp(keyCode))
-                            EffectObject.SetActive(false);
+                    EffectObject.SetActive(false);
 
 
 
-                
-            
-   
+
+
+
         }
 
     }

@@ -1,9 +1,8 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 public class Event_ChangeRolePosition : MonoBehaviour
 {
-
     public GameDefinition.ChangeRoleMode changeMode;
     // Use this for initialization
     void Start()
@@ -11,9 +10,7 @@ public class Event_ChangeRolePosition : MonoBehaviour
         RolesCollection.script.ChangeRolePosition(changeMode);
         Destroy(this.gameObject);
         if (AudioSoundPlayer.script)
-            AudioSoundPlayer.script.PlayAudio("¤}½b¤âµo®g½b¥Ú");
-
-
+            AudioSoundPlayer.script.PlayAudio("å¼“ç®­æ‰‹ç™¼å°„ç®­çŸ¢");
     }
 
     // Update is called once per frame

@@ -1,86 +1,86 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
-#region ¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­­×¥¿¬ö¿ı¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­
-/// 13/05/06    «Ø¸m
-/// 13/06/17    ­«·s©w¸q¦WºÙ MUI_Base  
+#region ï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒä¿®æ­£ç´€éŒ„ï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒ
+/// 13/05/06    å»ºç½®
+/// 13/06/17    é‡æ–°å®šç¾©åç¨± MUI_Base  
 #endregion
 
 /// <summary>
-/// ¤¶­±°ò©³ - ¨ä¥L¤¶­±ªº¤÷Ãş§O
+/// ä»‹é¢åŸºåº• - å…¶ä»–ä»‹é¢çš„çˆ¶é¡åˆ¥
 /// </summary>
-/// ¯S®Ä¨t²Î - ¦^¶ÇÅÜ¼Æ¨Ã«Ø¥ßiTween°õ¦æ°Êµe®ÄªG
-/// * ¤lÃş§O   MUI_Label  ¤å¦r¼ĞÅÒ¤¶­±
-/// * ¤lÃş§O   MUI_Texture_2D 2D¹Ï¹³¤¶­±
+/// ç‰¹æ•ˆç³»çµ± - å›å‚³è®Šæ•¸ä¸¦å»ºç«‹iTweenåŸ·è¡Œå‹•ç•«æ•ˆæœ
+/// * å­é¡åˆ¥   MUI_Label  æ–‡å­—æ¨™ç±¤ä»‹é¢
+/// * å­é¡åˆ¥   MUI_Texture_2D 2Dåœ–åƒä»‹é¢
 public class MUI_Base : MonoBehaviour
 {
-    //¤¶­±¥Ö½§
+    //ä»‹é¢çš®è†š
     public GUISkin guiSkin;
 
-    //¦ì¸m»P¤j¤p
+    //ä½ç½®èˆ‡å¤§å°
     public Rect rect;
 
-    //¨¤«×
+    //è§’åº¦
     public int angle;
 
-    //©ñ¤j­¿²v
+    //æ”¾å¤§å€ç‡
     public Vector2 scale = new Vector2(1, 1);
 
-     [HideInInspector]
-    //±Æª©©ñ¤j­¿²v
+    [HideInInspector]
+    //æ’ç‰ˆæ”¾å¤§å€ç‡
     public Vector2 LayoutScale = new Vector2(1, 1);
 
-    //¹Ï®×ÃC¦â
+    //åœ–æ¡ˆé¡è‰²
     public Color color = Color.white;
 
-    //¤¶­±²`«× - ­t­È¶V«e­±
+    //ä»‹é¢æ·±åº¦ - è² å€¼è¶Šå‰é¢
     public int depth;
 
-    //¤¶­±°¾²¾¶q
+    //ä»‹é¢åç§»é‡
     public Vector2 offset = new Vector2(1, 1);
 
-    //³]©w¤¤¤ßÂI (¥ª¤W¡B¥¿¤¤¥¡)
+    //è¨­å®šä¸­å¿ƒé» (å·¦ä¸Šã€æ­£ä¸­å¤®)
     public enum centerAlignment { UpperLeft, MiddleCenter };
     public centerAlignment CenterAlignment;
 
 
     /// <summary>
-    /// ¦Û°Ê®Ú¾Ú¸ÑªR«×©ñ¤jÁY¤p
-    /// None - µL
-    /// WidthFixed - ©T©w¼e«×
-    /// HeightFixed - ©T©w°ª«×
-    /// AreaFixed - ®Ú¾Ú­±¿n
+    /// è‡ªå‹•æ ¹æ“šè§£æåº¦æ”¾å¤§ç¸®å°
+    /// None - ç„¡
+    /// WidthFixed - å›ºå®šå¯¬åº¦
+    /// HeightFixed - å›ºå®šé«˜åº¦
+    /// AreaFixed - æ ¹æ“šé¢ç©
     /// </summary>
     public enum AutoResolutionFix { None, WidthFixed, HeightFixed, AreaFixed };
     public AutoResolutionFix autoResolutionFix;
 
     [HideInInspector]
-    //¤¤¤ßÂI
+    //ä¸­å¿ƒé»
     public Vector2 CenterPosition;
 
     [HideInInspector]
-    //±Æª©¤¤¤ßÂI
+    //æ’ç‰ˆä¸­å¿ƒé»
     public Vector2 LayoutCenterPosition;
 
     [HideInInspector]
-    //¸ÑªR«× - ¨Ì¾Ú1280¬°°ò·Ç
+    //è§£æåº¦ - ä¾æ“š1280ç‚ºåŸºæº–
     public int Resolution = 1280;
 
     [HideInInspector]
-    //µøµ¡¤j¤p
+    //è¦–çª—å¤§å°
     public Vector2 _ScreenSize = new Vector2(Screen.width, Screen.height);
 
     [HideInInspector]
-    //µøµ¡¤ñ¨Ò
+    //è¦–çª—æ¯”ä¾‹
     public float screenRatio;
 
 
-    //³Æ¥÷¸ê°T (BackUp)
+    //å‚™ä»½è³‡è¨Š (BackUp)
     private Rect _rect_previousState;
     private Color _color_previousState;
     private Vector2 _scale_previousState;
 
-    //¹Bºâ«áªºRect(Pixel­È)
+    //é‹ç®—å¾Œçš„Rect(Pixelå€¼)
     [HideInInspector]
     public Rect _rect;
 
@@ -93,7 +93,7 @@ public class MUI_Base : MonoBehaviour
         screenRatio = Screen.width / (float)Screen.height;
         ReDefinePreviousState();
 
-        //¦bStart¥ı¶i¦æ¤@¦¸Update¡A¥i¥HÁ×§K·íEnable®É Åã¥Ü¦rÅé·|¦³·¥µu¼È°{Ã{ªº±¡§Î
+        //åœ¨Startå…ˆé€²è¡Œä¸€æ¬¡Updateï¼Œå¯ä»¥é¿å…ç•¶Enableæ™‚ é¡¯ç¤ºå­—é«”æœƒæœ‰æ¥µçŸ­æš«é–ƒçˆçš„æƒ…å½¢
         Update();
     }
 
@@ -129,7 +129,7 @@ public class MUI_Base : MonoBehaviour
         {
             float area = rect.width * rect.height;
             float Screen_area = _ScreenSize.x * _ScreenSize.y;
-            //¥Ø¼Ğ­±¿n¹ïµe­±­±¿n¤ñ²v ¶}®Ú¸¹
+            //ç›®æ¨™é¢ç©å°ç•«é¢é¢ç©æ¯”ç‡ é–‹æ ¹è™Ÿ
             float sqrt_x = Mathf.Sqrt(area / Screen_area);
 
             rect.width = float.Parse((_ScreenSize.y * sqrt_x).ToString("0.0000"));
@@ -149,13 +149,13 @@ public class MUI_Base : MonoBehaviour
 
 
 
-    #region #¯S®Ä¨t²Î
+    #region #ç‰¹æ•ˆç³»çµ±
 
     /// <summary>
-    /// »s³yRect°Êµe®ÄªG (Create)
+    /// è£½é€ Rectå‹•ç•«æ•ˆæœ (Create)
     /// Name - RectTo
     /// </summary>
-    /// <param name="effect">¯S®Äµ²ºc</param>
+    /// <param name="effect">ç‰¹æ•ˆçµæ§‹</param>
     void RectTo(MUI_Enum.EffectStruct effect)
     {
         iTween.ValueTo(gameObject, iTween.Hash(
@@ -171,10 +171,10 @@ public class MUI_Base : MonoBehaviour
     }
 
     /// <summary>
-    /// »s³yColor°Êµe®ÄªG (Create)
+    /// è£½é€ Colorå‹•ç•«æ•ˆæœ (Create)
     /// Name - RectTo
     /// </summary>
-    /// <param name="effect">¯S®Äµ²ºc</param>
+    /// <param name="effect">ç‰¹æ•ˆçµæ§‹</param>
     void ColorTo(MUI_Enum.EffectStruct effect)
     {
         iTween.ValueTo(gameObject, iTween.Hash(
@@ -190,10 +190,10 @@ public class MUI_Base : MonoBehaviour
     }
 
     /// <summary>
-    /// »s³yScale°Êµe®ÄªG (Create)
+    /// è£½é€ Scaleå‹•ç•«æ•ˆæœ (Create)
     /// Name - ScaleTo
     /// </summary>
-    /// <param name="effect">¯S®Äµ²ºc</param>
+    /// <param name="effect">ç‰¹æ•ˆçµæ§‹</param>
     void ScaleTo(MUI_Enum.EffectStruct effect)
     {
         iTween.ValueTo(gameObject, iTween.Hash(
@@ -209,10 +209,10 @@ public class MUI_Base : MonoBehaviour
     }
 
     /// <summary>
-    /// »s³yLayoutScale°Êµe®ÄªG (Create)
+    /// è£½é€ LayoutScaleå‹•ç•«æ•ˆæœ (Create)
     /// Name - ScaleTo
     /// </summary>
-    /// <param name="effect">¯S®Äµ²ºc</param>
+    /// <param name="effect">ç‰¹æ•ˆçµæ§‹</param>
     void LayoutScaleTo(MUI_Enum.EffectStruct effect)
     {
         iTween.ValueTo(gameObject, iTween.Hash(
@@ -270,5 +270,5 @@ public class MUI_Base : MonoBehaviour
     {
         LayoutScale = input;
     }
-    #endregion ¯S®Ä¨t²Î
+    #endregion ç‰¹æ•ˆç³»çµ±
 }

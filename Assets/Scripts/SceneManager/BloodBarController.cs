@@ -1,16 +1,16 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// Create Date¡G2013-07-25
-/// Modify Date¡G2013-07-25
-/// Author¡GIan
-/// Description¡G
-///     ¦å±øÅã¥Ü±±¨î¾¹
+/// Create Dateï¼š2013-07-25
+/// Modify Dateï¼š2013-07-25
+/// Authorï¼šIan
+/// Descriptionï¼š
+///     è¡€æ¢é¡¯ç¤ºæ§åˆ¶å™¨
 /// </summary>
 public class BloodBarController : MonoBehaviour
 {
-    //½T»{¬O­şºØÃş«¬ªº¦å±ø
+    //ç¢ºèªæ˜¯å“ªç¨®é¡å‹çš„è¡€æ¢
     public enum WhichBlood
     { Role = 0, Enemy = 1 }
     public WhichBlood whichType;
@@ -35,7 +35,7 @@ public class BloodBarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //­pºâ (·í«e¦å¶q/³Ì¤j¦å¶q)¡A ¨Ã±a¤JTextureOffset
+        //è¨ˆç®— (ç•¶å‰è¡€é‡/æœ€å¤§è¡€é‡)ï¼Œ ä¸¦å¸¶å…¥TextureOffset
         switch (this.whichType)
         {
             case WhichBlood.Role:

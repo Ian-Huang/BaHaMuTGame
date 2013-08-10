@@ -1,22 +1,25 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// ·Æ¹«¥X°»´ú½d³ò¸Ì­±ªº¯S®Ä
+/// æ»‘é¼ å‡ºåµæ¸¬ç¯„åœè£¡é¢çš„ç‰¹æ•ˆ
 /// </summary>
-public class MouseExit : MonoBehaviour {
+public class MouseExit : MonoBehaviour
+{
 
     public Object DisplayObject;
     private Rect rect;
 
     public GameObject EffectObject;
-	// Use this for initialization
-	void Start () {
-        
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         rect = (Rect)(DisplayObject.GetType().GetField("_rect").GetValue(DisplayObject));
         //rect = new Rect((int)rect.x, (int)rect.y, (int)rect.width, (int)rect.height);
 
@@ -26,5 +29,5 @@ public class MouseExit : MonoBehaviour {
         else
             EffectObject.SetActive(true);
 
-	}
+    }
 }

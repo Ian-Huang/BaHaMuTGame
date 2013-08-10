@@ -1,12 +1,11 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// ¥­ªO¦b°»´ú½d³ò¸Ì­±«öÁäªº¯S®Ä
+/// å¹³æ¿åœ¨åµæ¸¬ç¯„åœè£¡é¢æŒ‰éµçš„ç‰¹æ•ˆ
 /// </summary>
 public class PlatformButtonTypeC : MonoBehaviour
 {
-
     public Object DisplayObject;
     private Rect rect;
 
@@ -30,7 +29,7 @@ public class PlatformButtonTypeC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //¨ú±o°»´ú½d³ò
+        //å–å¾—åµæ¸¬ç¯„åœ
         rect = (Rect)(DisplayObject.GetType().GetField("_rect").GetValue(DisplayObject));
 
 
@@ -75,7 +74,7 @@ public class PlatformButtonTypeC : MonoBehaviour
 
             pressDown = false;
 
-            
+
 
         }
 

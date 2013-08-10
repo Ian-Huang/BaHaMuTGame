@@ -1,6 +1,6 @@
-//************************************
-// key2Label ÃöÁä¦r§ä­È¿é¥X¦¨Lable
-// * ¨Ï¥ÎPlayerPrefs
+ï»¿//************************************
+// key2Label é—œéµå­—æ‰¾å€¼è¼¸å‡ºæˆLable
+// * ä½¿ç”¨PlayerPrefs
 //****************************
 
 using UnityEngine;
@@ -8,18 +8,18 @@ using System.Collections;
 
 public class MUI_KeyToText : MonoBehaviour
 {
-    /// ¤å¦r§Î¦¡
+    /// æ–‡å­—å½¢å¼
     public MUI_Enum.TextType textType = MUI_Enum.TextType.INT;
 
     private string Text;
-    //¥Î¦r¦ê·í§@ª÷Æ_¨Ó¨ú±o¸ê®Æ
+    //ç”¨å­—ä¸²ç•¶ä½œé‡‘é‘°ä¾†å–å¾—è³‡æ–™
     public string Key;
 
 
     // Use this for initialization
     void Start()
     {
-        //¦bStart¥ı¶i¦æ¤@¦¸Update¡A¥i¥HÁ×§K·íEnable®É Åã¥Ü¦rÅé·|¦³·¥µu¼È°{Ã{ªº±¡§Î
+        //åœ¨Startå…ˆé€²è¡Œä¸€æ¬¡Updateï¼Œå¯ä»¥é¿å…ç•¶Enableæ™‚ é¡¯ç¤ºå­—é«”æœƒæœ‰æ¥µçŸ­æš«é–ƒçˆçš„æƒ…å½¢
         Update();
     }
 

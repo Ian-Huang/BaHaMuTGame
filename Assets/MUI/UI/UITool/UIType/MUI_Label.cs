@@ -1,22 +1,22 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
-#region ¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­­×¥¿¬ö¿ı¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­
-/// 13/05/06    «Ø¸m
-/// 13/06/17    ­«·s©w¸q¦WºÙ MUI_Label            
+#region ï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒä¿®æ­£ç´€éŒ„ï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒ
+/// 13/05/06    å»ºç½®
+/// 13/06/17    é‡æ–°å®šç¾©åç¨± MUI_Label            
 #endregion
 
 /// <summary>
-/// ¤¶­± - ¤å¦r¼ĞÅÒ¤¶­±
+/// ä»‹é¢ - æ–‡å­—æ¨™ç±¤ä»‹é¢
 /// </summary>
-/// ¿W¥ß¯S®Ä¨t²Î - »s³yFontSize°Êµe®ÄªG
+/// ç¨ç«‹ç‰¹æ•ˆç³»çµ± - è£½é€ FontSizeå‹•ç•«æ•ˆæœ
 public class MUI_Label : MUI_Base
 {
-    //¤å¦r
+    //æ–‡å­—
     public string Text = "Type Text here";
-    //¤å¦r¤j¤p
+    //æ–‡å­—å¤§å°
     public int FontSize = 10;
-    //¤å¦r¹ï·Ç¤è¦¡
+    //æ–‡å­—å°æº–æ–¹å¼
     public TextAnchor Alignment;
 
     private int _fontSize_backup;
@@ -41,7 +41,7 @@ public class MUI_Label : MUI_Base
         //UIBase auto update
         base.Update();
     }
-    
+
     void OnGUI()
     {
         if (guiSkin)
@@ -72,10 +72,10 @@ public class MUI_Label : MUI_Base
 
 
     /// <summary>
-    /// »s³yFontSize°Êµe®ÄªG (Create)
+    /// è£½é€ FontSizeå‹•ç•«æ•ˆæœ (Create)
     /// Name - RectTo
     /// </summary>
-    /// <param name="effect">¯S®Äµ²ºc</param>
+    /// <param name="effect">ç‰¹æ•ˆçµæ§‹</param>
     void FontSizeTo(MUI_Enum.EffectStruct effect)
     {
         iTween.ValueTo(gameObject, iTween.Hash(

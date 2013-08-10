@@ -1,14 +1,14 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// ©T©wÀW²vªº¥æ´«¹Ï¤ùScript
+/// å›ºå®šé »ç‡çš„äº¤æ›åœ–ç‰‡Script
 /// </summary>
 public class RegularChangePictures : MonoBehaviour
 {
     public bool isRunChang = true;
     public Texture[] ChangeTextures;
-    public float ChangeTextureTime = 0.1f;             //¥æ´«®É¶¡¶¡¹j
+    public float ChangeTextureTime = 0.1f;             //äº¤æ›æ™‚é–“é–“éš”
 
     private int currentTextureIndex { get; set; }
     private float addValue { get; set; }
@@ -20,7 +20,7 @@ public class RegularChangePictures : MonoBehaviour
     }
 
     /// <summary>
-    /// ±N¼Æ­È¦^´_¦¨¹w³]­È
+    /// å°‡æ•¸å€¼å›å¾©æˆé è¨­å€¼
     /// </summary>
     void Reset()
     {
@@ -30,9 +30,9 @@ public class RegularChangePictures : MonoBehaviour
     }
 
     /// <summary>
-    /// §ïÅÜ¬O§_¹B¦æRegular Change Pictureªºª¬ºA
+    /// æ”¹è®Šæ˜¯å¦é‹è¡ŒRegular Change Pictureçš„ç‹€æ…‹
     /// </summary>
-    /// <param name="isChange">¬O©Î§_</param>
+    /// <param name="isChange">æ˜¯æˆ–å¦</param>
     public void ChangeState(bool isChange)
     {
         this.isRunChang = isChange;
@@ -48,7 +48,7 @@ public class RegularChangePictures : MonoBehaviour
             {
                 this.addValue = 0;
 
-                if ((this.currentTextureIndex + 1) >= this.ChangeTextures.Length)       //Âk0¡A´`Àô
+                if ((this.currentTextureIndex + 1) >= this.ChangeTextures.Length)       //æ­¸0ï¼Œå¾ªç’°
                     this.currentTextureIndex = 0;
                 else
                     this.currentTextureIndex++;

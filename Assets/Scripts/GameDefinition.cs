@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 
 public class GameDefinition
@@ -7,38 +7,38 @@ public class GameDefinition
     public static int MoraleRestoreRate = 5;
 
     public static List<RoleData> RoleList = new List<RoleData>(){ 
-        new RoleData(Role.¨g¾Ô¤h,500,10,50,130,0),
-        new RoleData(Role.¬ŞÃM¤h,500,10,80,80,0),
-        new RoleData(Role.ªk®v,300,6,30,100,100),
-        new RoleData(Role.Ây¤H,350,8,40,60,130)
+        new RoleData(Role.ç‹‚æˆ°å£«,500,10,50,130,0),
+        new RoleData(Role.ç›¾é¨å£«,500,10,80,80,0),
+        new RoleData(Role.æ³•å¸«,300,6,30,100,100),
+        new RoleData(Role.çµäºº,350,8,40,60,130)
     };
 
     public static List<EnemyData> EnemyList = new List<EnemyData>(){ 
-        new EnemyData(Enemy.¥vµÜ©i,50,5,10,100,0),
-        new EnemyData(Enemy.¤õµK¥vµÜ©i,100,10,20,150,0),
-        new EnemyData(Enemy.µw¤Æ¥vµÜ©i,200,15,50,80,0),
-        new EnemyData(Enemy.¤¤«¬¥vµÜ©i,500,30,10,100,0),
-        new EnemyData(Enemy.¤¤«¬¤õµK¥vµÜ©i,700,30,20,150,0),
-        new EnemyData(Enemy.¤¤«¬µw¤Æ¥vµÜ©i,1000,20,50,80,0),
+        new EnemyData(Enemy.å²èŠå§†,50,5,10,100,0),
+        new EnemyData(Enemy.ç«ç„°å²èŠå§†,100,10,20,150,0),
+        new EnemyData(Enemy.ç¡¬åŒ–å²èŠå§†,200,15,50,80,0),
+        new EnemyData(Enemy.ä¸­å‹å²èŠå§†,500,30,10,100,0),
+        new EnemyData(Enemy.ä¸­å‹ç«ç„°å²èŠå§†,700,30,20,150,0),
+        new EnemyData(Enemy.ä¸­å‹ç¡¬åŒ–å²èŠå§†,1000,20,50,80,0),
 
-        new EnemyData(Enemy.¾uÅ\¾Ô¤h,100,10,20,100,0),
-        new EnemyData(Enemy.¾uÅ\¤}½b¤â,80,10,20,0,120),
-        new EnemyData(Enemy.¾uÅ\ÃM¤h,300,20,50,100,0),
-        new EnemyData(Enemy.¾uÅ\ªk®v,100,5,10,0,150),
+        new EnemyData(Enemy.éª·é«æˆ°å£«,100,10,20,100,0),
+        new EnemyData(Enemy.éª·é«å¼“ç®­æ‰‹,80,10,20,0,120),
+        new EnemyData(Enemy.éª·é«é¨å£«,300,20,50,100,0),
+        new EnemyData(Enemy.éª·é«æ³•å¸«,100,5,10,0,150),
 
-        new EnemyData(Enemy.Ã~¤H¾Ô¤h,150,15,25,120,0),
-        new EnemyData(Enemy.Ã~¤H¤}½b¤â,100,10,25,0,140),
-        new EnemyData(Enemy.Ã~¤Hªk®v,100,5,15,0,170),
+        new EnemyData(Enemy.ç¸äººæˆ°å£«,150,15,25,120,0),
+        new EnemyData(Enemy.ç¸äººå¼“ç®­æ‰‹,100,10,25,0,140),
+        new EnemyData(Enemy.ç¸äººæ³•å¸«,100,5,15,0,170),
 
-        new EnemyData(Enemy.¥ÛÀY¤H,300,10,50,200,0),
+        new EnemyData(Enemy.çŸ³é ­äºº,300,10,50,200,0),
     };
 
     public static List<ObstacleData> ObstacleList = new List<ObstacleData>(){ 
-        new ObstacleData(Obstacle.¤õµKÅ]ªk°},500),
-        new ObstacleData(Obstacle.¾ğ¤ì_01,500),
-        new ObstacleData(Obstacle.¾ğ¤ì_02,300),
-        new ObstacleData(Obstacle.Â_¾À,350),
-        new ObstacleData(Obstacle.ÅK³´¨À,350)
+        new ObstacleData(Obstacle.ç«ç„°é­”æ³•é™£,500),
+        new ObstacleData(Obstacle.æ¨¹æœ¨_01,500),
+        new ObstacleData(Obstacle.æ¨¹æœ¨_02,300),
+        new ObstacleData(Obstacle.æ–·å£,350),
+        new ObstacleData(Obstacle.éµé™·é˜±,350)
     };
 
     public class RoleData
@@ -51,14 +51,14 @@ public class GameDefinition
         public int FarDamage;
 
         /// <summary>
-        /// ¨¤¦â¸ê®Æ«Øºc¦¡
+        /// è§’è‰²è³‡æ–™å»ºæ§‹å¼
         /// </summary>
-        /// <param name="name">¨¤¦â¦W¦r</param>
-        /// <param name="life">¨¤¦â¥Í©R­È</param>
-        /// <param name="cureRate">¨¤¦â¦^´_³t²v</param>
-        /// <param name="defence">¨¤¦â¨¾¿m¤O</param>
-        /// <param name="nearDamage">¨¤¦âªñ¶ZÂ÷¶Ë®`­È</param>
-        /// <param name="farDamage">¨¤¦â»·¶ZÂ÷¶Ë®`­È</param>
+        /// <param name="name">è§’è‰²åå­—</param>
+        /// <param name="life">è§’è‰²ç”Ÿå‘½å€¼</param>
+        /// <param name="cureRate">è§’è‰²å›å¾©é€Ÿç‡</param>
+        /// <param name="defence">è§’è‰²é˜²ç¦¦åŠ›</param>
+        /// <param name="nearDamage">è§’è‰²è¿‘è·é›¢å‚·å®³å€¼</param>
+        /// <param name="farDamage">è§’è‰²é è·é›¢å‚·å®³å€¼</param>
         public RoleData(Role name, int life, int cureRate, int defence, int nearDamage, int farDamage)
         {
             this.RoleName = name;
@@ -80,14 +80,14 @@ public class GameDefinition
         public int FarDamage;
 
         /// <summary>
-        /// ¼Ä¤H¸ê®Æ«Øºc¦¡
+        /// æ•µäººè³‡æ–™å»ºæ§‹å¼
         /// </summary>
-        /// <param name="name">¼Ä¤H¦W¦r</param>
-        /// <param name="life">¼Ä¤H¥Í©R­È</param>
-        /// <param name="cureRate">¼Ä¤H¦^´_³t²v</param>
-        /// <param name="defence">¼Ä¤H¨¾¿m¤O</param>
-        /// <param name="nearDamage">¼Ä¤Hªñ¶ZÂ÷¶Ë®`­È</param>
-        /// <param name="farDamage">¼Ä¤H»·¶ZÂ÷¶Ë®`­È</param>
+        /// <param name="name">æ•µäººåå­—</param>
+        /// <param name="life">æ•µäººç”Ÿå‘½å€¼</param>
+        /// <param name="cureRate">æ•µäººå›å¾©é€Ÿç‡</param>
+        /// <param name="defence">æ•µäººé˜²ç¦¦åŠ›</param>
+        /// <param name="nearDamage">æ•µäººè¿‘è·é›¢å‚·å®³å€¼</param>
+        /// <param name="farDamage">æ•µäººé è·é›¢å‚·å®³å€¼</param>
         public EnemyData(Enemy name, int life, int cureRate, int defence, int nearDamage, int farDamage)
         {
             this.EnemyName = name;
@@ -110,10 +110,10 @@ public class GameDefinition
         public int AttackSpeedTime;
 
         /// <summary>
-        /// »ÙÃªª«¸ê®Æ«Øºc¦¡
+        /// éšœç¤™ç‰©è³‡æ–™å»ºæ§‹å¼
         /// </summary>
-        /// <param name="name">»ÙÃªª«¦W¦r</param>
-        /// <param name="damage">»ÙÃªª«¶Ë®`­È</param>
+        /// <param name="name">éšœç¤™ç‰©åå­—</param>
+        /// <param name="damage">éšœç¤™ç‰©å‚·å®³å€¼</param>
         public ObstacleData(Obstacle name, int damage)
         {
             this.ObstacleName = name;
@@ -137,81 +137,43 @@ public class GameDefinition
 
     public enum Role
     {
-        ¨g¾Ô¤h = 0,
-        Ây¤H = 1,
-        ¬ŞÃM¤h = 2,
-        ªk®v = 3
+        ç‹‚æˆ°å£« = 0,
+        çµäºº = 1,
+        ç›¾é¨å£« = 2,
+        æ³•å¸« = 3
     }
 
     public enum Enemy
     {
-        ¦Û­q = 0,     //µ¹§Ú­Ì¦Û­q©Çª«¯à¤O­È¨Ï¥Î
+        è‡ªè¨‚ = 0,     //çµ¦æˆ‘å€‘è‡ªè¨‚æ€ªç‰©èƒ½åŠ›å€¼ä½¿ç”¨
 
-        ¥vµÜ©i = 101,
-        ¤õµK¥vµÜ©i = 102,
-        µw¤Æ¥vµÜ©i = 103,
-        ¤¤«¬¥vµÜ©i = 104,
-        ¤¤«¬¤õµK¥vµÜ©i = 105,
-        ¤¤«¬µw¤Æ¥vµÜ©i = 106,
+        å²èŠå§† = 101,
+        ç«ç„°å²èŠå§† = 102,
+        ç¡¬åŒ–å²èŠå§† = 103,
+        ä¸­å‹å²èŠå§† = 104,
+        ä¸­å‹ç«ç„°å²èŠå§† = 105,
+        ä¸­å‹ç¡¬åŒ–å²èŠå§† = 106,
 
-        ¾uÅ\¾Ô¤h = 201,
-        ¾uÅ\¤}½b¤â = 202,
-        ¾uÅ\ÃM¤h = 203,
-        ¾uÅ\ªk®v = 204,
+        éª·é«æˆ°å£« = 201,
+        éª·é«å¼“ç®­æ‰‹ = 202,
+        éª·é«é¨å£« = 203,
+        éª·é«æ³•å¸« = 204,
 
-        Ã~¤H¾Ô¤h = 301,
-        Ã~¤H¤}½b¤â = 302,
-        Ã~¤Hªk®v = 303,
+        ç¸äººæˆ°å£« = 301,
+        ç¸äººå¼“ç®­æ‰‹ = 302,
+        ç¸äººæ³•å¸« = 303,
 
-        ¥ÛÀY¤H = 401
+        çŸ³é ­äºº = 401
     }
 
     public enum Obstacle
     {
-        ¸t¤k¥Û¸O = 101,              //¸tÃM¤h³B²z
-        ÅK³´¨À = 201,                //³´¨À³B²z
-        Â_¾À = 301,                  //¨g¾Ô¤h³B²z           
-        ¤õµKÅ]ªk°} = 401,            //ªk®v³B²z
-        ¾ğ¤ì_01 = 501, ¾ğ¤ì_02 = 502 //¨g¾Ô¤h³B²z
+        è–å¥³çŸ³ç¢‘ = 101,              //è–é¨å£«è™•ç†
+        éµé™·é˜± = 201,                //é™·é˜±è™•ç†
+        æ–·å£ = 301,                  //ç‹‚æˆ°å£«è™•ç†           
+        ç«ç„°é­”æ³•é™£ = 401,            //æ³•å¸«è™•ç†
+        æ¨¹æœ¨_01 = 501, æ¨¹æœ¨_02 = 502 //ç‹‚æˆ°å£«è™•ç†
     }
-
-    /// <summary>
-    /// ¼È®É°O¿ı°Ï
-    /// 
-    /// *****Buff®ÄªG*****
-    /// 1.Buffª««~Ä²µo¤è¦¡¡G
-    /// ¥¿½TÄ²µo-> ¨¤¦â¼½©ñÄ²µo°Ê§@¡BBuffª««~¼½©ñ(correct animation)
-    /// ¿ù»~Ä²µo->¨¤¦âµL¤ÏÀ³¡BBuffµL¤ÏÀ³(fail animation)
-    /// 
-    /// 2.¼W¯q¤º®e
-    /// ¥şÅé¦^´_¤@©wHp¡B ¤@©w®É¶¡(­ÓÅé/¥şÅé)¦^´_¶q+X
-    /// 
-    /// ¡°(¥şÅé¦^´_¤@©wHp ¼gªk¼È¦s)
-    /// RolesCollection gameobject find RolePropertyInfo.cs  currentLife + cureValue
-    /// 
-    /// ¡°¤@©w®É¶¡(­ÓÅé/¥şÅé)¦^´_¶q+X
-    /// RolesCollection gameobject find RolePropertyInfo.cs  cureRate + addValue
-    /// 
-    /// 3.´î¯q¤º®e
-    /// ¥şÅé§ğ³t¤U­°¡B¤@©w®É¶¡(­ÓÅé/¥şÅé)¦^´_¶q-X
-    /// 
-    /// ¡°¥şÅé§ğ³t¤U­°¡G·s¼W«ü¥O
-    ///     this.boneAnimation["attack"].speed = newSpeed;
-    ///     
-    /// ¡°¤@©w®É¶¡(­ÓÅé/¥şÅé)¦^´_¶q-X
-    /// RolesCollection gameobject find RolePropertyInfo.cs  cureRate - deValue    
-    /// 
-    /// ¡°BuffData ¹w©w·|¦³ªº°Ñ¼Æ
-    /// BuffName ª¬ºA¦WºÙ
-    /// Damage ¶Ë®`­È (°²¦p­n¸ò³´¨À¨t²Î¦X¨Ö...)  (¶Ë®`¡B¦^´_¥Í©R¥i¥H¦X¨Ö)
-    /// CureHp  ¦^´_¥Í©R
-    /// CureRateHp  ¦^´_¥Í©R³t²v(¼W¥[/´î¤Ö)­È
-    /// CureRateTime    (¼W¥[/´î¤Ö)«ùÄò®É¶¡
-    /// AttackSpeed     §ğ³t(¼W¥[/´î¤Ö)
-    /// AttackSpeedTime §ğ³t(¼W¥[/´î¤Ö)«ùÄò®É¶¡
-    /// 
-    /// *****Buff®ÄªG*****
-    /// </summary>
 
     public enum ChangeRoleMode
     {
@@ -220,6 +182,46 @@ public class GameDefinition
 
     public enum EventTriggerType
     {
-        ¥X©ÇÂI = 0, Å]¤ıÄµ§iÂI = 1, ²×ÂI = 2
+        å‡ºæ€ªé» = 0, é­”ç‹è­¦å‘Šé» = 1, çµ‚é» = 2
     }
+
+
+    /// <summary>
+    /// æš«æ™‚è¨˜éŒ„å€
+    /// 
+    /// *****Buffæ•ˆæœ*****
+    /// 1.Buffç‰©å“è§¸ç™¼æ–¹å¼ï¼š
+    /// æ­£ç¢ºè§¸ç™¼-> è§’è‰²æ’­æ”¾è§¸ç™¼å‹•ä½œã€Buffç‰©å“æ’­æ”¾(correct animation)
+    /// éŒ¯èª¤è§¸ç™¼->è§’è‰²ç„¡åæ‡‰ã€Buffç„¡åæ‡‰(fail animation)
+    /// 
+    /// 2.å¢ç›Šå…§å®¹
+    /// å…¨é«”å›å¾©ä¸€å®šHpã€ ä¸€å®šæ™‚é–“(å€‹é«”/å…¨é«”)å›å¾©é‡+X
+    /// 
+    /// â€»(å…¨é«”å›å¾©ä¸€å®šHp å¯«æ³•æš«å­˜)
+    /// RolesCollection gameobject find RolePropertyInfo.cs  currentLife + cureValue
+    /// 
+    /// â€»ä¸€å®šæ™‚é–“(å€‹é«”/å…¨é«”)å›å¾©é‡+X
+    /// RolesCollection gameobject find RolePropertyInfo.cs  cureRate + addValue
+    /// 
+    /// 3.æ¸›ç›Šå…§å®¹
+    /// å…¨é«”æ”»é€Ÿä¸‹é™ã€ä¸€å®šæ™‚é–“(å€‹é«”/å…¨é«”)å›å¾©é‡-X
+    /// 
+    /// â€»å…¨é«”æ”»é€Ÿä¸‹é™ï¼šæ–°å¢æŒ‡ä»¤
+    ///     this.boneAnimation["attack"].speed = newSpeed;
+    ///     
+    /// â€»ä¸€å®šæ™‚é–“(å€‹é«”/å…¨é«”)å›å¾©é‡-X
+    /// RolesCollection gameobject find RolePropertyInfo.cs  cureRate - deValue    
+    /// 
+    /// â€»BuffData é å®šæœƒæœ‰çš„åƒæ•¸
+    /// BuffName ç‹€æ…‹åç¨±
+    /// Damage å‚·å®³å€¼ (å‡å¦‚è¦è·Ÿé™·é˜±ç³»çµ±åˆä½µ...)  (å‚·å®³ã€å›å¾©ç”Ÿå‘½å¯ä»¥åˆä½µ)
+    /// CureHp  å›å¾©ç”Ÿå‘½
+    /// CureRateHp  å›å¾©ç”Ÿå‘½é€Ÿç‡(å¢åŠ /æ¸›å°‘)å€¼
+    /// CureRateTime    (å¢åŠ /æ¸›å°‘)æŒçºŒæ™‚é–“
+    /// AttackSpeed     æ”»é€Ÿ(å¢åŠ /æ¸›å°‘)
+    /// AttackSpeedTime æ”»é€Ÿ(å¢åŠ /æ¸›å°‘)æŒçºŒæ™‚é–“
+    /// 
+    /// *****Buffæ•ˆæœ*****
+    /// </summary>
+
 }

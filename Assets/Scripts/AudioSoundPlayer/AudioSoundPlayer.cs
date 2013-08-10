@@ -1,19 +1,19 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// ­µ®Ä®w¼½©ñ
+/// éŸ³æ•ˆåº«æ’­æ”¾
 /// </summary>
-/// ¨Ï¥Î¤èªk
-/// AudioSoundPlayer.script.PlayAudio("­µ¼Ö¦WºÙ");
+/// ä½¿ç”¨æ–¹æ³•
+/// AudioSoundPlayer.script.PlayAudio("éŸ³æ¨‚åç¨±");
 public class AudioSoundPlayer : MonoBehaviour
 {
     public static AudioSoundPlayer script;
 
-    //°Ñ¼ÆºÊ±±Dictionary
+    //åƒæ•¸ç›£æ§Dictionary
     public static Dictionary<string, AudioClip> SoundDictionary = new Dictionary<string, AudioClip>();
-   
+
     [System.Serializable]
     public class Sound
     {
@@ -25,7 +25,7 @@ public class AudioSoundPlayer : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        
+
         DontDestroyOnLoad(this.gameObject);
 
         if (!this.GetComponent<AudioSource>())
@@ -45,9 +45,9 @@ public class AudioSoundPlayer : MonoBehaviour
     }
 
     /// <summary>
-    /// ¼½©ñ­µ®Ä
+    /// æ’­æ”¾éŸ³æ•ˆ
     /// </summary>
-    /// <param name="name">­µ®Ä¦WºÙ</param>
+    /// <param name="name">éŸ³æ•ˆåç¨±</param>
     public void PlayAudio(string name)
     {
         if (SoundDictionary.ContainsKey(name))

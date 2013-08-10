@@ -1,8 +1,8 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// ¥­ªO¦b°»´ú½d³ò¸Ì­±«öÁäªº¯S®Ä
+/// å¹³æ¿åœ¨åµæ¸¬ç¯„åœè£¡é¢æŒ‰éµçš„ç‰¹æ•ˆ
 /// </summary>
 public class PlatformButtonTypeB : MPlatformButton
 {
@@ -10,15 +10,14 @@ public class PlatformButtonTypeB : MPlatformButton
     new void Start()
     {
 
-
     }
 
     // Update is called once per frame
     new void Update()
     {
-        //¨ú±o°»´ú½d³ò
+        //å–å¾—åµæ¸¬ç¯„åœ
         rect = (Rect)(DisplayObject.GetType().GetField("_rect").GetValue(DisplayObject));
-        
+
         int i = 0;
         while (i < Input.touchCount)
         {
@@ -67,7 +66,7 @@ public class PlatformButtonTypeB : MPlatformButton
             i++;
         }
 
-       
+
     }
 
 

@@ -1,13 +1,13 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 public class MUI_Enum : MonoBehaviour
 {
-    //¤¶­±«¬ºA
+    //ä»‹é¢å‹æ…‹
     public enum MUIType { Lable, Texture2D};
-    //¤å¦r«¬ºA
+    //æ–‡å­—å‹æ…‹
     public enum TextType { INT, FLOAT, STRING };
-    //¦UºØEaseªº¤è¦¡
+    //å„ç¨®Easeçš„æ–¹å¼
     public enum EaseType
     {
         easeInQuad,
@@ -50,46 +50,46 @@ public class MUI_Enum : MonoBehaviour
         /* GFX47 MOD END */
         //punch
     }
-    //Itweenªº´`Àô¤è¦¡
+    //Itweençš„å¾ªç’°æ–¹å¼
     public enum loopType { none, pingPong, loop }
-    //·Ç¤ß°Ê§@¼Ò¦¡
+    //æº–å¿ƒå‹•ä½œæ¨¡å¼
     public enum CursorActionType { KeyDown, KeyUp, KeyDownAndUp, DoubleKeyDown }
 
-    //¯S®Äµ²§ô®É ¬O§_ ¦^¨ì­ì¥»ª¬ºA ¼Ò¦¡
+    //ç‰¹æ•ˆçµæŸæ™‚ æ˜¯å¦ å›åˆ°åŸæœ¬ç‹€æ…‹ æ¨¡å¼
     public enum ResetWhenEffectDone { False, True, True_ReDefine }
-    //ª«¥ó³QDisable®É¬O§_¦^¨ì­ì¥»ª¬ºA ¼Ò¦¡
+    //ç‰©ä»¶è¢«Disableæ™‚æ˜¯å¦å›åˆ°åŸæœ¬ç‹€æ…‹ æ¨¡å¼
     public enum ResetWhenDisable { False, True, True_ReDefine }
-    //¯S®Äµ²§ô®É ª«¥óDisable ¼Ò¦¡
+    //ç‰¹æ•ˆçµæŸæ™‚ ç‰©ä»¶Disable æ¨¡å¼
     public enum DisableWhenEffectDone { False, True }
 
-    // ¯S®ÄÅÜ¼Æ structure
+    // ç‰¹æ•ˆè®Šæ•¸ structure
     public struct EffectStruct
     {
-        //¦ì¸m»P¤j¤p
+        //ä½ç½®èˆ‡å¤§å°
         public Rect rect;
 
-        //¤å¦r¤j¤p
+        //æ–‡å­—å¤§å°
         public int fontSize;
 
-        //¤å¦rÃC¦â
+        //æ–‡å­—é¡è‰²
         public Color color;
 
-        //©ñ¤j­¿²v
+        //æ”¾å¤§å€ç‡
         public Vector2 scale;
 
-        //«ùÄò®É¶¡
+        //æŒçºŒæ™‚é–“
         public float time;
 
-        //©µ¿ğ®É¶¡
+        //å»¶é²æ™‚é–“
         public float delay;
 
-        //´`Àô¤è¦¡
+        //å¾ªç’°æ–¹å¼
         public loopType looptype;
 
-        //º¥ÅÜ¨ç¦¡
+        //æ¼¸è®Šå‡½å¼
         public EaseType easeType;
 
-        //¬O§_¨üTimeScale¼vÅT
+        //æ˜¯å¦å—TimeScaleå½±éŸ¿
         public bool ignoretimescale;
 
         //HashCode - Hex
@@ -98,29 +98,29 @@ public class MUI_Enum : MonoBehaviour
     }
 
     /// <summary>
-    /// °±¤î¯S®ÄStruct
+    /// åœæ­¢ç‰¹æ•ˆStruct
     /// </summary>
     public struct StopEffectStruct
     {
-        //¬O§_­«¸m¨ì¶}©lª¬ºA
+        //æ˜¯å¦é‡ç½®åˆ°é–‹å§‹ç‹€æ…‹
         public bool isReset;
 
-        //¬O§_§ó·s­«¸m¸ê°T
+        //æ˜¯å¦æ›´æ–°é‡ç½®è³‡è¨Š
         public bool isReDefine;
 
         //HashCode - Hex
         public string hashcode;
 
-        //¦ì¸m»P¤j¤p
+        //ä½ç½®èˆ‡å¤§å°
         public Rect rect;
 
-        //¤å¦r¤j¤p
+        //æ–‡å­—å¤§å°
         public int fontSize;
 
-        //¤å¦rÃC¦â
+        //æ–‡å­—é¡è‰²
         public Color color;
 
-        //©ñ¤j­¿²v
+        //æ”¾å¤§å€ç‡
         public Vector2 scale;
     }
 

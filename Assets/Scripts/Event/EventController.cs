@@ -1,30 +1,30 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// Create Date¡G2013-07-23
-/// Modify Date¡G2013-08-08
-/// Author¡GIan
-/// Description¡G
-///     ¨Æ¥ó±±¨î¾¹(¥Î¨Ó°»´úÄ²µo¨Æ¥ó)
+/// Create Dateï¼š2013-07-23
+/// Modify Dateï¼š2013-08-08
+/// Authorï¼šIan
+/// Descriptionï¼š
+///     äº‹ä»¶æ§åˆ¶å™¨(ç”¨ä¾†åµæ¸¬è§¸ç™¼äº‹ä»¶)
 /// </summary>
 public class EventController : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<EventTriggerType>().Type == GameDefinition.EventTriggerType.¥X©ÇÂI)
+        if (other.GetComponent<EventTriggerType>().Type == GameDefinition.EventTriggerType.å‡ºæ€ªé»)
         {
-            //Ä²µo¥X©Ç¨Æ¥ó¡A°µ¥H¤U³B²z
+            //è§¸ç™¼å‡ºæ€ªäº‹ä»¶ï¼Œåšä»¥ä¸‹è™•ç†
             other.GetComponent<EnemyCreatePoint>().CreateEnemy();
         }
-        else if (other.GetComponent<EventTriggerType>().Type == GameDefinition.EventTriggerType.Å]¤ıÄµ§iÂI)
+        else if (other.GetComponent<EventTriggerType>().Type == GameDefinition.EventTriggerType.é­”ç‹è­¦å‘Šé»)
         {
-            //Å]¤ıÄµ§iÂI¡A¥X²{´£¥Üª±®aÄµ°T
-            Instantiate(EffectCreator.script.Å]¤ı±µªñ´£¥Ü);
+            //é­”ç‹è­¦å‘Šé»ï¼Œå‡ºç¾æç¤ºç©å®¶è­¦è¨Š
+            Instantiate(EffectCreator.script.é­”ç‹æ¥è¿‘æç¤º);
         }
-        else if (other.GetComponent<EventTriggerType>().Type == GameDefinition.EventTriggerType.²×ÂI)
+        else if (other.GetComponent<EventTriggerType>().Type == GameDefinition.EventTriggerType.çµ‚é»)
         {
-            //©è¹F²×ÂI¡A°µ¥H¤U³B²z(°±¤î­I´º²¾°Ê¡B¸}¦â¤Á´«Idleª¬ºA)
+            //æŠµé”çµ‚é»ï¼Œåšä»¥ä¸‹è™•ç†(åœæ­¢èƒŒæ™¯ç§»å‹•ã€è…³è‰²åˆ‡æ›Idleç‹€æ…‹)
             BackgroundController.script.isRunning = false;
         }
     }

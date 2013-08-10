@@ -1,35 +1,37 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// ¥D­n¥Øªº¡G®Ú¾Ú»y¨tµ{¦¡ÀÉ§ó§ï¤å¦r
-/// »y¨t¤å¦r§ïÅÜ
-///  * ¥Hµ{¦¡ªº¤è¦¡¶ñ¤J¤å¦r°T®§¡A­×§ïMUIªºLabelªº¤å¦r»PGUISkin
+/// ä¸»è¦ç›®çš„ï¼šæ ¹æ“šèªç³»ç¨‹å¼æª”æ›´æ”¹æ–‡å­—
+/// èªç³»æ–‡å­—æ”¹è®Š
+///  * ä»¥ç¨‹å¼çš„æ–¹å¼å¡«å…¥æ–‡å­—è¨Šæ¯ï¼Œä¿®æ”¹MUIçš„Labelçš„æ–‡å­—èˆ‡GUISkin
 /// </summary>
-public class LanguageLabel : MonoBehaviour {
+public class LanguageLabel : MonoBehaviour
+{
 
     private MUI_Label label;
     public string MappingText;
     private string getText;
 
-    
-	// Use this for initialization
+
+    // Use this for initialization
     void Start()
     {
         if (this.gameObject.GetComponent<MUI_Label>())
             label = this.gameObject.GetComponent<MUI_Label>();
 
-        //Äµ§i³qª¾
+        //è­¦å‘Šé€šçŸ¥
         if (!label) Debug.LogWarning(this.name + "-label" + "-Unset");
 
         getText = (string)(Languages_Controller.script.languageFile.GetType().GetField(MappingText).GetValue(Languages_Controller.script.languageFile));
         label.Text = getText;
         label.guiSkin = Languages_Controller.script.languageGUISkin;
     }
-	
-	// Update is called once per frame
-	void Update () {
 
-        
-	}
+    // Update is called once per frame
+    void Update()
+    {
+
+
+    }
 }

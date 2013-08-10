@@ -1,11 +1,11 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// ¥D­n¥\¯à¡G¥i¥HÂÇ¥Ñ¥~³¡§ïÅÜ¤º³¡ÅÜ¼Æ
-/// Offset ºÊ±±
-/// §ïÅÜ¡@Texture2D¡@©Î¡@Label ªº Offset ­È
-///  * ¥HKeyªº¤è¦¡´M§äºÊ±±Dictionary¹ïÀ³ªº¸ê®Æ
+/// ä¸»è¦åŠŸèƒ½ï¼šå¯ä»¥è—‰ç”±å¤–éƒ¨æ”¹è®Šå…§éƒ¨è®Šæ•¸
+/// Offset ç›£æ§
+/// æ”¹è®Šã€€Texture2Dã€€æˆ–ã€€Label çš„ Offset å€¼
+///  * ä»¥Keyçš„æ–¹å¼å°‹æ‰¾ç›£æ§Dictionaryå°æ‡‰çš„è³‡æ–™
 /// </summary>
 public class MUI_OffsetMonitor : MonoBehaviour
 {
@@ -24,8 +24,8 @@ public class MUI_OffsetMonitor : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-       
-        //¥HKey¬°¦r¦êµù¥U¤@­Ó¯Á¤Ş
+
+        //ä»¥Keyç‚ºå­—ä¸²è¨»å†Šä¸€å€‹ç´¢å¼•
         if (Key != "") mMonitor.SubmitKey(Key + "x");
         if (Key != "") mMonitor.SubmitKey(Key + "y");
     }
@@ -39,7 +39,7 @@ public class MUI_OffsetMonitor : MonoBehaviour
         offset.y = Mathf.Lerp(From.y, To.y, Percentage.y / 100);
 
 
-        //ÅX°Ê¤¶­±ªºÅÜ¤Æ
+        //é©…å‹•ä»‹é¢çš„è®ŠåŒ–
         if (this.GetComponent<MUI_Texture_2D>()) this.GetComponent<MUI_Texture_2D>().offset = offset;
         if (this.GetComponent<MUI_Label>()) this.GetComponent<MUI_Label>().offset = offset;
     }

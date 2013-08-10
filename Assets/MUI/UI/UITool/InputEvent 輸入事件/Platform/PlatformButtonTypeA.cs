@@ -1,21 +1,20 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// ¥­ªO¦b°»´ú½d³ò¸Ì­±«öÁäªº¯S®Ä
+/// å¹³æ¿åœ¨åµæ¸¬ç¯„åœè£¡é¢æŒ‰éµçš„ç‰¹æ•ˆ
 /// </summary>
-/// µù¥U«¬
-/// 
+/// è¨»å†Šå‹
 public class PlatformButtonTypeA : MPlatformButton
 {
-    //µù¥UID
+    //è¨»å†ŠID
     int fingerID;
     bool FingerIDsubmit;
     static bool submit;
     // Use this for initialization
     new void Start()
     {
-        //ªì©l¤Æ
+        //åˆå§‹åŒ–
         base.Start();
     }
 
@@ -25,31 +24,31 @@ public class PlatformButtonTypeA : MPlatformButton
         base.Update();
         if (!ButtonEnable) return;
 
-        //¨ú±o°»´ú½d³ò
+        //å–å¾—åµæ¸¬ç¯„åœ
         rect = (Rect)(DisplayObject.GetType().GetField("_rect").GetValue(DisplayObject));
 
         int i = 0;
         while (i < Input.touchCount)
         {
-            //Ä²¸IÂI¦b½d³ò¤º
+            //è§¸ç¢°é»åœ¨ç¯„åœå…§
             if (rect.Contains(new Vector2(Input.GetTouch(i).position.x, Screen.height - Input.GetTouch(i).position.y)))
             {
-                //IDµù¥U
+                //IDè¨»å†Š
                 //if (!FingerIDsubmit)
                 //{
-                    if (!submit)
+                if (!submit)
+                {
+                    //ç•¶æŒ‰ä¸‹ï¼Œé€²è¡Œè¨»å†Š
+                    if (Input.GetTouch(i).phase == TouchPhase.Began)
                     {
-                        //·í«ö¤U¡A¶i¦æµù¥U
-                        if (Input.GetTouch(i).phase == TouchPhase.Began)
-                        {
-                            //FingerIDsubmit = true;
-                            fingerID = Input.GetTouch(i).fingerId;
-                            submit = true;
-                        }
+                        //FingerIDsubmit = true;
+                        fingerID = Input.GetTouch(i).fingerId;
+                        submit = true;
                     }
+                }
                 //}
 
-                //µù¥U«á
+                //è¨»å†Šå¾Œ
                 if (submit && Input.GetTouch(i).fingerId == fingerID)
                     if (Input.GetTouch(i).phase == TouchPhase.Began || Input.GetTouch(i).phase == TouchPhase.Moved)
                     {
@@ -78,7 +77,7 @@ public class PlatformButtonTypeA : MPlatformButton
                         }
                 }
             }
-            else  //Ä²¸IÂI¤£¦b½d³ò¤º
+            else  //è§¸ç¢°é»ä¸åœ¨ç¯„åœå…§
             {
                 if (Input.GetTouch(i).fingerId == fingerID)
                 {

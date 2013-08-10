@@ -1,25 +1,25 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
-#region ¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­­×¥¿¬ö¿ı¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­
-/// 13/05/08    «Ø¸m
-/// 13/06/19    ­«·s©w¸q¦WºÙ MUI_RectTo
+#region ï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒä¿®æ­£ç´€éŒ„ï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒ
+/// 13/05/08    å»ºç½®
+/// 13/06/19    é‡æ–°å®šç¾©åç¨± MUI_RectTo
 
 #endregion
 /// <summary>
-/// °Êµe - °ÊºA§óÅÜ Rect ÅÜ¼Æ
+/// å‹•ç•« - å‹•æ…‹æ›´è®Š Rect è®Šæ•¸
 /// </summary>
-/// ** Effect¦@¦P»¡©ú©ñ¸m¦bMUI_Effect
+/// ** Effectå…±åŒèªªæ˜æ”¾ç½®åœ¨MUI_Effect
 public class MUI_RectTo : MUI_Effect
 {
-    //¦ì¸m»P¤j¤p
+    //ä½ç½®èˆ‡å¤§å°
     public Rect rect;
 
     void Update()
     {
         if (this.transform.parent.GetComponent<iTween>())
         {
-            //·íITween°õ¦æµ²§ô(percentage = 1)
+            //ç•¶ITweenåŸ·è¡ŒçµæŸ(percentage = 1)
             if (this.transform.parent.GetComponent<iTween>().percentage >= 1)
             {
                 if (_disableWhenEffectDone == MUI_Enum.DisableWhenEffectDone.True)
@@ -33,7 +33,7 @@ public class MUI_RectTo : MUI_Effect
     }
 
     /// <summary>
-    /// ¯S®Ä¶}©l¨óµ{
+    /// ç‰¹æ•ˆé–‹å§‹å”ç¨‹
     /// </summary>
     void SetEffectStartCoroutine()
     {
@@ -42,9 +42,9 @@ public class MUI_RectTo : MUI_Effect
 
     void OnEnable()
     {
-        //¿ù»~­×¥¿
+        //éŒ¯èª¤ä¿®æ­£
         BugFix();
-        //«Ø¥ß¯S®Ä¨óµ{
+        //å»ºç«‹ç‰¹æ•ˆå”ç¨‹
         SetEffectStartCoroutine();
     }
 

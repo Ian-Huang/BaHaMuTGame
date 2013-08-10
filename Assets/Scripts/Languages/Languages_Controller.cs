@@ -1,15 +1,16 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
-public class Languages_Controller : MonoBehaviour {
+public class Languages_Controller : MonoBehaviour
+{
 
-    //ÀRºA°Æ¥»
+    //éœæ…‹å‰¯æœ¬
     public static Languages_Controller script;
     private Languages_en language_en;
     private Languages_zhTW language_zhTW;
     private Languages_jp language_jp;
 
-    public enum Language { English, Traditional_Chinese ,Japanese};
+    public enum Language { English, Traditional_Chinese, Japanese };
     public Language language;
 
     public GUISkin GUISkin_en;
@@ -46,11 +47,12 @@ public class Languages_Controller : MonoBehaviour {
 
         ChangeLanguage(language);
     }
-	// Use this for initialization
-	void Start () {
-       
-	}
-	
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
     public void ChangeLanguage(Language language)
     {
         this.language = language;

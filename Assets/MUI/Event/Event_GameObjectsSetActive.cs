@@ -1,9 +1,9 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 public class Event_GameObjectsSetActive : MonoBehaviour
 {
-    //Activeªºª¬ºA
+    //Activeçš„ç‹€æ…‹
     public bool ActiveStatus;
     public GameObject[] gameObjects;
 

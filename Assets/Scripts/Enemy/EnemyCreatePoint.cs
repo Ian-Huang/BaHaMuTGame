@@ -1,39 +1,39 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Create Date¡G2013-07-23
-/// Modify Date¡G2013-08-10
-/// Author¡GIan
-/// Description¡G
-///     ¼Ä¤H²£¥ÍÂI(·íª±®aÄ²µo¡A¶}©l»s³y¼Ä¤H)
-///     0808¡G·s¼W¤ıÂI³]©w¡A¤@¬q®É¶¡¶¡¹j¥X¤p§L
-///     0810¡G­×¥¿¥Í©Ç¼Æªº³]©w¤è¦¡(CreateCountMin¡BCreateCountMax)
+/// Create Dateï¼š2013-07-23
+/// Modify Dateï¼š2013-08-10
+/// Authorï¼šIan
+/// Descriptionï¼š
+///     æ•µäººç”¢ç”Ÿé»(ç•¶ç©å®¶è§¸ç™¼ï¼Œé–‹å§‹è£½é€ æ•µäºº)
+///     0808ï¼šæ–°å¢ç‹é»è¨­å®šï¼Œä¸€æ®µæ™‚é–“é–“éš”å‡ºå°å…µ
+///     0810ï¼šä¿®æ­£ç”Ÿæ€ªæ•¸çš„è¨­å®šæ–¹å¼(CreateCountMinã€CreateCountMax)
 /// </summary>
 public class EnemyCreatePoint : MonoBehaviour
 {
-    public int CreateCountMin;  //³Ì¤p¥Í©Ç¼Æ
-    public int CreateCountMax;  //³Ì¤j¥Í©Ç¼Æ
+    public int CreateCountMin;  //æœ€å°ç”Ÿæ€ªæ•¸
+    public int CreateCountMax;  //æœ€å¤§ç”Ÿæ€ªæ•¸
 
-    public GameObject[] RandomCreateEnemyKindList;      //ÀH¾÷²£¥Í©Çª«ªº²M³æ
-    public List<Transform> RandomCreatePositionList;    //ÀH¾÷²£¥Í©Çª«ªº¦ì¸m
+    public GameObject[] RandomCreateEnemyKindList;      //éš¨æ©Ÿç”¢ç”Ÿæ€ªç‰©çš„æ¸…å–®
+    public List<Transform> RandomCreatePositionList;    //éš¨æ©Ÿç”¢ç”Ÿæ€ªç‰©çš„ä½ç½®
     [HideInInspector]
     public List<Transform> originRandomCreatePositionList;
 
-    //-------Boss ±M¥Î°Ñ¼Æ-------
-    public bool isBossPoint = false;    //½T»{¬O§_¬°¥X¤ıÂI
-    public GameObject Boss;             //Å]¤ıª«¥ó
-    public float AutocreateMintime;     //¦Û°Ê¥X¤p§L³Ì¤p¶¡¹j¬í¼Æ
-    public float AutocreateMaxtime;     //¦Û°Ê¥X¤p§L³Ì¤j¶¡¹j¬í¼Æ
-    public float DelayTimeStartCreate;  //²£¥ÍÅ]¤ı«á¡A´X¬í«á¶}©l¥X²Ä¤@§å¤p§L
-    //-------Boss ±M¥Î°Ñ¼Æ-------
+    //-------Boss å°ˆç”¨åƒæ•¸-------
+    public bool isBossPoint = false;    //ç¢ºèªæ˜¯å¦ç‚ºå‡ºç‹é»
+    public GameObject Boss;             //é­”ç‹ç‰©ä»¶
+    public float AutocreateMintime;     //è‡ªå‹•å‡ºå°å…µæœ€å°é–“éš”ç§’æ•¸
+    public float AutocreateMaxtime;     //è‡ªå‹•å‡ºå°å…µæœ€å¤§é–“éš”ç§’æ•¸
+    public float DelayTimeStartCreate;  //ç”¢ç”Ÿé­”ç‹å¾Œï¼Œå¹¾ç§’å¾Œé–‹å§‹å‡ºç¬¬ä¸€æ‰¹å°å…µ
+    //-------Boss å°ˆç”¨åƒæ•¸-------
 
     void Start()
     {
         this.originRandomCreatePositionList.AddRange(this.RandomCreatePositionList);
 
-        //¨¾§b¥Î¡AÁ×§KCreateCountMin > CreateCountMax
+        //é˜²å‘†ç”¨ï¼Œé¿å…CreateCountMin > CreateCountMax
         if (this.CreateCountMin > this.CreateCountMax)
         {
             int temp = this.CreateCountMin;
@@ -43,11 +43,11 @@ public class EnemyCreatePoint : MonoBehaviour
     }
 
     /// <summary>
-    /// ¶}©l»s³y¼Ä¤H
+    /// é–‹å§‹è£½é€ æ•µäºº
     /// </summary>
     public void CreateEnemy()
     {
-        // ½T»{¬O§_¬°«ùÄò¥Í²£©Çª«ÂI(Boss±M¥Î)
+        // ç¢ºèªæ˜¯å¦ç‚ºæŒçºŒç”Ÿç”¢æ€ªç‰©é»(Bosså°ˆç”¨)
         if (this.isBossPoint)
         {
             GameObject newObj = (GameObject)Instantiate(
@@ -55,13 +55,13 @@ public class EnemyCreatePoint : MonoBehaviour
                     this.RandomCreatePositionList[Random.Range(0, this.RandomCreatePositionList.Count)].position,
                     this.Boss.transform.rotation);
 
-            //³]©wª«¥óªºparent
+            //è¨­å®šç‰©ä»¶çš„parent
             newObj.transform.parent = this.transform;
             StartCoroutine(AutoCreateEnemy(this.DelayTimeStartCreate));
         }
         else
         {
-            //ÀH¾÷¥Í©Ç CreateCountMin~CreateCountMax ¤§¶¡¡A°²¦pCreateCountMax¤j©ó¥Í©Ç¦ì¸m¼Æ¡A«hµ¥©ó¥Í©Ç¦ì¸m¼Æ
+            //éš¨æ©Ÿç”Ÿæ€ª CreateCountMin~CreateCountMax ä¹‹é–“ï¼Œå‡å¦‚CreateCountMaxå¤§æ–¼ç”Ÿæ€ªä½ç½®æ•¸ï¼Œå‰‡ç­‰æ–¼ç”Ÿæ€ªä½ç½®æ•¸
             int createCount;
             if (this.CreateCountMax > this.RandomCreatePositionList.Count)
                 createCount = Random.Range(this.CreateCountMin, this.RandomCreatePositionList.Count + 1);
@@ -78,28 +78,28 @@ public class EnemyCreatePoint : MonoBehaviour
                     this.RandomCreateEnemyKindList[enemyIndex],
                     this.RandomCreatePositionList[positionIndex].position,
                     this.RandomCreateEnemyKindList[enemyIndex].transform.rotation);
-                //¦]²£¥Í¦ì¸m¤£­«½Æ¡A©Ò¥H²¾°£¤w³Q²£¥Íªº¦ì¸m
+                //å› ç”¢ç”Ÿä½ç½®ä¸é‡è¤‡ï¼Œæ‰€ä»¥ç§»é™¤å·²è¢«ç”¢ç”Ÿçš„ä½ç½®
                 this.RandomCreatePositionList.RemoveAt(positionIndex);
-                //³]©wª«¥óªºparent
+                //è¨­å®šç‰©ä»¶çš„parent
                 newObj.transform.parent = this.transform;
             }
         }
     }
 
     /// <summary>
-    /// ¤@¬q®É¶¡¦Û°Ê²£¥Í¼Ä¤H
+    /// ä¸€æ®µæ™‚é–“è‡ªå‹•ç”¢ç”Ÿæ•µäºº
     /// </summary>
-    /// <param name="time">¤W¦¸»P¤U¦¸²£¥Íªº®É¶¡¶¡¹j</param>
+    /// <param name="time">ä¸Šæ¬¡èˆ‡ä¸‹æ¬¡ç”¢ç”Ÿçš„æ™‚é–“é–“éš”</param>
     /// <returns></returns>
     IEnumerator AutoCreateEnemy(float time)
     {
         yield return new WaitForSeconds(time);
 
-        //­«·s½Æ»s­ì©l¦ì¸m²M³æ
+        //é‡æ–°è¤‡è£½åŸå§‹ä½ç½®æ¸…å–®
         this.RandomCreatePositionList.Clear();
         this.RandomCreatePositionList.AddRange(this.originRandomCreatePositionList);
 
-        //ÀH¾÷¥Í©Ç CreateCountMin~CreateCountMax ¤§¶¡¡A°²¦pCreateCountMax¤j©ó¥Í©Ç¦ì¸m¼Æ¡A«hµ¥©ó¥Í©Ç¦ì¸m¼Æ
+        //éš¨æ©Ÿç”Ÿæ€ª CreateCountMin~CreateCountMax ä¹‹é–“ï¼Œå‡å¦‚CreateCountMaxå¤§æ–¼ç”Ÿæ€ªä½ç½®æ•¸ï¼Œå‰‡ç­‰æ–¼ç”Ÿæ€ªä½ç½®æ•¸
         int createCount;
         if (this.CreateCountMax > this.RandomCreatePositionList.Count)
             createCount = Random.Range(this.CreateCountMin, this.RandomCreatePositionList.Count + 1);
@@ -116,9 +116,9 @@ public class EnemyCreatePoint : MonoBehaviour
                 this.RandomCreateEnemyKindList[enemyIndex],
                 this.RandomCreatePositionList[positionIndex].position,
                 this.RandomCreateEnemyKindList[enemyIndex].transform.rotation);
-            //¦]²£¥Í¦ì¸m¤£­«½Æ¡A©Ò¥H²¾°£¤w³Q²£¥Íªº¦ì¸m
+            //å› ç”¢ç”Ÿä½ç½®ä¸é‡è¤‡ï¼Œæ‰€ä»¥ç§»é™¤å·²è¢«ç”¢ç”Ÿçš„ä½ç½®
             this.RandomCreatePositionList.RemoveAt(positionIndex);
-            //³]©wª«¥óªºparent
+            //è¨­å®šç‰©ä»¶çš„parent
             newObj.transform.parent = this.transform;
         }
 

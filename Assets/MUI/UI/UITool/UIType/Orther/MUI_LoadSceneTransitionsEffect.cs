@@ -1,27 +1,27 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 public class MUI_LoadSceneTransitionsEffect : MonoBehaviour
 {
     public static MUI_LoadSceneTransitionsEffect script;
 
-    //[OPTIONAL]¥Ø«eÅX°Ê2DÅã¥Üªº¤¶­±ª«¥ó
+    //[OPTIONAL]ç›®å‰é©…å‹•2Dé¡¯ç¤ºçš„ä»‹é¢ç‰©ä»¶
     public GameObject currentUserInterface;
-    //[OPTIONAL]¥Ø«eÅX°Ê3DÅã¥Üªºª«¥ó(¬Û¾÷)
+    //[OPTIONAL]ç›®å‰é©…å‹•3Dé¡¯ç¤ºçš„ç‰©ä»¶(ç›¸æ©Ÿ)
     public Camera currentCamera;
-    //¹L³õ¯S®Ä
+    //éå ´ç‰¹æ•ˆ
     public GameObject TransitionsEffect;
 
     public float DefaultDelayTime;
     public static float DelayTime;
 
     /// <summary>
-    /// ¤£¦P¨B¤è¦¡Åª·s³õ´º¡A¦³¹L³õ¯S®Ä
+    /// ä¸åŒæ­¥æ–¹å¼è®€æ–°å ´æ™¯ï¼Œæœ‰éå ´ç‰¹æ•ˆ
     /// </summary>
-    /// <param name="sceneName">³õ´º¦W</param>
-    /// <param name="delayTime">µ¹"0"·|¥H¹w³]¬í¼ÆÅª¨ú¡A«D0¬°¦Û©w¸q¬í¼Æ</param>
+    /// <param name="sceneName">å ´æ™¯å</param>
+    /// <param name="delayTime">çµ¦"0"æœƒä»¥é è¨­ç§’æ•¸è®€å–ï¼Œé0ç‚ºè‡ªå®šç¾©ç§’æ•¸</param>
     public void LoadScene(string sceneName, float delayTime)
-    { 
+    {
         DelayTime = delayTime;
         if (DelayTime == 0) DelayTime = DefaultDelayTime;
         StartCoroutine("LoadSceneAsync", sceneName);
@@ -31,9 +31,9 @@ public class MUI_LoadSceneTransitionsEffect : MonoBehaviour
     {
         if (!Application.isLoadingLevel)
         {
-            if (TransitionsEffect)      TransitionsEffect.SetActive(true);
-            if (currentCamera)          currentCamera.enabled = false;
-            if (currentUserInterface)   currentUserInterface.SetActive(false);
+            if (TransitionsEffect) TransitionsEffect.SetActive(true);
+            if (currentCamera) currentCamera.enabled = false;
+            if (currentUserInterface) currentUserInterface.SetActive(false);
             yield return new WaitForSeconds(DelayTime);
             Application.LoadLevelAsync(sceneName);
         }

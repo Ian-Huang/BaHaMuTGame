@@ -1,14 +1,14 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// ·Æ¹««öÁä¦b°»´ú½d³ò¸Ì­±«öÁäªº¯S®Ä
+/// æ»‘é¼ æŒ‰éµåœ¨åµæ¸¬ç¯„åœè£¡é¢æŒ‰éµçš„ç‰¹æ•ˆ
 /// </summary>
 public class MButton : MonoBehaviour
 {
-    //¥ş°ìÀRºAÅÜ¼Æ ²`«×ªùÂe ·íMUI²`«×¦bªùÂe¤§¤W «h¤£¯à§@¥Î(¶ÈÅã¥Ü¡A¦ı¤£¯à³QÂIÀ»)
+    //å…¨åŸŸéœæ…‹è®Šæ•¸ æ·±åº¦é–€æª» ç•¶MUIæ·±åº¦åœ¨é–€æª»ä¹‹ä¸Š å‰‡ä¸èƒ½ä½œç”¨(åƒ…é¡¯ç¤ºï¼Œä½†ä¸èƒ½è¢«é»æ“Š)
     public static int DepthThreshold;
-    //«ö¶s¬O§_¹ê§@ª¬ºA
+    //æŒ‰éˆ•æ˜¯å¦å¯¦ä½œç‹€æ…‹
     [HideInInspector]
     public bool ButtonEnable = true;
 
@@ -25,7 +25,7 @@ public class MButton : MonoBehaviour
     [HideInInspector]
     public bool pressDown;
 
-    //·íEvent³Q¥Í¦¨«á¡AisDone = true ¥Ø«e¥Î¦b±Ğ¾Ç¨t²Î ¥Î¨ÓÀËµø«ö¶s¦³¨S¦³³Q¦¨¥\¨Ï¥Î
+    //ç•¶Eventè¢«ç”Ÿæˆå¾Œï¼ŒisDone = true ç›®å‰ç”¨åœ¨æ•™å­¸ç³»çµ± ç”¨ä¾†æª¢è¦–æŒ‰éˆ•æœ‰æ²’æœ‰è¢«æˆåŠŸä½¿ç”¨
     [HideInInspector]
     public bool isDone;
 
@@ -37,7 +37,7 @@ public class MButton : MonoBehaviour
 
     public void Update()
     {
-        //·íMUI²`«×¦bªùÂe¤§¤W «h¤£¯à§@¥Î(Åã¥Ü¡A¦ı¤£¯à³QÂIÀ»)
+        //ç•¶MUIæ·±åº¦åœ¨é–€æª»ä¹‹ä¸Š å‰‡ä¸èƒ½ä½œç”¨(é¡¯ç¤ºï¼Œä½†ä¸èƒ½è¢«é»æ“Š)
         int depth = (int)(DisplayObject.GetType().GetField("depth").GetValue(DisplayObject));
         if (depth > DepthThreshold)
             ButtonEnable = false;
@@ -46,7 +46,7 @@ public class MButton : MonoBehaviour
 
     }
     /// <summary>
-    /// ¦Û°Ê°»´úMUIª«¥ó¨ÓÅÜ¦¨«ö¶s
+    /// è‡ªå‹•åµæ¸¬MUIç‰©ä»¶ä¾†è®ŠæˆæŒ‰éˆ•
     /// </summary>
     void GetMUI()
     {

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Event_TeamMenu : MonoBehaviour {
-
+public class Event_TeamMenu : MonoBehaviour
+{
     public static int ObjectCount;
     public Object[] LayoutObjects;
 
@@ -18,12 +18,12 @@ public class Event_TeamMenu : MonoBehaviour {
         switch (type)
         {
             case Type.Add:
-                if(ObjectCount < LayoutObjects.Length - 1)
-                ObjectCount++;
+                if (ObjectCount < LayoutObjects.Length - 1)
+                    ObjectCount++;
                 break;
             case Type.Dec:
                 if (ObjectCount > 0)
-                ObjectCount--;
+                    ObjectCount--;
                 break;
         }
         if (LayoutObjects[ObjectCount]) ((GameObject)LayoutObjects[ObjectCount]).SetActive(true);

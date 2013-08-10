@@ -1,18 +1,18 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// ·Æ¹««öÁä¦b°»´ú½d³ò¸Ì­±«öÁäªº¯S®Ä
+/// æ»‘é¼ æŒ‰éµåœ¨åµæ¸¬ç¯„åœè£¡é¢æŒ‰éµçš„ç‰¹æ•ˆ
 /// </summary>
 public class DesktopButtonTypeA : MDesktopButton
 {
-    //µù¥U«¬Button
-    //µù¥Uª¬ºA
+    //è¨»å†Šå‹Button
+    //è¨»å†Šç‹€æ…‹
     public static bool submit;
     // Use this for initialization
     new void Start()
     {
-        //ªì©l¤Æ
+        //åˆå§‹åŒ–
         base.Start();
     }
 
@@ -22,7 +22,7 @@ public class DesktopButtonTypeA : MDesktopButton
         base.Update();
         if (!ButtonEnable) return;
 
-        //¨ú±o°»´ú½d³ò(Rect)
+        //å–å¾—åµæ¸¬ç¯„åœ(Rect)
         rect = (Rect)(DisplayObject.GetType().GetField("_rect").GetValue(DisplayObject));
 
 

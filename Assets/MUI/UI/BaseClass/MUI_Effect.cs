@@ -1,59 +1,59 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
-#region ¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­­×¥¿¬ö¿ý¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­
-/// 13/05/08    «Ø¸m
-/// 13/06/19    ­«·s©w¸q¦WºÙ MUI_Effect
+#region ï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒä¿®æ­£ç´€éŒ„ï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒï¼ƒ
+/// 13/05/08    å»ºç½®
+/// 13/06/19    é‡æ–°å®šç¾©åç¨± MUI_Effect
 #endregion
 /// <summary>
-/// ¯S®Ä°ò©³ - ¨ä¥L¯S®Äªº¤÷Ãþ§O
+/// ç‰¹æ•ˆåŸºåº• - å…¶ä»–ç‰¹æ•ˆçš„çˆ¶é¡žåˆ¥
 /// </summary>
-/// * ¤lÃþ§O   MUI_RectTo      ¦ì¸m»P¤j¤pªº¯S®Ä
-/// * ¤lÃþ§O   MUI_ColorTo     ÃC¦âªº¯S®Ä
-/// * ¤lÃþ§O   MUI_ScaleTo     ¤j¤pªº¯S®Ä(¤£·|­«·s±Ä¼Ë)
-/// * ¤lÃþ§O   MUI_MoveTo      ¯Â²¾°ÊÅÜ¶qªº¯S®Ä
+/// * å­é¡žåˆ¥   MUI_RectTo      ä½ç½®èˆ‡å¤§å°çš„ç‰¹æ•ˆ
+/// * å­é¡žåˆ¥   MUI_ColorTo     é¡è‰²çš„ç‰¹æ•ˆ
+/// * å­é¡žåˆ¥   MUI_ScaleTo     å¤§å°çš„ç‰¹æ•ˆ(ä¸æœƒé‡æ–°æŽ¡æ¨£)
+/// * å­é¡žåˆ¥   MUI_MoveTo      ç´”ç§»å‹•è®Šé‡çš„ç‰¹æ•ˆ
 /// 
-/// * °»´úITweenµ²§ô»Ý­npercentageÅÜ¼Æ¡A»Ý­n§âITween.csªºpercentage³]¬°Public ( iTween¦³oncomplete°Ñ¼Æ­È¥i¥H¨Ï¥Î¦ý¥²¶·­n¶Ç"¤U¤@­Ó°Ê§@"¸ê®Æ¶i¥h¡A·|¨Ï¸ê®Æ¤£©ö¾ã²z)
-/// * DisableWhenEffectDone ·í¯S®Äµ²§ô±Nª«¥óDisable
-/// * ResetWhenDisable ·íª«¥ó³QDisable±Nª«¥óª¬ºAReset¨ì¤§«eª¬ºA
-/// * [¤w²¾°£] ResetWhenEffectDone ·í¯S®Äµ²§ô±Nª«¥óª¬ºAReset¨ì¤§«eª¬ºA (¥i¥Ñ¤W­z¨âªÌ¥N´À)
-public class MUI_Effect : MonoBehaviour {
-
+/// * åµæ¸¬ITweençµæŸéœ€è¦percentageè®Šæ•¸ï¼Œéœ€è¦æŠŠITween.csçš„percentageè¨­ç‚ºPublic ( iTweenæœ‰oncompleteåƒæ•¸å€¼å¯ä»¥ä½¿ç”¨ä½†å¿…é ˆè¦å‚³"ä¸‹ä¸€å€‹å‹•ä½œ"è³‡æ–™é€²åŽ»ï¼Œæœƒä½¿è³‡æ–™ä¸æ˜“æ•´ç†)
+/// * DisableWhenEffectDone ç•¶ç‰¹æ•ˆçµæŸå°‡ç‰©ä»¶Disable
+/// * ResetWhenDisable ç•¶ç‰©ä»¶è¢«Disableå°‡ç‰©ä»¶ç‹€æ…‹Resetåˆ°ä¹‹å‰ç‹€æ…‹
+/// * [å·²ç§»é™¤] ResetWhenEffectDone ç•¶ç‰¹æ•ˆçµæŸå°‡ç‰©ä»¶ç‹€æ…‹Resetåˆ°ä¹‹å‰ç‹€æ…‹ (å¯ç”±ä¸Šè¿°å…©è€…ä»£æ›¿)
+public class MUI_Effect : MonoBehaviour
+{
     public MUI_Enum.EffectStruct _effectStruct;
     public MUI_Enum.StopEffectStruct _stopEffectStruct;
 
-    //«ùÄò®É¶¡
+    //æŒçºŒæ™‚é–“
     public float time;
-    //©µ¿ð®É¶¡
+    //å»¶é²æ™‚é–“
     public float delay;
-    //¯S®Ä¶}©l©µ¿ð®É¶¡
+    //ç‰¹æ•ˆé–‹å§‹å»¶é²æ™‚é–“
     public float EffectStartDelay;
-    //Ease¤è¦¡
+    //Easeæ–¹å¼
     public MUI_Enum.EaseType easeType;
-    //´`Àô¤è¦¡
+    //å¾ªç’°æ–¹å¼
     public MUI_Enum.loopType looptype;
 
-    //ª«¥ó³QDisable®É¬O§_¦^¨ì­ì¥»ª¬ºA
+    //ç‰©ä»¶è¢«Disableæ™‚æ˜¯å¦å›žåˆ°åŽŸæœ¬ç‹€æ…‹
     public MUI_Enum.ResetWhenDisable _resetWhenDisable;
-    //¯S®Äµ²§ô®É ª«¥óDisable
+    //ç‰¹æ•ˆçµæŸæ™‚ ç‰©ä»¶Disable
     public MUI_Enum.DisableWhenEffectDone _disableWhenEffectDone;
 
     [HideInInspector]
-    //¬O§_µLµøTimeScale
+    //æ˜¯å¦ç„¡è¦–TimeScale
     public bool ignoretimescale;
 
-    //¯S®Äµ²§ô«á¤U¤@­Ó®ÄªGª«¥ó
+    //ç‰¹æ•ˆçµæŸå¾Œä¸‹ä¸€å€‹æ•ˆæžœç‰©ä»¶
     public GameObject NextEffect;
     [HideInInspector]
-    //°t¦X"¯S®Äµ²§ô«á¤U¤@­Ó®ÄªGª«¥ó"ªº®ÄªGª«¥ó
+    //é…åˆ"ç‰¹æ•ˆçµæŸå¾Œä¸‹ä¸€å€‹æ•ˆæžœç‰©ä»¶"çš„æ•ˆæžœç‰©ä»¶
     public bool isEffectStart;
 
 
-    //¿ù»~­×¥¿»PÁ×§K
+    //éŒ¯èª¤ä¿®æ­£èˆ‡é¿å…
     public void BugFix()
     {
-        //* ®Ú¾Ú Issue 72 
-        //ITween¨Ï¥Îdelay®ÉIgnoreTimeScaleµL®Ä ¡A ©Ò¥H·ídelay¤j©ó0 ·|¨Ï¥Î³QTimeScale¼vÅTªº¨ç¦¡ 
+        //* æ ¹æ“š Issue 72 
+        //ITweenä½¿ç”¨delayæ™‚IgnoreTimeScaleç„¡æ•ˆ ï¼Œ æ‰€ä»¥ç•¶delayå¤§æ–¼0 æœƒä½¿ç”¨è¢«TimeScaleå½±éŸ¿çš„å‡½å¼ 
         //https://code.google.com/p/itween/issues/detail?id=72
 
         if (delay > 0) ignoretimescale = false;

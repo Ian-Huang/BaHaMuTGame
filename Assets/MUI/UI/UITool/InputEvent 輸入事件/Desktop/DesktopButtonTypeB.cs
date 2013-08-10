@@ -1,8 +1,8 @@
-using UnityEngine;
+锘縰sing UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// 菲公龄盎代絛瞅柑龄疭
+/// 婊戦紶鎸夐嵉鍦ㄥ伒娓瘎鍦嶈！闈㈡寜閸电殑鐗规晥
 /// </summary>
 public class DesktopButtonTypeB : MDesktopButton
 {
@@ -15,7 +15,7 @@ public class DesktopButtonTypeB : MDesktopButton
     // Update is called once per frame
     new void Update()
     {
-        //眔盎代絛瞅
+        //鍙栧緱鍋垫脯绡勫湇
         rect = (Rect)(DisplayObject.GetType().GetField("_rect").GetValue(DisplayObject));
 
 
