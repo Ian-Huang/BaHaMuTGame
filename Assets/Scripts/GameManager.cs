@@ -7,10 +7,13 @@ using System.Collections.Generic;
 /// Description：
 ///     全域遊戲管理系統
 ///     0809新增：新增角色、怪物BoneAnimation管理系統，以控制Animation
+///     0814新增：金幣物件Prefab
 /// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager script;
+
+    public GameObject CoinObject;   //金幣物件Prefab
 
     public int CurrentMorale;
     public int MoraleRestoreRate;

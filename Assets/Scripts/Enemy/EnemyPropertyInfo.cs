@@ -113,5 +113,10 @@ public class EnemyPropertyInfo : MonoBehaviour
         this.boneAnimation.Play("defeat");
         Destroy(this.GetComponent<MoveController>());   //死亡:停止敵人移動
         CancelInvoke("RestoreLifePersecond");           //死亡:停止敵人回復生命
+
+        //產生金幣物件 (金幣數未完成)
+        GameObject newObj = (GameObject)Instantiate(GameManager.script.CoinObject, this.transform.position, GameManager.script.CoinObject.transform.rotation);
+        newObj.GetComponent<CoinPropertyInfo>().SetCoinAmount(Random.Range(1, 15));
+        newObj.transform.parent = this.transform.parent.transform;
     }
 }
