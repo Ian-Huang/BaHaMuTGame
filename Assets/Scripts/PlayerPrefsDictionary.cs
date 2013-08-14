@@ -7,6 +7,7 @@ using System.Collections.Generic;
 /// </summary>
 public class PlayerPrefsDictionary : MonoBehaviour
 {
+    public bool deletePlayerPref;
     public static PlayerPrefsDictionary script;
 
     //參數監控Dictionary
@@ -15,6 +16,9 @@ public class PlayerPrefsDictionary : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if (deletePlayerPref)
+            PlayerPrefs.DeleteAll();
+
         DontDestroyOnLoad(this.gameObject);
 
         script = this;
@@ -22,6 +26,8 @@ public class PlayerPrefsDictionary : MonoBehaviour
         //////////////////////////////////
         //金幣
         this.AddValue("Money");
+        //關卡破除度
+        this.AddValue("LevelComplete");
 
         //角色類
         this.AddValue("BSK_ATK");
@@ -56,7 +62,7 @@ public class PlayerPrefsDictionary : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.SetValue("Money", 50);
+        
     }
     /// <summary>
     /// 輸出全部資訊
@@ -101,7 +107,10 @@ public class PlayerPrefsDictionary : MonoBehaviour
         if (PlayerPrefDictionary.ContainsKey(key))
             return PlayerPrefDictionary[key];
         else
+        {
+            Debug.Log("Dictionary have no this key");
             return 0;
+        }
     }
 
     /// <summary>
@@ -123,13 +132,15 @@ public class PlayerPrefsDictionary : MonoBehaviour
     public void AddValue(string key)
     {
         if (!PlayerPrefs.HasKey(key))
-            PlayerPrefDictionary.Add(key.ToString(), 0);
+        {
+            PlayerPrefDictionary.Add(key.ToString(), 0); 
+        }
         else
         {
             if (isValid(key))
                 SetValue(key.ToString(), GetValue(key));
             else
-                PlayerPrefDictionary.Add(key.ToString(), GetValue(key));
+                PlayerPrefDictionary.Add(key.ToString(), PlayerPrefs.GetInt(key));
         }
     }
 
@@ -142,7 +153,7 @@ public class PlayerPrefsDictionary : MonoBehaviour
             if (isValid(key))
                 SetValue(key.ToString(), GetValue(key));
             else
-                PlayerPrefDictionary.Add(key.ToString(), GetValue(key));
+                PlayerPrefDictionary.Add(key.ToString(), PlayerPrefs.GetInt(key));
         }
     }
 }
