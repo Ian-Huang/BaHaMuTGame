@@ -62,7 +62,7 @@ public class TeachingSystem_ButtonControl : MonoBehaviour
         {
 
             //下一個段落
-            TeachingSystem.script.NextPart();
+            StartCoroutine( TeachingSystem.script.NextPart(0));
 
             //圖片回到原本Depth
             Texture_2D.depth = oldDepth;

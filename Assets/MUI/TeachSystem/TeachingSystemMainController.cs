@@ -26,7 +26,7 @@ public class TeachingSystemMainController : MonoBehaviour {
            RolePropertyInfo[] rolePropertyInfo = GameObject.Find("RolesCollection").GetComponentsInChildren<RolePropertyInfo>();
            foreach (RolePropertyInfo r in rolePropertyInfo)
            {
-               r.currentLife = r.currentLife / 2;
+               r.currentLife = r.maxLife  / 4;
                r.cureRate = 0;
            }
 
@@ -37,7 +37,7 @@ public class TeachingSystemMainController : MonoBehaviour {
             RolePropertyInfo[] rolePropertyInfo = GameObject.Find("RolesCollection").GetComponentsInChildren<RolePropertyInfo>();
             foreach (RolePropertyInfo r in rolePropertyInfo)
             {
-                r.cureRate = 5;
+                r.cureRate = 10;
             }
         }
 
