@@ -35,6 +35,8 @@ public class GameDefinition
         new EnemyData(Enemy.長爪樹人,200,15,30,100,0),
 
         new EnemyData(Enemy.石頭人,300,10,50,200,0),
+        new EnemyData(Enemy.石巨人BOSS,2500,30,30,400,100),
+        new EnemyData(Enemy.劍石巨人BOSS,2500,30,30,400,100),
 
         new EnemyData(Enemy.獸人戰士,150,15,25,120,0),
         new EnemyData(Enemy.獸人弓箭手,100,10,25,0,140),
@@ -165,6 +167,8 @@ public class GameDefinition
         長爪樹人 = 303,
 
         石頭人 = 401,
+        石巨人BOSS = 498,
+        劍石巨人BOSS = 499,
 
         獸人戰士 = 501,
         獸人弓箭手 = 502,

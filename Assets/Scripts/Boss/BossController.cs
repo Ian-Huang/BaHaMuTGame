@@ -7,9 +7,10 @@ using System.Collections.Generic;
 /// Modify Date：2013-08-10
 /// Author：Ian
 /// Description：
-///     魔王控制器(測試用)
+///     魔王控制器(巨型史萊姆BOSS、石巨人BOSS)
 ///     0809：新增註冊BoneAnimation到GameManager，方便管理
 ///     0810：新增BossAction，用來判斷目前魔王狀態
+///     0815：新增石巨人BOSS AI
 /// </summary>
 public class BossController : MonoBehaviour
 {
@@ -109,44 +110,92 @@ public class BossController : MonoBehaviour
             // 魔王必須未死亡
             if (!this.enemyInfo.isDead)
             {
-                if (this.currentBossAction == BossAction.登場中 | this.currentBossAction == BossAction.近距離攻擊)
-                    this.boneAnimation.Play("run");
+                #region 巨型史萊姆BOSS
 
-                else if (this.currentBossAction == BossAction.切換跑道)
-                    this.boneAnimation.Play("walk");
-
-                else if (this.currentBossAction == BossAction.閒置)
+                if (this.enemyInfo.Enemy == GameDefinition.Enemy.巨型史萊姆BOSS)
                 {
-                    if (this.ActionTimer.isRunTimer)
+                    if (this.currentBossAction == BossAction.登場中 | this.currentBossAction == BossAction.近距離攻擊)
+                        this.boneAnimation.Play("run");
+
+                    else if (this.currentBossAction == BossAction.切換跑道)
+                        this.boneAnimation.Play("walk");
+
+                    else if (this.currentBossAction == BossAction.閒置)
                     {
-                        this.NextActionTime -= Time.deltaTime;
-                        if (this.NextActionTime < 0)
+                        if (this.ActionTimer.isRunTimer)
                         {
-                            switch (Random.Range(0, 3))
+                            this.NextActionTime -= Time.deltaTime;
+                            if (this.NextActionTime < 0)
                             {
-                                //切換跑道
-                                case 0:
-                                    this.ChangeWalkside();
-                                    this.NextActionTime = this.ActionTimer.切換跑道後下次行動時間;
-                                    break;
-                                //近距離攻擊
-                                case 1:
-                                    this.NearAttack();
-                                    this.NextActionTime = this.ActionTimer.近距離攻擊後下次行動時間;
-                                    break;
-                                //遠距離攻擊
-                                case 2:
-                                    this.FarAttack();
-                                    this.NextActionTime = this.ActionTimer.遠距離攻擊後下次行動時間;
-                                    break;
+                                switch (Random.Range(0, 3))
+                                {
+                                    //切換跑道
+                                    case 0:
+                                        this.ChangeWalkside();
+                                        this.NextActionTime = this.ActionTimer.切換跑道後下次行動時間;
+                                        break;
+                                    //近距離攻擊
+                                    case 1:
+                                        this.NearAttack();
+                                        this.NextActionTime = this.ActionTimer.近距離攻擊後下次行動時間;
+                                        break;
+                                    //遠距離攻擊
+                                    case 2:
+                                        this.FarAttack();
+                                        this.NextActionTime = this.ActionTimer.遠距離攻擊後下次行動時間;
+                                        break;
+                                }
                             }
                         }
-                    }
 
-                    this.transform.localScale = this.originScale;
-                    if (!this.boneAnimation.isPlaying)
-                        this.boneAnimation.Play("idle");
+                        this.transform.localScale = this.originScale;
+                        if (!this.boneAnimation.isPlaying)
+                            this.boneAnimation.Play("idle");
+                    }
                 }
+                #endregion
+
+                #region 石巨人BOSS
+
+                else if (this.enemyInfo.Enemy == GameDefinition.Enemy.石巨人BOSS)
+                {
+                    if (this.currentBossAction == BossAction.登場中 | this.currentBossAction == BossAction.近距離攻擊 | this.currentBossAction == BossAction.切換跑道)
+                        this.boneAnimation.Play("walk");
+
+                    else if (this.currentBossAction == BossAction.閒置)
+                    {
+                        if (this.ActionTimer.isRunTimer)
+                        {
+                            this.NextActionTime -= Time.deltaTime;
+                            if (this.NextActionTime < 0)
+                            {
+                                switch (Random.Range(0, 3))
+                                {
+                                    //切換跑道
+                                    case 0:
+                                        this.ChangeWalkside();
+                                        this.NextActionTime = this.ActionTimer.切換跑道後下次行動時間;
+                                        break;
+                                    //近距離攻擊
+                                    case 1:
+                                        this.NearAttack();
+                                        this.NextActionTime = this.ActionTimer.近距離攻擊後下次行動時間;
+                                        break;
+                                    //遠距離攻擊
+                                    case 2:
+                                        this.FarAttack();
+                                        this.NextActionTime = this.ActionTimer.遠距離攻擊後下次行動時間;
+                                        break;
+                                }
+                            }
+                        }
+
+                        this.transform.localScale = this.originScale;
+                        if (!this.boneAnimation.isPlaying)
+                            this.boneAnimation.Play("idle");
+                    }
+                }
+                #endregion
             }
         }
     }
@@ -178,7 +227,7 @@ public class BossController : MonoBehaviour
     {
         this.currentBossAction = BossAction.閒置;
         this.ActionTimer.ChangeTimerState(false);
-        this.boneAnimation.Play("出現");  //播放"出現"動畫
+        this.boneAnimation.Play("登場");  //播放"登場"動畫
     }
 
     #endregion
@@ -212,7 +261,7 @@ public class BossController : MonoBehaviour
 
         yield return new WaitForSeconds(time);      //等待n秒
 
-        this.boneAnimation.Play("發射");  //播放"發射"動畫
+        this.boneAnimation.Play("遠距離攻擊");  //播放"遠距離攻擊"動畫
     }
 
     #endregion
@@ -226,7 +275,7 @@ public class BossController : MonoBehaviour
     {
         this.currentBossAction = BossAction.閒置;
         this.ActionTimer.ChangeTimerState(false);
-        this.boneAnimation.Play("突刺");      //播放"突刺"動畫
+        this.boneAnimation.Play("近距離攻擊");      //播放"近距離攻擊"動畫
         StartCoroutine(BacktoOriginPosition(2.0f)); //等待n秒後，回到定位點
     }
 
@@ -298,25 +347,25 @@ public class BossController : MonoBehaviour
     /// <param name="triggerEvent">觸發相關資訊</param>
     public void UserTrigger(SmoothMoves.UserTriggerEvent triggerEvent)
     {
-        //確認是由"出現"觸發的UserTrigger
-        if (triggerEvent.animationName == "出現" & triggerEvent.boneName != "ChangeLayer")
+        //確認是由"登場"動畫觸發的UserTrigger
+        if (triggerEvent.animationName == "登場" & triggerEvent.boneName != "ChangeLayer")
         {
             //鏡頭震動
             iTween.ShakePosition(Camera.main.gameObject, new Vector3(1, 1, 0), 0.15f);
         }
         //改變魔王Layer，更改為Enemy Layer，角色開始攻擊
-        else if (triggerEvent.animationName == "出現" & triggerEvent.boneName == "ChangeLayer")
+        else if (triggerEvent.animationName == "登場" & triggerEvent.boneName == "ChangeLayer")
         {
             this.gameObject.layer = LayerMask.NameToLayer("Enemy");
             this.ActionTimer.ChangeTimerState(true);
         }
-        //確認是由"發射"觸發的UserTrigger
-        else if (triggerEvent.animationName == "發射")
+        //確認是由"遠距離攻擊"觸發的UserTrigger
+        else if (triggerEvent.animationName == "遠距離攻擊")
         {
             //計算Boss與角色的距離
             float distance = Mathf.Abs(RolesCollection.script.Roles[0].transform.position.x - this.transform.position.x);
 
-            //發射史萊姆砲(目標為BOSS面前兩位角色)
+            //發射遠距離攻擊物件(目標為BOSS面前兩位角色)
             //目標為第一位角色
             Vector3 Posv3 = RolesCollection.script.Roles[this.currentBattlePositionIndex].transform.position + new Vector3(distance, 0, 0);
             GameObject newObj = (GameObject)Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
