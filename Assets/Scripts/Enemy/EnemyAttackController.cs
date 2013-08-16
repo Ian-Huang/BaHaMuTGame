@@ -2,12 +2,12 @@
 using System.Collections;
 
 /// <summary>
-/// Create Date：2013-07-23
-/// Modify Date：2013-08-09
+/// Modify Date：2013-08-16
 /// Author：Ian
 /// Description：
 ///     敵人攻擊控制器
 ///     0809新增：註冊BoneAnimation到GameManager，方便管理
+///     0816修改：不分近or遠距離攻擊值
 /// </summary>
 public class EnemyAttackController : MonoBehaviour
 {
@@ -79,7 +79,7 @@ public class EnemyAttackController : MonoBehaviour
                 //tag = MainBody
                 if (triggerEvent.otherCollider.tag.CompareTo("MainBody") == 0)
                 {
-                    triggerEvent.otherCollider.GetComponent<RolePropertyInfo>().DecreaseLife(this.enemyInfo.nearDamage);
+                    triggerEvent.otherCollider.GetComponent<RolePropertyInfo>().DecreaseLife(this.enemyInfo.damage);
 
                     //創建 斬擊特效BoneAnimation
                     SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
@@ -136,7 +136,7 @@ public class EnemyAttackController : MonoBehaviour
             obj.transform.parent = GameObject.Find("UselessObjectCollection").transform;
 
             ShootObjectInfo info = obj.GetComponent<ShootObjectInfo>();
-            info.Damage = this.enemyInfo.farDamage;
+            info.Damage = this.enemyInfo.damage;
         }
     }
 

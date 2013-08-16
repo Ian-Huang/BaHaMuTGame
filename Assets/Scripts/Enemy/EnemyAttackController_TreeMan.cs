@@ -2,7 +2,6 @@
 using System.Collections;
 
 /// <summary>
-/// Create Date：2013-08-10
 /// Modify Date：2013-08-10
 /// Author：Ian
 /// Description：
@@ -43,7 +42,7 @@ public class EnemyAttackController_TreeMan : MonoBehaviour
                         obj.Play("撞擊特效02");
 
                     //給予角色傷害
-                    other.GetComponent<RolePropertyInfo>().DecreaseLife(enemyInfo.nearDamage);
+                    other.GetComponent<RolePropertyInfo>().DecreaseLife(enemyInfo.damage);
                 }
             }
         }

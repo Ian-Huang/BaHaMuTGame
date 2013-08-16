@@ -2,11 +2,11 @@
 using System.Collections;
 
 /// <summary>
-/// Create Date：2013-07-25
-/// Modify Date：2013-08-08
+/// Modify Date：2013-08-17
 /// Author：Ian
 /// Description：
 ///     遠距離(角色/敵人)發射的物件資訊
+///     0817新增魔王資訊的判斷
 /// </summary>
 public class ShootObjectInfo : MonoBehaviour
 {
@@ -27,8 +27,15 @@ public class ShootObjectInfo : MonoBehaviour
                 {
                     //如對象為敵人，需再檢查敵人本身是否已經死亡(EnemyPropertyInfo.isDead)
                     if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                    {
                         if (other.GetComponent<EnemyPropertyInfo>().isDead)
                             return;
+                    }
+                    else if (other.gameObject.layer == LayerMask.NameToLayer("Boss"))
+                    {
+                        if (other.GetComponent<BossPropertyInfo>().isDead)
+                            return;
+                    }
 
                     //以下產生爆炸事件
                     this.isExplosion = true;
@@ -43,9 +50,11 @@ public class ShootObjectInfo : MonoBehaviour
                     //移除Script，使爆炸位置固定、換圖正常
                     Destroy(this.GetComponent<MoveController>());
 
-                    //處理不同碰撞物的部分(敵人、主角)
+                    //處理不同碰撞物的部分(小怪、魔王、遊戲角色)
                     if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                         other.GetComponent<EnemyPropertyInfo>().DecreaseLife(this.Damage);
+                    else if (other.gameObject.layer == LayerMask.NameToLayer("Boss"))
+                        other.GetComponent<BossPropertyInfo>().DecreaseLife(this.Damage);
                     else if (other.gameObject.layer == LayerMask.NameToLayer("Role"))
                         other.GetComponent<RolePropertyInfo>().DecreaseLife(this.Damage);
                 }

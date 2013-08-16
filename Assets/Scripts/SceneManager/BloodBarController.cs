@@ -2,8 +2,7 @@
 using System.Collections;
 
 /// <summary>
-/// Create Date：2013-07-25
-/// Modify Date：2013-07-25
+/// Modify Date：2013-08-16
 /// Author：Ian
 /// Description：
 ///     血條顯示控制器
@@ -39,10 +38,10 @@ public class BloodBarController : MonoBehaviour
         switch (this.whichType)
         {
             case WhichBlood.Role:
-                this.renderer.material.mainTextureOffset = new Vector2(Mathf.Lerp(1, 0, (float)this.RolePropertyInfo_Script.currentLife / this.RolePropertyInfo_Script.maxLife), 0);
+                this.renderer.material.mainTextureOffset = new Vector2(Mathf.Lerp(1, 0, this.RolePropertyInfo_Script.currentLife / this.RolePropertyInfo_Script.maxLife), 0);
                 break;
             case WhichBlood.Enemy:
-                this.renderer.material.mainTextureOffset = new Vector2(Mathf.Lerp(1, 0, (float)this.EnemyPropertyInfo_Script.currentLife / this.EnemyPropertyInfo_Script.maxLife), 0);
+                this.renderer.material.mainTextureOffset = new Vector2(Mathf.Lerp(1, 0, this.EnemyPropertyInfo_Script.currentLife / this.EnemyPropertyInfo_Script.maxLife), 0);
                 break;
         }
     }

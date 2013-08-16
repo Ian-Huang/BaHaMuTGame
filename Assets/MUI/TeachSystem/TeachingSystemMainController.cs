@@ -1,20 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TeachingSystemMainController : MonoBehaviour {
+public class TeachingSystemMainController : MonoBehaviour
+{
 
     public bool isBackgroindRunning;
     public bool isPlayerHalfHP;
     public bool isRecoverCure;
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    private float tempCureRate;
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     void OnEnable()
     {
@@ -23,13 +28,13 @@ public class TeachingSystemMainController : MonoBehaviour {
 
         if (isPlayerHalfHP)
         {
-           RolePropertyInfo[] rolePropertyInfo = GameObject.Find("RolesCollection").GetComponentsInChildren<RolePropertyInfo>();
-           foreach (RolePropertyInfo r in rolePropertyInfo)
-           {
-               r.currentLife = r.maxLife  / 4;
-               r.cureRate = 0;
-           }
-
+            RolePropertyInfo[] rolePropertyInfo = GameObject.Find("RolesCollection").GetComponentsInChildren<RolePropertyInfo>();
+            foreach (RolePropertyInfo r in rolePropertyInfo)
+            {
+                r.currentLife = r.maxLife / 4;
+                this.tempCureRate = r.cureRate;
+                r.cureRate = 0;
+            }
         }
 
         if (isRecoverCure)
@@ -37,7 +42,7 @@ public class TeachingSystemMainController : MonoBehaviour {
             RolePropertyInfo[] rolePropertyInfo = GameObject.Find("RolesCollection").GetComponentsInChildren<RolePropertyInfo>();
             foreach (RolePropertyInfo r in rolePropertyInfo)
             {
-                r.cureRate = 10;
+                r.cureRate = this.tempCureRate;
             }
         }
 

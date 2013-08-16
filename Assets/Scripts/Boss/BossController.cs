@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Create Date：2013-08-04
-/// Modify Date：2013-08-10
+/// Modify Date：2013-08-16
 /// Author：Ian
 /// Description：
 ///     魔王控制器(巨型史萊姆BOSS、石巨人BOSS)
 ///     0809：新增註冊BoneAnimation到GameManager，方便管理
 ///     0810：新增BossAction，用來判斷目前魔王狀態
 ///     0815：新增石巨人BOSS AI
+///     0816：從小怪資訊系統獨立出為王怪資訊系統
 /// </summary>
 public class BossController : MonoBehaviour
 {
@@ -32,14 +32,14 @@ public class BossController : MonoBehaviour
 
     private BossAction currentBossAction;   //確認目前魔王的動作狀態
     private Vector3 originScale;        //原始尺寸(物體翻轉使用)
-    private EnemyPropertyInfo enemyInfo { get; set; }
+    private BossPropertyInfo bossInfo { get; set; }
     private SmoothMoves.BoneAnimation boneAnimation;
 
     // Use this for initialization
     void Start()
     {
         //載入敵人資訊
-        this.enemyInfo = this.GetComponent<EnemyPropertyInfo>();
+        this.bossInfo = this.GetComponent<BossPropertyInfo>();
 
         //設定BoneAnimation
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
@@ -108,11 +108,11 @@ public class BossController : MonoBehaviour
         if (GameManager.script.GetBoneAnimationState(this.boneAnimation))
         {
             // 魔王必須未死亡
-            if (!this.enemyInfo.isDead)
+            if (!this.bossInfo.isDead)
             {
                 #region 巨型史萊姆BOSS
 
-                if (this.enemyInfo.Enemy == GameDefinition.Enemy.巨型史萊姆BOSS)
+                if (this.bossInfo.Boss == GameDefinition.Boss.巨型史萊姆BOSS)
                 {
                     if (this.currentBossAction == BossAction.登場中 | this.currentBossAction == BossAction.近距離攻擊)
                         this.boneAnimation.Play("run");
@@ -157,7 +157,7 @@ public class BossController : MonoBehaviour
 
                 #region 石巨人BOSS
 
-                else if (this.enemyInfo.Enemy == GameDefinition.Enemy.石巨人BOSS)
+                else if (this.bossInfo.Boss == GameDefinition.Boss.石巨人BOSS)
                 {
                     if (this.currentBossAction == BossAction.登場中 | this.currentBossAction == BossAction.近距離攻擊 | this.currentBossAction == BossAction.切換跑道)
                         this.boneAnimation.Play("walk");
@@ -322,7 +322,7 @@ public class BossController : MonoBehaviour
                 //tag = MainBody
                 if (triggerEvent.otherCollider.tag.CompareTo("MainBody") == 0)
                 {
-                    triggerEvent.otherCollider.GetComponent<RolePropertyInfo>().DecreaseLife(this.enemyInfo.nearDamage);
+                    triggerEvent.otherCollider.GetComponent<RolePropertyInfo>().DecreaseLife(this.bossInfo.nearDamage);
 
                     //創建 斬擊特效BoneAnimation
                     SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
@@ -356,7 +356,7 @@ public class BossController : MonoBehaviour
         //改變魔王Layer，更改為Enemy Layer，角色開始攻擊
         else if (triggerEvent.animationName == "登場" & triggerEvent.boneName == "ChangeLayer")
         {
-            this.gameObject.layer = LayerMask.NameToLayer("Enemy");
+            this.gameObject.layer = LayerMask.NameToLayer("Boss");
             this.ActionTimer.ChangeTimerState(true);
         }
         //確認是由"遠距離攻擊"觸發的UserTrigger
@@ -369,11 +369,11 @@ public class BossController : MonoBehaviour
             //目標為第一位角色
             Vector3 Posv3 = RolesCollection.script.Roles[this.currentBattlePositionIndex].transform.position + new Vector3(distance, 0, 0);
             GameObject newObj = (GameObject)Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
-            newObj.GetComponent<ShootObjectInfo>().Damage = this.enemyInfo.farDamage;
+            newObj.GetComponent<ShootObjectInfo>().Damage = this.bossInfo.farDamage;
             //目標為第二位角色
             Posv3 = RolesCollection.script.Roles[this.currentBattlePositionIndex + 1].transform.position + new Vector3(distance, 0, 0);
             newObj = (GameObject)Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
-            newObj.GetComponent<ShootObjectInfo>().Damage = this.enemyInfo.farDamage;
+            newObj.GetComponent<ShootObjectInfo>().Damage = this.bossInfo.farDamage;
 
             this.currentBossAction = BossAction.閒置;
         }

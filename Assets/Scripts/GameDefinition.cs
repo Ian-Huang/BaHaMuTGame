@@ -2,45 +2,50 @@
 using System.Collections.Generic;
 
 /// <summary>
-/// 遊戲定義檔
+/// Modify Date：2013-08-16
+/// Description：
+///     遊戲定義檔
+///     0816：新增魔王資訊系統
 /// </summary>
 public class GameDefinition
 {
-    public static int MaxMorale = 10000;
-    public static int MoraleRestoreRate = 5;
+    public static int MaxMorale = 5000;
+    public static int MoraleRestoreRate = 10;
 
     public static List<RoleData> RoleList = new List<RoleData>(){ 
-        new RoleData(Role.狂戰士,500,10,50,130,0),
-        new RoleData(Role.盾騎士,500,10,80,80,0),
-        new RoleData(Role.法師,300,6,30,100,100),
-        new RoleData(Role.獵人,350,8,40,60,130)
+        new RoleData(Role.盾騎士,500,100,120),
+        new RoleData(Role.狂戰士,550,120,100),
+        new RoleData(Role.獵人,450,100,90),
+        new RoleData(Role.法師,400,120,80)
     };
 
     public static List<EnemyData> EnemyList = new List<EnemyData>(){ 
-        new EnemyData(Enemy.史萊姆,50,5,10,100,0),
-        new EnemyData(Enemy.火焰史萊姆,100,10,20,150,0),
-        new EnemyData(Enemy.硬化史萊姆,200,15,50,80,0),
-        new EnemyData(Enemy.中型史萊姆,500,30,10,100,0),
-        new EnemyData(Enemy.中型火焰史萊姆,700,30,20,150,0),
-        new EnemyData(Enemy.中型硬化史萊姆,1000,20,50,80,0),
-        new EnemyData(Enemy.巨型史萊姆BOSS,2500,30,30,200,200),
+        new EnemyData(Enemy.史萊姆,100,150,50),
+        new EnemyData(Enemy.火焰史萊姆,120,170,60),
+        new EnemyData(Enemy.硬化史萊姆,150,150,70),
+        new EnemyData(Enemy.中型史萊姆,250,150,50),
+        new EnemyData(Enemy.中型火焰史萊姆,300,170,60),
+        new EnemyData(Enemy.中型硬化史萊姆,400,150,50),
 
-        new EnemyData(Enemy.骷髏戰士,100,10,20,100,0),
-        new EnemyData(Enemy.骷髏弓箭手,80,10,20,0,120),
-        new EnemyData(Enemy.骷髏騎士,300,20,50,100,0),
-        new EnemyData(Enemy.骷髏法師,100,5,10,0,150),
+        new EnemyData(Enemy.骷髏戰士,150,180,70),
+        new EnemyData(Enemy.骷髏弓箭手,150,150,70),
+        new EnemyData(Enemy.骷髏騎士,250,230,120),
+        new EnemyData(Enemy.骷髏法師,180,200,80),
 
-        new EnemyData(Enemy.樹人,200,10,35,150,0),
-        new EnemyData(Enemy.胖樹人,300,15,45,200,0),
-        new EnemyData(Enemy.長爪樹人,200,15,30,100,0),
+        new EnemyData(Enemy.樹人,200,150,70),
+        new EnemyData(Enemy.胖樹人,300,200,80),
+        new EnemyData(Enemy.長爪樹人,400,250,100),
 
-        new EnemyData(Enemy.石頭人,300,10,50,200,0),
-        new EnemyData(Enemy.石巨人BOSS,2500,30,30,400,100),
-        new EnemyData(Enemy.劍石巨人BOSS,2500,30,30,400,100),
+        new EnemyData(Enemy.石頭人,250,200,80),
 
-        new EnemyData(Enemy.獸人戰士,150,15,25,120,0),
-        new EnemyData(Enemy.獸人弓箭手,100,10,25,0,140),
-        new EnemyData(Enemy.獸人法師,100,5,15,0,170),
+        new EnemyData(Enemy.獸人戰士,150,120,25),
+        new EnemyData(Enemy.獸人弓箭手,100,140,25),
+        new EnemyData(Enemy.獸人法師,100,170,15),
+    };
+
+    public static List<BossData> BossList = new List<BossData>(){         
+        new BossData(Boss.巨型史萊姆BOSS,2500,180,150,50),
+        new BossData(Boss.石巨人BOSS,4000,200,180,120),
     };
 
     public static List<ObstacleData> ObstacleList = new List<ObstacleData>(){ 
@@ -55,28 +60,22 @@ public class GameDefinition
     {
         public Role RoleName;
         public int Life;
-        public int CureRate;
+        public int Damage;
         public int Defence;
-        public int NearDamage;
-        public int FarDamage;
 
         /// <summary>
         /// 角色資料建構式
         /// </summary>
         /// <param name="name">角色名字</param>
         /// <param name="life">角色生命值</param>
-        /// <param name="cureRate">角色回復速率</param>
+        /// <param name="damage">角色傷害值</param>
         /// <param name="defence">角色防禦力</param>
-        /// <param name="nearDamage">角色近距離傷害值</param>
-        /// <param name="farDamage">角色遠距離傷害值</param>
-        public RoleData(Role name, int life, int cureRate, int defence, int nearDamage, int farDamage)
+        public RoleData(Role name, int life, int damage, int defence)
         {
             this.RoleName = name;
             this.Life = life;
-            this.CureRate = cureRate;
+            this.Damage = damage;
             this.Defence = defence;
-            this.NearDamage = nearDamage;
-            this.FarDamage = farDamage;
         }
     }
 
@@ -84,28 +83,48 @@ public class GameDefinition
     {
         public Enemy EnemyName;
         public int Life;
-        public int CureRate;
+        public int Damage;
         public int Defence;
-        public int NearDamage;
-        public int FarDamage;
 
         /// <summary>
         /// 敵人資料建構式
         /// </summary>
         /// <param name="name">敵人名字</param>
         /// <param name="life">敵人生命值</param>
-        /// <param name="cureRate">敵人回復速率</param>
+        /// <param name="damage">敵人傷害值</param>
         /// <param name="defence">敵人防禦力</param>
-        /// <param name="nearDamage">敵人近距離傷害值</param>
-        /// <param name="farDamage">敵人遠距離傷害值</param>
-        public EnemyData(Enemy name, int life, int cureRate, int defence, int nearDamage, int farDamage)
+        public EnemyData(Enemy name, int life, int damage, int defence)
         {
             this.EnemyName = name;
             this.Life = life;
-            this.CureRate = cureRate;
+            this.Damage = damage;
             this.Defence = defence;
+        }
+    }
+
+    public class BossData
+    {
+        public Boss BossName;
+        public int Life;
+        public int NearDamage;
+        public int FarDamage;
+        public int Defence;
+
+        /// <summary>
+        /// BOSS資料建構式
+        /// </summary>
+        /// <param name="name">BOSS名字</param>
+        /// <param name="life">BOSS生命值</param>
+        /// <param name="nearDamage">BOSS近距離傷害值</param>
+        /// <param name="farDamage">BOSS遠距離傷害值</param>
+        /// <param name="defence">BOSS防禦力</param>
+        public BossData(Boss name, int life, int nearDamage, int farDamage, int defence)
+        {
+            this.BossName = name;
+            this.Life = life;
             this.NearDamage = nearDamage;
             this.FarDamage = farDamage;
+            this.Defence = defence;
         }
     }
 
@@ -155,7 +174,6 @@ public class GameDefinition
         中型史萊姆 = 104,
         中型火焰史萊姆 = 105,
         中型硬化史萊姆 = 106,
-        巨型史萊姆BOSS = 199,
 
         骷髏戰士 = 201,
         骷髏弓箭手 = 202,
@@ -167,12 +185,18 @@ public class GameDefinition
         長爪樹人 = 303,
 
         石頭人 = 401,
-        石巨人BOSS = 498,
-        劍石巨人BOSS = 499,
 
         獸人戰士 = 501,
         獸人弓箭手 = 502,
         獸人法師 = 503
+    }
+
+    public enum Boss
+    {
+        自訂 = 0,     //給我們自訂怪物能力值使用
+
+        巨型史萊姆BOSS = 1,
+        石巨人BOSS = 2,
     }
 
     public enum Obstacle

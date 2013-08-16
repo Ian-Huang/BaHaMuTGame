@@ -2,11 +2,11 @@
 using System.Collections;
 
 /// <summary>
-/// Create Date：2013-07-23
 /// Modify Date：2013-08-08
 /// Author：Ian
 /// Description：
 ///     事件控制器(用來偵測觸發事件)
+///     0808新增魔王警告點
 /// </summary>
 public class EventController : MonoBehaviour
 {

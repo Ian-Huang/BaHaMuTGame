@@ -2,7 +2,6 @@
 using System.Collections;
 
 /// <summary>
-/// Create Date：2013-07-27
 /// Modify Date：2013-07-31
 /// Author：Ian
 /// Description：

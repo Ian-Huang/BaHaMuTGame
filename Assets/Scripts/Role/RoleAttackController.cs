@@ -2,20 +2,20 @@
 using System.Collections;
 
 /// <summary>
-/// Create Date：2013-07-23
-/// Modify Date：2013-08-09
+/// Modify Date：2013-08-17
 /// Author：Ian
 /// Description：
 ///     角色攻擊控制器 (敵人、障礙物)
 ///     0809新增：註冊BoneAnimation到GameManager，方便管理
+///     0816修改：不分近or遠距離攻擊值
+///     0817新增魔王資訊的判斷
 /// </summary>
 public class RoleAttackController : MonoBehaviour
 {
     public float AttackDistance;        //攻擊距離
     public GameObject ShootObject;      //遠距離攻擊發射出的物件
     public SmoothMoves.BoneAnimation EffectAnimation;   //效果動畫物件
-    public LayerMask EnemyLayer;       //判定是否攻擊的敵人Layer
-    public LayerMask ObstacleLayer;       //判定是否攻擊的障礙物Layer
+    public LayerMask AttackLayer;       //判定是否攻擊的Layer (Enemy、Boss、Obstacle)
 
     private RolePropertyInfo roleInfo { get; set; }
     private SmoothMoves.BoneAnimation boneAnimation;
@@ -44,22 +44,36 @@ public class RoleAttackController : MonoBehaviour
             if (!this.roleInfo.isWeak)
             {
                 //判別物件為何？  敵人與障礙物有不同的處理
-                if (Physics.Raycast(this.transform.position, Vector3.right, out this.hitData, this.AttackDistance, this.EnemyLayer))
+                if (Physics.Raycast(this.transform.position, Vector3.right, out this.hitData, this.AttackDistance, this.AttackLayer))
                 {
                     //tag = MainBody  (物件主體)
                     if (this.hitData.collider.tag.CompareTo("MainBody") == 0)
-                        if (!this.hitData.collider.GetComponent<EnemyPropertyInfo>().isDead)    //確認Enemy是否已經死亡
+                    {
+                        string layerName = LayerMask.LayerToName(this.hitData.collider.gameObject.layer);
+                        bool isCheck = false;
+
+                        //判別物件為何？  敵人、障礙物、魔王有不同的處理
+                        if (layerName.CompareTo("Enemy") == 0)
+                        {
+                            if (!this.hitData.collider.GetComponent<EnemyPropertyInfo>().isDead)    //確認Enemy是否已經死亡
+                                isCheck = true;
+                        }
+                        else if (layerName.CompareTo("Boss") == 0)
+                        {
+                            if (!this.hitData.collider.GetComponent<BossPropertyInfo>().isDead)    //確認Boss是否已經死亡
+                                isCheck = true;
+                        }
+                        else if (layerName.CompareTo("Obstacle") == 0)
+                        {
+                            if (!this.hitData.collider.GetComponent<ObstaclePropertyInfo>().isDisappear)    //確認Obstacle是否已經消失
+                                if (this.GetComponent<ObstacleSystem>().ObstacleList.Contains(this.hitData.collider.GetComponent<ObstaclePropertyInfo>().Obstacle))
+                                    isCheck = true;
+                        }
+
+                        if (isCheck)
                             if (!this.boneAnimation.IsPlaying("attack"))
                                 this.boneAnimation.Play("attack");
-                }
-                else if (Physics.Raycast(this.transform.position, Vector3.right, out this.hitData, this.AttackDistance, this.ObstacleLayer))
-                {
-                    //tag = MainBody  (物件主體)
-                    if (this.hitData.collider.tag.CompareTo("MainBody") == 0)
-                        if (!this.hitData.collider.GetComponent<ObstaclePropertyInfo>().isDisappear)    //確認Obstacle是否已經消失
-                            if (this.GetComponent<ObstacleSystem>().ObstacleList.Contains(this.hitData.collider.GetComponent<ObstaclePropertyInfo>().Obstacle))
-                                if (!this.boneAnimation.IsPlaying("attack"))
-                                    this.boneAnimation.Play("attack");
+                    }
                 }
 
                 //確認目前動畫狀態(必須沒再播attack)
@@ -87,28 +101,28 @@ public class RoleAttackController : MonoBehaviour
             //tag = MainBody  (物件主體)
             if (triggerEvent.otherCollider.tag.CompareTo("MainBody") == 0)
             {
-                //判別物件為何？  敵人與障礙物有不同的處理
-                if (((1 << triggerEvent.otherCollider.gameObject.layer) & this.EnemyLayer.value) > 0)
-                {
-                    triggerEvent.otherCollider.GetComponent<EnemyPropertyInfo>().DecreaseLife(this.roleInfo.nearDamage);
+                string layerName = LayerMask.LayerToName(triggerEvent.otherCollider.gameObject.layer);
+                bool isCheck = false;
 
-                    //創建 斬擊特效BoneAnimation
-                    SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
-                    //設定動畫播放中心點
-                    Vector3 expPos = triggerEvent.otherColliderClosestPointToBone;
-                    expPos.z = triggerEvent.otherCollider.gameObject.transform.position.z - 1;
-                    obj.mLocalTransform.position = expPos;
-                    obj.playAutomatically = false;
-                    //隨機撥放 1 或 2 動畫片段
-                    if (Random.Range(0, 2) == 0)
-                        obj.Play("斬擊特效01");
-                    else
-                        obj.Play("斬擊特效02");
+                //判別物件為何？  敵人、障礙物、魔王有不同的處理
+                if (layerName.CompareTo("Enemy") == 0)
+                {
+                    triggerEvent.otherCollider.GetComponent<EnemyPropertyInfo>().DecreaseLife(this.roleInfo.damage);
+                    isCheck = true;
                 }
-                else if (((1 << triggerEvent.otherCollider.gameObject.layer) & this.ObstacleLayer.value) > 0)
+                else if (layerName.CompareTo("Boss") == 0)
+                {
+                    triggerEvent.otherCollider.GetComponent<BossPropertyInfo>().DecreaseLife(this.roleInfo.damage);
+                    isCheck = true;
+                }
+                else if (layerName.CompareTo("Obstacle") == 0)
                 {
                     triggerEvent.otherCollider.GetComponent<ObstaclePropertyInfo>().CheckObstacle(true);
+                    isCheck = true;
+                }
 
+                if (isCheck)
+                {
                     //創建 斬擊特效BoneAnimation
                     SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
                     //設定動畫播放中心點
@@ -143,7 +157,7 @@ public class RoleAttackController : MonoBehaviour
             obj.transform.parent = GameObject.Find("UselessObjectCollection").transform;
 
             ShootObjectInfo info = obj.GetComponent<ShootObjectInfo>();
-            info.Damage = this.roleInfo.farDamage;
+            info.Damage = this.roleInfo.damage;
         }
     }
 

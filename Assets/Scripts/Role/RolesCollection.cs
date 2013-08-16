@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Create Date：2013-07-22
 /// Modify Date：2013-08-06
 /// Author：Ian
 /// Description：

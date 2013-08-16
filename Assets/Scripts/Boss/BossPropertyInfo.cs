@@ -5,17 +5,18 @@ using System.Collections;
 /// Modify Date：2013-08-16
 /// Author：Ian
 /// Description：
-///     敵人的屬性資訊
-///     0809新增：移除敵人的同時，移除註冊於GameManager AllBoneAnimationList中的資訊
-///     0816修改：移除敵人回血功能
+///     BOSS的屬性資訊
+///     0809新增：移除BOSS的同時，移除註冊於GameManager AllBoneAnimationList中的資訊
+///     0816修改：移除BOSS回血功能
 ///     0816：從小怪資訊系統獨立出為王怪資訊系統
 /// </summary>
-public class EnemyPropertyInfo : MonoBehaviour
+public class BossPropertyInfo : MonoBehaviour
 {
-    public GameDefinition.Enemy Enemy;  //怪物名稱
+    public GameDefinition.Boss Boss;    //BOSS名稱
     public float currentLife;           //當前生命值
     public float maxLife;               //最大生命值
-    public int damage;                  //攻擊傷害值
+    public int nearDamage;              //近距離傷害值
+    public int farDamage;               //遠距離傷害值
     public int defence;                 //防禦力
 
     public Material CurrentMaterial;    //設定物件Material (null => 使用預設Material)
@@ -39,13 +40,14 @@ public class EnemyPropertyInfo : MonoBehaviour
             this.boneAnimation.SwapMaterial(this.boneAnimation.mMaterialSource[0], this.CurrentMaterial);
         }
 
-        //讀取系統儲存的怪物屬性資料
-        if (this.Enemy != GameDefinition.Enemy.自訂)  //如是"自訂"怪物，則不讀取系統資料
+        //讀取系統儲存的BOSS屬性資料
+        if (this.Boss != GameDefinition.Boss.自訂)  //如是"自訂"BOSS，則不讀取系統資料
         {
-            GameDefinition.EnemyData getData = GameDefinition.EnemyList.Find((GameDefinition.EnemyData data) => { return data.EnemyName == Enemy; });
+            GameDefinition.BossData getData = GameDefinition.BossList.Find((GameDefinition.BossData data) => { return data.BossName == Boss; });
             this.maxLife = getData.Life;
             this.currentLife = getData.Life;
-            this.damage = getData.Damage;
+            this.nearDamage = getData.NearDamage;
+            this.farDamage = getData.FarDamage;
             this.defence = getData.Defence;
         }
     }
@@ -67,7 +69,7 @@ public class EnemyPropertyInfo : MonoBehaviour
     }
 
     /// <summary>
-    /// 減少敵人血量函式
+    /// 減少BOSS血量函式
     /// </summary>
     /// <param name="deLife">減少的數值</param>
     public void DecreaseLife(int deLife)
@@ -80,18 +82,24 @@ public class EnemyPropertyInfo : MonoBehaviour
 
         //當生命小於0，刪除物件
         if (!this.isDead && this.currentLife <= 0)
-            this.EnemyDead();
+        {
+            //王怪死亡，連同小兵一起死亡
+            foreach (var script in this.transform.parent.gameObject.GetComponentsInChildren<EnemyPropertyInfo>())
+                script.EnemyDead();
+
+            this.BossDead();
+        }
     }
 
     /// <summary>
-    /// 怪物死亡執行函式
+    /// BOSS死亡執行函式
     /// </summary>
-    public void EnemyDead()
+    void BossDead()
     {
         this.currentLife = 0;
         this.isDead = true;
         this.boneAnimation.Play("defeat");
-        Destroy(this.GetComponent<MoveController>());   //死亡:停止敵人移動
+        Destroy(this.GetComponent<MoveController>());   //死亡:停止BOSS移動
 
         //產生金幣物件 (金幣數未完成)
         GameObject newObj = (GameObject)Instantiate(GameManager.script.CoinObject, this.transform.position, GameManager.script.CoinObject.transform.rotation);
