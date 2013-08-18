@@ -19,6 +19,7 @@ public class BossPropertyInfo : MonoBehaviour
     public int nearDamage;              //近距離傷害值
     public int farDamage;               //遠距離傷害值
     public int defence;                 //防禦力
+    public int coin;                    //掉落錢幣數
 
     public Material CurrentMaterial;    //設定物件Material (null => 使用預設Material)
 
@@ -50,6 +51,7 @@ public class BossPropertyInfo : MonoBehaviour
             this.nearDamage = getData.NearDamage;
             this.farDamage = getData.FarDamage;
             this.defence = getData.Defence;
+            this.coin = getData.Coin;
         }
     }
 
@@ -105,7 +107,7 @@ public class BossPropertyInfo : MonoBehaviour
 
         //產生金幣物件 (金幣數未完成)
         GameObject newObj = (GameObject)Instantiate(GameManager.script.CoinObject, this.transform.position, GameManager.script.CoinObject.transform.rotation);
-        newObj.GetComponent<CoinPropertyInfo>().SetCoinAmount(Random.Range(1, 15));
+        newObj.GetComponent<CoinPropertyInfo>().SetCoinAmount(this.coin);
         newObj.transform.parent = this.transform.parent.transform;
     }
 }

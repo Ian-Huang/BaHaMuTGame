@@ -2,11 +2,12 @@
 using System.Collections;
 
 /// <summary>
-/// Modify Date：2013-08-18
+/// Modify Date：2013-08-19
 /// Author：Ian
 /// Description：
 ///     金幣系統
-///     0818新增：一訂時間後金幣自動開始移動到指定位置
+///     0818新增：一定時間後金幣自動開始移動到指定位置
+///     0819新增：新增四種錢幣種類，依照金錢數決定種類
 /// </summary>
 public class CoinPropertyInfo : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class CoinPropertyInfo : MonoBehaviour
     public LayerMask TargerLayer;           //被觸發的目標
 
     private bool isDisappear = false;
+    private int[] CoinLevelList = new int[] { 100, 500, 1000 }; //錢幣等級的清單 (銅<銀<金<錢袋)
 
     void Start()
     {
@@ -71,6 +73,21 @@ public class CoinPropertyInfo : MonoBehaviour
     public void SetCoinAmount(int count)
     {
         this.coinAmount = count;
+
+        //判定要用哪種錢幣種類
+        SmoothMoves.BoneAnimation boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
+        boneAnimation.playAutomatically = false;
+        if (this.coinAmount < this.CoinLevelList[0])
+            boneAnimation.Play("銅幣");
+
+        else if (this.coinAmount < this.CoinLevelList[1])
+            boneAnimation.Play("銀幣");
+
+        else if (this.coinAmount < this.CoinLevelList[2])
+            boneAnimation.Play("金幣");
+
+        else
+            boneAnimation.Play("錢袋");
     }
 
     /// <summary>

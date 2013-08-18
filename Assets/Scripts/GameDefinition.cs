@@ -20,32 +20,28 @@ public class GameDefinition
     };
 
     public static List<EnemyData> EnemyList = new List<EnemyData>(){ 
-        new EnemyData(Enemy.史萊姆,100,150,50),
-        new EnemyData(Enemy.火焰史萊姆,120,170,60),
-        new EnemyData(Enemy.硬化史萊姆,150,150,70),
-        new EnemyData(Enemy.中型史萊姆,250,150,50),
-        new EnemyData(Enemy.中型火焰史萊姆,300,170,60),
-        new EnemyData(Enemy.中型硬化史萊姆,400,150,50),
+        new EnemyData(Enemy.史萊姆,100,150,50,5),
+        new EnemyData(Enemy.火焰史萊姆,120,170,60,5),
+        new EnemyData(Enemy.硬化史萊姆,150,150,70,10),
+        new EnemyData(Enemy.中型史萊姆,250,150,50,10),
+        new EnemyData(Enemy.中型火焰史萊姆,300,170,60,15),
+        new EnemyData(Enemy.中型硬化史萊姆,400,150,50,25),
 
-        new EnemyData(Enemy.骷髏戰士,150,180,70),
-        new EnemyData(Enemy.骷髏弓箭手,150,150,70),
-        new EnemyData(Enemy.骷髏騎士,250,230,120),
-        new EnemyData(Enemy.骷髏法師,180,200,80),
+        new EnemyData(Enemy.骷髏戰士,150,180,70,15),
+        new EnemyData(Enemy.骷髏弓箭手,150,150,70,15),
+        new EnemyData(Enemy.骷髏騎士,250,230,120,30),
+        new EnemyData(Enemy.骷髏法師,180,200,80,25),
 
-        new EnemyData(Enemy.樹人,200,150,70),
-        new EnemyData(Enemy.胖樹人,300,200,80),
-        new EnemyData(Enemy.長爪樹人,400,250,100),
+        new EnemyData(Enemy.樹人,200,150,70,20),
+        new EnemyData(Enemy.胖樹人,300,200,80,30),
+        new EnemyData(Enemy.長爪樹人,400,250,100,35),
 
-        new EnemyData(Enemy.石頭人,250,200,80),
-
-        new EnemyData(Enemy.獸人戰士,150,120,25),
-        new EnemyData(Enemy.獸人弓箭手,100,140,25),
-        new EnemyData(Enemy.獸人法師,100,170,15),
+        new EnemyData(Enemy.石頭人,250,200,80,20),
     };
 
     public static List<BossData> BossList = new List<BossData>(){         
-        new BossData(Boss.巨型史萊姆BOSS,2500,180,150,80),
-        new BossData(Boss.石巨人BOSS,4000,120,200,180),
+        new BossData(Boss.巨型史萊姆BOSS,2500,180,150,80,300),
+        new BossData(Boss.石巨人BOSS,4000,120,200,180,500),
     };
 
     public static List<ObstacleData> ObstacleList = new List<ObstacleData>(){ 
@@ -92,6 +88,7 @@ public class GameDefinition
         public int Life;
         public int Damage;
         public int Defence;
+        public int Coin;
 
         /// <summary>
         /// 敵人資料建構式
@@ -100,12 +97,14 @@ public class GameDefinition
         /// <param name="life">敵人生命值</param>
         /// <param name="damage">敵人傷害值</param>
         /// <param name="defence">敵人防禦力</param>
-        public EnemyData(Enemy name, int life, int damage, int defence)
+        /// <param name="coin">敵人掉落金錢數</param>
+        public EnemyData(Enemy name, int life, int damage, int defence, int coin)
         {
             this.EnemyName = name;
             this.Life = life;
             this.Damage = damage;
             this.Defence = defence;
+            this.Coin = coin;
         }
     }
 
@@ -116,6 +115,7 @@ public class GameDefinition
         public int NearDamage;
         public int FarDamage;
         public int Defence;
+        public int Coin;
 
         /// <summary>
         /// BOSS資料建構式
@@ -125,13 +125,15 @@ public class GameDefinition
         /// <param name="nearDamage">BOSS近距離傷害值</param>
         /// <param name="farDamage">BOSS遠距離傷害值</param>
         /// <param name="defence">BOSS防禦力</param>
-        public BossData(Boss name, int life, int nearDamage, int farDamage, int defence)
+        /// <param name="coin">BOSS掉落金錢數</param>
+        public BossData(Boss name, int life, int nearDamage, int farDamage, int defence, int coin)
         {
             this.BossName = name;
             this.Life = life;
             this.NearDamage = nearDamage;
             this.FarDamage = farDamage;
             this.Defence = defence;
+            this.Coin = coin;
         }
     }
 

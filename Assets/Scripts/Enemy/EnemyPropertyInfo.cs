@@ -18,6 +18,7 @@ public class EnemyPropertyInfo : MonoBehaviour
     public float maxLife;               //最大生命值
     public int damage;                  //攻擊傷害值
     public int defence;                 //防禦力
+    public int coin;                    //掉落錢幣數
 
     public Material CurrentMaterial;    //設定物件Material (null => 使用預設Material)
 
@@ -48,6 +49,7 @@ public class EnemyPropertyInfo : MonoBehaviour
             this.currentLife = getData.Life;
             this.damage = getData.Damage;
             this.defence = getData.Defence;
+            this.coin = getData.Coin;
         }
     }
 
@@ -96,7 +98,7 @@ public class EnemyPropertyInfo : MonoBehaviour
 
         //產生金幣物件 (金幣數未完成)
         GameObject newObj = (GameObject)Instantiate(GameManager.script.CoinObject, this.transform.position, GameManager.script.CoinObject.transform.rotation);
-        newObj.GetComponent<CoinPropertyInfo>().SetCoinAmount(Random.Range(1, 15));
+        newObj.GetComponent<CoinPropertyInfo>().SetCoinAmount(this.coin);
         newObj.transform.parent = this.transform.parent.transform;
     }
 }
