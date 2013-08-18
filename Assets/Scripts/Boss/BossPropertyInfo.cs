@@ -9,6 +9,7 @@ using System.Collections;
 ///     0809新增：移除BOSS的同時，移除註冊於GameManager AllBoneAnimationList中的資訊
 ///     0816修改：移除BOSS回血功能
 ///     0816：從小怪資訊系統獨立出為王怪資訊系統
+///     0818：修改傷害公式(BOSS被傷害低於20時，固定造成20點傷害)
 /// </summary>
 public class BossPropertyInfo : MonoBehaviour
 {
@@ -75,8 +76,8 @@ public class BossPropertyInfo : MonoBehaviour
     public void DecreaseLife(int deLife)
     {
         deLife -= this.defence; //扣除防禦力
-        if (deLife <= 0)
-            deLife = 0;
+        if (deLife <= 20)
+            deLife = 20;
 
         this.currentLife -= deLife;
 
