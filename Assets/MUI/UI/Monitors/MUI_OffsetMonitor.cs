@@ -34,7 +34,6 @@ public class MUI_OffsetMonitor : MonoBehaviour
     void Update()
     {
 
-        MUI_Monitor.script.SetValue("進度條x", 50F);
 
 
         if (mMonitor.isValid(Key + "x")) Percentage.x = MUI_Monitor.MonitorDictionary[Key + "x"];

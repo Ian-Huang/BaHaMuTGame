@@ -10,7 +10,7 @@ using System.Collections.Generic;
 public class GameDefinition
 {
     public static int MaxMorale = 5000;
-    public static int MoraleRestoreRate = 10;
+    public static int MoraleRestoreRate = 1;
 
     public static List<RoleData> RoleList = new List<RoleData>(){ 
         new RoleData(Role.盾騎士,500,100,120),
@@ -44,17 +44,24 @@ public class GameDefinition
     };
 
     public static List<BossData> BossList = new List<BossData>(){         
-        new BossData(Boss.巨型史萊姆BOSS,2500,180,150,50),
-        new BossData(Boss.石巨人BOSS,4000,200,180,120),
+        new BossData(Boss.巨型史萊姆BOSS,2500,180,150,80),
+        new BossData(Boss.石巨人BOSS,4000,120,200,180),
     };
 
     public static List<ObstacleData> ObstacleList = new List<ObstacleData>(){ 
+        new ObstacleData(Obstacle.鐵陷阱,200),
         new ObstacleData(Obstacle.火焰魔法陣,250),
         new ObstacleData(Obstacle.樹木_01,200),
         new ObstacleData(Obstacle.樹木_02,200),
-        new ObstacleData(Obstacle.斷壁,250),
-        new ObstacleData(Obstacle.鐵陷阱,200)
+        new ObstacleData(Obstacle.斷壁,250)        
     };
+
+    //能力(生命、攻擊力、防禦力)升級花費表
+    public static List<int> AbilityCostLevel = new List<int>() { 100, 200, 350, 700, 1200, 1800, 2500, 3500, 4800, 6500 };
+    //招式升級花費表
+    public static List<int> SkillCostLevel = new List<int>() { 500, 800, 1200, 1800, 2500 };
+    //絕技升級花費表
+    public static List<int> UltimateSkillCostLevel = new List<int>() { 2000, 4500 };
 
     public class RoleData
     {
@@ -193,7 +200,7 @@ public class GameDefinition
 
     public enum Boss
     {
-        自訂 = 0,     //給我們自訂怪物能力值使用
+        自訂Boss = 0,     //給我們自訂怪物能力值使用
 
         巨型史萊姆BOSS = 1,
         石巨人BOSS = 2,

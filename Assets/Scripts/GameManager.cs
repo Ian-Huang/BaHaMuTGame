@@ -15,9 +15,13 @@ public class GameManager : MonoBehaviour
 
     public GameObject CoinObject;   //金幣物件Prefab
 
-    public int CurrentMorale;
+    public float CurrentMorale;
+    public float MaxMorale;
     public int MoraleRestoreRate;
-    public int MaxMorale;
+
+    public GameObject StartPosition;
+    public GameObject EndPosition;
+    public float TotalDistance;
 
     public Dictionary<SmoothMoves.BoneAnimation, bool> AllBoneAnimationList = new Dictionary<SmoothMoves.BoneAnimation, bool>();
 
@@ -71,6 +75,8 @@ public class GameManager : MonoBehaviour
         this.CurrentMorale = GameDefinition.MaxMorale;
         this.MoraleRestoreRate = GameDefinition.MoraleRestoreRate;
 
+        this.TotalDistance = Mathf.Abs(this.StartPosition.transform.position.x - this.EndPosition.transform.position.x);
+
         InvokeRepeating("RestoreMoralePersecond", 0.1f, 1);
     }
 
@@ -80,15 +86,19 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     public float GetCurrentMorale()
     {
-        return ((float)this.CurrentMorale / this.MaxMorale) * 100;
+        return (this.CurrentMorale / this.MaxMorale) * 100;
     }
 
     // Update is called once per frame
     void Update()
     {
         //提供介面監控數值
+
+        //進度條
+        MUI_Monitor.script.SetValue("進度條x", (1 - Mathf.Abs(this.StartPosition.transform.position.x - this.EndPosition.transform.position.x) / this.TotalDistance) * 100);
+
         //士氣
-        MUI_Monitor.script.SetValue("士氣值" + "x", ((float)this.CurrentMorale / this.MaxMorale) * 100);
+        MUI_Monitor.script.SetValue("士氣值" + "x", (this.CurrentMorale / this.MaxMorale) * 100);
 
         //測試用，暫停所有註冊的BoneAnimation
         if (Input.GetKeyDown(KeyCode.V))

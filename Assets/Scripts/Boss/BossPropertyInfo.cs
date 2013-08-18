@@ -42,7 +42,7 @@ public class BossPropertyInfo : MonoBehaviour
         }
 
         //讀取系統儲存的BOSS屬性資料
-        if (this.Boss != GameDefinition.Boss.自訂)  //如是"自訂"BOSS，則不讀取系統資料
+        if (this.Boss != GameDefinition.Boss.自訂Boss)  //如是"自訂"BOSS，則不讀取系統資料
         {
             GameDefinition.BossData getData = GameDefinition.BossList.Find((GameDefinition.BossData data) => { return data.BossName == Boss; });
             this.maxLife = getData.Life;
@@ -101,6 +101,7 @@ public class BossPropertyInfo : MonoBehaviour
         this.isDead = true;
         this.boneAnimation.Play("defeat");
         Destroy(this.GetComponent<MoveController>());   //死亡:停止BOSS移動
+        iTween.Stop(this.gameObject);                   //停止所有ITween影響的動作
 
         //產生金幣物件 (金幣數未完成)
         GameObject newObj = (GameObject)Instantiate(GameManager.script.CoinObject, this.transform.position, GameManager.script.CoinObject.transform.rotation);

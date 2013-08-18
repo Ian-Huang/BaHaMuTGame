@@ -7,6 +7,7 @@ using System.Collections;
 /// Description：
 ///     角色的屬性資訊
 ///     0816：修改回血速率公式
+///     0818：修改被敵人傷害公式(最小傷害為角色最大生命的3%)
 /// </summary>
 public class RolePropertyInfo : MonoBehaviour
 {
@@ -46,17 +47,18 @@ public class RolePropertyInfo : MonoBehaviour
     /// 減少角色血量函式
     /// </summary>
     /// <param name="deLife">減少的數值</param>
-    public void DecreaseLife(int deLife)
+    public void DecreaseLife(float deLife)
     {
         //扣除防禦力
         deLife -= this.defence;
-        if (deLife <= 0)
-            deLife = 1;
+        if (deLife <= (this.maxLife * 0.03f))   //角色受到最小傷害為角色最大生命的3%
+            deLife = this.maxLife * 0.03f;
 
         if (!this.isWeak)
         {
-            //角色當前未虛弱，扣角色的生命值
+            //角色當前未虛弱，扣角色的生命值、傷害1/5的士氣值
             this.currentLife -= deLife;
+            GameManager.script.CurrentMorale -= deLife * 0.2f;  //受到傷害的1/5，扣除士氣值
         }
         else
         {

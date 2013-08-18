@@ -11,6 +11,7 @@ using System.Collections.Generic;
 ///     0810：新增BossAction，用來判斷目前魔王狀態
 ///     0815：新增石巨人BOSS AI
 ///     0816：從小怪資訊系統獨立出為王怪資訊系統
+///     0818：新增自訂魔王控制
 /// </summary>
 public class BossController : MonoBehaviour
 {
@@ -110,6 +111,25 @@ public class BossController : MonoBehaviour
             // 魔王必須未死亡
             if (!this.bossInfo.isDead)
             {
+                #region 自訂BOSS
+
+                if (this.bossInfo.Boss == GameDefinition.Boss.自訂Boss)
+                {
+                    if (this.currentBossAction == BossAction.登場中 | this.currentBossAction == BossAction.近距離攻擊)
+                        this.boneAnimation.Play("run");
+
+                    else if (this.currentBossAction == BossAction.切換跑道)
+                        this.boneAnimation.Play("walk");
+
+                    else if (this.currentBossAction == BossAction.閒置)
+                    {
+                        this.transform.localScale = this.originScale;
+                        if (!this.boneAnimation.isPlaying)
+                            this.boneAnimation.Play("idle");
+                    }
+                }
+                #endregion
+
                 #region 巨型史萊姆BOSS
 
                 if (this.bossInfo.Boss == GameDefinition.Boss.巨型史萊姆BOSS)
