@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public static GameManager script;
 
     public GameObject CoinObject;   //金幣物件Prefab
+    public int CurrentCoinCount;
 
     public float CurrentMorale;
     public float MaxMorale;
