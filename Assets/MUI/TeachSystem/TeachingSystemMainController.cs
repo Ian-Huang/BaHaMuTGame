@@ -8,8 +8,9 @@ public class TeachingSystemMainController : MonoBehaviour
     public bool isPlayerHalfHP;
     public bool isRecoverCure;
     public bool isBossUIEffectShow;
-
-
+    public enum BossAttackType { None, Melee, Range };
+    public BossAttackType bossAttackType;
+    
     public GameObject UIBoss_Health;
     public GameObject UIMap_Progress;
 
@@ -54,6 +55,12 @@ public class TeachingSystemMainController : MonoBehaviour
             UIBoss_Health.SetActive(true);
             UIMap_Progress.SetActive(true);
         }
+
+        if (bossAttackType == BossAttackType.Melee)
+            BossController.script.NearAttack();
+
+        if (bossAttackType == BossAttackType.Range)
+            BossController.script.FarAttack();
 
     }
 

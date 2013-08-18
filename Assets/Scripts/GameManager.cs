@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
+using System;
 
 /// <summary>
 /// Modify Date：2013-08-09
@@ -74,8 +76,9 @@ public class GameManager : MonoBehaviour
         this.MaxMorale = GameDefinition.MaxMorale;
         this.CurrentMorale = GameDefinition.MaxMorale;
         this.MoraleRestoreRate = GameDefinition.MoraleRestoreRate;
-
-        this.TotalDistance = Mathf.Abs(this.StartPosition.transform.position.x - this.EndPosition.transform.position.x);
+       
+        if (Application.loadedLevelName != "TeachScene")
+            this.TotalDistance = Mathf.Abs(this.StartPosition.transform.position.x - this.EndPosition.transform.position.x);
 
         InvokeRepeating("RestoreMoralePersecond", 0.1f, 1);
     }
@@ -94,9 +97,15 @@ public class GameManager : MonoBehaviour
     {
         //提供介面監控數值
 
-        //進度條
-        MUI_Monitor.script.SetValue("進度條x", (1 - Mathf.Abs(this.StartPosition.transform.position.x - this.EndPosition.transform.position.x) / this.TotalDistance) * 100);
+        //f進度條For教學系統
 
+        if (Application.loadedLevelName == "TeachScene")
+            MUI_Monitor.script.SetValue("進度條x", (TeachingSystem.currentPartNumber / 15F) * 100);
+        else
+        {
+            //進度條
+            MUI_Monitor.script.SetValue("進度條x", (1 - Mathf.Abs(this.StartPosition.transform.position.x - this.EndPosition.transform.position.x) / this.TotalDistance) * 100);
+        }
         //士氣
         MUI_Monitor.script.SetValue("士氣值" + "x", (this.CurrentMorale / this.MaxMorale) * 100);
 

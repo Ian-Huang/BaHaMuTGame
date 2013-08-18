@@ -15,6 +15,8 @@ using System.Collections.Generic;
 /// </summary>
 public class BossController : MonoBehaviour
 {
+    public static BossController script;
+
     public ActionTimerData ActionTimer = new ActionTimerData();
     private float NextActionTime;
 
@@ -39,6 +41,8 @@ public class BossController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        script = this;
+
         //載入敵人資訊
         this.bossInfo = this.GetComponent<BossPropertyInfo>();
 
@@ -229,7 +233,7 @@ public class BossController : MonoBehaviour
     {
         //魔王出現定位點為所有定位點清單中間值
         this.currentBattlePositionIndex = this.BattlePositionList.Count / 2;
-
+        
         //魔王從出生點移動到定位點
         iTween.MoveTo(this.gameObject, iTween.Hash(
                     "position", this.BattlePositionList[this.currentBattlePositionIndex].PositionTransform.position,
