@@ -33,6 +33,10 @@ public class MUI_OffsetMonitor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        MUI_Monitor.script.SetValue("進度條x", 50F);
+
+
         if (mMonitor.isValid(Key + "x")) Percentage.x = MUI_Monitor.MonitorDictionary[Key + "x"];
         if (mMonitor.isValid(Key + "y")) Percentage.y = MUI_Monitor.MonitorDictionary[Key + "y"];
         offset.x = Mathf.Lerp(From.x, To.x, Percentage.x / 100);

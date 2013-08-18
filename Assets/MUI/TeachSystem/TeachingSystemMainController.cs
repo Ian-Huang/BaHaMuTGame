@@ -7,8 +7,12 @@ public class TeachingSystemMainController : MonoBehaviour
     public bool isBackgroindRunning;
     public bool isPlayerHalfHP;
     public bool isRecoverCure;
+    public bool isBossUIEffectShow;
 
-    private float tempCureRate;
+
+    public GameObject UIBoss_Health;
+    public GameObject UIMap_Progress;
+
     // Use this for initialization
     void Start()
     {
@@ -32,7 +36,6 @@ public class TeachingSystemMainController : MonoBehaviour
             foreach (RolePropertyInfo r in rolePropertyInfo)
             {
                 r.currentLife = r.maxLife / 4;
-                this.tempCureRate = r.cureRate;
                 r.cureRate = 0;
             }
         }
@@ -42,8 +45,14 @@ public class TeachingSystemMainController : MonoBehaviour
             RolePropertyInfo[] rolePropertyInfo = GameObject.Find("RolesCollection").GetComponentsInChildren<RolePropertyInfo>();
             foreach (RolePropertyInfo r in rolePropertyInfo)
             {
-                r.cureRate = this.tempCureRate;
+                r.cureRate = 10;
             }
+        }
+
+        if (isBossUIEffectShow)
+        {
+            UIBoss_Health.SetActive(true);
+            UIMap_Progress.SetActive(true);
         }
 
     }

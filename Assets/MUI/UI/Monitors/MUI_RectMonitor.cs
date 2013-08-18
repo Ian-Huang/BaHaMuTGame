@@ -19,12 +19,14 @@ public class MUI_RectMonitor : MonoBehaviour
 
     private Rect rect;
 
+    private MUI_Monitor mMonitor = new MUI_Monitor();
+
     // Use this for initialization
     void Start()
     {
         //以Key為字串註冊一個索引
-        //if (Key != "") MonitorDictionary.Add(Key + "x", 0);
-        //if (Key != "") MonitorDictionary.Add(Key + "y", 0);
+        if (Key != "") mMonitor.SubmitKey(Key + "x");
+        if (Key != "") mMonitor.SubmitKey(Key + "y");
     }
 
     // Update is called once per frame
@@ -36,8 +38,23 @@ public class MUI_RectMonitor : MonoBehaviour
         //rect.y = Mathf.Lerp(From.y, To.y, Percentage.y / 100);
 
 
+        if (mMonitor.isValid(Key + "x")) Percentage.x = MUI_Monitor.MonitorDictionary[Key + "x"];
+        if (mMonitor.isValid(Key + "y")) Percentage.y = MUI_Monitor.MonitorDictionary[Key + "y"];
+        rect.x = Mathf.Lerp(From.x, To.x, Percentage.x / 100);
+        rect.y = Mathf.Lerp(From.y, To.y, Percentage.y / 100);
+
+
         //介面變化
-        if (this.GetComponent<MUI_Texture_2D>()) this.GetComponent<MUI_Texture_2D>().rect = rect;
-        if (this.GetComponent<MUI_Label>()) this.GetComponent<MUI_Label>().rect = rect;
+        if (this.GetComponent<MUI_Texture_2D>())
+        {
+            this.GetComponent<MUI_Texture_2D>().rect.x = rect.x;
+            this.GetComponent<MUI_Texture_2D>().rect.y = rect.y;
+
+        }
+        if (this.GetComponent<MUI_Label>())
+        {
+            this.GetComponent<MUI_Label>().rect.x = rect.x;
+            this.GetComponent<MUI_Label>().rect.y = rect.y;
+        }
     }
 }

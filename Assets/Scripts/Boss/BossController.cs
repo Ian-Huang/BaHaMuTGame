@@ -60,7 +60,7 @@ public class BossController : MonoBehaviour
         this.BossReadyAppear();
     }
 
-    void NearAttack()
+    public void NearAttack()
     {
         iTween.MoveTo(this.gameObject, iTween.Hash(
                                     "x", this.transform.position.x - this.NearAttackRunDistance,
@@ -72,7 +72,7 @@ public class BossController : MonoBehaviour
         this.currentBossAction = BossAction.近距離攻擊;
     }
 
-    void FarAttack()
+    public void FarAttack()
     {
         if (this.currentBossAction != BossAction.遠距離攻擊)
         {
