@@ -105,7 +105,7 @@ public class BossPropertyInfo : MonoBehaviour
         Destroy(this.GetComponent<MoveController>());   //死亡:停止BOSS移動
         iTween.Stop(this.gameObject);                   //停止所有ITween影響的動作
 
-        //產生金幣物件 (金幣數未完成)
+        //產生金幣物件
         GameObject newObj = (GameObject)Instantiate(GameManager.script.CoinObject, this.transform.position, GameManager.script.CoinObject.transform.rotation);
         newObj.GetComponent<CoinPropertyInfo>().SetCoinAmount(this.coin);
         newObj.transform.parent = this.transform.parent.transform;

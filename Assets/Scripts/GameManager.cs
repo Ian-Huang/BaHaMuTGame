@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
         this.MaxMorale = GameDefinition.MaxMorale;
         this.CurrentMorale = GameDefinition.MaxMorale;
         this.MoraleRestoreRate = GameDefinition.MoraleRestoreRate;
-       
+
         if (Application.loadedLevelName != "TeachScene")
             this.TotalDistance = Mathf.Abs(this.StartPosition.transform.position.x - this.EndPosition.transform.position.x);
 
