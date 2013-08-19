@@ -14,7 +14,7 @@ public class PlayerPrefsDictionary : MonoBehaviour
     public static Dictionary<string, int> PlayerPrefDictionary = new Dictionary<string, int>();
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         if (deletePlayerPref)
             PlayerPrefs.DeleteAll();
@@ -126,20 +126,20 @@ public class PlayerPrefsDictionary : MonoBehaviour
 
 
     /// <summary>
-    /// 增加數值
+    /// 增加數值 , 多型 
     /// </summary>
     /// <param name="key">Key字串</param>
     public void AddValue(string key)
     {
+        // 如果在PlayerPrefs沒有這Key
         if (!PlayerPrefs.HasKey(key))
         {
+            //在字典中增加Key 值為0
             PlayerPrefDictionary.Add(key.ToString(), 0); 
         }
         else
         {
-            if (isValid(key))
-                SetValue(key.ToString(), GetValue(key));
-            else
+            //如果在PlayerPrefs有這Key 但 字典沒有這Key 
                 PlayerPrefDictionary.Add(key.ToString(), PlayerPrefs.GetInt(key));
         }
     }
