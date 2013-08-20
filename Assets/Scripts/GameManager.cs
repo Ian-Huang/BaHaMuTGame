@@ -107,8 +107,15 @@ public class GameManager : MonoBehaviour
             //進度條
             MUI_Monitor.script.SetValue("進度條x", (1 - Mathf.Abs(this.StartPosition.transform.position.x - this.EndPosition.transform.position.x) / this.TotalDistance) * 100);
         }
-        //士氣
-        MUI_Monitor.script.SetValue("士氣值" + "x", (this.CurrentMorale / this.MaxMorale) * 100);
+        //士氣條
+        MUI_Monitor.script.SetValue("士氣條" + "x", (this.CurrentMorale / this.MaxMorale) * 100);
+
+        
+        //魔王血條
+        if(GameObject.Find("巨型史萊姆BOSS"))
+        MUI_Monitor.script.SetValue("魔王血條" + "x", (GameObject.Find("巨型史萊姆BOSS").GetComponent<BossPropertyInfo>().currentLife / GameObject.Find("巨型史萊姆BOSS").GetComponent<BossPropertyInfo>().maxLife) * 100);
+
+
 
         //測試用，暫停所有註冊的BoneAnimation
         if (Input.GetKeyDown(KeyCode.V))

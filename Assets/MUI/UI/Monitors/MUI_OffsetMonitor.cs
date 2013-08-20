@@ -24,7 +24,6 @@ public class MUI_OffsetMonitor : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
         //以Key為字串註冊一個索引
         if (Key != "") mMonitor.SubmitKey(Key + "x");
         if (Key != "") mMonitor.SubmitKey(Key + "y");
@@ -33,9 +32,6 @@ public class MUI_OffsetMonitor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
-
         if (mMonitor.isValid(Key + "x")) Percentage.x = MUI_Monitor.MonitorDictionary[Key + "x"];
         if (mMonitor.isValid(Key + "y")) Percentage.y = MUI_Monitor.MonitorDictionary[Key + "y"];
         offset.x = Mathf.Lerp(From.x, To.x, Percentage.x / 100);
