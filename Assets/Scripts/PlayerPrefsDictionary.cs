@@ -17,7 +17,10 @@ public class PlayerPrefsDictionary : MonoBehaviour
     void Awake()
     {
         if (deletePlayerPref)
+        {
             PlayerPrefs.DeleteAll();
+            PlayerPrefDictionary.Clear();
+        }
 
         DontDestroyOnLoad(this.gameObject);
 
@@ -62,7 +65,7 @@ public class PlayerPrefsDictionary : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     /// <summary>
     /// 輸出全部資訊
@@ -135,11 +138,13 @@ public class PlayerPrefsDictionary : MonoBehaviour
         if (!PlayerPrefs.HasKey(key))
         {
             //在字典中增加Key 值為0
-            PlayerPrefDictionary.Add(key.ToString(), 0); 
+            print(key);
+            PlayerPrefDictionary.Add(key.ToString(), 0);
         }
         else
         {
-            //如果在PlayerPrefs有這Key 但 字典沒有這Key 
+            //如果在PlayerPrefs有這Key 但 字典沒有這Key
+            if (!isValid(key))
                 PlayerPrefDictionary.Add(key.ToString(), PlayerPrefs.GetInt(key));
         }
     }
@@ -150,9 +155,7 @@ public class PlayerPrefsDictionary : MonoBehaviour
             PlayerPrefDictionary.Add(key.ToString(), value);
         else
         {
-            if (isValid(key))
-                SetValue(key.ToString(), GetValue(key));
-            else
+            if (!isValid(key))
                 PlayerPrefDictionary.Add(key.ToString(), PlayerPrefs.GetInt(key));
         }
     }
