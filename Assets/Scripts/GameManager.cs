@@ -5,26 +5,31 @@ using UnityEditor;
 using System;
 
 /// <summary>
-/// Modify Date：2013-08-09
+/// Modify Date：2013-08-21
 /// Description：
 ///     全域遊戲管理系統
 ///     0809新增：新增角色、怪物BoneAnimation管理系統，以控制Animation
 ///     0814新增：金幣物件Prefab
+///     0821新增：效果動畫物件Prefab
 /// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager script;
 
-    public GameObject CoinObject;   //金幣物件Prefab
     public int CurrentCoinCount;
-
     public float CurrentMorale;
+    [HideInInspector]
     public float MaxMorale;
+    [HideInInspector]
     public int MoraleRestoreRate;
 
     public GameObject StartPosition;
     public GameObject EndPosition;
+    [HideInInspector]
     public float TotalDistance;
+
+    public GameObject CoinObject;               //金幣物件Prefab
+    public SmoothMoves.BoneAnimation EffectAnimationObject;    //效果動畫物件Prefab
 
     public Dictionary<SmoothMoves.BoneAnimation, bool> AllBoneAnimationList = new Dictionary<SmoothMoves.BoneAnimation, bool>();
 
@@ -110,10 +115,10 @@ public class GameManager : MonoBehaviour
         //士氣條
         MUI_Monitor.script.SetValue("士氣條" + "x", (this.CurrentMorale / this.MaxMorale) * 100);
 
-        
+
         //魔王血條
-        if(GameObject.Find("巨型史萊姆BOSS"))
-        MUI_Monitor.script.SetValue("魔王血條" + "x", (GameObject.Find("巨型史萊姆BOSS").GetComponent<BossPropertyInfo>().currentLife / GameObject.Find("巨型史萊姆BOSS").GetComponent<BossPropertyInfo>().maxLife) * 100);
+        if (GameObject.Find("巨型史萊姆BOSS"))
+            MUI_Monitor.script.SetValue("魔王血條" + "x", (GameObject.Find("巨型史萊姆BOSS").GetComponent<BossPropertyInfo>().currentLife / GameObject.Find("巨型史萊姆BOSS").GetComponent<BossPropertyInfo>().maxLife) * 100);
 
 
 

@@ -23,6 +23,7 @@ public class BossController : MonoBehaviour
     public List<PositionData> BattlePositionList = new List<PositionData>();    //戰鬥定位點資訊清單
     private int currentBattlePositionIndex = -1;                                //當前定位點的Index
 
+    public float 登場移動時間;
     public float ChangeWalksideMoveTime;        //魔王切換跑道所需時間(秒)
 
     public float NearAttackRunDistance;             //近距離攻擊到玩家前要移動的距離
@@ -31,7 +32,6 @@ public class BossController : MonoBehaviour
     public GameObject FarShootObject;   //遠距離射擊物件
 
     public LayerMask AttackLayer;       //攻擊判定的Layer
-    public SmoothMoves.BoneAnimation EffectAnimation;   //效果動畫物件
 
     private BossAction currentBossAction;   //確認目前魔王的動作狀態
     private Vector3 originScale;        //原始尺寸(物體翻轉使用)
@@ -233,11 +233,11 @@ public class BossController : MonoBehaviour
     {
         //魔王出現定位點為所有定位點清單中間值
         this.currentBattlePositionIndex = this.BattlePositionList.Count / 2;
-        
+
         //魔王從出生點移動到定位點
         iTween.MoveTo(this.gameObject, iTween.Hash(
                     "position", this.BattlePositionList[this.currentBattlePositionIndex].PositionTransform.position,
-                    "time", 2.5f,   //移動過程秒數
+                    "time", this.登場移動時間,   //移動過程秒數
                     "easetype", iTween.EaseType.easeInOutQuad,
                     "oncomplete", "BossAppearComplete"
                 ));
@@ -349,7 +349,7 @@ public class BossController : MonoBehaviour
                     triggerEvent.otherCollider.GetComponent<RolePropertyInfo>().DecreaseLife(this.bossInfo.nearDamage);
 
                     //創建 斬擊特效BoneAnimation
-                    SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
+                    SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(GameManager.script.EffectAnimationObject);
                     //設定動畫播放中心點
                     Vector3 expPos = triggerEvent.otherColliderClosestPointToBone;
                     expPos.z = triggerEvent.otherCollider.gameObject.transform.position.z - 1;

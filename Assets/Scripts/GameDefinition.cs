@@ -41,7 +41,7 @@ public class GameDefinition
 
     public static List<BossData> BossList = new List<BossData>(){         
         new BossData(Boss.巨型史萊姆BOSS,2500,180,150,80,300),
-        new BossData(Boss.石巨人BOSS,4000,120,200,180,500),
+        new BossData(Boss.石巨人BOSS,4000,200,180,120,500),
     };
 
     public static List<ObstacleData> ObstacleList = new List<ObstacleData>(){ 

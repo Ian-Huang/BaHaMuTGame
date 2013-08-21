@@ -13,7 +13,6 @@ public class EnemyAttackController : MonoBehaviour
 {
     public float AttackDistance;        //攻擊距離
     public GameObject ShootObject;      //遠距離攻擊發射出的物件
-    public SmoothMoves.BoneAnimation EffectAnimation;   //效果動畫物件
     public LayerMask AttackLayer;       //攻擊判定的Layer
 
     private EnemyPropertyInfo enemyInfo { get; set; }
@@ -82,7 +81,7 @@ public class EnemyAttackController : MonoBehaviour
                     triggerEvent.otherCollider.GetComponent<RolePropertyInfo>().DecreaseLife(this.enemyInfo.damage);
 
                     //創建 斬擊特效BoneAnimation
-                    SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
+                    SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(GameManager.script.EffectAnimationObject);
 
                     //設定動畫播放中心點
                     Vector3 expPos = triggerEvent.otherColliderClosestPointToBone;

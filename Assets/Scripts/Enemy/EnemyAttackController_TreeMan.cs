@@ -13,7 +13,6 @@ public class EnemyAttackController_TreeMan : MonoBehaviour
     public float RunSpeed;              //跑步速度
 
     public float AttackDistance;        //攻擊距離
-    public SmoothMoves.BoneAnimation EffectAnimation;   //效果動畫物件
     public LayerMask AttackLayer;       //攻擊判定的Layer
 
     private EnemyPropertyInfo enemyInfo { get; set; }
@@ -32,7 +31,7 @@ public class EnemyAttackController_TreeMan : MonoBehaviour
                 if (other.collider.tag.CompareTo("MainBody") == 0)
                 {
                     //創建 撞擊特效BoneAnimation
-                    SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
+                    SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(GameManager.script.EffectAnimationObject);
                     obj.mLocalTransform.position = other.ClosestPointOnBounds(this.transform.position) - Vector3.forward;
                     obj.playAutomatically = false;
                     //隨機撥放 1 或 2 動畫片段

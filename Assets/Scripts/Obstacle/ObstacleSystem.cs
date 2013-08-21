@@ -11,7 +11,6 @@ using System.Collections.Generic;
 public class ObstacleSystem : MonoBehaviour
 {
     public List<GameDefinition.Obstacle> ObstacleList = new List<GameDefinition.Obstacle>();    //可處理的障礙物清單
-    public SmoothMoves.BoneAnimation EffectAnimation;   //效果動畫物件
 
     private RolePropertyInfo roleInfo { get; set; }
 
@@ -31,7 +30,7 @@ public class ObstacleSystem : MonoBehaviour
         else
         {
             //創建 撞擊特效BoneAnimation
-            SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(this.EffectAnimation);
+            SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(GameManager.script.EffectAnimationObject);
             obj.mLocalTransform.position = other.ClosestPointOnBounds(this.transform.position) - Vector3.forward;
             obj.playAutomatically = false;
             //隨機撥放 1 或 2 動畫片段
