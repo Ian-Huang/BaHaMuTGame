@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
-/// Modify Date：2013-08-16
+/// Modify Date：2013-08-22
 /// Author：Ian
 /// Description：
 ///     BOSS的屬性資訊
@@ -10,16 +11,16 @@ using System.Collections;
 ///     0816修改：移除BOSS回血功能
 ///     0816：從小怪資訊系統獨立出為王怪資訊系統
 ///     0818：修改傷害公式(BOSS被傷害低於20時，固定造成20點傷害)
+///     0822：新增魔王招式資訊資料
 /// </summary>
 public class BossPropertyInfo : MonoBehaviour
 {
     public GameDefinition.Boss Boss;    //BOSS名稱
     public float currentLife;           //當前生命值
     public float maxLife;               //最大生命值
-    public int nearDamage;              //近距離傷害值
-    public int farDamage;               //遠距離傷害值
     public int defence;                 //防禦力
     public int coin;                    //掉落錢幣數
+    public List<GameDefinition.BossSkillData> skillData;    //BOSS的招式清單
 
     public Material CurrentMaterial;    //設定物件Material (null => 使用預設Material)
 
@@ -48,10 +49,9 @@ public class BossPropertyInfo : MonoBehaviour
             GameDefinition.BossData getData = GameDefinition.BossList.Find((GameDefinition.BossData data) => { return data.BossName == Boss; });
             this.maxLife = getData.Life;
             this.currentLife = getData.Life;
-            this.nearDamage = getData.NearDamage;
-            this.farDamage = getData.FarDamage;
             this.defence = getData.Defence;
             this.coin = getData.Coin;
+            this.skillData = getData.SkillData;
         }
     }
 

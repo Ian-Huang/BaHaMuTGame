@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 
 /// <summary>
-/// Modify Date：2013-08-16
+/// Modify Date：2013-08-22
 /// Description：
 ///     遊戲定義檔
 ///     0816：新增魔王資訊系統
+///     0822：新增魔王招式資訊系統
 /// </summary>
 public class GameDefinition
 {
@@ -39,9 +40,10 @@ public class GameDefinition
         new EnemyData(Enemy.石頭人,250,200,80,20),
     };
 
-    public static List<BossData> BossList = new List<BossData>(){         
-        new BossData(Boss.巨型史萊姆BOSS,2500,180,150,80,300),
-        new BossData(Boss.石巨人BOSS,4000,200,180,120,500),
+    public static List<BossData> BossList = new List<BossData>(){
+        new BossData(Boss.巨型史萊姆BOSS,2500,80,300,new List<BossSkillData>(){new BossSkillData("近距離攻擊",180),new BossSkillData("遠距離攻擊",150)}),
+        new BossData(Boss.石巨人BOSS,4000,120,500,new List<BossSkillData>(){new BossSkillData("近距離攻擊",200),new BossSkillData("遠距離攻擊",180)}),
+        new BossData(Boss.樹人長老BOSS,6000,150,1000,new List<BossSkillData>(){new BossSkillData("小樹根攻擊",300),new BossSkillData("大樹根攻擊",700)}),
     };
 
     public static List<ObstacleData> ObstacleList = new List<ObstacleData>(){ 
@@ -108,32 +110,47 @@ public class GameDefinition
         }
     }
 
+    [System.Serializable]
+    public class BossSkillData
+    {
+        public string SkillName;
+        public int Damage;
+
+        /// <summary>
+        /// BOSS招式資料
+        /// </summary>
+        /// <param name="name">BOSS招式名字</param>
+        /// <param name="damage">BOSS招式傷害值</param>
+        public BossSkillData(string name, int damage)
+        {
+            this.SkillName = name;
+            this.Damage = damage;
+        }
+    }
+
     public class BossData
     {
         public Boss BossName;
         public int Life;
-        public int NearDamage;
-        public int FarDamage;
         public int Defence;
         public int Coin;
+        public List<BossSkillData> SkillData;
 
         /// <summary>
         /// BOSS資料建構式
         /// </summary>
         /// <param name="name">BOSS名字</param>
         /// <param name="life">BOSS生命值</param>
-        /// <param name="nearDamage">BOSS近距離傷害值</param>
-        /// <param name="farDamage">BOSS遠距離傷害值</param>
         /// <param name="defence">BOSS防禦力</param>
         /// <param name="coin">BOSS掉落金錢數</param>
-        public BossData(Boss name, int life, int nearDamage, int farDamage, int defence, int coin)
+        /// <param name="skillData">BOSS招式清單</param>
+        public BossData(Boss name, int life, int defence, int coin, List<BossSkillData> skillData)
         {
             this.BossName = name;
             this.Life = life;
-            this.NearDamage = nearDamage;
-            this.FarDamage = farDamage;
             this.Defence = defence;
             this.Coin = coin;
+            this.SkillData = skillData;
         }
     }
 
@@ -206,6 +223,7 @@ public class GameDefinition
 
         巨型史萊姆BOSS = 1,
         石巨人BOSS = 2,
+        樹人長老BOSS = 3,
     }
 
     public enum Obstacle
