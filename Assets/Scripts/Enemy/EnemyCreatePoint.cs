@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Modify Date：2013-08-10
+/// Modify Date：2013-08-22
 /// Author：Ian
 /// Description：
 ///     敵人產生點(當玩家觸發，開始製造敵人)
@@ -49,13 +49,17 @@ public class EnemyCreatePoint : MonoBehaviour
         // 確認是否為持續生產怪物點(Boss專用)
         if (this.isBossPoint)
         {
-            GameObject newObj = (GameObject)Instantiate(
-                    this.Boss,
-                    this.RandomCreatePositionList[Random.Range(0, this.RandomCreatePositionList.Count)].position,
-                    this.Boss.transform.rotation);
+            if (this.Boss != null)
+            {
+                GameObject newObj = (GameObject)Instantiate(
+                        this.Boss,
+                        this.RandomCreatePositionList[Random.Range(0, this.RandomCreatePositionList.Count)].position,
+                        this.Boss.transform.rotation);
 
-            //設定物件的parent
-            newObj.transform.parent = this.transform;
+                //設定物件的parent
+                newObj.transform.parent = this.transform;
+            }
+
             StartCoroutine(AutoCreateEnemy(this.DelayTimeStartCreate));
         }
         else
