@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Modify Date：2013-08-16
+/// Modify Date：2013-08-22
 /// Author：Ian
 /// Description：
 ///     魔王控制器(巨型史萊姆BOSS、石巨人BOSS)
@@ -12,6 +12,7 @@ using System.Collections.Generic;
 ///     0815：新增石巨人BOSS AI
 ///     0816：從小怪資訊系統獨立出為王怪資訊系統
 ///     0818：新增自訂魔王控制
+///     0822：透過定義的魔王招式資訊得到招式傷害值
 /// </summary>
 public class BossController : MonoBehaviour
 {
@@ -346,7 +347,8 @@ public class BossController : MonoBehaviour
                 //tag = MainBody
                 if (triggerEvent.otherCollider.tag.CompareTo("MainBody") == 0)
                 {
-                    triggerEvent.otherCollider.GetComponent<RolePropertyInfo>().DecreaseLife(this.bossInfo.nearDamage);
+                    int damage = this.bossInfo.skillData.Find((GameDefinition.BossSkillData data) => { return data.SkillName == "近距離攻擊"; }).Damage;
+                    triggerEvent.otherCollider.GetComponent<RolePropertyInfo>().DecreaseLife(damage);
 
                     //創建 斬擊特效BoneAnimation
                     SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(GameManager.script.EffectAnimationObject);
@@ -388,16 +390,17 @@ public class BossController : MonoBehaviour
         {
             //計算Boss與角色的距離
             float distance = Mathf.Abs(RolesCollection.script.Roles[0].transform.position.x - this.transform.position.x);
+            int damage = this.bossInfo.skillData.Find((GameDefinition.BossSkillData data) => { return data.SkillName == "遠距離攻擊"; }).Damage;
 
             //發射遠距離攻擊物件(目標為BOSS面前兩位角色)
             //目標為第一位角色
             Vector3 Posv3 = RolesCollection.script.Roles[this.currentBattlePositionIndex].transform.position + new Vector3(distance, 0, 0);
             GameObject newObj = (GameObject)Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
-            newObj.GetComponent<ShootObjectInfo>().Damage = this.bossInfo.farDamage;
+            newObj.GetComponent<ShootObjectInfo>().Damage = damage;
             //目標為第二位角色
             Posv3 = RolesCollection.script.Roles[this.currentBattlePositionIndex + 1].transform.position + new Vector3(distance, 0, 0);
             newObj = (GameObject)Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
-            newObj.GetComponent<ShootObjectInfo>().Damage = this.bossInfo.farDamage;
+            newObj.GetComponent<ShootObjectInfo>().Damage = damage;
 
             this.currentBossAction = BossAction.閒置;
         }
