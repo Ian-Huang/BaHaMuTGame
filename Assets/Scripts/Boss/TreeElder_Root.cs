@@ -63,7 +63,7 @@ public class TreeElder_Root : MonoBehaviour
     /// <param name="triggerEvent"></param>
     public void AttackDestroy(SmoothMoves.UserTriggerEvent triggerEvent)
     {
-        //確認已進入攻擊狀態且攻擊動畫後，才可刪除
+        //攻擊動畫後，才可刪除
         if (triggerEvent.animationName.CompareTo("小樹根") == 0 || triggerEvent.animationName.CompareTo("大樹根") == 0)
             Destroy(this.gameObject);
     }

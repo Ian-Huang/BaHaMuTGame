@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Modify Date：2013-08-22
+/// Modify Date：2013-08-23
 /// Author：Ian
 /// Description：
 ///     BOSS的屬性資訊
@@ -12,6 +12,7 @@ using System.Collections.Generic;
 ///     0816：從小怪資訊系統獨立出為王怪資訊系統
 ///     0818：修改傷害公式(BOSS被傷害低於20時，固定造成20點傷害)
 ///     0822：新增魔王招式資訊資料
+///     0823：新增樹人長老BOSS累積傷害判斷
 /// </summary>
 public class BossPropertyInfo : MonoBehaviour
 {
@@ -82,6 +83,9 @@ public class BossPropertyInfo : MonoBehaviour
             deLife = 20;
 
         this.currentLife -= deLife;
+
+        if (this.Boss == GameDefinition.Boss.樹人長老BOSS)
+            BossController_TreeElder.script.addDamageValue += deLife;
 
         //當生命小於0，刪除物件
         if (!this.isDead && this.currentLife <= 0)

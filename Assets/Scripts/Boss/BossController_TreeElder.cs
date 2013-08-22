@@ -15,17 +15,31 @@ public class BossController_TreeElder : MonoBehaviour
     public ActionTimerData ActionTimer = new ActionTimerData();
     private float NextActionTime;
 
-    public float CastingTime;
+    private float currentAttackProbability;     //當前觸發小樹根攻擊的機率(0~1)
+    public float minAttackProbability = 0.6F;  //觸發小樹根攻擊的最小可能機率(0~1) 預設0.6 => 60%
+
+    [HideInInspector]
+    public int addDamageValue;          //累積的傷害值(累積一定量後觸發開花事件)
+    public int addDamageMaxValue;       //累積傷害的最大值，當前累積超過最大值觸發開花事件
+
+    public List<GameObject> FlowerPointList = new List<GameObject>();
+    private float currentAddFlowerOpenTime; //當前花朵開啟所需時間
+
+    [HideInInspector]
+    public int currentOpenFlowerCount;     //目前開出花朵的數目
+    public GameObject FlowerObject;         //花朵物件
+
     public GameObject TreeRootObject;   //樹根物件
+    public float CastingTime;           //樹根吟詠咒語時間(秒)
 
     public LayerMask AttackLayer;       //攻擊判定的Layer
 
     [HideInInspector]
-    public SmoothMoves.BoneAnimation boneAnimation;
+    public BossAction currentBossAction;   //確認目前魔王的動作狀態    
     [HideInInspector]
-    public BossAction currentBossAction;   //確認目前魔王的動作狀態
+    public SmoothMoves.BoneAnimation boneAnimation;
     private BossPropertyInfo bossInfo { get; set; }
-
+    private List<int> treeRootAttackList = new List<int>();
 
     // Use this for initialization
     void Start()
@@ -38,61 +52,51 @@ public class BossController_TreeElder : MonoBehaviour
         //設定BoneAnimation
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
         this.boneAnimation.RegisterUserTriggerDelegate(UserTrigger);
-        this.boneAnimation.RegisterColliderTriggerDelegate(WeaponHit);
         GameManager.script.RegisterBoneAnimation(this.boneAnimation);   //註冊BoneAnimation，GameManager統一管理
 
         this.boneAnimation.playAutomatically = false;
         this.boneAnimation.Play("nowake");
         this.currentBossAction = BossAction.未甦醒;
+
+        this.currentOpenFlowerCount = 0;    //目前開出花朵的數目設定為0
+        this.addDamageValue = 0;            //累積的傷害值設定為0
+        this.ActionTimer.ChangeTimerState(false);                   //關閉計時器功能
+        this.currentAttackProbability = this.minAttackProbability;  //當前觸發樹根攻擊的機率為最小機率
+        this.currentAddFlowerOpenTime = this.ActionTimer.花朵生成時間;
+        this.NextActionTime = this.ActionTimer.觸發小樹根間隔時間;
     }
 
-    public List<int> treerootAttackList = new List<int>();
-
+    /// <summary>
+    /// 執行樹根攻擊
+    /// </summary>
+    /// <param name="action">動作類型(大樹根攻擊or小樹根攻擊)</param>
+    void TreeRootAttack(BossAction action)
+    {
+        this.currentBossAction = action;
+        StartCoroutine(ReadyTreeRootAttack(this.CastingTime));  //等待吟詠咒語時間後，進行樹根攻擊
+    }
 
     /// <summary>
-    /// 魔王準備進行遠距離攻擊
+    /// 執行開花功能
     /// </summary>
-    /// <param name="time">等待秒數後開始攻擊</param>
-    /// <returns></returns>
-    IEnumerator ReadyFarAttack(float time)
+    void OpenFlower()
     {
-        int index;
-        for (int i = 0; i < 2; i++)
+        if (this.currentOpenFlowerCount < this.FlowerPointList.Count)
         {
+            //開花，隨機一個未開花的點
+            int index = -1;
             do
             {
-                index = Random.Range(0, 4);
-            } while (this.treerootAttackList.Contains(index));
-            this.treerootAttackList.Add(index);
+                index = Random.Range(0, this.FlowerPointList.Count);
+            } while (this.FlowerPointList[index].transform.childCount > 0);
+
+            GameObject newObj = (GameObject)Instantiate(this.FlowerObject, this.FlowerPointList[index].transform.position, this.FlowerObject.transform.rotation);
+            newObj.transform.parent = this.FlowerPointList[index].transform;
+            this.currentOpenFlowerCount++;
+
+            if (this.currentOpenFlowerCount == this.FlowerPointList.Count)
+                this.NextActionTime = ActionTimer.使用樹根後等待時間;
         }
-
-        //顯示提示提醒玩家(目標為隨機兩位角色)
-        Instantiate(EffectCreator.script.道路危險提示[this.treerootAttackList[0]]);
-        Instantiate(EffectCreator.script.道路危險提示[this.treerootAttackList[1]]);
-
-        this.boneAnimation.Play("小樹根攻擊");       //開始撥放小
-
-        yield return new WaitForSeconds(time);      //等待n秒
-
-        //目標為兩位隨機角色
-        float playRootLength = 0;
-        foreach (var attackIndex in this.treerootAttackList)
-        {
-            Vector3 pos = RolesCollection.script.Roles[attackIndex].transform.position - new Vector3(0, 0, 0.1f);
-            GameObject newObj = (GameObject)Instantiate(this.TreeRootObject, pos, this.TreeRootObject.transform.rotation);
-            newObj.GetComponent<TreeElder_Root>().Damage = this.bossInfo.skillData.Find((GameDefinition.BossSkillData data) => { return data.SkillName == "小樹根攻擊"; }).Damage;
-            SmoothMoves.BoneAnimation boneAnim = newObj.GetComponent<SmoothMoves.BoneAnimation>();
-            boneAnim.playAutomatically = false;
-            boneAnim.Play("小樹根");                   //播放"小樹根"動畫
-            playRootLength = boneAnim["小樹根"].length;//計算"小樹根"長度(秒)
-        }
-
-        yield return new WaitForSeconds(playRootLength);      //小樹根動畫播完後
-
-        this.currentBossAction = BossAction.閒置;
-        this.boneAnimation.Play("idle");
-        this.treerootAttackList.Clear();
-        //this.boneAnimation.Play("遠距離攻擊");  //播放"遠距離攻擊"動畫
     }
 
     // Update is called once per frame
@@ -104,22 +108,69 @@ public class BossController_TreeElder : MonoBehaviour
             // 魔王必須未死亡
             if (!this.bossInfo.isDead)
             {
-                if (this.currentBossAction == BossAction.登場中 | this.currentBossAction == BossAction.近距離攻擊)
+                if (this.currentBossAction != BossAction.未甦醒 && this.currentOpenFlowerCount < this.FlowerPointList.Count)
                 {
-                    this.boneAnimation.Play("run");
+                    this.currentAddFlowerOpenTime -= Time.deltaTime;
+                    if (this.currentAddFlowerOpenTime < 0 | this.addDamageValue >= this.addDamageMaxValue)
+                    {
+                        this.currentAddFlowerOpenTime = ActionTimer.花朵生成時間;
+                        this.addDamageValue = 0;
+                        this.OpenFlower();
+                    }
                 }
-                else if (this.currentBossAction == BossAction.切換跑道)
+
+                if (this.currentBossAction == BossAction.閒置)
                 {
-                    this.boneAnimation.Play("walk");
-                }
-                else if (this.currentBossAction == BossAction.閒置)
-                {
+                    //測試用
                     if (Input.GetKeyDown(KeyCode.T))
                     {
-                        if (this.currentBossAction != BossAction.遠距離攻擊)
+                        this.TreeRootAttack(BossAction.小樹根攻擊);
+                    }
+
+                    //測試用
+                    if (Input.GetKeyDown(KeyCode.Y))
+                    {
+                        this.TreeRootAttack(BossAction.大樹根攻擊);
+                    }
+
+                    //測試用
+                    if (Input.GetKeyDown(KeyCode.O))
+                    {
+                        this.OpenFlower();
+                    }
+
+                    if (this.ActionTimer.isRunTimer)
+                    {
+                        this.NextActionTime -= Time.deltaTime;
+                        if (this.NextActionTime < 0)
                         {
-                            this.currentBossAction = BossAction.遠距離攻擊;
-                            StartCoroutine(ReadyFarAttack(this.CastingTime));  //等待n秒後，進行遠距離攻擊
+                            //如果當前已開最大開花數，執行大樹根攻擊
+                            if (this.currentOpenFlowerCount == this.FlowerPointList.Count)
+                            {
+                                this.currentAttackProbability = this.minAttackProbability;  //樹根觸發機率回到最小機率
+                                this.TreeRootAttack(BossAction.大樹根攻擊);
+
+                                //關閉樹人長老BOSS頭上的花朵，相關數值初始化                                
+                                foreach (var script in this.GetComponentsInChildren<TreeElder_Flower>())
+                                    script.CloseFlower();
+                                this.currentAddFlowerOpenTime = ActionTimer.花朵生成時間;
+                                this.addDamageValue = 0;
+
+                                return;
+                            }
+
+                            float p = Random.value;
+                            //攻擊
+                            if (p < this.currentAttackProbability)
+                            {
+                                this.currentAttackProbability = this.minAttackProbability;  //樹根觸發機率回到最小機率
+                                this.TreeRootAttack(BossAction.小樹根攻擊);
+                            }
+                            else
+                            {
+                                this.currentAttackProbability += 0.1f;  //機率增加10%
+                                this.NextActionTime = this.ActionTimer.觸發小樹根間隔時間;
+                            }
                         }
                     }
 
@@ -131,37 +182,74 @@ public class BossController_TreeElder : MonoBehaviour
     }
 
     /// <summary>
-    /// 綁在敵人武器上的Collider，觸發攻擊判定(近距離攻擊使用)
+    /// 樹人長老BOSS準備進行樹根攻擊(小樹根攻擊、大樹根攻擊)
     /// </summary>
-    /// <param name="triggerEvent">觸發相關資訊</param>
-    public void WeaponHit(SmoothMoves.ColliderTriggerEvent triggerEvent)
+    /// <param name="time">等待秒數後開始樹根攻擊</param>
+    /// <returns></returns>
+    IEnumerator ReadyTreeRootAttack(float time)
     {
-        //確認是由"weapon"碰撞的collider
-        if (triggerEvent.boneName == "weapon" && triggerEvent.triggerType == SmoothMoves.ColliderTriggerEvent.TRIGGER_TYPE.Enter)
-        {
-            if (((1 << triggerEvent.otherCollider.gameObject.layer) & this.AttackLayer.value) > 0)
-            {
-                //tag = MainBody
-                if (triggerEvent.otherCollider.tag.CompareTo("MainBody") == 0)
-                {
-                    int damage = this.bossInfo.skillData.Find((GameDefinition.BossSkillData data) => { return data.SkillName == "近距離攻擊"; }).Damage;
-                    triggerEvent.otherCollider.GetComponent<RolePropertyInfo>().DecreaseLife(damage);
+        int attackIndex = -1;           //攻擊目標的索引
+        float playRootLength = -1;      //儲存樹根動畫秒數
 
-                    //創建 斬擊特效BoneAnimation
-                    SmoothMoves.BoneAnimation obj = (SmoothMoves.BoneAnimation)Instantiate(GameManager.script.EffectAnimationObject);
-                    //設定動畫播放中心點
-                    Vector3 expPos = triggerEvent.otherColliderClosestPointToBone;
-                    expPos.z = triggerEvent.otherCollider.gameObject.transform.position.z - 1;
-                    obj.mLocalTransform.position = expPos;
-                    obj.playAutomatically = false;
-                    //隨機撥放 1 或 2 動畫片段
-                    if (Random.Range(0, 2) == 0)
-                        obj.Play("撞擊特效01");
-                    else
-                        obj.Play("撞擊特效02");
-                }
+        //小樹根攻擊(攻擊2位角色)
+        if (this.currentBossAction == BossAction.小樹根攻擊)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                do
+                {
+                    attackIndex = Random.Range(0, 4);
+                } while (this.treeRootAttackList.Contains(attackIndex));
+                this.treeRootAttackList.Add(attackIndex);
+            }
+
+            //顯示提示提醒玩家(目標為隨機兩位角色)
+            Instantiate(EffectCreator.script.道路危險提示[this.treeRootAttackList[0]]);
+            Instantiate(EffectCreator.script.道路危險提示[this.treeRootAttackList[1]]);
+            this.boneAnimation.Play("小樹根攻擊");       //開始播放小樹根攻擊動作
+
+            yield return new WaitForSeconds(time);      //等待n秒(吟詠時間)
+
+            //目標為兩位隨機角色
+            foreach (var attackTarget in this.treeRootAttackList)
+            {
+                //產生樹根，攻擊玩家
+                Vector3 pos = RolesCollection.script.Roles[attackTarget].transform.position - new Vector3(0, 0, 0.1f);
+                GameObject newObj = (GameObject)Instantiate(this.TreeRootObject, pos, this.TreeRootObject.transform.rotation);
+                SmoothMoves.BoneAnimation boneAnim = newObj.GetComponent<SmoothMoves.BoneAnimation>();
+                newObj.GetComponent<TreeElder_Root>().Damage = this.bossInfo.skillData.Find((GameDefinition.BossSkillData data) => { return data.SkillName == "小樹根攻擊"; }).Damage;
+                boneAnim.playAutomatically = false;
+                boneAnim.Play("小樹根");                   //播放"小樹根"動畫
+                playRootLength = boneAnim["小樹根"].length;//計算"小樹根"長度(秒)
             }
         }
+        //大樹根攻擊(攻擊1位角色)
+        else if (this.currentBossAction == BossAction.大樹根攻擊)
+        {
+            attackIndex = Random.Range(0, 4);
+
+            //顯示提示提醒玩家(目標為隨機一位角色)
+            Instantiate(EffectCreator.script.道路危險提示[attackIndex]);
+            this.boneAnimation.Play("大樹根攻擊");       //開始播放大樹根攻擊動作
+
+            yield return new WaitForSeconds(time);      //等待n秒(吟詠時間)
+
+            //目標為隨機一位角色
+            Vector3 pos = RolesCollection.script.Roles[attackIndex].transform.position - new Vector3(0, 0, 0.1f);
+            GameObject newObj = (GameObject)Instantiate(this.TreeRootObject, pos, this.TreeRootObject.transform.rotation);
+            SmoothMoves.BoneAnimation boneAnim = newObj.GetComponent<SmoothMoves.BoneAnimation>();
+            newObj.GetComponent<TreeElder_Root>().Damage = this.bossInfo.skillData.Find((GameDefinition.BossSkillData data) => { return data.SkillName == "大樹根攻擊"; }).Damage;
+            boneAnim.playAutomatically = false;
+            boneAnim.Play("大樹根");                   //播放"大樹根"動畫
+            playRootLength = boneAnim["大樹根"].length;//計算"大樹根"長度(秒)
+        }
+
+        yield return new WaitForSeconds(playRootLength);      //等待樹根動畫播完後
+
+        this.currentBossAction = BossAction.閒置; //狀態切回"閒置"
+        this.NextActionTime = ActionTimer.使用樹根後等待時間;
+        this.boneAnimation.Play("idle");            //播放"idle"動畫
+        this.treeRootAttackList.Clear();            //清除目前攻擊目標的清單
     }
 
     /// <summary>
@@ -177,25 +265,6 @@ public class BossController_TreeElder : MonoBehaviour
             this.gameObject.layer = LayerMask.NameToLayer("Boss");
             this.ActionTimer.ChangeTimerState(true);
         }
-        //確認是由"遠距離攻擊"觸發的UserTrigger
-        else if (triggerEvent.animationName == "遠距離攻擊")
-        {
-            //計算Boss與角色的距離
-            float distance = Mathf.Abs(RolesCollection.script.Roles[0].transform.position.x - this.transform.position.x);
-            int damage = this.bossInfo.skillData.Find((GameDefinition.BossSkillData data) => { return data.SkillName == "遠距離攻擊"; }).Damage;
-
-            //發射遠距離攻擊物件(目標為BOSS面前兩位角色)
-            //目標為第一位角色
-            //Vector3 Posv3 = RolesCollection.script.Roles[this.currentBattlePositionIndex].transform.position + new Vector3(distance, 0, 0);
-            //GameObject newObj = (GameObject)Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
-            //newObj.GetComponent<ShootObjectInfo>().Damage = damage;
-            //目標為第二位角色
-            //Posv3 = RolesCollection.script.Roles[this.currentBattlePositionIndex + 1].transform.position + new Vector3(distance, 0, 0);
-            //newObj = (GameObject)Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
-            //newObj.GetComponent<ShootObjectInfo>().Damage = damage;
-
-            this.currentBossAction = BossAction.閒置;
-        }
     }
 
     /// <summary>
@@ -205,9 +274,9 @@ public class BossController_TreeElder : MonoBehaviour
     public class ActionTimerData
     {
         public bool isRunTimer { get; private set; }
-        public float 切換跑道後下次行動時間;
-        public float 近距離攻擊後下次行動時間;
-        public float 遠距離攻擊後下次行動時間;
+        public float 觸發小樹根間隔時間;
+        public float 使用樹根後等待時間;
+        public float 花朵生成時間;
 
         public void ChangeTimerState(bool state)
         {
@@ -215,19 +284,8 @@ public class BossController_TreeElder : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 定位點資訊
-    /// </summary>
-    [System.Serializable]
-    public class PositionData
-    {
-        public string PositionName; //位置在Scene中名稱
-        [HideInInspector]
-        public Transform PositionTransform;
-    }
-
     public enum BossAction
     {
-        未甦醒 = 0, 閒置 = 1, 登場中 = 2, 切換跑道 = 3, 近距離攻擊 = 4, 遠距離攻擊 = 5
+        未甦醒 = 0, 閒置 = 1, 小樹根攻擊 = 2, 大樹根攻擊 = 3
     }
 }
