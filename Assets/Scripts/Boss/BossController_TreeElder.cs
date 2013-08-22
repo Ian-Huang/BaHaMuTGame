@@ -15,7 +15,8 @@ public class BossController_TreeElder : MonoBehaviour
     public ActionTimerData ActionTimer = new ActionTimerData();
     private float NextActionTime;
 
-    public GameObject FarShootObject;   //遠距離射擊物件
+    public float CastingTime;
+    public GameObject TreeRootObject;   //樹根物件
 
     public LayerMask AttackLayer;       //攻擊判定的Layer
 
@@ -69,9 +70,29 @@ public class BossController_TreeElder : MonoBehaviour
         Instantiate(EffectCreator.script.道路危險提示[this.treerootAttackList[0]]);
         Instantiate(EffectCreator.script.道路危險提示[this.treerootAttackList[1]]);
 
+        this.boneAnimation.Play("小樹根攻擊");       //開始撥放小
+
         yield return new WaitForSeconds(time);      //等待n秒
 
-        this.boneAnimation.Play("遠距離攻擊");  //播放"遠距離攻擊"動畫
+        //目標為兩位隨機角色
+        float playRootLength = 0;
+        foreach (var attackIndex in this.treerootAttackList)
+        {
+            Vector3 pos = RolesCollection.script.Roles[attackIndex].transform.position - new Vector3(0, 0, 0.1f);
+            GameObject newObj = (GameObject)Instantiate(this.TreeRootObject, pos, this.TreeRootObject.transform.rotation);
+            newObj.GetComponent<TreeElder_Root>().Damage = this.bossInfo.skillData.Find((GameDefinition.BossSkillData data) => { return data.SkillName == "小樹根攻擊"; }).Damage;
+            SmoothMoves.BoneAnimation boneAnim = newObj.GetComponent<SmoothMoves.BoneAnimation>();
+            boneAnim.playAutomatically = false;
+            boneAnim.Play("小樹根");                   //播放"小樹根"動畫
+            playRootLength = boneAnim["小樹根"].length;//計算"小樹根"長度(秒)
+        }
+
+        yield return new WaitForSeconds(playRootLength);      //小樹根動畫播完後
+
+        this.currentBossAction = BossAction.閒置;
+        this.boneAnimation.Play("idle");
+        this.treerootAttackList.Clear();
+        //this.boneAnimation.Play("遠距離攻擊");  //播放"遠距離攻擊"動畫
     }
 
     // Update is called once per frame
@@ -98,7 +119,7 @@ public class BossController_TreeElder : MonoBehaviour
                         if (this.currentBossAction != BossAction.遠距離攻擊)
                         {
                             this.currentBossAction = BossAction.遠距離攻擊;
-                            StartCoroutine(ReadyFarAttack(1));  //等待n秒後，進行遠距離攻擊
+                            StartCoroutine(ReadyFarAttack(this.CastingTime));  //等待n秒後，進行遠距離攻擊
                         }
                     }
 
