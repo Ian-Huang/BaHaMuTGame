@@ -10,6 +10,8 @@ using System.Collections.Generic;
 /// </summary>
 public class BossController_TreeElder : MonoBehaviour
 {
+    public static BossController_TreeElder script;
+
     public ActionTimerData ActionTimer = new ActionTimerData();
     private float NextActionTime;
 
@@ -17,13 +19,18 @@ public class BossController_TreeElder : MonoBehaviour
 
     public LayerMask AttackLayer;       //攻擊判定的Layer
 
-    private BossAction currentBossAction;   //確認目前魔王的動作狀態
+    [HideInInspector]
+    public SmoothMoves.BoneAnimation boneAnimation;
+    [HideInInspector]
+    public BossAction currentBossAction;   //確認目前魔王的動作狀態
     private BossPropertyInfo bossInfo { get; set; }
-    private SmoothMoves.BoneAnimation boneAnimation;
+
 
     // Use this for initialization
     void Start()
     {
+        script = this;
+
         //載入敵人資訊
         this.bossInfo = this.GetComponent<BossPropertyInfo>();
 
@@ -35,9 +42,9 @@ public class BossController_TreeElder : MonoBehaviour
 
         this.boneAnimation.playAutomatically = false;
         this.boneAnimation.Play("nowake");
+        this.currentBossAction = BossAction.未甦醒;
     }
 
-    public bool testBool;
     // Update is called once per frame
     void Update()
     {
@@ -57,11 +64,8 @@ public class BossController_TreeElder : MonoBehaviour
                 }
                 else if (this.currentBossAction == BossAction.閒置)
                 {
-                    if (this.testBool)
-                    {
-                        if (!this.boneAnimation.isPlaying)
-                            this.boneAnimation.Play("登場");
-                    }
+                    if (!this.boneAnimation.isPlaying)
+                        this.boneAnimation.Play("idle");
                 }
             }
         }
@@ -108,14 +112,9 @@ public class BossController_TreeElder : MonoBehaviour
     public void UserTrigger(SmoothMoves.UserTriggerEvent triggerEvent)
     {
         //確認是由"登場"動畫觸發的UserTrigger
-        if (triggerEvent.animationName == "登場" & triggerEvent.boneName != "ChangeLayer")
+        if (triggerEvent.animationName == "登場" & triggerEvent.boneName == "ChangeLayer")
         {
-            //鏡頭震動
-            iTween.ShakePosition(Camera.main.gameObject, new Vector3(1, 1, 0), 0.15f);
-        }
-        //改變魔王Layer，更改為Enemy Layer，角色開始攻擊
-        else if (triggerEvent.animationName == "登場" & triggerEvent.boneName == "ChangeLayer")
-        {
+            //改變魔王Layer，更改為Boss Layer，啟動AI，角色開始攻擊
             this.gameObject.layer = LayerMask.NameToLayer("Boss");
             this.ActionTimer.ChangeTimerState(true);
         }
@@ -170,6 +169,6 @@ public class BossController_TreeElder : MonoBehaviour
 
     public enum BossAction
     {
-        閒置 = 0, 登場中 = 1, 切換跑道 = 2, 近距離攻擊 = 3, 遠距離攻擊 = 4
+        未甦醒 = 0, 閒置 = 1, 登場中 = 2, 切換跑道 = 3, 近距離攻擊 = 4, 遠距離攻擊 = 5
     }
 }

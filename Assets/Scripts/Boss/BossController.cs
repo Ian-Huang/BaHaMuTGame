@@ -379,7 +379,7 @@ public class BossController : MonoBehaviour
             //鏡頭震動
             iTween.ShakePosition(Camera.main.gameObject, new Vector3(1, 1, 0), 0.15f);
         }
-        //改變魔王Layer，更改為Enemy Layer，角色開始攻擊
+        //改變魔王Layer，更改為Boss Layer，啟動AI，角色開始攻擊
         else if (triggerEvent.animationName == "登場" & triggerEvent.boneName == "ChangeLayer")
         {
             this.gameObject.layer = LayerMask.NameToLayer("Boss");
