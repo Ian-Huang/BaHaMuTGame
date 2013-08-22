@@ -45,6 +45,35 @@ public class BossController_TreeElder : MonoBehaviour
         this.currentBossAction = BossAction.未甦醒;
     }
 
+    public List<int> treerootAttackList = new List<int>();
+
+
+    /// <summary>
+    /// 魔王準備進行遠距離攻擊
+    /// </summary>
+    /// <param name="time">等待秒數後開始攻擊</param>
+    /// <returns></returns>
+    IEnumerator ReadyFarAttack(float time)
+    {
+        int index;
+        for (int i = 0; i < 2; i++)
+        {
+            do
+            {
+                index = Random.Range(0, 4);
+            } while (this.treerootAttackList.Contains(index));
+            this.treerootAttackList.Add(index);
+        }
+
+        //顯示提示提醒玩家(目標為隨機兩位角色)
+        Instantiate(EffectCreator.script.道路危險提示[this.treerootAttackList[0]]);
+        Instantiate(EffectCreator.script.道路危險提示[this.treerootAttackList[1]]);
+
+        yield return new WaitForSeconds(time);      //等待n秒
+
+        this.boneAnimation.Play("遠距離攻擊");  //播放"遠距離攻擊"動畫
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -64,6 +93,15 @@ public class BossController_TreeElder : MonoBehaviour
                 }
                 else if (this.currentBossAction == BossAction.閒置)
                 {
+                    if (Input.GetKeyDown(KeyCode.T))
+                    {
+                        if (this.currentBossAction != BossAction.遠距離攻擊)
+                        {
+                            this.currentBossAction = BossAction.遠距離攻擊;
+                            StartCoroutine(ReadyFarAttack(1));  //等待n秒後，進行遠距離攻擊
+                        }
+                    }
+
                     if (!this.boneAnimation.isPlaying)
                         this.boneAnimation.Play("idle");
                 }
