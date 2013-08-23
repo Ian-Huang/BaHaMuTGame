@@ -10,6 +10,9 @@ public class EffectCreator : MonoBehaviour
     public GameObject 遊戲開始提示;
     public GameObject 魔王接近提示;
 
+    public bool isBossUIEffectShow;
+    public GameObject UIBoss_Health_LayoutMove;
+    public GameObject UIMap_Progress_LayoutMove;
     // Use this for initialization
     void Start()
     {
@@ -19,6 +22,13 @@ public class EffectCreator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (isBossUIEffectShow)
+        {
+            isBossUIEffectShow = false;
+            UIBoss_Health_LayoutMove.SetActive(true);
+            UIMap_Progress_LayoutMove.SetActive(true);
+        }
     }
+
+
 }
