@@ -2,6 +2,7 @@
 using System.Collections;
 
 //特效製造機
+
 public class EffectCreator : MonoBehaviour
 {
     public static EffectCreator script;
@@ -10,6 +11,10 @@ public class EffectCreator : MonoBehaviour
     public GameObject 遊戲開始提示;
     public GameObject 魔王接近提示;
 
+
+    /// <summary>
+    /// 魔王出現時 血條與進度條切換
+    /// </summary>
     public bool isBossUIEffectShow;
     public GameObject UIBoss_Health_LayoutMove;
     public GameObject UIMap_Progress_LayoutMove;
@@ -27,6 +32,7 @@ public class EffectCreator : MonoBehaviour
             isBossUIEffectShow = false;
             UIBoss_Health_LayoutMove.SetActive(true);
             UIMap_Progress_LayoutMove.SetActive(true);
+            GameObject.Find("Tex2D - CurrentPosition").GetComponent<MUI_RectMonitor>().enabled = false;
         }
     }
 
