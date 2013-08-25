@@ -29,7 +29,10 @@ public class MusicPlayer : MonoBehaviour
     void Start()
     {
         script = this;
+        DontDestroyOnLoad(this.gameObject);
+
         if (!this.GetComponent<AudioSource>()) this.gameObject.AddComponent<AudioSource>();
+        this.audio.loop = true;
     }
 
     // Update is called once per frame
@@ -54,7 +57,7 @@ public class MusicPlayer : MonoBehaviour
         iTween.AudioTo(this.gameObject, 1, 1, FadeTime);
 
     }
-    void BGM_FadeOUT()
+    public void BGM_FadeOUT()
     {
         iTween.AudioTo(this.gameObject, 0, 1, FadeTime);
     }

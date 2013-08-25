@@ -34,7 +34,9 @@ public class MUI_LoadSceneTransitionsEffect : MonoBehaviour
             if (TransitionsEffect) TransitionsEffect.SetActive(true);
             if (currentCamera) currentCamera.enabled = false;
             if (currentUserInterface) currentUserInterface.SetActive(false);
-            yield return new WaitForSeconds(DelayTime);
+
+            MusicPlayer.script.BGM_FadeOUT();
+            yield return new WaitForSeconds(DelayTime);       
             Application.LoadLevelAsync(sceneName);
         }
     }

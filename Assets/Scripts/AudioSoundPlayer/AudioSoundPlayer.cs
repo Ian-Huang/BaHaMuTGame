@@ -35,7 +35,10 @@ public class AudioSoundPlayer : MonoBehaviour
 
         //Dump "Sound Data" to Dictionary , so we can use "key" to get the value
         foreach (Sound sound in audios)
-            SoundDictionary.Add(sound.audioName, sound.audioClip);
+        {
+            if(sound.audioName != "")
+                SoundDictionary.Add(sound.audioName, sound.audioClip);
+        }
     }
 
     // Update is called once per frame
