@@ -18,6 +18,8 @@ public class TeachingSystem_ButtonControl : MonoBehaviour
     //指定按鈕的Texture2D
     public MUI_Texture_2D Texture_2D;
 
+    public bool isNextPart;
+
     //不運作的按鈕(桌上型)
     //public MDesktopButton[] disableButtons_desktop;
     //運作的按鈕(桌上型)
@@ -60,12 +62,13 @@ public class TeachingSystem_ButtonControl : MonoBehaviour
         //當按鈕isDone　= true 時　，當按鈕Event產生時
         if (Texture_2D.gameObject.transform.GetComponent<MDesktopButton>().isDone || Texture_2D.gameObject.transform.GetComponent<MPlatformButton>().isDone)
         {
-
-            //下一個段落
-            StartCoroutine( TeachingSystem.script.NextPart(0));
-
-            //圖片回到原本Depth
-            Texture_2D.depth = oldDepth;
+            if (isNextPart)
+            {
+                //下一個段落
+                StartCoroutine(TeachingSystem.script.NextPart(0));
+                //圖片回到原本Depth
+                Texture_2D.depth = oldDepth;
+            }
 
             ////enable all button you set
             //foreach (MButton mbutton in disableButtons_desktop)
