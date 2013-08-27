@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System;
 
 /// <summary>
-/// Modify Date：2013-08-21
+/// Modify Date：2013-08-27
 /// Description：
 ///     全域遊戲管理系統
 ///     0809新增：新增角色、怪物BoneAnimation管理系統，以控制Animation
 ///     0814新增：金幣物件Prefab
 ///     0821新增：效果動畫物件Prefab
+///     0827新增：魔王回饋
 /// </summary>
 public class GameManager : MonoBehaviour
 {
@@ -115,11 +116,10 @@ public class GameManager : MonoBehaviour
         MUI_Monitor.script.SetValue("士氣條" + "x", (this.CurrentMorale / this.MaxMorale) * 100);
 
 
-        //魔王血條
-        if (GameObject.Find("巨型史萊姆BOSS"))
-            MUI_Monitor.script.SetValue("魔王血條" + "x", (GameObject.Find("巨型史萊姆BOSS").GetComponent<BossPropertyInfo>().currentLife / GameObject.Find("巨型史萊姆BOSS").GetComponent<BossPropertyInfo>().maxLife) * 100);
-
-
+        //魔王血條        
+        BossPropertyInfo script = (BossPropertyInfo)GameObject.FindObjectOfType(typeof(BossPropertyInfo));
+        if (script)
+            MUI_Monitor.script.SetValue("魔王血條" + "x", (script.currentLife / script.maxLife) * 100);
 
         //測試用，暫停所有註冊的BoneAnimation
         if (Input.GetKeyDown(KeyCode.V))

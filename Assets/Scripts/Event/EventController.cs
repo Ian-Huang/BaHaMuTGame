@@ -9,6 +9,7 @@ using System.Collections;
 ///     0808新增：魔王警告點
 ///     0822新增：魔王為樹人長老時，抵達終點觸發魔王的登場動畫
 ///     0827修改：BackgroundController 修正狀態的方式
+///     0827新增：介面變化
 /// </summary>
 public class EventController : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class EventController : MonoBehaviour
         {
             //魔王警告點，出現提示玩家警訊
             Instantiate(EffectCreator.script.魔王接近提示);
+            EffectCreator.script.isBossUIEffectShow = true; //呼叫魔王血量介面
         }
         else if (other.GetComponent<EventTriggerType>().Type == GameDefinition.EventTriggerType.終點)
         {
