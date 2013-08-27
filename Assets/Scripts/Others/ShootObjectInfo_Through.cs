@@ -15,8 +15,6 @@ public class ShootObjectInfo_Through : MonoBehaviour
     public GameDefinition.AttackType AttackType;    //攻擊的類型(物理、魔法)
     public LayerMask ThroughLayer;                  //爆破的對象
 
-    private SmoothMoves.BoneAnimation boneAnimation;
-
     void OnTriggerEnter(Collider other)
     {
         if (((1 << other.collider.gameObject.layer) & this.ThroughLayer.value) > 0)   //判定爆炸的Layer
@@ -60,12 +58,5 @@ public class ShootObjectInfo_Through : MonoBehaviour
                     other.GetComponent<RolePropertyInfo>().DecreaseLife(this.Damage);
             }
         }
-    }
-
-    // Use this for initialization
-    void Start()
-    {
-        //設定BoneAnimation
-        this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
     }
 }
