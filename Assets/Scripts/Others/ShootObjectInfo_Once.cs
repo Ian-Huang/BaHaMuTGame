@@ -2,13 +2,14 @@
 using System.Collections;
 
 /// <summary>
-/// Modify Date：2013-08-17
+/// Modify Date：2013-08-27
 /// Author：Ian
 /// Description：
-///     遠距離(角色/敵人)發射的物件資訊
-///     0817新增魔王資訊的判斷
+///     遠距離(角色/敵人)發射的物件資訊(一次性使用)
+///     0817新增：魔王資訊的判斷
+///     0827新增：依不同需求，分為兩個Script (ShootObjectInfo_Once.cs、ShootObjectInfo_Through.cs)
 /// </summary>
-public class ShootObjectInfo : MonoBehaviour
+public class ShootObjectInfo_Once : MonoBehaviour
 {
     public int Damage;                              //造成的傷害值
     public GameDefinition.AttackType AttackType;    //攻擊的類型(物理、魔法)

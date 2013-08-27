@@ -2,12 +2,13 @@
 using System.Collections;
 
 /// <summary>
-/// Modify Date：2013-08-16
+/// Modify Date：2013-08-27
 /// Author：Ian
 /// Description：
 ///     敵人攻擊控制器
 ///     0809新增：註冊BoneAnimation到GameManager，方便管理
 ///     0816修改：不分近or遠距離攻擊值
+///     0827：修正射擊物件不同腳本的判別(ShootObjectInfo_Once、ShootObjectInfo_Through)
 /// </summary>
 public class EnemyAttackController : MonoBehaviour
 {
@@ -133,9 +134,10 @@ public class EnemyAttackController : MonoBehaviour
             //設定物件的parent 、 layer 、 Damage
             obj.layer = LayerMask.NameToLayer("ShootObject");
             obj.transform.parent = GameObject.Find("UselessObjectCollection").transform;
-
-            ShootObjectInfo info = obj.GetComponent<ShootObjectInfo>();
-            info.Damage = this.enemyInfo.damage;
+            if (obj.GetComponent<ShootObjectInfo_Once>())
+                obj.GetComponent<ShootObjectInfo_Once>().Damage = this.enemyInfo.damage;
+            else if (obj.GetComponent<ShootObjectInfo_Through>())
+                obj.GetComponent<ShootObjectInfo_Through>().Damage = this.enemyInfo.damage;
         }
     }
 
