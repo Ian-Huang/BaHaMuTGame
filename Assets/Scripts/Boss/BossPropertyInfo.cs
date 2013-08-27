@@ -14,6 +14,7 @@ using System.Collections.Generic;
 ///     0822：新增魔王招式資訊資料
 ///     0823：新增樹人長老BOSS累積傷害判斷
 ///     0827：修正BOSS死亡後繼續出怪的Bug
+///     0827：修正BOSS在移動過程中死亡會卡住的BUG
 /// </summary>
 public class BossPropertyInfo : MonoBehaviour
 {
@@ -85,9 +86,6 @@ public class BossPropertyInfo : MonoBehaviour
 
         this.currentLife -= deLife;
 
-        if (this.Boss == GameDefinition.Boss.樹人長老BOSS)
-            BossController_TreeElder.script.addDamageValue += deLife;
-
         //當生命小於0，刪除物件
         if (!this.isDead && this.currentLife <= 0)
         {
@@ -96,6 +94,12 @@ public class BossPropertyInfo : MonoBehaviour
                 script.EnemyDead();
 
             this.BossDead();
+        }
+        else
+        {
+            //樹人長老BOSS需要紀錄當前累積的傷害
+            if (this.Boss == GameDefinition.Boss.樹人長老BOSS)
+                BossController_TreeElder.script.addDamageValue += deLife;
         }
     }
 
@@ -106,8 +110,16 @@ public class BossPropertyInfo : MonoBehaviour
     {
         this.currentLife = 0;   //生命歸0
         this.isDead = true;     //切換為死亡狀態
+
+        //Start---停止BOSS所有多執行緒工作
+        if (BossController.script)
+            BossController.script.StopAllCoroutines();
+        else if (BossController_TreeElder.script)
+            BossController_TreeElder.script.StopAllCoroutines();
+        //End---停止BOSS所有多執行緒工作
+
         Destroy(this.transform.parent.gameObject.GetComponent<EnemyCreatePoint>()); //刪除EnemyCreatePoint.cs，停止繼續生小怪
-        Destroy(this.GetComponent<MoveController>());   //刪除MoveController.cs，停止BOSS移動
+        Destroy(this.GetComponent<MoveController>());   //刪除MoveController.cs，停止BOSS移動        
         this.boneAnimation.Play("defeat");              //開始播放死亡動畫
         iTween.Stop(this.gameObject);                   //停止所有ITween影響的動作
 
