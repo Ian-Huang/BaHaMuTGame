@@ -2,12 +2,13 @@
 using System.Collections;
 
 /// <summary>
-/// Modify Date：2013-08-19
+/// Modify Date：2013-08-27
 /// Author：Ian
 /// Description：
 ///     金幣系統
 ///     0818新增：一定時間後金幣自動開始移動到指定位置
 ///     0819新增：新增四種錢幣種類，依照金錢數決定種類
+///     0827新增：金幣系統註冊
 /// </summary>
 public class CoinPropertyInfo : MonoBehaviour
 {
@@ -96,7 +97,8 @@ public class CoinPropertyInfo : MonoBehaviour
     void MoveCoinComplete()
     {
         //待補---增加金幣數
-        GameManager.script.CurrentCoinCount += this.coinAmount;
+        //GameManager.script.CurrentCoinCount += this.coinAmount;
+        PlayerPrefsDictionary.script.SetValue("Money", PlayerPrefsDictionary.script.GetValue("Money") + this.coinAmount);
 
         //刪除自己
         Destroy(this.gameObject);
