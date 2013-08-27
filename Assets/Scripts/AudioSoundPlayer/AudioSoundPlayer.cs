@@ -36,8 +36,11 @@ public class AudioSoundPlayer : MonoBehaviour
         //Dump "Sound Data" to Dictionary , so we can use "key" to get the value
         foreach (Sound sound in audios)
         {
-            if(sound.audioName != "")
-                SoundDictionary.Add(sound.audioName, sound.audioClip);
+            if (sound.audioName != "")
+            {
+                if (!SoundDictionary.ContainsKey(sound.audioName))
+                    SoundDictionary.Add(sound.audioName, sound.audioClip);
+            }
         }
     }
 
