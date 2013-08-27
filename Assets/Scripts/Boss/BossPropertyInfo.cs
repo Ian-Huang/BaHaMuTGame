@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Modify Date：2013-08-23
+/// Modify Date：2013-08-27
 /// Author：Ian
 /// Description：
 ///     BOSS的屬性資訊
@@ -13,6 +13,7 @@ using System.Collections.Generic;
 ///     0818：修改傷害公式(BOSS被傷害低於20時，固定造成20點傷害)
 ///     0822：新增魔王招式資訊資料
 ///     0823：新增樹人長老BOSS累積傷害判斷
+///     0827：修正BOSS死亡後繼續出怪的Bug
 /// </summary>
 public class BossPropertyInfo : MonoBehaviour
 {
@@ -103,10 +104,11 @@ public class BossPropertyInfo : MonoBehaviour
     /// </summary>
     void BossDead()
     {
-        this.currentLife = 0;
-        this.isDead = true;
-        this.boneAnimation.Play("defeat");
-        Destroy(this.GetComponent<MoveController>());   //死亡:停止BOSS移動
+        this.currentLife = 0;   //生命歸0
+        this.isDead = true;     //切換為死亡狀態
+        Destroy(this.transform.parent.gameObject.GetComponent<EnemyCreatePoint>()); //刪除EnemyCreatePoint.cs，停止繼續生小怪
+        Destroy(this.GetComponent<MoveController>());   //刪除MoveController.cs，停止BOSS移動
+        this.boneAnimation.Play("defeat");              //開始播放死亡動畫
         iTween.Stop(this.gameObject);                   //停止所有ITween影響的動作
 
         //產生金幣物件
