@@ -33,33 +33,51 @@ public class PlayerPrefsDictionary : MonoBehaviour
         this.AddValue("LevelComplete");
 
         //角色類
+        //ATK	攻擊力
+        //DEF	防禦力
+        //HP	血量
+        //BASIC_LV	普通攻擊等級
+        //ULT_LV	絕技等級
+
         this.AddValue("BSK_ATK");
         this.AddValue("BSK_DEF");
         this.AddValue("BSK_HP");
-        this.AddValue("BSK_ATK_ADD", 10);
-        this.AddValue("BSK_DEF_ADD", 5);
-        this.AddValue("BSK_HP_ADD", 20);
+        this.AddValue("BSK_BASIC_LV");
+        this.AddValue("BSK_ULT_LV");
+
+        //this.AddValue("BSK_ATK_ADD", 10);
+        //this.AddValue("BSK_DEF_ADD", 5);
+        //this.AddValue("BSK_HP_ADD", 20);
 
         this.AddValue("WIZ_ATK");
         this.AddValue("WIZ_DEF");
         this.AddValue("WIZ_HP");
-        this.AddValue("WIZ_ATK_ADD");
-        this.AddValue("WIZ_DEF_ADD");
-        this.AddValue("WIZ_HP_ADD");
+        this.AddValue("WIZ_BASIC_LV");
+        this.AddValue("WIZ_ULT_LV");
+
+        //this.AddValue("WIZ_ATK_ADD");
+        //this.AddValue("WIZ_DEF_ADD");
+        //this.AddValue("WIZ_HP_ADD");
 
         this.AddValue("HUN_ATK");
         this.AddValue("HUN_DEF");
         this.AddValue("HUN_HP");
-        this.AddValue("HUN_ATK_ADD");
-        this.AddValue("HUN_DEF_ADD");
-        this.AddValue("HUN_HP_ADD");
+        this.AddValue("HUN_BASIC_LV");
+        this.AddValue("HUN_ULT_LV");
+
+        //this.AddValue("HUN_ATK_ADD");
+        //this.AddValue("HUN_DEF_ADD");
+        //this.AddValue("HUN_HP_ADD");
 
         this.AddValue("KNI_ATK");
         this.AddValue("KNI_DEF");
         this.AddValue("KNI_HP");
-        this.AddValue("KNI_ATK_ADD");
-        this.AddValue("KNI_DEF_ADD");
-        this.AddValue("KNI_HP_ADD");
+        this.AddValue("KNI_BASIC_LV");
+        this.AddValue("KNI_ULT_LV");
+
+        //this.AddValue("KNI_ATK_ADD");
+        //this.AddValue("KNI_DEF_ADD");
+        //this.AddValue("KNI_HP_ADD");
     }
 
     // Update is called once per frame
