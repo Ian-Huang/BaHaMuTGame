@@ -2,12 +2,13 @@
 using System.Collections;
 
 /// <summary>
-/// Modify Date：2013-08-16
+/// Modify Date：2013-08-27
 /// Author：Ian
 /// Description：
 ///     角色的屬性資訊
 ///     0816：修改回血速率公式
 ///     0818：修改被敵人傷害公式(最小傷害為角色最大生命的3%)
+///     0827：修正boneAnimation 保護層級
 /// </summary>
 public class RolePropertyInfo : MonoBehaviour
 {
@@ -21,7 +22,8 @@ public class RolePropertyInfo : MonoBehaviour
 
     public bool isWeak { get; private set; }
 
-    private SmoothMoves.BoneAnimation boneAnimation;
+    [HideInInspector]
+    public SmoothMoves.BoneAnimation boneAnimation;
 
     // Use this for initialization
     void Start()

@@ -3,37 +3,24 @@ using System.Collections;
 
 public class TeachingSystemMainController : MonoBehaviour
 {
-
     public bool isBackgroindRunning;
     public bool isPlayerHalfHP;
     public bool isRecoverCure;
     public bool isBossUIEffectShow;
     public enum BossAttackType { None, Melee, Range };
     public BossAttackType bossAttackType;
-    
+
     public GameObject UIBoss_Health;
     public GameObject UIMap_Progress;
-
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     void OnEnable()
     {
         if (!isBackgroindRunning)
-            BackgroundController.script.isRunning = false;
+            BackgroundController.script.SetRunBackgroundState(false);
 
         if (isPlayerHalfHP)
         {
-            RolePropertyInfo[] rolePropertyInfo = GameObject.Find("RolesCollection").GetComponentsInChildren<RolePropertyInfo>();
+            RolePropertyInfo[] rolePropertyInfo = RolesCollection.script.gameObject.GetComponentsInChildren<RolePropertyInfo>();
             foreach (RolePropertyInfo r in rolePropertyInfo)
             {
                 r.currentLife = r.maxLife / 5;
@@ -43,11 +30,9 @@ public class TeachingSystemMainController : MonoBehaviour
 
         if (isRecoverCure)
         {
-            RolePropertyInfo[] rolePropertyInfo = GameObject.Find("RolesCollection").GetComponentsInChildren<RolePropertyInfo>();
+            RolePropertyInfo[] rolePropertyInfo = RolesCollection.script.gameObject.GetComponentsInChildren<RolePropertyInfo>();
             foreach (RolePropertyInfo r in rolePropertyInfo)
-            {
                 r.cureRate = 10;
-            }
         }
 
         if (isBossUIEffectShow)
@@ -61,12 +46,10 @@ public class TeachingSystemMainController : MonoBehaviour
 
         if (bossAttackType == BossAttackType.Range)
             BossController.script.FarAttack();
-
     }
 
     void OnDisable()
     {
-        BackgroundController.script.isRunning = true;
+        BackgroundController.script.SetRunBackgroundState(true);
     }
-
 }

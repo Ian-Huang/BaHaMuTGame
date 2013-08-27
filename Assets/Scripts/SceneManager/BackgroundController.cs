@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Modify Date：2013-07-30
+/// Modify Date：2013-08-27
 /// Author：Ian
 /// Description：
 ///     背景控制器(控制背景移動、判斷背景移動的狀態)
+///     0827：修改isRunning 修改方式→ 呼叫SetRunBackgroundState()，並判斷角色動作的切換
 /// </summary>
 public class BackgroundController : MonoBehaviour
 {
@@ -29,6 +30,28 @@ public class BackgroundController : MonoBehaviour
     void Awake()
     {
         script = this;
+    }
+
+    /// <summary>
+    /// 設定背景控制器是否運作
+    /// </summary>
+    /// <param name="state">切換狀態</param>
+    public void SetRunBackgroundState(bool state)
+    {
+        this.isRunning = state;
+
+        //判斷當前背景移動狀況，如果無移動角色則使用"idleweak"
+        RolePropertyInfo[] rolePropertyInfos = RolesCollection.script.gameObject.GetComponentsInChildren<RolePropertyInfo>();
+        foreach (RolePropertyInfo script in rolePropertyInfos)
+        {
+            if (script.boneAnimation.IsPlaying("walkweak") || script.boneAnimation.IsPlaying("idleweak"))
+            {
+                if (state)
+                    script.boneAnimation.Play("walkweak");
+                else
+                    script.boneAnimation.Play("idleweak");
+            }
+        }
     }
 
     // Update is called once per frame
