@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Modify Date：2013-08-22
+/// Modify Date：2013-08-27
 /// Author：Ian
 /// Description：
 ///     魔王控制器(巨型史萊姆BOSS、石巨人BOSS)
@@ -13,6 +13,7 @@ using System.Collections.Generic;
 ///     0816：從小怪資訊系統獨立出為王怪資訊系統
 ///     0818：新增自訂魔王控制
 ///     0822：透過定義的魔王招式資訊得到招式傷害值
+///     0827：修正射擊物件不同腳本的判別(ShootObjectInfo_Once、ShootObjectInfo_Through)
 /// </summary>
 public class BossController : MonoBehaviour
 {
@@ -396,11 +397,18 @@ public class BossController : MonoBehaviour
             //目標為第一位角色
             Vector3 Posv3 = RolesCollection.script.Roles[this.currentBattlePositionIndex].transform.position + new Vector3(distance, 0, 0);
             GameObject newObj = (GameObject)Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
-            newObj.GetComponent<ShootObjectInfo>().Damage = damage;
+            if (newObj.GetComponent<ShootObjectInfo_Once>())
+                newObj.GetComponent<ShootObjectInfo_Once>().Damage = damage;
+            else if (newObj.GetComponent<ShootObjectInfo_Through>())
+                newObj.GetComponent<ShootObjectInfo_Through>().Damage = damage;
+
             //目標為第二位角色
             Posv3 = RolesCollection.script.Roles[this.currentBattlePositionIndex + 1].transform.position + new Vector3(distance, 0, 0);
             newObj = (GameObject)Instantiate(this.FarShootObject, Posv3, this.FarShootObject.transform.rotation);
-            newObj.GetComponent<ShootObjectInfo>().Damage = damage;
+            if (newObj.GetComponent<ShootObjectInfo_Once>())
+                newObj.GetComponent<ShootObjectInfo_Once>().Damage = damage;
+            else if (newObj.GetComponent<ShootObjectInfo_Through>())
+                newObj.GetComponent<ShootObjectInfo_Through>().Damage = damage;
 
             this.currentBossAction = BossAction.閒置;
         }

@@ -2,13 +2,14 @@
 using System.Collections;
 
 /// <summary>
-/// Modify Date：2013-08-17
+/// Modify Date：2013-08-27
 /// Author：Ian
 /// Description：
 ///     角色攻擊控制器 (敵人、障礙物)
 ///     0809新增：註冊BoneAnimation到GameManager，方便管理
 ///     0816修改：不分近or遠距離攻擊值
-///     0817新增魔王資訊的判斷
+///     0817：新增魔王資訊的判斷
+///     0827：修正射擊物件不同腳本的判別(ShootObjectInfo_Once、ShootObjectInfo_Through)
 /// </summary>
 public class RoleAttackController : MonoBehaviour
 {
@@ -154,9 +155,10 @@ public class RoleAttackController : MonoBehaviour
             //設定物件的parent 、 layer 、 Damage
             obj.layer = LayerMask.NameToLayer("ShootObject");
             obj.transform.parent = GameObject.Find("UselessObjectCollection").transform;
-
-            ShootObjectInfo info = obj.GetComponent<ShootObjectInfo>();
-            info.Damage = this.roleInfo.damage;
+            if (obj.GetComponent<ShootObjectInfo_Once>())
+                obj.GetComponent<ShootObjectInfo_Once>().Damage = this.roleInfo.damage;
+            else if (obj.GetComponent<ShootObjectInfo_Through>())
+                obj.GetComponent<ShootObjectInfo_Through>().Damage = this.roleInfo.damage;
         }
     }
 
