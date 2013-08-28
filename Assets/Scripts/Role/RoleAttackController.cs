@@ -15,8 +15,10 @@ public class RoleAttackController : MonoBehaviour
 {
     public float AttackDistance;        //攻擊距離
     public GameObject ShootObject;      //遠距離攻擊發射出的物件
+    public GameObject SkillObject;
     public LayerMask AttackLayer;       //判定是否攻擊的Layer (Enemy、Boss、Obstacle)
 
+    private bool isUsingSkill;
     private RolePropertyInfo roleInfo { get; set; }
     private SmoothMoves.BoneAnimation boneAnimation;
     private RaycastHit hitData;
@@ -26,6 +28,7 @@ public class RoleAttackController : MonoBehaviour
     {
         //載入角色資訊
         this.roleInfo = this.GetComponent<RolePropertyInfo>();
+        this.isUsingSkill = false;
 
         //設定BoneAnimation
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
@@ -43,41 +46,77 @@ public class RoleAttackController : MonoBehaviour
             // 角色必須未虛弱
             if (!this.roleInfo.isWeak)
             {
-                //判別物件為何？  敵人與障礙物有不同的處理
-                if (Physics.Raycast(this.transform.position, Vector3.right, out this.hitData, this.AttackDistance, this.AttackLayer))
+                if (Input.GetKeyDown(KeyCode.P))
                 {
-                    //tag = MainBody  (物件主體)
-                    if (this.hitData.collider.tag.CompareTo("MainBody") == 0)
+                    switch (this.roleInfo.Role)
                     {
-                        string layerName = LayerMask.LayerToName(this.hitData.collider.gameObject.layer);
-                        bool isCheck = false;
+                        //case GameDefinition.Role.狂戰士:
+                        //    GameManager.script.StopAllBoneAnimation(this.boneAnimation);
+                        //    this.boneAnimation.Play("絕招01");
+                        //    this.isUsingSkill = true;
+                        //    RolesCollection.script.isChanging = true;   //暫停角色交換功能
+                        //    break;
 
-                        //判別物件為何？  敵人、障礙物、魔王有不同的處理
-                        if (layerName.CompareTo("Enemy") == 0)
-                        {
-                            if (!this.hitData.collider.GetComponent<EnemyPropertyInfo>().isDead)    //確認Enemy是否已經死亡
-                                isCheck = true;
-                        }
-                        else if (layerName.CompareTo("Boss") == 0)
-                        {
-                            if (!this.hitData.collider.GetComponent<BossPropertyInfo>().isDead)    //確認Boss是否已經死亡
-                                isCheck = true;
-                        }
-                        else if (layerName.CompareTo("Obstacle") == 0)
-                        {
-                            if (!this.hitData.collider.GetComponent<ObstaclePropertyInfo>().isDisappear)    //確認Obstacle是否已經消失
-                                if (this.GetComponent<ObstacleSystem>().ObstacleList.Contains(this.hitData.collider.GetComponent<ObstaclePropertyInfo>().Obstacle))
-                                    isCheck = true;
-                        }
+                        //case GameDefinition.Role.獵人:
+                        //    GameManager.script.StopAllBoneAnimation(this.boneAnimation);
+                        //    this.boneAnimation.Play("絕招01");
+                        //    this.isUsingSkill = true;
+                        //    RolesCollection.script.isChanging = true;   //暫停角色交換功能
+                        //    break;
 
-                        if (isCheck)
-                            if (!this.boneAnimation.IsPlaying("attack"))
-                                this.boneAnimation.Play("attack");
+                        case GameDefinition.Role.盾騎士:
+                            GameManager.script.StopAllBoneAnimation(this.boneAnimation);
+                            this.boneAnimation.Play("絕招01");
+                            this.isUsingSkill = true;
+                            RolesCollection.script.isChanging = true; //暫停角色交換功能
+                            break;
+
+                        case GameDefinition.Role.法師:
+                            //GameManager.script.StopAllBoneAnimation(this.boneAnimation);
+                            //this.boneAnimation.Play("絕招01");
+                            //this.isUsingSkill = true;
+                            //RolesCollection.script.isChanging = true;   //暫停角色交換功能
+                            break;
                     }
                 }
 
+                if (!this.isUsingSkill)
+                {
+                    //判別物件為何？  敵人與障礙物有不同的處理
+                    if (Physics.Raycast(this.transform.position, Vector3.right, out this.hitData, this.AttackDistance, this.AttackLayer))
+                    {
+                        //tag = MainBody  (物件主體)
+                        if (this.hitData.collider.tag.CompareTo("MainBody") == 0)
+                        {
+                            string layerName = LayerMask.LayerToName(this.hitData.collider.gameObject.layer);
+                            bool isCheck = false;
+
+                            //判別物件為何？  敵人、障礙物、魔王有不同的處理
+                            if (layerName.CompareTo("Enemy") == 0)
+                            {
+                                if (!this.hitData.collider.GetComponent<EnemyPropertyInfo>().isDead)    //確認Enemy是否已經死亡
+                                    isCheck = true;
+                            }
+                            else if (layerName.CompareTo("Boss") == 0)
+                            {
+                                if (!this.hitData.collider.GetComponent<BossPropertyInfo>().isDead)    //確認Boss是否已經死亡
+                                    isCheck = true;
+                            }
+                            else if (layerName.CompareTo("Obstacle") == 0)
+                            {
+                                if (!this.hitData.collider.GetComponent<ObstaclePropertyInfo>().isDisappear)    //確認Obstacle是否已經消失
+                                    if (this.GetComponent<ObstacleSystem>().ObstacleList.Contains(this.hitData.collider.GetComponent<ObstaclePropertyInfo>().Obstacle))
+                                        isCheck = true;
+                            }
+
+                            if (isCheck)
+                                if (!this.boneAnimation.IsPlaying("attack"))
+                                    this.boneAnimation.Play("attack");
+                        }
+                    }
+                }
                 //確認目前動畫狀態(必須沒再播attack)
-                if (!this.boneAnimation.IsPlaying("attack"))
+                if (!this.boneAnimation.isPlaying)
                 {
                     //判定背景是否有在動，以此決定角色的動作狀態
                     if (BackgroundController.script.isRunning)
@@ -146,8 +185,8 @@ public class RoleAttackController : MonoBehaviour
     /// <param name="triggerEvent">觸發相關資訊</param>
     public void ShootEvent(SmoothMoves.UserTriggerEvent triggerEvent)
     {
-        //確認是由"weapon"觸發的UserTrigger
-        if (triggerEvent.boneName == "weapon")
+        //遠距離角色一般攻擊觸發的UserTrigger
+        if (triggerEvent.boneName == "weapon" && triggerEvent.animationName == "attack")
         {
             //產生射擊物件
             GameObject obj = (GameObject)Instantiate(this.ShootObject, this.transform.position - new Vector3(0, 0, 0.1f), this.ShootObject.transform.rotation);
@@ -159,6 +198,78 @@ public class RoleAttackController : MonoBehaviour
                 obj.GetComponent<ShootObjectInfo_Once>().Damage = this.roleInfo.damage;
             else if (obj.GetComponent<ShootObjectInfo_Through>())
                 obj.GetComponent<ShootObjectInfo_Through>().Damage = this.roleInfo.damage;
+        }
+
+        //角色釋放絕招觸發的UserTrigger
+        if (triggerEvent.boneName == "weapon" && triggerEvent.animationName == "絕招01")
+        {
+            if (triggerEvent.time == this.boneAnimation["絕招01"].length)
+            {
+                this.isUsingSkill = false;
+                RolesCollection.script.isChanging = false;      //恢復角色交換功能
+                GameManager.script.ResumeAllBoneAnimation();
+            }
+            else
+            {
+                this.UniqueSkill(this.roleInfo.Role);
+            }
+        }
+    }
+
+    void UniqueSkill(GameDefinition.Role role)
+    {
+        GameObject obj = null;
+        switch (role)
+        {
+            case GameDefinition.Role.狂戰士:   //公式：第一段普通攻擊2倍，第二段普通攻擊1.5倍
+                //第一段攻擊，自身攻擊距離範圍內所有怪物受到傷害
+                foreach (var hit in Physics.RaycastAll(this.transform.position, Vector3.right, this.AttackDistance, this.AttackLayer))
+                {
+                    if (hit.transform.GetComponent<EnemyPropertyInfo>())
+                        hit.transform.GetComponent<EnemyPropertyInfo>().DecreaseLife(this.roleInfo.damage * 2);    //第一段傷害
+                    else if (hit.transform.GetComponent<BossPropertyInfo>())
+                        hit.transform.GetComponent<BossPropertyInfo>().DecreaseLife(this.roleInfo.damage * 2);    //第一段傷害
+                }
+                //第二段攻擊，產生衝擊波物件
+                obj = (GameObject)Instantiate(this.SkillObject, this.transform.position - new Vector3(0, 0, 0.1f), this.SkillObject.transform.rotation);
+
+                //設定物件的parent 、 layer 、 Damage
+                obj.layer = LayerMask.NameToLayer("ShootObject");
+                obj.transform.parent = GameObject.Find("UselessObjectCollection").transform;
+                obj.GetComponent<ShootObjectInfo_Through>().Damage = Mathf.FloorToInt(this.roleInfo.damage * 1.5f); //第二段傷害
+                break;
+
+            case GameDefinition.Role.獵人:    //公式：普通攻擊1.2倍
+                //產生光波物件
+                obj = (GameObject)Instantiate(this.SkillObject, this.transform.position - new Vector3(0, 0, 0.1f), this.SkillObject.transform.rotation);
+
+                //設定物件的parent 、 layer 、 Damage
+                obj.layer = LayerMask.NameToLayer("ShootObject");
+                obj.transform.parent = GameObject.Find("UselessObjectCollection").transform;
+                obj.GetComponent<ShootObjectInfo_Through>().Damage = Mathf.FloorToInt(this.roleInfo.damage * 1.2f);
+                break;
+
+            case GameDefinition.Role.盾騎士:   //公式：普通攻擊3倍
+                //產生光波物件
+                obj = (GameObject)Instantiate(this.SkillObject, this.transform.position - new Vector3(0, 0, 0.1f), this.SkillObject.transform.rotation);
+
+                //設定物件的parent 、 layer 、 Damage
+                obj.layer = LayerMask.NameToLayer("ShootObject");
+                obj.transform.parent = GameObject.Find("UselessObjectCollection").transform;
+                obj.GetComponent<ShootObjectInfo_Through>().Damage = this.roleInfo.damage * 3;
+                break;
+
+            case GameDefinition.Role.法師:    //公式：普通攻擊2.5倍
+                //產生魔法陣物件
+                obj = (GameObject)Instantiate(this.SkillObject, this.transform.position - new Vector3(0, 0, 0.1f), this.SkillObject.transform.rotation);
+
+                foreach (EnemyPropertyInfo script in GameObject.FindObjectsOfType(typeof(EnemyPropertyInfo)))
+                    script.DecreaseLife(Mathf.FloorToInt(this.roleInfo.damage * 2.5f));
+
+                foreach (BossPropertyInfo script in GameObject.FindObjectsOfType(typeof(BossPropertyInfo)))
+                    script.DecreaseLife(Mathf.FloorToInt(this.roleInfo.damage * 2.5f));
+
+                break;
         }
     }
 

@@ -53,9 +53,34 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 暫停所有註冊的BoneAnimation
+    /// 暫停所有註冊的BoneAnimation (去除參數的BoneAnimation)
     /// </summary>
-    public void StopAllBoneAnimation()
+    /// <param name="dontStopAnimation">不暫停的BoneAnimation</param>
+    public void StopAllBoneAnimation(SmoothMoves.BoneAnimation dontStopAnimation = null)
+    {
+        lock (this.AllBoneAnimationList)
+        {
+            //從List 複製到local arrays
+            SmoothMoves.BoneAnimation[] allAnimations = new SmoothMoves.BoneAnimation[this.AllBoneAnimationList.Keys.Count];
+            this.AllBoneAnimationList.Keys.CopyTo(allAnimations, 0);
+            List<SmoothMoves.BoneAnimation> animationList = new List<SmoothMoves.BoneAnimation>(allAnimations);
+
+            //去除不必暫停物件
+            if (dontStopAnimation != null)
+                animationList.Remove(dontStopAnimation);
+
+            for (int i = 0; i < animationList.Count; i++)
+            {
+                animationList[i].Stop();    //暫停BoneAnimation的運作
+                this.AllBoneAnimationList[animationList[i]] = false;    //將狀態改為停止
+            }
+        }
+    }
+
+    /// <summary>
+    /// 恢復所有註冊的BoneAnimation
+    /// </summary>
+    public void ResumeAllBoneAnimation()
     {
         lock (this.AllBoneAnimationList)
         {
@@ -65,8 +90,7 @@ public class GameManager : MonoBehaviour
 
             for (int i = 0; i < allAnimations.Length; i++)
             {
-                allAnimations[i].Stop();    //暫停BoneAnimation的運作
-                this.AllBoneAnimationList[allAnimations[i]] = false;    //將狀態改為停止
+                this.AllBoneAnimationList[allAnimations[i]] = true;    //將狀態改為正在使用
             }
         }
     }
@@ -125,6 +149,11 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.V))
         {
             GameManager.script.StopAllBoneAnimation();
+        }
+        //測試用，恢復所有註冊的BoneAnimation
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            GameManager.script.ResumeAllBoneAnimation();
         }
     }
 
