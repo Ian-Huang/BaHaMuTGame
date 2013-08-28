@@ -32,7 +32,9 @@ public class EffectCreator : MonoBehaviour
             isBossUIEffectShow = false;
             UIBoss_Health_LayoutMove.SetActive(true);
             UIMap_Progress_LayoutMove.SetActive(true);
-            GameObject.Find("Tex2D - CurrentPosition").GetComponent<MUI_RectMonitor>().enabled = false;
+            MusicPlayer.script.ChangeBackgroungMusic(10);
+            //GameObject.Find("Tex2D - CurrentPosition").GetComponent<MUI_RectMonitor>().enabled = false;
+            
         }
     }
 

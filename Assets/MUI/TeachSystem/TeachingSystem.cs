@@ -12,7 +12,7 @@ public class TeachingSystem : MonoBehaviour
 {
     public static TeachingSystem script;
     //目前階段編號
-    public static int currentPartNumber;
+    public int currentPartNumber;
     //教學的段落陣列
     public GameObject[] TechingParts;
     //教學模式等待開始時間

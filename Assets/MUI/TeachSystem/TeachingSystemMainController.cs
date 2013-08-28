@@ -7,6 +7,7 @@ public class TeachingSystemMainController : MonoBehaviour
     public bool isPlayerHalfHP;
     public bool isRecoverCure;
     public bool isBossUIEffectShow;
+    public bool isOver;
     public enum BossAttackType { None, Melee, Range };
     public BossAttackType bossAttackType;
 
@@ -37,8 +38,7 @@ public class TeachingSystemMainController : MonoBehaviour
 
         if (isBossUIEffectShow)
         {
-            UIBoss_Health.SetActive(true);
-            UIMap_Progress.SetActive(true);
+            EffectCreator.script.isBossUIEffectShow = true;
         }
 
         if (bossAttackType == BossAttackType.Melee)
@@ -46,6 +46,11 @@ public class TeachingSystemMainController : MonoBehaviour
 
         if (bossAttackType == BossAttackType.Range)
             BossController.script.FarAttack();
+
+        if (isOver)
+        {
+            MusicPlayer.script.ChangeBackgroungMusic(4);
+        }
     }
 
     void OnDisable()

@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
         //f進度條For教學系統
 
         if (Application.loadedLevelName == "TeachScene")
-            MUI_Monitor.script.SetValue("進度條x", (TeachingSystem.currentPartNumber / 15F) * 100);
+            MUI_Monitor.script.SetValue("進度條x", (TeachingSystem.script.currentPartNumber / 15F) * 100);
         else
         {
             //進度條

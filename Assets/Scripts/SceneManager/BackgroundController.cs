@@ -41,15 +41,18 @@ public class BackgroundController : MonoBehaviour
         this.isRunning = state;
 
         //判斷當前背景移動狀況，如果無移動角色則使用"idleweak"
-        RolePropertyInfo[] rolePropertyInfos = RolesCollection.script.gameObject.GetComponentsInChildren<RolePropertyInfo>();
-        foreach (RolePropertyInfo script in rolePropertyInfos)
+        if (RolesCollection.script)
         {
-            if (script.boneAnimation.IsPlaying("walkweak") || script.boneAnimation.IsPlaying("idleweak"))
+            RolePropertyInfo[] rolePropertyInfos = RolesCollection.script.gameObject.GetComponentsInChildren<RolePropertyInfo>();
+            foreach (RolePropertyInfo script in rolePropertyInfos)
             {
-                if (state)
-                    script.boneAnimation.Play("walkweak");
-                else
-                    script.boneAnimation.Play("idleweak");
+                if (script.boneAnimation.IsPlaying("walkweak") || script.boneAnimation.IsPlaying("idleweak"))
+                {
+                    if (state)
+                        script.boneAnimation.Play("walkweak");
+                    else
+                        script.boneAnimation.Play("idleweak");
+                }
             }
         }
     }
