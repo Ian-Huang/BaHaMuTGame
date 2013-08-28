@@ -121,24 +121,6 @@ public class BossController_TreeElder : MonoBehaviour
 
                 if (this.currentBossAction == BossAction.閒置)
                 {
-                    //測試用
-                    if (Input.GetKeyDown(KeyCode.T))
-                    {
-                        this.TreeRootAttack(BossAction.小樹根攻擊);
-                    }
-
-                    //測試用
-                    if (Input.GetKeyDown(KeyCode.Y))
-                    {
-                        this.TreeRootAttack(BossAction.大樹根攻擊);
-                    }
-
-                    //測試用
-                    if (Input.GetKeyDown(KeyCode.O))
-                    {
-                        this.OpenFlower();
-                    }
-
                     if (this.ActionTimer.isRunTimer)
                     {
                         this.NextActionTime -= Time.deltaTime;

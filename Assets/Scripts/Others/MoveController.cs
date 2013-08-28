@@ -2,10 +2,11 @@
 using System.Collections;
 
 /// <summary>
-/// Modify Date：2013-07-25
+/// Modify Date：2013-08-28
 /// Author：Ian
 /// Description：
 ///     控制物體的移動(速度、方向)
+///     0828新增：可自行選擇Local、World座標
 /// </summary>
 public class MoveController : MonoBehaviour
 {

@@ -2,7 +2,7 @@
 using System.Collections;
 
 /// <summary>
-/// Modify Date：2013-08-27
+/// Modify Date：2013-08-28
 /// Author：Ian
 /// Description：
 ///     角色攻擊控制器 (敵人、障礙物)
@@ -10,6 +10,7 @@ using System.Collections;
 ///     0816修改：不分近or遠距離攻擊值
 ///     0817：新增魔王資訊的判斷
 ///     0827：修正射擊物件不同腳本的判別(ShootObjectInfo_Once、ShootObjectInfo_Through)
+///     0828：新增絕招系統
 /// </summary>
 public class RoleAttackController : MonoBehaviour
 {
@@ -37,6 +38,17 @@ public class RoleAttackController : MonoBehaviour
         GameManager.script.RegisterBoneAnimation(this.boneAnimation);   //註冊BoneAnimation，GameManager統一管理
     }
 
+    /// <summary>
+    /// 供外部呼叫使用，使角色用出絕招
+    /// </summary>
+    public void RunUniqueSkill()
+    {
+        GameManager.script.StopAllBoneAnimation(this.boneAnimation);
+        this.boneAnimation.Play("絕招01");
+        this.isUsingSkill = true;
+        RolesCollection.script.isChanging = true;   //暫停角色交換功能
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -46,39 +58,14 @@ public class RoleAttackController : MonoBehaviour
             // 角色必須未虛弱
             if (!this.roleInfo.isWeak)
             {
-                if (Input.GetKeyDown(KeyCode.P))
-                {
-                    switch (this.roleInfo.Role)
-                    {
-                        //case GameDefinition.Role.狂戰士:
-                        //    GameManager.script.StopAllBoneAnimation(this.boneAnimation);
-                        //    this.boneAnimation.Play("絕招01");
-                        //    this.isUsingSkill = true;
-                        //    RolesCollection.script.isChanging = true;   //暫停角色交換功能
-                        //    break;
-
-                        //case GameDefinition.Role.獵人:
-                        //    GameManager.script.StopAllBoneAnimation(this.boneAnimation);
-                        //    this.boneAnimation.Play("絕招01");
-                        //    this.isUsingSkill = true;
-                        //    RolesCollection.script.isChanging = true;   //暫停角色交換功能
-                        //    break;
-
-                        case GameDefinition.Role.盾騎士:
-                            GameManager.script.StopAllBoneAnimation(this.boneAnimation);
-                            this.boneAnimation.Play("絕招01");
-                            this.isUsingSkill = true;
-                            RolesCollection.script.isChanging = true; //暫停角色交換功能
-                            break;
-
-                        case GameDefinition.Role.法師:
-                            //GameManager.script.StopAllBoneAnimation(this.boneAnimation);
-                            //this.boneAnimation.Play("絕招01");
-                            //this.isUsingSkill = true;
-                            //RolesCollection.script.isChanging = true;   //暫停角色交換功能
-                            break;
-                    }
-                }
+                if (Input.GetKeyDown(KeyCode.U) && this.roleInfo.Role == GameDefinition.Role.狂戰士)
+                    this.RunUniqueSkill();
+                else if (Input.GetKeyDown(KeyCode.I) && this.roleInfo.Role == GameDefinition.Role.法師)
+                    this.RunUniqueSkill();
+                else if (Input.GetKeyDown(KeyCode.O) && this.roleInfo.Role == GameDefinition.Role.盾騎士)
+                    this.RunUniqueSkill();
+                else if (Input.GetKeyDown(KeyCode.P) && this.roleInfo.Role == GameDefinition.Role.獵人)
+                    this.RunUniqueSkill();
 
                 if (!this.isUsingSkill)
                 {
@@ -115,6 +102,7 @@ public class RoleAttackController : MonoBehaviour
                         }
                     }
                 }
+
                 //確認目前動畫狀態(必須沒再播attack)
                 if (!this.boneAnimation.isPlaying)
                 {
@@ -203,7 +191,7 @@ public class RoleAttackController : MonoBehaviour
         //角色釋放絕招觸發的UserTrigger
         if (triggerEvent.boneName == "weapon" && triggerEvent.animationName == "絕招01")
         {
-            if (triggerEvent.time == this.boneAnimation["絕招01"].length)
+            if (triggerEvent.normalizedTime == 1)   //動畫最後一Frame
             {
                 this.isUsingSkill = false;
                 RolesCollection.script.isChanging = false;      //恢復角色交換功能
@@ -211,12 +199,16 @@ public class RoleAttackController : MonoBehaviour
             }
             else
             {
-                this.UniqueSkill(this.roleInfo.Role);
+                this.CheckRoleUniqueSkill(this.roleInfo.Role);
             }
         }
     }
 
-    void UniqueSkill(GameDefinition.Role role)
+    /// <summary>
+    /// 根據角色不同，使出不同絕技
+    /// </summary>
+    /// <param name="role">角色</param>
+    void CheckRoleUniqueSkill(GameDefinition.Role role)
     {
         GameObject obj = null;
         switch (role)
@@ -240,13 +232,18 @@ public class RoleAttackController : MonoBehaviour
                 break;
 
             case GameDefinition.Role.獵人:    //公式：普通攻擊1.2倍
-                //產生光波物件
-                obj = (GameObject)Instantiate(this.SkillObject, this.transform.position - new Vector3(0, 0, 0.1f), this.SkillObject.transform.rotation);
+                //三支箭
+                for (int i = 0; i < 3; i++)
+                {
+                    //產生光箭物件
+                    obj = (GameObject)Instantiate(this.SkillObject, this.transform.position - new Vector3(0, 0, 0.1f), this.SkillObject.transform.rotation);
 
-                //設定物件的parent 、 layer 、 Damage
-                obj.layer = LayerMask.NameToLayer("ShootObject");
-                obj.transform.parent = GameObject.Find("UselessObjectCollection").transform;
-                obj.GetComponent<ShootObjectInfo_Through>().Damage = Mathf.FloorToInt(this.roleInfo.damage * 1.2f);
+                    //設定物件的parent 、 layer 、 Damage
+                    obj.layer = LayerMask.NameToLayer("ShootObject");
+                    obj.transform.parent = GameObject.Find("UselessObjectCollection").transform;
+                    obj.transform.Rotate(new Vector3(0, 0, -10 + i * 10));  //光箭角度不同
+                    obj.GetComponent<ShootObjectInfo_Through>().Damage = Mathf.FloorToInt(this.roleInfo.damage * 1.2f);
+                }
                 break;
 
             case GameDefinition.Role.盾騎士:   //公式：普通攻擊3倍
@@ -268,7 +265,6 @@ public class RoleAttackController : MonoBehaviour
 
                 foreach (BossPropertyInfo script in GameObject.FindObjectsOfType(typeof(BossPropertyInfo)))
                     script.DecreaseLife(Mathf.FloorToInt(this.roleInfo.damage * 2.5f));
-
                 break;
         }
     }
