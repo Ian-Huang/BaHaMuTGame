@@ -55,15 +55,15 @@ public class LevelSystem : MonoBehaviour
             else
                 PlayerPrefsDictionary.script.SetValue(this.RoleNameDictionary[data.RoleName] + "_HP_M", GameDefinition.AbilityCostLevel[PlayerPrefsDictionary.script.GetValue(this.RoleNameDictionary[data.RoleName] + "_HP_LV")]);
 
-            if (GameDefinition.AbilityCostLevel.Count == (level = PlayerPrefsDictionary.script.GetValue(this.RoleNameDictionary[data.RoleName] + "_BASIC_LV")))
+            if (GameDefinition.AttackLVCostLevel.Count == (level = PlayerPrefsDictionary.script.GetValue(this.RoleNameDictionary[data.RoleName] + "_BASIC_LV")))
                 PlayerPrefsDictionary.script.SetValue(this.RoleNameDictionary[data.RoleName] + "_BASIC_LV_M", 0);
             else
-                PlayerPrefsDictionary.script.SetValue(this.RoleNameDictionary[data.RoleName] + "_BASIC_LV_M", GameDefinition.AbilityCostLevel[PlayerPrefsDictionary.script.GetValue(this.RoleNameDictionary[data.RoleName] + "_BASIC_LV")]);
+                PlayerPrefsDictionary.script.SetValue(this.RoleNameDictionary[data.RoleName] + "_BASIC_LV_M", GameDefinition.AttackLVCostLevel[PlayerPrefsDictionary.script.GetValue(this.RoleNameDictionary[data.RoleName] + "_BASIC_LV")]);
 
-            if (GameDefinition.AbilityCostLevel.Count == (level = PlayerPrefsDictionary.script.GetValue(this.RoleNameDictionary[data.RoleName] + "_ULT_LV")))
+            if (GameDefinition.UltimateSkillCostLevel.Count == (level = PlayerPrefsDictionary.script.GetValue(this.RoleNameDictionary[data.RoleName] + "_ULT_LV")))
                 PlayerPrefsDictionary.script.SetValue(this.RoleNameDictionary[data.RoleName] + "_ULT_LV_M", 0);
             else
-                PlayerPrefsDictionary.script.SetValue(this.RoleNameDictionary[data.RoleName] + "_ULT_LV_M", GameDefinition.AbilityCostLevel[PlayerPrefsDictionary.script.GetValue(this.RoleNameDictionary[data.RoleName] + "_ULT_LV")]);
+                PlayerPrefsDictionary.script.SetValue(this.RoleNameDictionary[data.RoleName] + "_ULT_LV_M", GameDefinition.UltimateSkillCostLevel[PlayerPrefsDictionary.script.GetValue(this.RoleNameDictionary[data.RoleName] + "_ULT_LV")]);
         }
     }
 
