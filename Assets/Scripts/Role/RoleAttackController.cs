@@ -44,6 +44,7 @@ public class RoleAttackController : MonoBehaviour
     public void RunUniqueSkill()
     {
         this.isUsingSkill = true;
+        this.roleInfo.CurrentEnergy = 0;
 
         GameManager.script.ChangeButtonUIObject.SetActive(false);       //暫停角色交換功能
         GameManager.script.StopAllBoneAnimation(this.boneAnimation);    //暫停所有註冊的BoneAnimation
