@@ -16,7 +16,7 @@ public class UI_CompareValueToShowObject : MonoBehaviour
         string s = MUI_Label.Text;
         if (s == "") s = "0";
 
-        if (PlayerPrefsDictionary.script.GetValue(PlayerPrefsString) > int.Parse(s))
+        if (PlayerPrefsDictionary.script.GetValue(PlayerPrefsString) >= int.Parse(s))
         {
             CanUseLevel.SetActive(true);
             CantUseLevel.SetActive(false);

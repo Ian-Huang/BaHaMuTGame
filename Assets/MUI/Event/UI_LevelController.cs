@@ -11,20 +11,12 @@ public class UI_LevelController : MonoBehaviour {
     public GameObject CantUseLevel;
 	// Use this for initialization
 	void Start () {
-        if (PlayerPrefsDictionary.script.GetValue("LevelComplete") > levelValue)
+        if (PlayerPrefsDictionary.script.GetValue("LevelComplete") >= levelValue)
         {
             CanUseLevel.SetActive(true);
             CantUseLevel.SetActive(false);
         }
         else
             CantUseLevel.SetActive(true);
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (Input.GetKeyDown(KeyCode.A))
-            PlayerPrefsDictionary.script.SetValue("LevelComplete", 15);
-
-        //print(PlayerPrefsDictionary.script.GetValue("LevelComplete"));
 	}
 }
