@@ -8,6 +8,7 @@ public class TeachingSystemMainController : MonoBehaviour
     public bool isRecoverCure;
     public bool isBossUIEffectShow;
     public bool isOver;
+    public bool isAllRoleFullEnergy;
     public enum BossAttackType { None, Melee, Range };
     public BossAttackType bossAttackType;
 
@@ -18,6 +19,8 @@ public class TeachingSystemMainController : MonoBehaviour
     {
         if (!isBackgroindRunning)
             BackgroundController.script.SetRunBackgroundState(false);
+        else
+            BackgroundController.script.SetRunBackgroundState(true);
 
         if (isPlayerHalfHP)
         {
@@ -51,6 +54,15 @@ public class TeachingSystemMainController : MonoBehaviour
         {
             MusicPlayer.script.ChangeBackgroungMusic(4);
         }
+
+        if (isAllRoleFullEnergy)
+        {
+            foreach (RolePropertyInfo script in GameObject.FindObjectsOfType(typeof(RolePropertyInfo)))
+                script.CurrentEnergy = 1000;
+        }
+
+
+
     }
 
     void OnDisable()
