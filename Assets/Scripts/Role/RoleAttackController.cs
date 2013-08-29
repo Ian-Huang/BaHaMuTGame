@@ -43,10 +43,21 @@ public class RoleAttackController : MonoBehaviour
     /// </summary>
     public void RunUniqueSkill()
     {
-        GameManager.script.StopAllBoneAnimation(this.boneAnimation);
-        this.boneAnimation.Play("絕招01");
         this.isUsingSkill = true;
-        GameManager.script.ChangeButtonUIObject.SetActive(false); //暫停角色交換功能
+
+        GameManager.script.ChangeButtonUIObject.SetActive(false);       //暫停角色交換功能
+        GameManager.script.StopAllBoneAnimation(this.boneAnimation);    //暫停所有註冊的BoneAnimation
+        if (GameManager.script.CurrentBossObject != null)
+        {
+            iTween.Pause(GameManager.script.CurrentBossObject);         //暫停當前魔王的iTween
+            GameManager.script.CurrentBossObject.transform.parent.GetComponent<EnemyCreatePoint>().PauseCreate();   //暫停魔王點生怪狀態
+        }
+        else
+            BackgroundController.script.SetRunBackgroundState(false);       //暫停地圖移動        
+        foreach (MoveController script in GameObject.FindObjectsOfType(typeof(MoveController))) //暫停所有物件的移動功能
+            script.isRunning = false;
+
+        this.boneAnimation.Play("絕招01");
     }
 
     // Update is called once per frame
@@ -194,8 +205,17 @@ public class RoleAttackController : MonoBehaviour
             if (triggerEvent.normalizedTime == 1)   //動畫最後一Frame
             {
                 this.isUsingSkill = false;
-                GameManager.script.ChangeButtonUIObject.SetActive(true);  //恢復角色交換功能
-                GameManager.script.ResumeAllBoneAnimation();
+                GameManager.script.ChangeButtonUIObject.SetActive(true);    //恢復角色交換功能                
+                GameManager.script.ResumeAllBoneAnimation();                //恢復所有註冊的BoneAnimation
+                if (GameManager.script.CurrentBossObject != null)
+                {
+                    iTween.Resume(GameManager.script.CurrentBossObject);     //恢復當前魔王的iTween
+                    GameManager.script.CurrentBossObject.transform.parent.GetComponent<EnemyCreatePoint>().ResumeCreate();  //恢復魔王點生怪狀態
+                }
+                else
+                    BackgroundController.script.SetRunBackgroundState(true);    //恢復地圖移動
+                foreach (MoveController script in GameObject.FindObjectsOfType(typeof(MoveController))) //恢復所有物件的移動功能
+                    script.isRunning = true;
             }
             else
             {

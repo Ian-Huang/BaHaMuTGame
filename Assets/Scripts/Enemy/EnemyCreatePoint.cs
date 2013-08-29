@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Modify Date：2013-08-22
+/// Modify Date：2013-08-29
 /// Author：Ian
 /// Description：
 ///     敵人產生點(當玩家觸發，開始製造敵人)
 ///     0808：新增王點設定，一段時間間隔出小兵
 ///     0810：修正生怪數的設定方式(CreateCountMin、CreateCountMax)
+///     0829：新增絕招系統呼叫使用函式
 /// </summary>
 public class EnemyCreatePoint : MonoBehaviour
 {
@@ -87,6 +88,21 @@ public class EnemyCreatePoint : MonoBehaviour
                 newObj.transform.parent = this.transform;
             }
         }
+    }
+
+    /// <summary>
+    /// 暫停生怪狀態
+    /// </summary>
+    public void PauseCreate()
+    {
+        this.StopAllCoroutines();
+    }
+    /// <summary>
+    /// 恢復生怪狀態
+    /// </summary>
+    public void ResumeCreate()
+    {
+        this.StartCoroutine(AutoCreateEnemy(Random.Range(this.AutocreateMintime, this.AutocreateMaxtime) / 2));
     }
 
     /// <summary>

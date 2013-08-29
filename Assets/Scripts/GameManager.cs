@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector]
     public GameObject ChangeButtonUIObject; //交換位置按鈕UI的物件(使用絕技時要將UI隱藏)
+    [HideInInspector]
+    public GameObject CurrentBossObject;    //紀錄當前魔王物件(使用絕技要暫停iTween)
 
     public GameObject CoinObject;               //金幣物件Prefab
     public SmoothMoves.BoneAnimation EffectAnimationObject;    //效果動畫物件Prefab
@@ -145,12 +147,12 @@ public class GameManager : MonoBehaviour
         //士氣條
         MUI_Monitor.script.SetValue("士氣條" + "x", (this.CurrentMorale / this.MaxMorale) * 100);
 
-
         //魔王血條        
         BossPropertyInfo script = (BossPropertyInfo)GameObject.FindObjectOfType(typeof(BossPropertyInfo));
         if (script)
             MUI_Monitor.script.SetValue("魔王血條" + "x", (script.currentLife / script.maxLife) * 100);
     }
+
 
     /// <summary>
     /// 每秒固定回復士氣值

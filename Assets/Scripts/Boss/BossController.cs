@@ -44,6 +44,7 @@ public class BossController : MonoBehaviour
     void Start()
     {
         script = this;
+        GameManager.script.CurrentBossObject = this.gameObject; //紀錄當前魔王物件(使用絕技要暫停iTween)
 
         //載入敵人資訊
         this.bossInfo = this.GetComponent<BossPropertyInfo>();
