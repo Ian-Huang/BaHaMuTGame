@@ -25,7 +25,7 @@ public class PlayerPrefsDictionary : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         script = this;
-        InvokeRepeating("DumpToPlayerPref", 0, 0.5F);
+        //InvokeRepeating("DumpToPlayerPref", 0, 0.5F);
         //////////////////////////////////
         //金幣
         this.AddValue("Money");
@@ -43,7 +43,17 @@ public class PlayerPrefsDictionary : MonoBehaviour
         this.AddValue("BSK_DEF");
         this.AddValue("BSK_HP");
         this.AddValue("BSK_BASIC_LV");
-        this.AddValue("BSK_ULT_LV");
+        this.AddValue("BSK_ULT_LV_");
+
+        this.AddValue("BSK_ATK_M");
+        this.AddValue("BSK_DEF_M");
+        this.AddValue("BSK_HP_M");
+        this.AddValue("BSK_BASIC_LV_M");
+        this.AddValue("BSK_ULT_LV_M");
+
+        this.AddValue("BSK_ATK_LV");
+        this.AddValue("BSK_DEF_LV");
+        this.AddValue("BSK_HP_LV");
 
         //this.AddValue("BSK_ATK_ADD", 10);
         //this.AddValue("BSK_DEF_ADD", 5);
@@ -55,6 +65,16 @@ public class PlayerPrefsDictionary : MonoBehaviour
         this.AddValue("WIZ_BASIC_LV");
         this.AddValue("WIZ_ULT_LV");
 
+        this.AddValue("WIZ_ATK_M");
+        this.AddValue("WIZ_DEF_M");
+        this.AddValue("WIZ_HP_M");
+        this.AddValue("WIZ_BASIC_LV_M");
+        this.AddValue("WIZ_ULT_LV_M");
+
+        this.AddValue("WIZ_ATK_LV");
+        this.AddValue("WIZ_DEF_LV");
+        this.AddValue("WIZ_HP_LV");
+
         //this.AddValue("WIZ_ATK_ADD");
         //this.AddValue("WIZ_DEF_ADD");
         //this.AddValue("WIZ_HP_ADD");
@@ -65,6 +85,16 @@ public class PlayerPrefsDictionary : MonoBehaviour
         this.AddValue("HUN_BASIC_LV");
         this.AddValue("HUN_ULT_LV");
 
+        this.AddValue("HUN_ATK_M");
+        this.AddValue("HUN_DEF_M");
+        this.AddValue("HUN_HP_M");
+        this.AddValue("HUN_BASIC_LV_M");
+        this.AddValue("HUN_ULT_LV_M");
+
+        this.AddValue("HUN_ATK_LV");
+        this.AddValue("HUN_DEF_LV");
+        this.AddValue("HUN_HP_LV");
+
         //this.AddValue("HUN_ATK_ADD");
         //this.AddValue("HUN_DEF_ADD");
         //this.AddValue("HUN_HP_ADD");
@@ -74,6 +104,16 @@ public class PlayerPrefsDictionary : MonoBehaviour
         this.AddValue("KNI_HP");
         this.AddValue("KNI_BASIC_LV");
         this.AddValue("KNI_ULT_LV");
+
+        this.AddValue("KNI_ATK_M");
+        this.AddValue("KNI_DEF_M");
+        this.AddValue("KNI_HP_M");
+        this.AddValue("KNI_BASIC_LV_M");
+        this.AddValue("KNI_ULT_LV_M");
+
+        this.AddValue("KNI_ATK_LV");
+        this.AddValue("KNI_DEF_LV");
+        this.AddValue("KNI_HP_LV");
 
         //this.AddValue("KNI_ATK_ADD");
         //this.AddValue("KNI_DEF_ADD");
@@ -142,7 +182,10 @@ public class PlayerPrefsDictionary : MonoBehaviour
     public void SetValue(string key, int newValue)
     {
         if (PlayerPrefDictionary.ContainsKey(key))
+        {
             PlayerPrefDictionary[key] = newValue;
+            PlayerPrefs.SetInt(key.ToString(), newValue);
+        }
     }
 
 
@@ -156,7 +199,6 @@ public class PlayerPrefsDictionary : MonoBehaviour
         if (!PlayerPrefs.HasKey(key))
         {
             //在字典中增加Key 值為0
-            print(key);
             PlayerPrefDictionary.Add(key.ToString(), 0);
         }
         else
