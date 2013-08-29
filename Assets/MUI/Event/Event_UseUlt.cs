@@ -12,10 +12,17 @@ public class Event_UseUlt : MonoBehaviour
         {
             if (script.Role == charClass)
             {
-                script.gameObject.GetComponent<RoleAttackController>().RunUniqueSkill();
-                break;
+                //從GameManager 確認BoneAnimation的狀態
+                if (GameManager.script.GetBoneAnimationState(script.boneAnimation))
+                {
+                    // 角色必須未虛弱
+                    if (!script.isWeak)
+                    {
+                        script.gameObject.GetComponent<RoleAttackController>().RunUniqueSkill();
+                        break;
+                    }
+                }
             }
         }
     }
-
 }

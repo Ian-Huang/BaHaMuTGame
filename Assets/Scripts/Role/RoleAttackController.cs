@@ -69,15 +69,6 @@ public class RoleAttackController : MonoBehaviour
             // 角色必須未虛弱
             if (!this.roleInfo.isWeak)
             {
-                if (Input.GetKeyDown(KeyCode.U) && this.roleInfo.Role == GameDefinition.Role.狂戰士)
-                    this.RunUniqueSkill();
-                else if (Input.GetKeyDown(KeyCode.I) && this.roleInfo.Role == GameDefinition.Role.法師)
-                    this.RunUniqueSkill();
-                else if (Input.GetKeyDown(KeyCode.O) && this.roleInfo.Role == GameDefinition.Role.盾騎士)
-                    this.RunUniqueSkill();
-                else if (Input.GetKeyDown(KeyCode.P) && this.roleInfo.Role == GameDefinition.Role.獵人)
-                    this.RunUniqueSkill();
-
                 if (!this.isUsingSkill)
                 {
                     //判別物件為何？  敵人與障礙物有不同的處理
@@ -279,6 +270,7 @@ public class RoleAttackController : MonoBehaviour
             case GameDefinition.Role.法師:    //公式：普通攻擊2.5倍
                 //產生魔法陣物件
                 obj = (GameObject)Instantiate(this.SkillObject, this.transform.position - new Vector3(0, 0, 0.1f), this.SkillObject.transform.rotation);
+                obj.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 1));       //魔法陣在螢幕正中央
 
                 foreach (EnemyPropertyInfo script in GameObject.FindObjectsOfType(typeof(EnemyPropertyInfo)))
                     script.DecreaseLife(Mathf.FloorToInt(this.roleInfo.damage * 2.5f));
