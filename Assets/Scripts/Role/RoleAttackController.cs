@@ -2,7 +2,7 @@
 using System.Collections;
 
 /// <summary>
-/// Modify Date：2013-08-28
+/// Modify Date：2013-08-29
 /// Author：Ian
 /// Description：
 ///     角色攻擊控制器 (敵人、障礙物)
@@ -46,7 +46,7 @@ public class RoleAttackController : MonoBehaviour
         GameManager.script.StopAllBoneAnimation(this.boneAnimation);
         this.boneAnimation.Play("絕招01");
         this.isUsingSkill = true;
-        RolesCollection.script.isChanging = true;   //暫停角色交換功能
+        GameManager.script.ChangeButtonUIObject.SetActive(false); //暫停角色交換功能
     }
 
     // Update is called once per frame
@@ -194,7 +194,7 @@ public class RoleAttackController : MonoBehaviour
             if (triggerEvent.normalizedTime == 1)   //動畫最後一Frame
             {
                 this.isUsingSkill = false;
-                RolesCollection.script.isChanging = false;      //恢復角色交換功能
+                GameManager.script.ChangeButtonUIObject.SetActive(true);  //恢復角色交換功能
                 GameManager.script.ResumeAllBoneAnimation();
             }
             else

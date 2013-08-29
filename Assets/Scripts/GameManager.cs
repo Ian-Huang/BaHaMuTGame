@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System;
 
 /// <summary>
-/// Modify Date：2013-08-28
+/// Modify Date：2013-08-29
 /// Description：
 ///     全域遊戲管理系統
 ///     0809新增：新增角色、怪物BoneAnimation管理系統，以控制Animation
@@ -28,6 +28,9 @@ public class GameManager : MonoBehaviour
     public GameObject EndPosition;
     [HideInInspector]
     public float TotalDistance;
+
+    [HideInInspector]
+    public GameObject ChangeButtonUIObject; //交換位置按鈕UI的物件(使用絕技時要將UI隱藏)
 
     public GameObject CoinObject;               //金幣物件Prefab
     public SmoothMoves.BoneAnimation EffectAnimationObject;    //效果動畫物件Prefab
@@ -104,6 +107,8 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        this.ChangeButtonUIObject = GameObject.Find("ChangeButtons 隊伍位置交換按鈕");
+
         this.MaxMorale = GameDefinition.MaxMorale;
         this.CurrentMorale = GameDefinition.MaxMorale;
         this.MoraleRestoreRate = GameDefinition.MoraleRestoreRate;
