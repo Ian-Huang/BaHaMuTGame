@@ -17,7 +17,7 @@ public class GameDefinition
         new RoleData(Role.盾騎士,500,100,120),
         new RoleData(Role.狂戰士,550,120,100),
         new RoleData(Role.獵人,450,100,90),
-        new RoleData(Role.法師,400,120,80)
+        new RoleData(Role.魔法師,400,120,80)
     };
 
     public static List<EnemyData> EnemyList = new List<EnemyData>(){ 
@@ -187,7 +187,7 @@ public class GameDefinition
         狂戰士 = 0,
         獵人 = 1,
         盾騎士 = 2,
-        法師 = 3
+        魔法師 = 3
     }
 
     public enum Enemy

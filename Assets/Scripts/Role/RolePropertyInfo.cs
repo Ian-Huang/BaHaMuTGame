@@ -2,13 +2,14 @@
 using System.Collections;
 
 /// <summary>
-/// Modify Date：2013-08-27
+/// Modify Date：2013-08-29
 /// Author：Ian
 /// Description：
 ///     角色的屬性資訊
 ///     0816：修改回血速率公式
 ///     0818：修改被敵人傷害公式(最小傷害為角色最大生命的3%)
 ///     0827：修正boneAnimation 保護層級
+///     0829：新增能量值(絕技系統)相關公式
 /// </summary>
 public class RolePropertyInfo : MonoBehaviour
 {
@@ -20,6 +21,10 @@ public class RolePropertyInfo : MonoBehaviour
 
     public float cureRate;              //每秒回復生命速率    
 
+    [HideInInspector]
+    public float CurrentEnergy;
+    public float MaxEnergy { get; private set; }
+
     public bool isWeak { get; private set; }
 
     [HideInInspector]
@@ -29,6 +34,8 @@ public class RolePropertyInfo : MonoBehaviour
     void Start()
     {
         this.isWeak = false;
+        this.CurrentEnergy = 0;     //當前能量初始化為0
+        this.MaxEnergy = 1000;      //能量值上限1000
 
         //設定BoneAnimation
         this.boneAnimation = this.GetComponent<SmoothMoves.BoneAnimation>();
@@ -42,7 +49,13 @@ public class RolePropertyInfo : MonoBehaviour
 
         this.cureRate = this.maxLife / 300;
 
-        InvokeRepeating("RestoreLifePersecond", 0.1f, 1);
+        InvokeRepeating("RestoreLifePersecond", 0.1f, 1);       //每秒固定回復生命值
+        InvokeRepeating("RestoreEnergyPersecond", 0.1f, 1);     //每秒固定回復能量值
+    }
+
+    void Update()
+    {
+        MUI_Monitor.script.SetValue(this.Role.ToString() + "絕招值y", (this.CurrentEnergy / this.MaxEnergy) * 100);
     }
 
     /// <summary>
@@ -55,6 +68,11 @@ public class RolePropertyInfo : MonoBehaviour
         deLife -= this.defence;
         if (deLife <= (this.maxLife * 0.03f))   //角色受到最小傷害為角色最大生命的3%
             deLife = this.maxLife * 0.03f;
+
+        //所受到的傷害值，增加為能量值
+        this.CurrentEnergy += deLife;
+        if (this.CurrentEnergy >= this.MaxEnergy)
+            this.CurrentEnergy = this.MaxEnergy;
 
         if (!this.isWeak)
         {
@@ -85,6 +103,16 @@ public class RolePropertyInfo : MonoBehaviour
                     this.boneAnimation.Play("idleweak");
             }
         }
+    }
+
+    /// <summary>
+    /// 每秒固定回復能量值(絕招使用)
+    /// </summary>
+    void RestoreEnergyPersecond()
+    {
+        this.CurrentEnergy += 15;     //每秒回15點能量值
+        if (this.CurrentEnergy >= this.MaxEnergy)
+            this.CurrentEnergy = this.MaxEnergy;
     }
 
     /// <summary>

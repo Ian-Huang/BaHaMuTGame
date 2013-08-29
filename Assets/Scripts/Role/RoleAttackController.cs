@@ -267,7 +267,7 @@ public class RoleAttackController : MonoBehaviour
                 obj.GetComponent<ShootObjectInfo_Through>().Damage = this.roleInfo.damage * 3;
                 break;
 
-            case GameDefinition.Role.法師:    //公式：普通攻擊2.5倍
+            case GameDefinition.Role.魔法師:    //公式：普通攻擊2.5倍
                 //產生魔法陣物件
                 obj = (GameObject)Instantiate(this.SkillObject, this.transform.position - new Vector3(0, 0, 0.1f), this.SkillObject.transform.rotation);
                 obj.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 1));       //魔法陣在螢幕正中央
