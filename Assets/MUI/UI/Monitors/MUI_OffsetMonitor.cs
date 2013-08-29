@@ -21,6 +21,12 @@ public class MUI_OffsetMonitor : MonoBehaviour
     private Vector2 offset;
 
     private MUI_Monitor mMonitor = new MUI_Monitor();
+
+    //根據MUI_Monitor的值 若所指定的值為目標值，將按鈕(MButton)給打開 反之則否
+    public ButtonEnableBy buttonEnableBy;
+    //當按鈕可被執行時的特效
+    public GameObject ButtonEnableOnEffect;
+
     // Use this for initialization
     void Start()
     {
@@ -41,5 +47,47 @@ public class MUI_OffsetMonitor : MonoBehaviour
         //驅動介面的變化
         if (this.GetComponent<MUI_Texture_2D>()) this.GetComponent<MUI_Texture_2D>().offset = offset;
         if (this.GetComponent<MUI_Label>()) this.GetComponent<MUI_Label>().offset = offset;
+
+        switch (buttonEnableBy)
+        {
+            case ButtonEnableBy.x:
+                if (Percentage.x == 100)
+                {
+                    ButtonEnableOnEffect.SetActive(true);
+                    foreach (MButton mb in this.GetComponents<MButton>())
+                        mb.enabled = true;
+                }
+                else
+                {
+                    ButtonEnableOnEffect.SetActive(false);
+                    foreach (MButton mb in this.GetComponents<MButton>())
+                        mb.enabled = false;
+                }
+
+                break;
+
+            case ButtonEnableBy.y:
+                if (Percentage.y == 100)
+                {
+                    ButtonEnableOnEffect.SetActive(true);
+                    foreach (MButton mb in this.GetComponents<MButton>())
+                        mb.enabled = true;
+                }
+                else
+                {
+                    ButtonEnableOnEffect.SetActive(false);
+                    foreach (MButton mb in this.GetComponents<MButton>())
+                        mb.enabled = false;
+                }
+
+                break;
+        }
+
+    }
+
+
+    public enum ButtonEnableBy
+    {
+        none = 0, x = 1, y = 2
     }
 }
