@@ -106,7 +106,7 @@ public class RoleAttackController : MonoBehaviour
                 }
 
                 //確認目前動畫狀態(必須沒再播attack)
-                if (!this.boneAnimation.isPlaying)
+                if (!this.boneAnimation.isPlaying || this.boneAnimation.IsPlaying("walkweak") || this.boneAnimation.IsPlaying("idleweak"))
                 {
                     //判定背景是否有在動，以此決定角色的動作狀態
                     if (BackgroundController.script.isRunning)
