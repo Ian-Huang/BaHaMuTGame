@@ -88,6 +88,9 @@ public class LevelSystem : MonoBehaviour
                 //將能力升一級
                 PlayerPrefsDictionary.script.SetValue(this.RoleNameDictionary[role] + "_HP_LV", currentLV + 1);
 
+                //將目前金幣數扣除升級能力所需的費用
+                PlayerPrefsDictionary.script.SetValue("Money", PlayerPrefsDictionary.script.GetValue("Money") - PlayerPrefsDictionary.script.GetValue(this.RoleNameDictionary[role] + "_HP_M"));
+
                 //如果該能力在升級後，達最大等級，則升級所需金額設為0
                 if ((currentLV + 1) == GameDefinition.AbilityCostLevel.Count)
                     PlayerPrefsDictionary.script.SetValue(this.RoleNameDictionary[role] + "_HP_M", 0);
@@ -109,6 +112,9 @@ public class LevelSystem : MonoBehaviour
 
                 //將能力升一級
                 PlayerPrefsDictionary.script.SetValue(this.RoleNameDictionary[role] + "_ATK_LV", currentLV + 1);
+
+                //將目前金幣數扣除升級能力所需的費用
+                PlayerPrefsDictionary.script.SetValue("Money", PlayerPrefsDictionary.script.GetValue("Money") - PlayerPrefsDictionary.script.GetValue(this.RoleNameDictionary[role] + "_ATK_M"));
 
                 //如果該能力在升級後，達最大等級，則升級所需金額設為0
                 if ((currentLV + 1) == GameDefinition.AbilityCostLevel.Count)
@@ -132,6 +138,9 @@ public class LevelSystem : MonoBehaviour
                 //將能力升一級
                 PlayerPrefsDictionary.script.SetValue(this.RoleNameDictionary[role] + "_DEF_LV", currentLV + 1);
 
+                //將目前金幣數扣除升級能力所需的費用
+                PlayerPrefsDictionary.script.SetValue("Money", PlayerPrefsDictionary.script.GetValue("Money") - PlayerPrefsDictionary.script.GetValue(this.RoleNameDictionary[role] + "_DEF_M"));
+
                 //如果該能力在升級後，達最大等級，則升級所需金額設為0
                 if ((currentLV + 1) == GameDefinition.AbilityCostLevel.Count)
                     PlayerPrefsDictionary.script.SetValue(this.RoleNameDictionary[role] + "_DEF_M", 0);
@@ -154,6 +163,9 @@ public class LevelSystem : MonoBehaviour
                 //將能力升一級
                 PlayerPrefsDictionary.script.SetValue(this.RoleNameDictionary[role] + "_BASIC_LV", currentLV + 1);
 
+                //將目前金幣數扣除升級能力所需的費用
+                PlayerPrefsDictionary.script.SetValue("Money", PlayerPrefsDictionary.script.GetValue("Money") - PlayerPrefsDictionary.script.GetValue(this.RoleNameDictionary[role] + "_BASIC_LV_M"));
+
                 //如果該能力在升級後，達最大等級，則升級所需金額設為0
                 if ((currentLV + 1) == GameDefinition.AttackLVCostLevel.Count)
                     PlayerPrefsDictionary.script.SetValue(this.RoleNameDictionary[role] + "_BASIC_LV_M", 0);
@@ -169,6 +181,9 @@ public class LevelSystem : MonoBehaviour
 
                 //將能力升一級
                 PlayerPrefsDictionary.script.SetValue(this.RoleNameDictionary[role] + "_ULT_LV", currentLV + 1);
+
+                //將目前金幣數扣除升級能力所需的費用
+                PlayerPrefsDictionary.script.SetValue("Money", PlayerPrefsDictionary.script.GetValue("Money") - PlayerPrefsDictionary.script.GetValue(this.RoleNameDictionary[role] + "_ULT_LV_M"));
 
                 //如果該能力在升級後，達最大等級，則升級所需金額設為0
                 if ((currentLV + 1) == GameDefinition.UltimateSkillCostLevel.Count)
