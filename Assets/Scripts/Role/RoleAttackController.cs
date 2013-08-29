@@ -51,7 +51,8 @@ public class RoleAttackController : MonoBehaviour
         if (GameManager.script.CurrentBossObject != null)
         {
             iTween.Pause(GameManager.script.CurrentBossObject);         //暫停當前魔王的iTween
-            GameManager.script.CurrentBossObject.transform.parent.GetComponent<EnemyCreatePoint>().PauseCreate();   //暫停魔王點生怪狀態
+            if (GameManager.script.CurrentBossObject.transform.parent.GetComponent<EnemyCreatePoint>())
+                GameManager.script.CurrentBossObject.transform.parent.GetComponent<EnemyCreatePoint>().PauseCreate();   //暫停魔王點生怪狀態
         }
         else
             BackgroundController.script.SetRunBackgroundState(false);       //暫停地圖移動        
@@ -202,7 +203,8 @@ public class RoleAttackController : MonoBehaviour
                 if (GameManager.script.CurrentBossObject != null)
                 {
                     iTween.Resume(GameManager.script.CurrentBossObject);     //恢復當前魔王的iTween
-                    GameManager.script.CurrentBossObject.transform.parent.GetComponent<EnemyCreatePoint>().ResumeCreate();  //恢復魔王點生怪狀態
+                    if (GameManager.script.CurrentBossObject.transform.parent.GetComponent<EnemyCreatePoint>())
+                        GameManager.script.CurrentBossObject.transform.parent.GetComponent<EnemyCreatePoint>().ResumeCreate();  //恢復魔王點生怪狀態
                 }
                 else
                     BackgroundController.script.SetRunBackgroundState(true);    //恢復地圖移動

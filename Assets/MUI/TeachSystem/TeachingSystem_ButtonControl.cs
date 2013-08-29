@@ -19,7 +19,8 @@ public class TeachingSystem_ButtonControl : MonoBehaviour
     public MUI_Texture_2D Texture_2D;
 
     public bool isNextPart;
-
+    public bool isNextULT;
+    public GameObject NextUltGameObject;
     //不運作的按鈕(桌上型)
     //public MDesktopButton[] disableButtons_desktop;
     //運作的按鈕(桌上型)
@@ -68,6 +69,12 @@ public class TeachingSystem_ButtonControl : MonoBehaviour
                 StartCoroutine(TeachingSystem.script.NextPart(0));
                 //圖片回到原本Depth
                 Texture_2D.depth = oldDepth;
+            }
+
+            if (isNextULT)
+            {
+                NextUltGameObject.SetActive(true);
+                this.gameObject.SetActive(false);
             }
 
             ////enable all button you set
