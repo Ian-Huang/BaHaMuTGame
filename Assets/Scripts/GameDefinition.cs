@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 
 /// <summary>
-/// Modify Date：2013-08-22
+/// Modify Date：2013-08-29
 /// Description：
 ///     遊戲定義檔
 ///     0816：新增魔王資訊系統
 ///     0822：新增魔王招式資訊系統
+///     0829：新增升級系統部分資訊
 /// </summary>
 public class GameDefinition
 {
@@ -14,10 +15,10 @@ public class GameDefinition
     public static int MoraleRestoreRate = 1;
 
     public static List<RoleData> RoleList = new List<RoleData>(){ 
-        new RoleData(Role.盾騎士,500,100,120),
-        new RoleData(Role.狂戰士,550,120,100),
-        new RoleData(Role.獵人,450,100,90),
-        new RoleData(Role.魔法師,400,120,80)
+        new RoleData(Role.盾騎士,500,100,120,30,10,12),
+        new RoleData(Role.狂戰士,550,120,100,35,12,10),
+        new RoleData(Role.獵人,450,100,90,25,8,9),
+        new RoleData(Role.魔法師,400,120,80,20,9,8)
     };
 
     public static List<EnemyData> EnemyList = new List<EnemyData>(){ 
@@ -56,8 +57,8 @@ public class GameDefinition
 
     //能力(生命、攻擊力、防禦力)升級花費表
     public static List<int> AbilityCostLevel = new List<int>() { 100, 200, 350, 700, 1200, 1800, 2500, 3500, 4800, 6500 };
-    //招式升級花費表
-    public static List<int> SkillCostLevel = new List<int>() { 500, 800, 1200, 1800, 2500 };
+    //攻擊等級升級花費表
+    public static List<int> AttackLVCostLevel = new List<int>() { 500, 800, 1200, 1800, 2500 };
     //絕技升級花費表
     public static List<int> UltimateSkillCostLevel = new List<int>() { 2000, 4500 };
 
@@ -67,6 +68,9 @@ public class GameDefinition
         public int Life;
         public int Damage;
         public int Defence;
+        public int LifeAdd;
+        public int DamageAdd;
+        public int DefenceAdd;
 
         /// <summary>
         /// 角色資料建構式
@@ -75,9 +79,28 @@ public class GameDefinition
         /// <param name="life">角色生命值</param>
         /// <param name="damage">角色傷害值</param>
         /// <param name="defence">角色防禦力</param>
-        public RoleData(Role name, int life, int damage, int defence)
+        /// <param name="lifeAdd">角色生命增加值(升級用)</param>
+        /// <param name="damageAdd">角色傷害增加值(升級用)</param>
+        /// <param name="defenceAdd">角色防禦增加值(升級用)</param>
+        public RoleData(Role name, int life, int damage, int defence, int lifeAdd, int damageAdd, int defenceAdd)
         {
             this.RoleName = name;
+            this.Life = life;
+            this.Damage = damage;
+            this.Defence = defence;
+            this.LifeAdd = lifeAdd;
+            this.DamageAdd = damageAdd;
+            this.DefenceAdd = defenceAdd;
+        }
+
+        /// <summary>
+        /// 更新角色能力值
+        /// </summary>
+        /// <param name="life">角色生命值</param>
+        /// <param name="damage">角色傷害值</param>
+        /// <param name="defence">角色防禦力</param>
+        public void UpdateAbilityValue(int life, int damage, int defence)
+        {
             this.Life = life;
             this.Damage = damage;
             this.Defence = defence;
