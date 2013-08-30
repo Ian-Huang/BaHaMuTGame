@@ -43,7 +43,7 @@ public class PlayerPrefsDictionary : MonoBehaviour
         this.AddValue("BSK_DEF");
         this.AddValue("BSK_HP");
         this.AddValue("BSK_BASIC_LV");
-        this.AddValue("BSK_ULT_LV_");
+        this.AddValue("BSK_ULT_LV");
 
         this.AddValue("BSK_ATK_M");
         this.AddValue("BSK_DEF_M");
@@ -169,7 +169,7 @@ public class PlayerPrefsDictionary : MonoBehaviour
             return PlayerPrefDictionary[key];
         else
         {
-            Debug.Log("Dictionary have no this key");
+            Debug.Log("Dictionary have no this key" + key);
             return 0;
         }
     }
