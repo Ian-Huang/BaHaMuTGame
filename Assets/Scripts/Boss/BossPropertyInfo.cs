@@ -70,6 +70,10 @@ public class BossPropertyInfo : MonoBehaviour
             //移除物件的同時，移除註冊於GameManager AllBoneAnimationList中的資訊
             if (GameManager.script.AllBoneAnimationList.ContainsKey(this.boneAnimation))
                 GameManager.script.AllBoneAnimationList.Remove(this.boneAnimation);
+
+            //擊敗BOSS執行過關動畫
+            GameManager.script.RunLevelComplete(15);
+
             Destroy(this.gameObject);
         }
     }

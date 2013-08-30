@@ -17,7 +17,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager script;
 
+    public int CurrentSceneIndex;
+
+    [HideInInspector]
     public int CurrentCoinCount;
+    [HideInInspector]
     public float CurrentMorale;
     [HideInInspector]
     public float MaxMorale;
@@ -128,6 +132,28 @@ public class GameManager : MonoBehaviour
     public float GetCurrentMorale()
     {
         return (this.CurrentMorale / this.MaxMorale) * 100;
+    }
+
+    /// <summary>
+    /// 執行破關事件
+    /// </summary>
+    /// <param name="time">幾秒後切換場景</param>
+    public void RunLevelComplete(float time)
+    {
+        StartCoroutine(LevelComplete(time));
+    }
+
+    /// <summary>
+    /// 破關事件執行項目
+    /// </summary>
+    /// <param name="time">幾秒後切換場景</param>
+    /// <returns></returns>
+    IEnumerator LevelComplete(float time)
+    {
+        Instantiate(EffectCreator.script.遊戲破關提示);
+        PlayerPrefsDictionary.script.SetValue("LevelComplete", GameManager.script.CurrentSceneIndex);
+        yield return new WaitForSeconds(time);
+        MUI_LoadSceneTransitionsEffect.script.LoadScene("LevelSelectScene", 0);
     }
 
     // Update is called once per frame

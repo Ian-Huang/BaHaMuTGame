@@ -26,17 +26,26 @@ public class EventController : MonoBehaviour
             Instantiate(EffectCreator.script.魔王接近提示);
             EffectCreator.script.isBossUIEffectShow = true; //呼叫魔王血量介面
         }
-        else if (other.GetComponent<EventTriggerType>().Type == GameDefinition.EventTriggerType.終點)
+        else if (other.GetComponent<EventTriggerType>().Type == GameDefinition.EventTriggerType.有魔王終點)
         {
             //抵達終點，做以下處理(停止背景移動、腳色切換Idle狀態)
             BackgroundController.script.SetRunBackgroundState(false);
 
+            //因抵達終點有魔王，進入BOSS戰
             if (BossController_TreeElder.script)
             {
                 GameManager.script.CurrentBossObject = BossController_TreeElder.script.gameObject; //紀錄當前魔王物件(使用絕技要暫停iTween)
                 BossController_TreeElder.script.boneAnimation.Play("登場");
                 BossController_TreeElder.script.currentBossAction = BossController_TreeElder.BossAction.閒置;
             }
+        }
+        else if (other.GetComponent<EventTriggerType>().Type == GameDefinition.EventTriggerType.無魔王終點)
+        {
+            //抵達終點，做以下處理(停止背景移動、腳色切換Idle狀態)
+            BackgroundController.script.SetRunBackgroundState(false);
+
+            //因抵達終點後無魔王，直接過關
+            GameManager.script.RunLevelComplete(10);
         }
     }
 }
