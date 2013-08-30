@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System;
 
 /// <summary>
-/// Modify Date：2013-08-29
+/// Modify Date：2013-08-31
 /// Description：
 ///     全域遊戲管理系統
 ///     0809新增：新增角色、怪物BoneAnimation管理系統，以控制Animation
@@ -150,7 +150,8 @@ public class GameManager : MonoBehaviour
     {
         Instantiate(EffectCreator.script.遊戲破關提示);
         MusicPlayer.script.BGM_FadeOUT();
-        PlayerPrefsDictionary.script.SetValue("LevelComplete", (int)GameManager.script.levelCompleteIndex);
+        if ((int)GameManager.script.levelCompleteIndex > PlayerPrefsDictionary.script.GetValue("LevelComplete"))
+            PlayerPrefsDictionary.script.SetValue("LevelComplete", (int)GameManager.script.levelCompleteIndex);
         yield return new WaitForSeconds(9);
         foreach (RolePropertyInfo script in GameObject.FindObjectsOfType(typeof(RolePropertyInfo))) //刪除所有生怪點
             script.boneAnimation.Play("win");
