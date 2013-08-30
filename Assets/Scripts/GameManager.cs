@@ -152,7 +152,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefsDictionary.script.SetValue("LevelComplete", GameManager.script.CurrentSceneIndex + 1);
         yield return new WaitForSeconds(9);
         foreach (RolePropertyInfo script in GameObject.FindObjectsOfType(typeof(RolePropertyInfo))) //刪除所有生怪點
-            script.boneAnimation.Play("Win");
+            script.boneAnimation.Play("win");
         yield return new WaitForSeconds(3);
         MUI_LoadSceneTransitionsEffect.script.LoadScene("LevelSelectScene", 0);
     }
