@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Modify Date：2013-08-30
+/// Modify Date：2013-08-31
 /// Author：Ian
 /// Description：
 ///     角色能力等級系統
@@ -11,7 +11,7 @@ using System.Collections.Generic;
 public class LevelSystem : MonoBehaviour
 {
     public static LevelSystem script;
-    private Dictionary<GameDefinition.Role, string> RoleNameDictionary = new Dictionary<GameDefinition.Role, string>();
+    public Dictionary<GameDefinition.Role, string> RoleNameDictionary = new Dictionary<GameDefinition.Role, string>();
 
     void Awake()
     {

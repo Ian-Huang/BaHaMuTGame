@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 /// <summary>
-/// Modify Date：2013-08-29
+/// Modify Date：2013-08-31
 /// Description：
 ///     遊戲定義檔
 ///     0816：新增魔王資訊系統
@@ -15,10 +15,10 @@ public class GameDefinition
     public static int MoraleRestoreRate = 1;
 
     public static List<RoleData> RoleList = new List<RoleData>(){ 
-        new RoleData(Role.盾騎士,500,100,120,30,10,12),
-        new RoleData(Role.狂戰士,550,120,100,35,12,10),
-        new RoleData(Role.獵人,450,100,90,25,8,9),
-        new RoleData(Role.魔法師,400,120,80,20,9,8)
+        new RoleData(Role.盾騎士,500,100,120,30,10,12,0.2f),
+        new RoleData(Role.狂戰士,550,120,100,35,12,10,0.3f),
+        new RoleData(Role.獵人,450,100,90,25,8,9,0.25f),
+        new RoleData(Role.魔法師,400,120,80,20,9,8,0.25f)
     };
 
     public static List<EnemyData> EnemyList = new List<EnemyData>(){ 
@@ -71,6 +71,7 @@ public class GameDefinition
         public int LifeAdd;
         public int DamageAdd;
         public int DefenceAdd;
+        public float AttackRatioAdd;
 
         /// <summary>
         /// 角色資料建構式
@@ -82,7 +83,8 @@ public class GameDefinition
         /// <param name="lifeAdd">角色生命增加值(升級用)</param>
         /// <param name="damageAdd">角色傷害增加值(升級用)</param>
         /// <param name="defenceAdd">角色防禦增加值(升級用)</param>
-        public RoleData(Role name, int life, int damage, int defence, int lifeAdd, int damageAdd, int defenceAdd)
+        /// <param name="attackRatioAdd">角色攻擊等級增加值(升級用)</param>
+        public RoleData(Role name, int life, int damage, int defence, int lifeAdd, int damageAdd, int defenceAdd, float attackRatioAdd)
         {
             this.RoleName = name;
             this.Life = life;
@@ -91,6 +93,7 @@ public class GameDefinition
             this.LifeAdd = lifeAdd;
             this.DamageAdd = damageAdd;
             this.DefenceAdd = defenceAdd;
+            this.AttackRatioAdd = attackRatioAdd;
         }
 
         /// <summary>

@@ -2,7 +2,7 @@
 using System.Collections;
 
 /// <summary>
-/// Modify Date：2013-08-29
+/// Modify Date：2013-08-31
 /// Author：Ian
 /// Description：
 ///     角色的屬性資訊
@@ -18,6 +18,10 @@ public class RolePropertyInfo : MonoBehaviour
     public float maxLife;               //最大生命值    
     public int damage;                  //攻擊傷害值
     public int defence;                 //防禦力
+
+    public float AttackRatioAdd;        //攻擊等級增加值
+    public int AttackLV;                //攻擊等級
+    public int UltimateSkillLV;         //絕技等級
 
     public float cureRate;              //每秒回復生命速率    
 
@@ -46,6 +50,9 @@ public class RolePropertyInfo : MonoBehaviour
         this.currentLife = getData.Life;
         this.damage = getData.Damage;
         this.defence = getData.Defence;
+        this.AttackRatioAdd = getData.AttackRatioAdd;
+        this.AttackLV = PlayerPrefsDictionary.script.GetValue(LevelSystem.script.RoleNameDictionary[this.Role] + "_BASIC_LV");
+        this.UltimateSkillLV = PlayerPrefsDictionary.script.GetValue(LevelSystem.script.RoleNameDictionary[this.Role] + "_ULT_LV");
 
         this.cureRate = this.maxLife / 300;
 

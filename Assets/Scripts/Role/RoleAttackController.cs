@@ -2,7 +2,7 @@
 using System.Collections;
 
 /// <summary>
-/// Modify Date：2013-08-29
+/// Modify Date：2013-08-31
 /// Author：Ian
 /// Description：
 ///     角色攻擊控制器 (敵人、障礙物)
@@ -138,12 +138,12 @@ public class RoleAttackController : MonoBehaviour
                 //判別物件為何？  敵人、障礙物、魔王有不同的處理
                 if (layerName.CompareTo("Enemy") == 0)
                 {
-                    triggerEvent.otherCollider.GetComponent<EnemyPropertyInfo>().DecreaseLife(this.roleInfo.damage);
+                    triggerEvent.otherCollider.GetComponent<EnemyPropertyInfo>().DecreaseLife(Mathf.FloorToInt(this.roleInfo.damage * (1 + this.roleInfo.AttackRatioAdd * this.roleInfo.AttackLV)));
                     isCheck = true;
                 }
                 else if (layerName.CompareTo("Boss") == 0)
                 {
-                    triggerEvent.otherCollider.GetComponent<BossPropertyInfo>().DecreaseLife(this.roleInfo.damage);
+                    triggerEvent.otherCollider.GetComponent<BossPropertyInfo>().DecreaseLife(Mathf.FloorToInt(this.roleInfo.damage * (1 + this.roleInfo.AttackRatioAdd * this.roleInfo.AttackLV)));
                     isCheck = true;
                 }
                 else if (layerName.CompareTo("Obstacle") == 0)
@@ -187,9 +187,9 @@ public class RoleAttackController : MonoBehaviour
             obj.layer = LayerMask.NameToLayer("ShootObject");
             obj.transform.parent = GameObject.Find("UselessObjectCollection").transform;
             if (obj.GetComponent<ShootObjectInfo_Once>())
-                obj.GetComponent<ShootObjectInfo_Once>().Damage = this.roleInfo.damage;
+                obj.GetComponent<ShootObjectInfo_Once>().Damage = Mathf.FloorToInt(this.roleInfo.damage * (1 + this.roleInfo.AttackRatioAdd * this.roleInfo.AttackLV));
             else if (obj.GetComponent<ShootObjectInfo_Through>())
-                obj.GetComponent<ShootObjectInfo_Through>().Damage = this.roleInfo.damage;
+                obj.GetComponent<ShootObjectInfo_Through>().Damage = Mathf.FloorToInt(this.roleInfo.damage * (1 + this.roleInfo.AttackRatioAdd * this.roleInfo.AttackLV));
         }
 
         //角色釋放絕招觸發的UserTrigger
@@ -232,9 +232,9 @@ public class RoleAttackController : MonoBehaviour
                 foreach (var hit in Physics.RaycastAll(this.transform.position, Vector3.right, this.AttackDistance, this.AttackLayer))
                 {
                     if (hit.transform.GetComponent<EnemyPropertyInfo>())
-                        hit.transform.GetComponent<EnemyPropertyInfo>().DecreaseLife(this.roleInfo.damage * 2);    //第一段傷害
+                        hit.transform.GetComponent<EnemyPropertyInfo>().DecreaseLife(Mathf.FloorToInt(this.roleInfo.damage * (2 + this.roleInfo.UltimateSkillLV * 1.5f)));    //第一段傷害
                     else if (hit.transform.GetComponent<BossPropertyInfo>())
-                        hit.transform.GetComponent<BossPropertyInfo>().DecreaseLife(this.roleInfo.damage * 2);    //第一段傷害
+                        hit.transform.GetComponent<BossPropertyInfo>().DecreaseLife(Mathf.FloorToInt(this.roleInfo.damage * (2 + this.roleInfo.UltimateSkillLV * 1.5f)));    //第一段傷害
                 }
                 //第二段攻擊，產生衝擊波物件
                 obj = (GameObject)Instantiate(this.SkillObject, this.transform.position - new Vector3(0, 0, 0.1f), this.SkillObject.transform.rotation);
@@ -242,7 +242,7 @@ public class RoleAttackController : MonoBehaviour
                 //設定物件的parent 、 layer 、 Damage
                 obj.layer = LayerMask.NameToLayer("ShootObject");
                 obj.transform.parent = GameObject.Find("UselessObjectCollection").transform;
-                obj.GetComponent<ShootObjectInfo_Through>().Damage = Mathf.FloorToInt(this.roleInfo.damage * 1.5f); //第二段傷害
+                obj.GetComponent<ShootObjectInfo_Through>().Damage = Mathf.FloorToInt(this.roleInfo.damage * (1.5f + this.roleInfo.UltimateSkillLV * 0.75f)); //第二段傷害
                 break;
 
             case GameDefinition.Role.獵人:    //公式：普通攻擊1.2倍
@@ -256,7 +256,7 @@ public class RoleAttackController : MonoBehaviour
                     obj.layer = LayerMask.NameToLayer("ShootObject");
                     obj.transform.parent = GameObject.Find("UselessObjectCollection").transform;
                     obj.transform.Rotate(new Vector3(0, 0, -10 + i * 10));  //光箭角度不同
-                    obj.GetComponent<ShootObjectInfo_Through>().Damage = Mathf.FloorToInt(this.roleInfo.damage * 1.2f);
+                    obj.GetComponent<ShootObjectInfo_Through>().Damage = Mathf.FloorToInt(this.roleInfo.damage * (1.2f + this.roleInfo.UltimateSkillLV * 0.4f));
                 }
                 break;
 
@@ -267,7 +267,7 @@ public class RoleAttackController : MonoBehaviour
                 //設定物件的parent 、 layer 、 Damage
                 obj.layer = LayerMask.NameToLayer("ShootObject");
                 obj.transform.parent = GameObject.Find("UselessObjectCollection").transform;
-                obj.GetComponent<ShootObjectInfo_Through>().Damage = this.roleInfo.damage * 3;
+                obj.GetComponent<ShootObjectInfo_Through>().Damage = this.roleInfo.damage * (3 + this.roleInfo.UltimateSkillLV * 2);
                 break;
 
             case GameDefinition.Role.魔法師:    //公式：普通攻擊2.5倍
@@ -276,12 +276,12 @@ public class RoleAttackController : MonoBehaviour
                 obj.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 1));       //魔法陣在螢幕正中央
 
                 foreach (EnemyPropertyInfo script in GameObject.FindObjectsOfType(typeof(EnemyPropertyInfo)))
-                    script.DecreaseLife(Mathf.FloorToInt(this.roleInfo.damage * 2.5f));
+                    script.DecreaseLife(Mathf.FloorToInt(this.roleInfo.damage * (2.5f + this.roleInfo.UltimateSkillLV * 1.75f)));
 
                 if (GameManager.script.CurrentBossObject != null)
                 {
                     BossPropertyInfo script = (BossPropertyInfo)GameObject.FindObjectOfType(typeof(BossPropertyInfo));
-                    script.DecreaseLife(Mathf.FloorToInt(this.roleInfo.damage * 2.5f));
+                    script.DecreaseLife(Mathf.FloorToInt(this.roleInfo.damage * (2.5f + this.roleInfo.UltimateSkillLV * 1.75f)));
                 }
                 break;
         }
