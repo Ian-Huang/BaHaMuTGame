@@ -33,6 +33,7 @@ public class EventController : MonoBehaviour
 
             if (BossController_TreeElder.script)
             {
+                GameManager.script.CurrentBossObject = BossController_TreeElder.script.gameObject; //紀錄當前魔王物件(使用絕技要暫停iTween)
                 BossController_TreeElder.script.boneAnimation.Play("登場");
                 BossController_TreeElder.script.currentBossAction = BossController_TreeElder.BossAction.閒置;
             }

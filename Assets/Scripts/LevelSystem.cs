@@ -208,18 +208,6 @@ public class LevelSystem : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            LevelUp(GameDefinition.Role.狂戰士, LevelUpType.生命);
-        }
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            PlayerPrefsDictionary.script.SetValue("Money", 10000);
-        }
-    }
-
     public enum LevelUpType
     {
         生命 = 0, 攻擊 = 1, 防禦 = 2, 普攻等級 = 3, 絕技等級 = 4
