@@ -268,6 +268,12 @@ public class GameDefinition
         出怪點 = 0, 魔王警告點 = 1, 有魔王終點 = 2, 無魔王終點 = 3
     }
 
+    public enum LevelCompleteIndex : int
+    {
+        關卡1_1 = 12, 關卡1_2 = 13, 關卡1_3 = 14, 關卡1_4 = 21,
+        關卡2_1 = 22, 關卡2_2 = 23, 關卡2_3 = 24, 關卡2_4 = 25
+    }
+
 
     /// <summary>
     /// 暫時記錄區

@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager script;
 
-    public int CurrentSceneIndex;
+    public GameDefinition.LevelCompleteIndex levelCompleteIndex;
 
     [HideInInspector]
     public int CurrentCoinCount;
@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour
     {
         Instantiate(EffectCreator.script.遊戲破關提示);
         MusicPlayer.script.BGM_FadeOUT();
-        PlayerPrefsDictionary.script.SetValue("LevelComplete", GameManager.script.CurrentSceneIndex + 1);
+        PlayerPrefsDictionary.script.SetValue("LevelComplete", (int)GameManager.script.levelCompleteIndex);
         yield return new WaitForSeconds(9);
         foreach (RolePropertyInfo script in GameObject.FindObjectsOfType(typeof(RolePropertyInfo))) //刪除所有生怪點
             script.boneAnimation.Play("win");
