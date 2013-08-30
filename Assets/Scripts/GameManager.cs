@@ -149,6 +149,7 @@ public class GameManager : MonoBehaviour
     IEnumerator LevelComplete()
     {
         Instantiate(EffectCreator.script.遊戲破關提示);
+        MusicPlayer.script.BGM_FadeOUT();
         PlayerPrefsDictionary.script.SetValue("LevelComplete", GameManager.script.CurrentSceneIndex + 1);
         yield return new WaitForSeconds(9);
         foreach (RolePropertyInfo script in GameObject.FindObjectsOfType(typeof(RolePropertyInfo))) //刪除所有生怪點
@@ -174,6 +175,7 @@ public class GameManager : MonoBehaviour
     IEnumerator LevelFail(float time)
     {
         Instantiate(EffectCreator.script.遊戲失敗提示);
+        MusicPlayer.script.BGM_FadeOUT();
         yield return new WaitForSeconds(time);
         MUI_LoadSceneTransitionsEffect.script.LoadScene("LevelSelectScene", 0);
     }
