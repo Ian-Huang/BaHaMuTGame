@@ -45,7 +45,7 @@ public class EventController : MonoBehaviour
             BackgroundController.script.SetRunBackgroundState(false);
 
             //因抵達終點後無魔王，直接過關
-            GameManager.script.RunLevelComplete(10);
+            GameManager.script.RunLevelComplete();
         }
     }
 }

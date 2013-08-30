@@ -82,10 +82,30 @@ public class RolePropertyInfo : MonoBehaviour
         }
         else
         {
-            //角色當前虛弱，扣總士氣(未完成)
+            //角色當前虛弱，扣總士氣
             GameManager.script.CurrentMorale -= deLife;
+
+            //假如士氣=0，則播放失敗動畫
             if (GameManager.script.CurrentMorale <= 0)
-                GameManager.script.CurrentMorale = 0;
+            {
+                GameManager.script.CurrentMorale = 0;   //士氣歸0
+
+                GameManager.script.ChangeButtonUIObject.SetActive(false);       //暫停角色交換功能
+                GameManager.script.StopAllBoneAnimation();                      //暫停所有註冊的BoneAnimation
+
+                if (GameManager.script.CurrentBossObject != null)
+                    iTween.Pause(GameManager.script.CurrentBossObject);         //暫停當前魔王的iTween
+
+                BackgroundController.script.SetRunBackgroundState(false);       //暫停地圖移動    
+
+                foreach (MoveController script in GameObject.FindObjectsOfType(typeof(MoveController))) //暫停所有物件的移動功能
+                    script.isRunning = false;
+
+                foreach (EnemyCreatePoint script in GameObject.FindObjectsOfType(typeof(EnemyCreatePoint))) //刪除所有生怪點
+                    Destroy(script.gameObject);
+
+                GameManager.script.RunLevelFail(6);
+            }
         }
 
         if (!this.isWeak)

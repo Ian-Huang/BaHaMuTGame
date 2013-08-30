@@ -72,7 +72,7 @@ public class BossPropertyInfo : MonoBehaviour
                 GameManager.script.AllBoneAnimationList.Remove(this.boneAnimation);
 
             //擊敗BOSS執行過關動畫
-            GameManager.script.RunLevelComplete(15);
+            GameManager.script.RunLevelComplete();
 
             Destroy(this.gameObject);
         }

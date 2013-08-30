@@ -137,21 +137,43 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 執行破關事件
     /// </summary>
-    /// <param name="time">幾秒後切換場景</param>
-    public void RunLevelComplete(float time)
+    public void RunLevelComplete()
     {
-        StartCoroutine(LevelComplete(time));
+        StartCoroutine(LevelComplete());
     }
 
     /// <summary>
     /// 破關事件執行項目
     /// </summary>
-    /// <param name="time">幾秒後切換場景</param>
     /// <returns></returns>
-    IEnumerator LevelComplete(float time)
+    IEnumerator LevelComplete()
     {
         Instantiate(EffectCreator.script.遊戲破關提示);
-        PlayerPrefsDictionary.script.SetValue("LevelComplete", GameManager.script.CurrentSceneIndex);
+        PlayerPrefsDictionary.script.SetValue("LevelComplete", GameManager.script.CurrentSceneIndex + 1);
+        yield return new WaitForSeconds(9);
+        foreach (RolePropertyInfo script in GameObject.FindObjectsOfType(typeof(RolePropertyInfo))) //刪除所有生怪點
+            script.boneAnimation.Play("Win");
+        yield return new WaitForSeconds(3);
+        MUI_LoadSceneTransitionsEffect.script.LoadScene("LevelSelectScene", 0);
+    }
+
+    /// <summary>
+    /// 執行失敗事件
+    /// </summary>
+    /// <param name="time">幾秒後切換場景</param>
+    public void RunLevelFail(float time)
+    {
+        StartCoroutine(LevelFail(time));
+    }
+
+    /// <summary>
+    /// 失敗事件執行項目
+    /// </summary>
+    /// <param name="time">幾秒後切換場景</param>
+    /// <returns></returns>
+    IEnumerator LevelFail(float time)
+    {
+        Instantiate(EffectCreator.script.遊戲失敗提示);
         yield return new WaitForSeconds(time);
         MUI_LoadSceneTransitionsEffect.script.LoadScene("LevelSelectScene", 0);
     }
