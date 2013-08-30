@@ -278,8 +278,11 @@ public class RoleAttackController : MonoBehaviour
                 foreach (EnemyPropertyInfo script in GameObject.FindObjectsOfType(typeof(EnemyPropertyInfo)))
                     script.DecreaseLife(Mathf.FloorToInt(this.roleInfo.damage * 2.5f));
 
-                foreach (BossPropertyInfo script in GameObject.FindObjectsOfType(typeof(BossPropertyInfo)))
+                if (GameManager.script.CurrentBossObject != null)
+                {
+                    BossPropertyInfo script = (BossPropertyInfo)GameObject.FindObjectOfType(typeof(BossPropertyInfo));
                     script.DecreaseLife(Mathf.FloorToInt(this.roleInfo.damage * 2.5f));
+                }
                 break;
         }
     }
