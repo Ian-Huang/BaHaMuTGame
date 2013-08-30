@@ -10,6 +10,8 @@ public class EffectCreator : MonoBehaviour
     public GameObject[] 道路危險提示;
     public GameObject 遊戲開始提示;
     public GameObject 魔王接近提示;
+    public GameObject 遊戲破關提示;
+    public GameObject 遊戲失敗提示;
 
 
     /// <summary>
