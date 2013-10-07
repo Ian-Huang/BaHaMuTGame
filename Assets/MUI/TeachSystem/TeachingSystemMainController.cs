@@ -53,7 +53,9 @@ public class TeachingSystemMainController : MonoBehaviour
         if (isOver)
         {
             MusicPlayer.script.ChangeBackgroungMusic(4);
-            PlayerPrefsDictionary.script.SetValue("LevelComplete", 11);
+
+            if (11 > PlayerPrefsDictionary.script.GetValue("LevelComplete"))
+                PlayerPrefsDictionary.script.SetValue("LevelComplete", 11);
         }
 
         if (isAllRoleFullEnergy)
