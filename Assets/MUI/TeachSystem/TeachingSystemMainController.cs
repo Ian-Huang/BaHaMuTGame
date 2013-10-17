@@ -70,6 +70,6 @@ public class TeachingSystemMainController : MonoBehaviour
 
     void OnDisable()
     {
-        BackgroundController.script.SetRunBackgroundState(true);
+        //BackgroundController.script.SetRunBackgroundState(true);
     }
 }
